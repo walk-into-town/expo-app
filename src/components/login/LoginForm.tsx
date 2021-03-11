@@ -2,23 +2,24 @@ import React, { useState } from 'react'
 import styled from 'styled-components/native';
 import { Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/EvilIcons';
+import { useAuth } from '../../api/Auth';
 
 interface Props {
-    signIn: () => void;
+
 }
 
-const LoginForm = ({ signIn }: Props) => {
+const LoginForm = ({}: Props) => {
     const [id, setId] = useState("")
     const [pw, setPw] = useState("")
 
     const onClick = () => {
         console.log(id, pw)
     }
-
+    const { signIn } = useAuth();
 
     return (
         <Container>
-            <Input 
+            <Input
                 onChangeText={(text: string) => setId(text)}
                 textAlign={'center'}
             />
@@ -33,7 +34,7 @@ const LoginForm = ({ signIn }: Props) => {
 
             <Btns>
                 <Icon name="sc-telegram" color="#517fa4" size={70} onPress={signIn} />
-                <Icon name="sc-github" color="#517fa4" size={70} onPress={onClick}/>
+                <Icon name="sc-github" color="#517fa4" size={70} onPress={onClick} />
             </Btns>
 
         </Container>

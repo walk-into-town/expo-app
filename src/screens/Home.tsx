@@ -1,35 +1,26 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import { Button, Text } from 'react-native'
-
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '@types';
+import { useAuth } from '../api/Auth';
 
 interface Props {
-    navigation: StackNavigationProp<RootStackParamList, 'HomeScreen'>;
+
 }
 
 
-const Home = ({ navigation }: Props) => {
+const Home = ({}: Props) => {
+
+    const { signOut } = useAuth();
+
 
     return (
         <Container background="#ececec">
             <Text>Hello World</Text>
 
             <Button
-                title="Go to Login... again"
-                onPress={() => navigation.push("Login")}
-            />
-            <Button
-                title="Go to Home"
-                onPress={() => navigation.navigate('HomeScreen')} />
-            <Button
-                title="Go back"
-                onPress={() => navigation.goBack()} />
-            <Button
-                title="Go back to first screen in stack"
-                onPress={() => navigation.popToTop()}
-            />
+                title="logout"
+                onPress={signOut} />
+
         </Container>
     )
 }
