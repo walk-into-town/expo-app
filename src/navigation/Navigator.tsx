@@ -10,9 +10,7 @@ import GamePlay from '../screens/GamePlay';
 import Ranking from '../screens/Ranking';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { View, Text } from 'react-native';
-import { getStorage, rmStorage, setStorage } from '../api/AsyncStorage';
-import { Iauth } from '@types';
-import { AuthContext } from '../api/Auth';
+import { useAuthContext } from '../api/Auth';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,77 +41,24 @@ const HomeScreen = () => {
 }
 
 export default () => {
-    const [state, dispatch] = React.useReducer(
-        (prevState: any, action: { type: string; token: any; }) => {
-            switch (action.type) {
-                case 'RESTORE_TOKEN':
-                    return {
-                        ...prevState,
-                        isLoading: false,
-                        userToken: action.token,
-                    };
-                case 'SIGN_IN':
-                    return {
-                        ...prevState,
-                        isSignout: false,
-                        userToken: action.token,
-                    };
-                case 'SIGN_OUT':
-                    return {
-                        ...prevState,
-                        isSignout: true,
-                        userToken: null,
-                    };
-            }
-        },
-        {
-            isLoading: true,
-            isSignout: false,
-            userToken: null,
-        }
-    );
 
-    React.useEffect(() => {
-        const bootAsync = async () => {
-            const userToken = await getStorage("userToken")
-            dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-        };
-
-        bootAsync();
-    }, []);
-
-    const auth:Iauth = React.useMemo(() => ({
-        signIn: async (data) => {
-            // await setStorage("userToken", data);
-            dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-        },
-        signOut: async () => {
-            await rmStorage("userToken");
-            dispatch({ type: 'SIGN_OUT', token: "null" })
-        },
-        signUp: async (data) => {
-
-            dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-        },
-    }), []);
-
-    if (state.isLoading)
+    const { auth: { isLoading, userToken } } = useAuthContext();
+    
+    if (isLoading)
         return <View><Text>Loading...</Text></View>;
 
     return (
-        <AuthContext.Provider value={auth}>
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="Login">
-                    {
-                        state.userToken ?
-                            <Stack.Screen name="HomeScreen" component={HomeScreen} />
-                            :
-                            <>
-                                <Stack.Screen name="Login" component={Login} />
-                            </>
-                    }
-                </Stack.Navigator>
-            </NavigationContainer>
-        </AuthContext.Provider>
+        <NavigationContainer>
+            <Stack.Navigator headerMode="float" initialRouteName="Login">
+                {
+                    userToken ?
+                        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                        :
+                        <>
+                            <Stack.Screen name="Login" component={Login} />
+                        </>
+                }
+            </Stack.Navigator>
+        </NavigationContainer>
     )
 }

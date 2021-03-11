@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components/native';
 import { Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/EvilIcons';
-import { useAuth } from '../../api/Auth';
+import { useAuthContext } from '../../api/Auth';
 
 interface Props {
 
@@ -15,7 +15,7 @@ const LoginForm = ({}: Props) => {
     const onClick = () => {
         console.log(id, pw)
     }
-    const { signIn } = useAuth();
+    const { useAuth: {signIn} } = useAuthContext();
 
     return (
         <Container>

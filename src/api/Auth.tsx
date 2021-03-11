@@ -1,14 +1,78 @@
-import { Iauth } from "@types";
-import { createContext, useContext } from "react";
+import { IAuthContext, IUseAuth } from "@types";
+import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
+import { getStorage, setStorage, rmStorage } from "./AsyncStorage";
 
-const AuthContext = createContext<Iauth | null>(null);
+const AuthContext = createContext<IAuthContext | null>(null);
 
-const useAuth = () => {
-    const auth = useContext(AuthContext);
-    if (!auth)
+const useAuthContext = () => {
+    const context = useContext(AuthContext);
+    if (!context)
         throw new Error('Cannot find AuthContext');
 
-    return auth;
+    return context;
 }
 
-export { AuthContext, useAuth }
+const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
+
+    const reduce = (prevState: any, action: { type: string; userToken: object; }) => {
+        switch (action.type) {
+            case 'RESTORE_TOKEN':
+                return {
+                    ...prevState,
+                    isLoading: false,
+                    userToken: action.userToken,
+                };
+            case 'SIGN_IN':
+                return {
+                    ...prevState,
+                    isSignout: false,
+                    userToken: action.userToken,
+                };
+            case 'SIGN_OUT':
+                return {
+                    ...prevState,
+                    isSignout: true,
+                    userToken: null,
+                };
+        }
+    }
+    const [auth, dispatch] = useReducer(reduce, {
+        isLoading: true,
+        isSignout: false,
+        userToken: null,
+    });
+
+    useEffect(() => {
+        const bootAsync = async () => {
+            const userToken = await getStorage("userToken")
+            dispatch({ type: 'RESTORE_TOKEN', userToken });
+        };
+
+        bootAsync();
+    }, []);
+
+    const useAuth: IUseAuth = useMemo(() => ({
+        signIn: async (data) => {
+            const tmpUser = { name: "test" }
+            await setStorage("userToken", tmpUser);
+            dispatch({ type: 'SIGN_IN', userToken: tmpUser });
+        },
+        signOut: async () => {
+            await rmStorage("userToken");
+            dispatch({ type: 'SIGN_OUT', userToken: {} })
+        },
+        signUp: async (data) => {
+            const tmpUser = { name: "testSignup" }
+            dispatch({ type: 'SIGN_IN', userToken: tmpUser });
+        },
+    }), []);
+
+    return (
+        <AuthContext.Provider value={{ auth, useAuth }}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+
+export { AuthContext, useAuthContext, AuthContextProvider }
