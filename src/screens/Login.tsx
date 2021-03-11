@@ -1,20 +1,20 @@
 import React from 'react'
-import { View, Button } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '@types';
+
+import LoginForm from '../components/login/LoginForm';
 
 interface Props {
     navigation: StackNavigationProp<RootStackParamList, 'Login'>;
 }
 
 const Login = ({ navigation }: Props) => {
-
+    const signIn = () => {
+        navigation.navigate("HomeScreen");
+    }
+    
     return (
-        <View>
-            <Button
-                title="Go to Home"
-                onPress={() => navigation.navigate('HomeScreen')} />
-        </View>
+        <LoginForm signIn={signIn}/>
     )
 }
 
