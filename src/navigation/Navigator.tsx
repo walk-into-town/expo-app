@@ -19,19 +19,19 @@ export default () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator headerMode="float">
-                {
-                    userToken ?
-                        <>
-                            <Stack.Screen name="HomeTab" component={HomeTab} />
-                            <Stack.Screen name="Game" component={Game} />
-                        </>
-                        :
-                        <>
-                            <Stack.Screen name="LoginForm" component={LoginForm} />
-                        </>
-                }
+            <Stack.Navigator headerMode="float" screenOptions={{headerShown: false}}>
+            {
+                userToken ?
+                    <>
+                        <Stack.Screen name="HomeTab" component={HomeTab} />
+                        <Stack.Screen name="Game" component={Game} />
+                    </>
+                    :
+                    <>
+                        <Stack.Screen name="LoginForm" component={LoginForm}/>
+                    </>
+            }
             </Stack.Navigator>
-        </NavigationContainer>
+        </NavigationContainer >
     )
 }
