@@ -4,8 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { View, Text } from 'react-native';
 import { useAuthContext } from '../api/Auth';
-import Home from './Home';
+import HomeTab from './HomeTab';
 import LoginForm from '../components/Login/LoginForm';
+import Game from '../components/GamePlay/Game';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,10 @@ export default () => {
             <Stack.Navigator headerMode="float">
                 {
                     userToken ?
-                        <Stack.Screen name="Home" component={Home} />
+                        <>
+                            <Stack.Screen name="HomeTab" component={HomeTab} />
+                            <Stack.Screen name="Game" component={Game} />
+                        </>
                         :
                         <>
                             <Stack.Screen name="LoginForm" component={LoginForm} />

@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
-const Home = () => {
+const HomeTab = () => {
     const iconName: { [key: string]: [string, string] } = {
         MyPage: ["ios-home-outline", "ios-home"],
         Campaign: ["ios-flashlight-outline", "ios-flashlight"],
@@ -34,4 +34,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default HomeTab;
