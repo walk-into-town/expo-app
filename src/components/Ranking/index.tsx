@@ -5,12 +5,10 @@ interface Props {
 
 }
 
-const Ranking = (props: Props) => {
+export default (props: Props) => {
     return (
         <View>
             <Text></Text>
         </View>
     )
 }
-
-export default Ranking

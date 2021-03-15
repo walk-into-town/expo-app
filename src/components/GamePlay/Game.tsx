@@ -2,15 +2,15 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 interface Props {
-
+    
 }
 
-const Home = (props: Props) => {
+const Game = (props: Props) => {
     return (
         <View>
-            <Text> welcome to home </Text>
+            <Text></Text>
         </View>
     )
 }
 
-export default Home
+export default Game

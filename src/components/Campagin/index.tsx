@@ -6,26 +6,30 @@ interface Props {
 
 }
 
-const Campaign = (props: Props) => {
+export default (props: Props) => {
     return (
         <Container>
             <Button
                 title="Create Campaign"
-                type = "clear"
+                type="clear"
             />
             <Button
                 title="Search Campaign"
-                type = "clear"
+                type="clear"
             />
-            <Text>Recommend Campaign</Text>
+            <CampaignList>
+                <Text>Recommend Campaign List</Text>
+            </CampaignList>
         </Container>
     )
 }
 
-export default Campaign;
-
-
 const Container = styled.View`
     flex: 1;
     align-items: center;
+    justify-content: center;
+`
+
+const CampaignList = styled.View`
+    padding-top: 10%;
 `
