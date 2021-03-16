@@ -1,4 +1,4 @@
-import { IAuthContext, IUseAuth } from "@types";
+import { IAuthContext, IUseAuth, IUser } from "@types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { getStorage, setStorage, rmStorage } from "./AsyncStorage";
 
@@ -14,7 +14,7 @@ const useAuthContext = () => {
 
 const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
-    const reduce = (prevState: any, action: { type: string; userToken: object; }) => {
+    const reduce = (prevState: any, action: { type: string; userToken?: IUser; }) => {
         switch (action.type) {
             case 'RESTORE_TOKEN':
                 return {
@@ -45,6 +45,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
     useEffect(() => {
         const bootAsync = async () => {
             const userToken = await getStorage("userToken")
+            console.log(userToken)
             dispatch({ type: 'RESTORE_TOKEN', userToken });
         };
 
@@ -53,16 +54,18 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
     const useAuth: IUseAuth = useMemo(() => ({
         signIn: async (data) => {
-            const tmpUser = { name: "test" }
+            const {id, pw} = data;
+            const tmpUser = { name: id, pw}
             await setStorage("userToken", tmpUser);
             dispatch({ type: 'SIGN_IN', userToken: tmpUser });
         },
         signOut: async () => {
             await rmStorage("userToken");
-            dispatch({ type: 'SIGN_OUT', userToken: {} })
+            dispatch({ type: 'SIGN_OUT', userToken: undefined })
         },
         signUp: async (data) => {
-            const tmpUser = { name: "testSignup" }
+            const tmpUser = { name: "tmpSignup" }
+            await setStorage("userToken", tmpUser);
             dispatch({ type: 'SIGN_IN', userToken: tmpUser });
         },
     }), []);

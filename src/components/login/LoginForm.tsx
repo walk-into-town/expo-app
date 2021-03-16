@@ -35,7 +35,7 @@ const LoginForm = ({ }: Props) => {
             />
 
             <Btns>
-                <Icon name="sc-telegram" color="#517fa4" size={70} onPress={signIn} />
+                <Icon name="sc-telegram" color="#517fa4" size={70} onPress={() => signIn({id, pw})} />
                 <Icon name="sc-github" color="#517fa4" size={70} onPress={onClick} />
             </Btns>
 

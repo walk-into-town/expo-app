@@ -2,12 +2,12 @@ declare module "@types" {
 
   /* auth */
   interface IUser {
-
+    name: string;
   }
   interface IAuth {
     isLoading: boolean;
     isSignout: boolean;
-    userToken: object;
+    userToken: IUser;
   }
   interface IUseAuth {
     signIn: (data: any) => Promise<void>;

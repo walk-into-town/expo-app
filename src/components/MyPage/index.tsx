@@ -2,25 +2,19 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Button, Text, View } from 'react-native'
 import { useAuthContext } from '../../api/Auth';
-import { getStorage } from '../../api/AsyncStorage';
-
 
 interface Props {
 }
 
 export default({ }: Props) => {
 
-    const { useAuth: { signOut } } = useAuthContext();
-    let test = { name: "test" };
-    getStorage("user").then(res => {
-        test = res;
-        console.log(res)
-    });
+    const { auth: { userToken }, useAuth: { signOut } } = useAuthContext();
+    
 
     return (
         <Container background="#ececec">
             <Text>My page</Text>
-            <Text>user name: {test.name}</Text>
+            <Text>user name: {userToken.name}</Text>
 
             <Wrapper>
                 <Text>🚩</Text>

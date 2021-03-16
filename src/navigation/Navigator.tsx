@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
 import { useAuthContext } from '../api/Auth';
 import HomeTab from './HomeTab';
-import LoginForm from '../components/Login/LoginForm';
 import Game from '../components/GamePlay/Game';
+import Login from '../components/Login';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +28,7 @@ export default () => {
                     </>
                     :
                     <>
-                        <Stack.Screen name="LoginForm" component={LoginForm}/>
+                        <Stack.Screen name="Login" component={Login}/>
                     </>
             }
             </Stack.Navigator>
