@@ -29,7 +29,11 @@ declare module "@types" {
   type CampaginStackParamList = {
     Campagin: undefined,
     MyCampagin: undefined,
+    
     MakeCampagin: undefined,
+    MakePinPoint: undefined,
+    MakeCoupon: undefined,
+
     SearchCampagin: undefined
   };
 

@@ -23,7 +23,7 @@ const LoginForm = ({ }: Props) => {
         <Container>
             <Input
                 onChangeText={(text: string) => setId(text)}
-                textAlign={'center'}
+                inputStyle={{textAlign: "center"}}
             />
 
             <Input
@@ -31,7 +31,7 @@ const LoginForm = ({ }: Props) => {
                 errorMessage='ENTER A VALID ERROR HERE'
                 errorStyle={{ color: '#517fa4', textAlign: "center" }}
                 secureTextEntry={true}
-                textAlign={'center'}
+                inputStyle={{textAlign: "center"}}
             />
 
             <Btns>

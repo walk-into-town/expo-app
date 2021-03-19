@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
-import { NavigationProp } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/core';
 import { CampaginStackParamList } from '@types';
 import React from 'react'
 import { Button, Text } from 'react-native-elements';
