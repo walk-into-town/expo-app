@@ -46,6 +46,8 @@ const LoginForm = ({ }: Props) => {
 export default LoginForm;
 
 const Container = styled.View`
+    flex: 1;
+    justify-content: center;
     align-items: center;
 `
 const Btns = styled.View`

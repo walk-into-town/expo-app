@@ -26,5 +26,11 @@ declare module "@types" {
     GamePlay: undefined;
     Ranking: undefined;
   };
+  type CampaginStackParamList = {
+    Campagin: undefined,
+    MyCampagin: undefined,
+    MakeCampagin: undefined,
+    SearchCampagin: undefined
+  };
 
 }
