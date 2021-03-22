@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-import { campgainNavigation } from '../../navigation/CampaginStack'
-import ImgPicker from '../common/imgPicker'
+import { Container } from '../../atoms/atoms';
+import { campgainNavigation } from '../../navigation/useNavigation';
 
 
 const MakeCampagin = () => {
@@ -11,13 +11,12 @@ const MakeCampagin = () => {
     const [depiction, setDepiction] = useState("");
 
     return (
-        <View>
+        <Container>
             <Input
                 onChangeText={(text: string) => setTitle(text)}
                 inputStyle={{ textAlign: "center" }}
                 placeholder="캠페인 이름"
             />
-            <ImgPicker />
             <Input
                 onChangeText={(text: string) => setDepiction(text)}
                 multiline
@@ -31,7 +30,7 @@ const MakeCampagin = () => {
                 type="clear"
                 onPress={() => navigation.navigate("MakePinPoint")}
             />
-        </View>
+        </Container>
     )
 }
 

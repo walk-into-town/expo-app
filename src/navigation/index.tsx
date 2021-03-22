@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { View, Text } from 'react-native';
@@ -10,15 +10,23 @@ import Login from '../components/Login';
 
 const Stack = createStackNavigator();
 
-export default () => {
+const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: 'rgb(255, 45, 85)',
 
-    const { auth: { isLoading, userToken } } = useAuthContext();
+    }
+}
+
+export default () => {
+    const { auth: { isLoading, userToken, isSignout } } = useAuthContext();
 
     if (isLoading)
         return <View><Text>Loading...</Text></View>;
 
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={MyTheme}>
             <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
                 {
                     userToken ?

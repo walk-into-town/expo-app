@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { Button, Text, View } from 'react-native'
+import { Button, Text } from 'react-native'
 import { useAuthContext } from '../../api/Auth';
+import { Container } from '../../atoms/atoms';
 
 interface Props {
 }
@@ -9,10 +10,12 @@ interface Props {
 export default({ }: Props) => {
 
     const { auth: { userToken }, useAuth: { signOut } } = useAuthContext();
-    
+
+    if(!userToken)
+        return <Text>asdf</Text>;
 
     return (
-        <Container background="#ececec">
+        <Container>
             <Text>My page</Text>
             <Text>user name: {userToken.name}</Text>
 
@@ -35,16 +38,6 @@ export default({ }: Props) => {
         </Container>
     )
 }
-
-interface IContainerProps {
-    background?: string;
-}
-const Container = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: ${(props: IContainerProps) => props.background ? props.background : 'white'};
-`
 const Wrapper = styled.View`
 
     justify-content: center;

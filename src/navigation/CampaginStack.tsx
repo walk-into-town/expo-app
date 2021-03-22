@@ -31,9 +31,4 @@ const CampaginStack = () => {
     )
 }
 
-export default CampaginStack
-
-const campgainNavigation = () => {
-    return useNavigation<NavigationProp<CampaginStackParamList>>();
-}
-export { campgainNavigation }
+export default CampaginStack;

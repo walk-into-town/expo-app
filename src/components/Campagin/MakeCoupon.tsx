@@ -2,12 +2,13 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Button } from 'react-native-elements'
-import { campgainNavigation } from '../../navigation/CampaginStack';
+import { Container } from '../../atoms/atoms';
+import { campgainNavigation } from '../../navigation/useNavigation';
 
 const MakeCoupon = () => {
     const navigation = campgainNavigation();
     return (
-        <View>
+        <Container>
             <Text>쿠폰 리스트</Text>
             <Button 
                 title="쿠폰 추가"
@@ -17,7 +18,7 @@ const MakeCoupon = () => {
                 title="캠페인 만들기"
                 onPress={() => navigation.navigate("Campagin")}
             />
-        </View>
+        </Container>
     )
 }
 

@@ -3,7 +3,7 @@ import { Button, Image, View, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
-export default function ImagePickerExample() {
+const ImgPicker = () => {
     const [image, setImage] = useState("");
 
     useEffect(() => {
@@ -36,3 +36,5 @@ export default function ImagePickerExample() {
         </View>
     );
 }
+
+export default ImgPicker;

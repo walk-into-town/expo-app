@@ -32,7 +32,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 return {
                     ...prevState,
                     isSignout: true,
-                    userToken: null,
+                    userToken: undefined,
                 };
         }
     }
@@ -45,7 +45,6 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
     useEffect(() => {
         const bootAsync = async () => {
             const userToken = await getStorage("userToken")
-            console.log(userToken)
             dispatch({ type: 'RESTORE_TOKEN', userToken });
         };
 
@@ -61,7 +60,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         },
         signOut: async () => {
             await rmStorage("userToken");
-            dispatch({ type: 'SIGN_OUT', userToken: undefined })
+            dispatch({ type: 'SIGN_OUT' })
         },
         signUp: async (data) => {
             const tmpUser = { name: "tmpSignup" }
