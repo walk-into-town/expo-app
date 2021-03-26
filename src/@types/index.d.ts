@@ -18,9 +18,16 @@ declare module "@types" {
     auth: IAuth,
     useAuth: IUseAuth;
   }
-  
+
   /* naviagetion */
-  type HomeStackParamList = {
+  type MainStackParamList = {
+    HomeTab: undefined,
+    Game: undefined,
+    ModalStack: {
+      screen: keyof ModalStackParamList
+    }
+  };
+  type HomeTapParamList = {
     Home: undefined;
     Campaign: undefined;
     GamePlay: undefined;
@@ -29,12 +36,16 @@ declare module "@types" {
   type CampaginStackParamList = {
     Campagin: undefined,
     MyCampagin: undefined,
-    
+
     MakeCampagin: undefined,
     MakePinPoint: undefined,
     MakeCoupon: undefined,
 
     SearchCampagin: undefined
   };
-
+  type ModalStackParamList = {
+    MakePinPointModal: undefined,
+    MakePinPointQuiz: undefined,
+    MakeCouponModal: undefined,
+  }
 }

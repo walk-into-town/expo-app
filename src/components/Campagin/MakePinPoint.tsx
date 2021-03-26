@@ -1,22 +1,24 @@
 import React from 'react'
-import { View } from 'react-native'
 import { Button, Text } from 'react-native-elements';
 import { Container } from '../../atoms/atoms';
-import { campgainNavigation } from '../../navigation/useNavigation';
+import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
 
 const MakePinPoint = () => {
-    const navigation = campgainNavigation();
+    const campaginNav = campaginNavigation();
+    const mainNav = mainNavigation();
+
     return (
         <Container>
             <Text>핀포인트 리스트</Text>
             <Button 
                 title="핀포인트 추가"
                 type="clear"
+                onPress={() => mainNav.navigate("ModalStack", {screen: 'MakePinPointModal'})}
             />
             <Button 
                 title="다음"
                 type="clear"
-                onPress={() => navigation.navigate("MakeCoupon")}
+                onPress={() => campaginNav.navigate("MakeCoupon")}
             />
         </Container>
     )

@@ -1,8 +1,14 @@
 import { NavigationProp, useNavigation } from "@react-navigation/core";
-import { CampaginStackParamList } from "@types";
+import { CampaginStackParamList, MainStackParamList, ModalStackParamList } from "@types";
 
-
-const campgainNavigation = () => {
+const mainNavigation = () => {
+    return useNavigation<NavigationProp<MainStackParamList>>();
+}
+const campaginNavigation = () => {
     return useNavigation<NavigationProp<CampaginStackParamList>>();
 }
-export { campgainNavigation }
+const modalNavigation = () => {
+    return useNavigation<NavigationProp<ModalStackParamList>>();
+}
+
+export { mainNavigation, campaginNavigation, modalNavigation }

@@ -7,6 +7,7 @@ import { useAuthContext } from '../api/Auth';
 import HomeTab from './HomeTab';
 import Game from '../components/GamePlay/Game';
 import Login from '../components/Login';
+import ModalStack from './ModalStack';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ export default () => {
                         <>
                             <Stack.Screen name="HomeTab" component={HomeTab} />
                             <Stack.Screen name="Game" component={Game} />
+                            <Stack.Screen name="ModalStack" component={ModalStack} />
                         </>
                         :
                         <>
