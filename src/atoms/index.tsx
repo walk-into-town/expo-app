@@ -1,10 +1,9 @@
+import React from 'react'
+import { TextInputProps } from 'react-native'
 import { Input } from "react-native-elements"
 
-type IOption = {
-    placeholder: string,
-    onChangeText?: ((text: string) => void)
-}
-export const TextArea = (option:IOption) => {
+
+export const TextArea = (option:TextInputProps) => {
     return (
         <Input
             multiline

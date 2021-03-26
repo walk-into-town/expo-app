@@ -11,7 +11,7 @@ const MakePinPointQuiz = (props: Props) => {
     const mainNav = mainNavigation();
     return (
         <Container>
-            <Button title="핀포인트 추가" onPress={() => mainNav.navigate('HomeTab')} />
+            <Button title="핀포인트 완료" onPress={() => mainNav.navigate('HomeTab')} />
         </Container>
     )
 }

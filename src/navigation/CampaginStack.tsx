@@ -18,7 +18,6 @@ const CampaginStack = () => {
             <Stack.Screen name="Campagin" component={Campagin} />
             <Stack.Screen name="MyCampagin" component={MyCampagin} />
 
-
             <Stack.Screen name="MakeCampagin" component={MakeCampagin} />
             <Stack.Screen name="MakePinPoint" component={MakePinPoint} />
             <Stack.Screen name="MakeCoupon" component={MakeCoupon} />

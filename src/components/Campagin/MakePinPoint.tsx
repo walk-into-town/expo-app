@@ -1,4 +1,5 @@
-import React from 'react'
+import { PinPoint } from '@types';
+import React, { useState } from 'react'
 import { Button, Text } from 'react-native-elements';
 import { Container } from '../../atoms/styled';
 import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
@@ -6,6 +7,8 @@ import { campaginNavigation, mainNavigation } from '../../navigation/useNavigati
 const MakePinPoint = () => {
     const campaginNav = campaginNavigation();
     const mainNav = mainNavigation();
+
+    const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
 
     return (
         <Container>
