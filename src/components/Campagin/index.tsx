@@ -1,14 +1,11 @@
-import { useNavigation, NavigationProp } from '@react-navigation/core';
-import { CampaginStackParamList } from '@types';
 import React from 'react'
 import { Button, Text } from 'react-native-elements';
 import styled from 'styled-components/native';
-import { Container } from '../../atoms/atoms';
-
-
+import { Container } from '../../atoms/styledAtoms';
+import { campaginNavigation } from '../../navigation/useNavigation';
 
 export default () => {
-    const navigation: NavigationProp<CampaginStackParamList> = useNavigation();
+    const navigation = campaginNavigation();
     return (
         <Container>
             <Button

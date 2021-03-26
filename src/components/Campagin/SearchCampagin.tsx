@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Container } from '../../atoms/atoms'
+import { Container } from '../../atoms/styledAtoms'
 
 const SearchCampagin = () => {
     return (

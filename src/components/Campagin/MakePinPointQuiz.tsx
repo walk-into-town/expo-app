@@ -1,15 +1,17 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Container } from '../../atoms/atoms'
+import { Button, Container } from '../../atoms/styledAtoms'
+import { mainNavigation } from '../../navigation/useNavigation'
 
 interface Props {
-    
+
 }
 
 const MakePinPointQuiz = (props: Props) => {
+    const mainNav = mainNavigation();
     return (
         <Container>
-            
+            <Button title="핀포인트 추가" onPress={() => mainNav.navigate('HomeTab')} />
         </Container>
     )
 }

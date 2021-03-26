@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Container } from '../../atoms/atoms'
+import { Container } from '../../atoms/styledAtoms'
 
 interface Props {
     
@@ -9,7 +9,7 @@ interface Props {
 const MakeCouponModal = (props: Props) => {
     return (
         <Container>
-            
+
         </Container>
     )
 }
