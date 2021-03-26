@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Text } from 'react-native-elements';
-import { Container } from '../../atoms/styledAtoms';
+import { Container } from '../../atoms/styled';
 import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
 
 const MakePinPoint = () => {

@@ -2,7 +2,7 @@ import { Input } from "react-native-elements"
 
 type IOption = {
     placeholder: string,
-    onChangeText: Function
+    onChangeText?: ((text: string) => void)
 }
 export const TextArea = (option:IOption) => {
     return (

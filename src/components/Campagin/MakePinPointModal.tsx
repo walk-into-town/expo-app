@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Input } from 'react-native-elements'
+import { TextArea } from '../../atoms'
 import ImgPicker from '../../atoms/ImgPicker'
-import { Button, Container } from '../../atoms/styledAtoms'
+import { Button, Container } from '../../atoms/styled'
 import { modalNavigation } from '../../navigation/useNavigation'
 
 interface Props {
@@ -21,6 +22,9 @@ const MakePinPointModal = (props: Props) => {
             />
             <Button title="위치찾기" onPress={() => console.log('위치 찾기 api 연동')}/>
             <ImgPicker />
+
+            <TextArea placeholder="핀포인트 설명" />
+
             <Button title="next" onPress={() => modalNav.navigate('MakePinPointQuiz')}/>
         </Container>
     )

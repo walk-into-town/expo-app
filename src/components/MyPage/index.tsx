@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Button, Text } from 'react-native'
 import { useAuthContext } from '../../api/Auth';
-import { Container } from '../../atoms/styledAtoms';
+import { Container } from '../../atoms/styled';
 
 interface Props {
 }

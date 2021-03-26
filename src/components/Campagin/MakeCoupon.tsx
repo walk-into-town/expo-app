@@ -2,7 +2,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Button } from 'react-native-elements'
-import { Container } from '../../atoms/styledAtoms';
+import { Container } from '../../atoms/styled';
 import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
 
 const MakeCoupon = () => {

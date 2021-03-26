@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-import { Container } from '../../atoms/styledAtoms';
+import { Container } from '../../atoms/styled';
 import ImgPicker from '../../atoms/ImgPicker';
 import { campaginNavigation } from '../../navigation/useNavigation';
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Text } from 'react-native-elements';
 import styled from 'styled-components/native';
-import { Container } from '../../atoms/styledAtoms';
+import { Container } from '../../atoms/styled';
 import { campaginNavigation } from '../../navigation/useNavigation';
 
 export default () => {
