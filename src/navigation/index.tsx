@@ -8,6 +8,8 @@ import HomeTab from './HomeTab';
 import Game from '../components/GamePlay/Game';
 import Login from '../components/Login';
 import ModalStack from './ModalStack';
+import theme from '../style/theme';
+import { ThemeProvider } from 'styled-components';
 
 const Stack = createStackNavigator();
 
@@ -28,20 +30,23 @@ export default () => {
 
     return (
         <NavigationContainer theme={MyTheme}>
-            <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
-                {
-                    userToken ?
-                        <>
-                            <Stack.Screen name="HomeTab" component={HomeTab} />
-                            <Stack.Screen name="Game" component={Game} />
-                            <Stack.Screen name="ModalStack" component={ModalStack} />
-                        </>
-                        :
-                        <>
-                            <Stack.Screen name="Login" component={Login} />
-                        </>
-                }
-            </Stack.Navigator>
+            <ThemeProvider theme={theme}>
+                <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
+                    {
+                        userToken ?
+                            <>
+                                <Stack.Screen name="HomeTab" component={HomeTab} />
+                                <Stack.Screen name="Game" component={Game} />
+                                <Stack.Screen name="ModalStack" component={ModalStack} />
+                            </>
+                            :
+                            <>
+                                <Stack.Screen name="Login" component={Login} />
+                            </>
+                    }
+                </Stack.Navigator>
+
+            </ThemeProvider>
         </NavigationContainer >
     )
 }

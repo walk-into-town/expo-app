@@ -1,5 +1,4 @@
 declare module "@types" {
-
   /* auth */
   interface IUser {
     name: string;
@@ -18,6 +17,9 @@ declare module "@types" {
     auth: IAuth,
     useAuth: IUseAuth;
   }
+
+  /* classes */
+  
 
   /* naviagetion */
   type MainStackParamList = {
