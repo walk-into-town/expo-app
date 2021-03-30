@@ -8,8 +8,8 @@ interface Props {
 
 const BadgeList = (props: Props) => {
     return (
-        <Card containerStyle={{width: "90%"}}>
-            <Card.Title>⚜️ Badge list</Card.Title>
+        <Card containerStyle={{width: "100%"}}>
+            <Card.Title>⚜️ 명예 컬렉션 ⚜️</Card.Title>
             <Card.Divider />
         </Card>
     )
