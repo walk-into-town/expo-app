@@ -1,12 +1,24 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { Container } from '../../atoms/styled'
+import React, { useState } from 'react'
+import { View } from 'react-native'
+import { SearchBar, Text } from 'react-native-elements'
 
 const SearchCampagin = () => {
+    const [value, setValue] = useState("")
+    const [test, setTest] = useState("")
     return (
-        <Container>
-            <Text>SearchCampagin</Text>
-        </Container>
+        <View style={{width: "100%"}}>
+            <SearchBar
+                containerStyle={{backgroundColor: "transparent"}}
+                platform="ios"
+                placeholder="검색어"
+                value={value}
+                onChangeText={newVal => setValue(newVal)}
+                cancelButtonTitle={"취소"}
+                showLoading={false}
+                onSubmitEditing={() => setTest(value)}
+            />
+            <Text style={{textAlign: "center"}}>{test}</Text>
+        </View>
     )
 }
 
