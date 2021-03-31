@@ -19,6 +19,11 @@ const MakePinPoint = () => {
                 onPress={() => mainNav.navigate("ModalStack", {screen: 'MakePinPointModal'})}
             />
             <Button 
+                title="이전"
+                type="clear"
+                onPress={() => campaginNav.navigate("MakeCoupon")}
+            />
+            <Button 
                 title="다음"
                 type="clear"
                 onPress={() => campaginNav.navigate("MakeCoupon")}
