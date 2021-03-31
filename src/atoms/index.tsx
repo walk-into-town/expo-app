@@ -1,8 +1,8 @@
 import { LightSearchBarProps } from '@types'
 import React from 'react'
-import { TextInputProps } from 'react-native'
-import { Button, ButtonProps, Input, SearchBar, SearchBarIosProps, SearchBarProps } from "react-native-elements"
-
+import { TextInputProps, TouchableOpacity } from 'react-native'
+import { ButtonProps, Image, Input, SearchBar, Text } from "react-native-elements"
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 export const TextArea = (option: TextInputProps) => (
     <Input
@@ -13,12 +13,11 @@ export const TextArea = (option: TextInputProps) => (
     />
 )
 
-export const NextButton = (option: ButtonProps) => (
-    <Button
-        title="다음"
-        type="clear"
-        {...option}
-    />
+export const NextButton = (props: { onPress: () => void }) => (
+    <Image
+        onPress={props.onPress}
+        source={require('../../assets/next.png')}
+        style={{ width: 170, height: 77 }} />
 )
 
 export const LightSearchBar = (option: LightSearchBarProps) => {
