@@ -7,7 +7,7 @@ export const TextArea = (option: TextInputProps) => (
     <Input
         multiline
         numberOfLines={4}
-        inputStyle={{ textAlign: "center" }}
+        style={{height: 100}}
         {...option}
     />
 )
@@ -15,6 +15,11 @@ export const TextArea = (option: TextInputProps) => (
 export const OutLineButton = (props: ButtonProps) => (
     <View style={{width: '100%', alignSelf: 'center'}}>
         <Button type="outline" {...props} />
+    </View>
+)
+export const SubmitButton = (props: ButtonProps) => (
+    <View style={{width: '100%', position: "absolute", bottom: 20}}>
+        <Button {...props}/>
     </View>
 )
 export const NextButton = (props: { onPress: () => void }) => (

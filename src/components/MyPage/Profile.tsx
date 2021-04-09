@@ -1,7 +1,6 @@
 import React from 'react'
 import { Avatar, Card, ListItem, Text } from 'react-native-elements';
 import { useAuthContext } from '../../api/Auth';
-import { Button, Row } from '../../atoms/styled';
 
 interface Props {
 
@@ -28,7 +27,7 @@ const Profile = (props: Props) => {
                 </ListItem.Content>
                 <ListItem.Content>
                     <Text>1</Text>
-                    <Text>참여중인 캠페인</Text>
+                    <Text>참여중 캠페인</Text>
                 </ListItem.Content>
             </ListItem>
 

@@ -14,7 +14,7 @@ export default ({ }: Props) => {
     const { useAuth: { signOut } } = useAuthContext();
 
     return (
-        <Container>
+        <Container style={{alignItems: "center"}}>
             <Profile />
 
             <Row>

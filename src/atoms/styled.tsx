@@ -1,24 +1,24 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
-    margin-top: 50px;
+export const Container = styled.SafeAreaView`
     flex: 1;
-    align-items: center;
+    margin: 0 10px;
 `
 export const Row = styled.View`
     flex-direction: row;
     align-items: center;
+    width: 100%;
 `
 export const ScrollWrapper = styled.ScrollView`
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 0 10px;
 `
 
 export const Box = styled.View`
-    margin-top: 10%;
+    margin: 10px 0;
 `
 
 export const SubTitle = styled.Text`
     font-size: 16px;
     font-weight: 600;
+    margin-bottom: 5px;
 `

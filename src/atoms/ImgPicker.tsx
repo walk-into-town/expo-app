@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Image, Text } from 'react-native-elements';
 import { Row } from './styled';
@@ -35,7 +35,7 @@ const ImgPicker = (props: { useImgs: [string[], setState] }) => {
     }
 
     return (
-        <>
+        <View style={{marginBottom: 20, width: "100%"}}>
             <OutLineButton title="사진 추가" onPress={pickImage} />
             <Text>* 사진을 클릭하면 삭제 됩니다.</Text>
             <Row>
@@ -48,7 +48,7 @@ const ImgPicker = (props: { useImgs: [string[], setState] }) => {
                     />
                 )}
             </Row>
-        </>
+        </View>
     );
 }
 
