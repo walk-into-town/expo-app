@@ -12,8 +12,16 @@ const Stack = createStackNavigator();
 const ModalStack = (props: Props) => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="MakePinPointModal" component={MakePinPointModal} />
-            <Stack.Screen name="MakeCouponModal" component={MakeCouponModal} />
+            <Stack.Screen 
+                name="MakePinPointModal" 
+                component={MakePinPointModal} 
+                options={{ headerTitle: "핀포인트 만들기", headerBackTitleVisible: false }}
+            />
+            <Stack.Screen 
+                name="MakeCouponModal" 
+                component={MakeCouponModal} 
+                options={{ headerTitle: "쿠폰 만들기", headerBackTitleVisible: false }}
+            />
         </Stack.Navigator>
     )
 }

@@ -5,7 +5,6 @@ import MyCampagin from '../components/Campagin/MyCampagin';
 import MakeCampagin from '../components/Campagin/MakeCampagin';
 import SearchCampagin from '../components/Campagin/SearchCampagin';
 
-
 const Stack = createStackNavigator();
 const CampaginStack = () => {
 
@@ -14,7 +13,10 @@ const CampaginStack = () => {
             <Stack.Screen name="Campagin" component={Campagin} options={{ headerShown: false }} />
             <Stack.Screen name="MyCampagin" component={MyCampagin} />
 
-            <Stack.Screen name="MakeCampagin" component={MakeCampagin} options={{ headerTitle: "캠페인 만들기", headerBackTitle: "뒤로가기" }} />
+            <Stack.Screen 
+                name="MakeCampagin" 
+                component={MakeCampagin} 
+                options={{ headerTitle: "캠페인 만들기", headerBackTitle: "취소" }} />
 
             <Stack.Screen name="SearchCampagin" component={SearchCampagin} />
         </Stack.Navigator>
