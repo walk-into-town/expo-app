@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-import { Container } from '../../atoms/styled';
+import { Container, SubTitle } from '../../atoms/styled';
 import ImgPicker from '../../atoms/ImgPicker';
 import { campaginNavigation } from '../../navigation/useNavigation';
 
@@ -18,7 +18,9 @@ const MakeCampagin = () => {
                 inputStyle={{ textAlign: "center" }}
                 placeholder="캠페인 이름"
             />
+
             <ImgPicker />
+            
             <Input
                 onChangeText={(text: string) => setDepiction(text)}
                 multiline
@@ -27,7 +29,8 @@ const MakeCampagin = () => {
                 placeholder="캠페인 설명"
             />
             <Text>{title} {depiction}</Text>
-            <Button 
+
+            <Button
                 title="다음"
                 type="clear"
                 onPress={() => navigation.navigate("MakePinPoint")}

@@ -1,8 +1,7 @@
 import { LightSearchBarProps } from '@types'
 import React from 'react'
-import { TextInputProps, TouchableOpacity } from 'react-native'
-import { ButtonProps, Image, Input, SearchBar, Text } from "react-native-elements"
-import Icon from 'react-native-vector-icons/EvilIcons';
+import { TextInputProps, View } from 'react-native'
+import { Button, ButtonProps, Image, Input, SearchBar } from "react-native-elements"
 
 export const TextArea = (option: TextInputProps) => (
     <Input
@@ -11,6 +10,12 @@ export const TextArea = (option: TextInputProps) => (
         inputStyle={{ textAlign: "center" }}
         {...option}
     />
+)
+
+export const OutLineButton = (props: ButtonProps) => (
+    <View style={{width: '90%', justifyContent: 'center'}}>
+        <Button type="outline" {...props} />
+    </View>
 )
 
 export const NextButton = (props: { onPress: () => void }) => (

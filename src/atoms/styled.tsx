@@ -7,10 +7,14 @@ export const Container = styled.View`
 `
 export const Row = styled.View`
     flex-direction: row;
-    justify-content: center;
     align-items: center;
 `
 
-export const Button = styled.Button`
-    
+export const Box = styled.View`
+    margin-top: 10%;
+`
+
+export const SubTitle = styled.Text`
+    font-size: 20px;
+    font-weight: 600;
 `

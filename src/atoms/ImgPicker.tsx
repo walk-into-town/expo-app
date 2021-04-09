@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Image, Platform } from 'react-native';
+import { Image, Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { OutLineButton } from '.';
+import { Row } from './styled';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text } from 'react-native-elements';
 
 
 const ImgPicker = () => {
-    const [image, setImage] = useState<string | null>(null);
+    const [imgList, setImgList] = useState<string[]>([]);
 
     const pickImage = async () => {
         (async () => {
@@ -15,22 +19,31 @@ const ImgPicker = () => {
             }
         })();
 
-        let result = await ImagePicker.launchImageLibraryAsync();
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            quality: 1,
+        });
 
         if (!result.cancelled) {
-            setImage(result.uri);
+            setImgList([...imgList, result.uri])
         }
     };
 
+    const onImgPress = (idx:number) => {
+        setImgList(imgList.filter((img, i) => i != idx));
+    }
+
     return (
-        <>
-            <Button title="사진 선택" onPress={pickImage} />
-
-            {image ? <Image
-                source={{ uri: image }}
-            /> : null}
-
-        </>
+        <View style={{ width: "95%", marginLeft: "5%" }}>
+            <OutLineButton title="사진 추가" onPress={pickImage} />
+            <Text>* 사진을 클릭하면 삭제 됩니다.</Text>
+            <Row>
+                {imgList.map((uri, idx) => <TouchableOpacity onPress={() => onImgPress(idx)}>
+                    <Image source={{ uri: uri }} style={{ width: 100, height: 100 }} />
+                </TouchableOpacity>)}
+            </Row>
+        </View>
     );
 }
 
