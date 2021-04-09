@@ -17,19 +17,22 @@ const Game = (props: Props) => {
             <Text> </Text>
             <Text> </Text>
             <Text> </Text>
-            <Text>Discription of game Discription of game Discription of game</Text><Text>Discription of game Discription of game Discription of game</Text>
-            <Text>Discription of game Discription of game Discription of game</Text>
+            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur vestibulum bibendum. Sed vel lectus nisl. Vestibulum a finibus arcu, quis feugiat nunc. Nunc sit amet viverra nulla. Morbi sed convallis erat, nec semper ipsum. Vestibulum lobortis nulla enim, aliquam elementum enim pharetra ut. Quisque vestibulum magna in facilisis tincidunt.</Text>
             <Text> </Text>
             <Button
+                type="clear"
                 title="selector 1"
                 onPress={() => console.log("play")} />
             <Button
+                type="clear"
                 title="selector 2"
                 onPress={() => console.log("play")} />
             <Button
+                type="clear"
                 title="selector 3"
                 onPress={() => console.log("play")} />
             <Button
+                type="clear"
                 title="selector 4"
                 onPress={() => console.log("play")} />
         </Container>
