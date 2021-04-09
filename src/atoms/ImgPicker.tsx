@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Platform, View } from 'react-native';
+import React from 'react';
+import { Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Image, Text } from 'react-native-elements';
 import { Row } from './styled';
 import { OutLineButton } from '.';
+import { setState } from '@types';
 
 
-const ImgPicker = (props: {defaultList?:string[]}) => {
-    const [imgList, setImgList] = useState<string[]>(props.defaultList || []);
+const ImgPicker = (props: { useImgs: [string[], setState] }) => {
+    const [imgList, setImgList] = props.useImgs;
 
     const pickImage = async () => {
         (async () => {
@@ -34,15 +35,20 @@ const ImgPicker = (props: {defaultList?:string[]}) => {
     }
 
     return (
-        <View style={{ width: "95%", marginLeft: "5%" }}>
+        <>
             <OutLineButton title="사진 추가" onPress={pickImage} />
             <Text>* 사진을 클릭하면 삭제 됩니다.</Text>
             <Row>
                 {imgList.map((uri, idx) =>
-                    <Image source={{ uri: uri }} onPress={() => onImgPress(idx)} style={{ width: 100, height: 100 }} />
+                    <Image 
+                        key={idx} 
+                        source={{ uri: uri }} 
+                        onPress={() => onImgPress(idx)} 
+                        style={{ width: 100, height: 100 }}
+                    />
                 )}
             </Row>
-        </View>
+        </>
     );
 }
 

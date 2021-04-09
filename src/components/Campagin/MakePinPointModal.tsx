@@ -14,7 +14,8 @@ const MakePinPointModal = (props: Props) => {
     const mainNav = mainNavigation();
 
     const [pinPoint, setPinPoint] = useState<PinPoint>();
-    const [title, setTitle] = useState(pinPoint?.name)
+    const [title, setTitle] = useState(pinPoint?.name);
+    const [pinPointImgs, setPinPointImgs] = useState<string[]>([]);
 
     const changePinPointName = () => {
         if(pinPoint === undefined || title === undefined)
@@ -32,7 +33,7 @@ const MakePinPointModal = (props: Props) => {
             <Button 
                 type="clear"title="위치찾기" onPress={() => console.log('위치 찾기 api 연동')} />
                 
-            <ImgPicker />
+            <ImgPicker useImgs={[pinPointImgs, setPinPointImgs]}/>
 
             <TextArea placeholder="핀포인트 설명" />
 

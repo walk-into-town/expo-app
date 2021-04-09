@@ -13,11 +13,10 @@ export const TextArea = (option: TextInputProps) => (
 )
 
 export const OutLineButton = (props: ButtonProps) => (
-    <View style={{width: '90%', justifyContent: 'center'}}>
+    <View style={{width: '100%', alignSelf: 'center'}}>
         <Button type="outline" {...props} />
     </View>
 )
-
 export const NextButton = (props: { onPress: () => void }) => (
     <Image
         onPress={props.onPress}

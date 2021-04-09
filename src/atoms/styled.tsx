@@ -9,8 +9,9 @@ export const Row = styled.View`
     flex-direction: row;
     align-items: center;
 `
-export const Wrapper = styled.View`
-    width: 95%;
+export const ScrollWrapper = styled.ScrollView`
+    margin-left: 20px;
+    margin-right: 20px;
 `
 
 export const Box = styled.View`
@@ -18,6 +19,6 @@ export const Box = styled.View`
 `
 
 export const SubTitle = styled.Text`
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
 `

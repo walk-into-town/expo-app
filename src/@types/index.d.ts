@@ -19,7 +19,7 @@ declare module "@types" {
   }
 
   /* classes */
-  
+  type setState = Dispatch<SetStateAction<string[]>>;
 
   /* naviagetion */
   type MainStackParamList = {
