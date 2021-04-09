@@ -4,16 +4,16 @@ import { Input, Button } from 'react-native-elements'
 import { TextArea } from '../../atoms'
 import ImgPicker from '../../atoms/ImgPicker'
 import {  Container } from '../../atoms/styled'
-import { modalNavigation } from '../../navigation/useNavigation'
+import { mainNavigation, modalNavigation } from '../../navigation/useNavigation'
 
 interface Props {
 
 }
 
 const MakePinPointModal = (props: Props) => {
-    const modalNav = modalNavigation();
-    const [pinPoint, setPinPoint] = useState<PinPoint>();
+    const mainNav = mainNavigation();
 
+    const [pinPoint, setPinPoint] = useState<PinPoint>();
     const [title, setTitle] = useState(pinPoint?.name)
 
     const changePinPointName = () => {
@@ -21,6 +21,7 @@ const MakePinPointModal = (props: Props) => {
             return;
         setPinPoint({...pinPoint, name: title});
     }
+
     return (
         <Container>
             <Input
@@ -30,12 +31,13 @@ const MakePinPointModal = (props: Props) => {
             />
             <Button 
                 type="clear"title="위치찾기" onPress={() => console.log('위치 찾기 api 연동')} />
+                
             <ImgPicker />
 
             <TextArea placeholder="핀포인트 설명" />
 
-            <Button 
-                type="clear"title="다음" onPress={() => modalNav.navigate('MakePinPointQuiz')} />
+            <Button title="핀포인트 완료" onPress={() => mainNav.navigate('HomeTab')} />
+
         </Container>
     )
 }

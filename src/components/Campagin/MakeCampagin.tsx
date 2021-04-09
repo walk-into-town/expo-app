@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-import { Container, SubTitle } from '../../atoms/styled';
+import { Container } from '../../atoms/styled';
 import ImgPicker from '../../atoms/ImgPicker';
-import { campaginNavigation } from '../../navigation/useNavigation';
+import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
+import { PinPoint } from '@types';
 
 
 const MakeCampagin = () => {
-    const navigation = campaginNavigation();
+    const mainNav = mainNavigation();
+    const campaginNav = campaginNavigation();
+
+    const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
+    
     const [title, setTitle] = useState("");
     const [depiction, setDepiction] = useState("");
 
@@ -30,10 +35,24 @@ const MakeCampagin = () => {
             />
             <Text>{title} {depiction}</Text>
 
+
+            <Text>핀포인트 리스트</Text>
             <Button
-                title="다음"
+                title="핀포인트 추가"
                 type="clear"
-                onPress={() => navigation.navigate("MakePinPoint")}
+                onPress={() => mainNav.navigate("ModalStack", {screen: 'MakePinPointModal'})}
+            />
+
+
+            <Text>쿠폰 리스트</Text>
+            <Button 
+                title="쿠폰 추가"
+                type="clear"
+                onPress={() => mainNav.navigate("ModalStack", {screen: 'MakeCouponModal'})}
+            />
+            <Button
+                title="캠페인 만들기"
+                onPress={() => campaginNav.navigate("Campagin")}
             />
         </Container>
     )

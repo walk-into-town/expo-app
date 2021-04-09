@@ -9,6 +9,9 @@ export const Row = styled.View`
     flex-direction: row;
     align-items: center;
 `
+export const Wrapper = styled.View`
+    width: 95%;
+`
 
 export const Box = styled.View`
     margin-top: 10%;

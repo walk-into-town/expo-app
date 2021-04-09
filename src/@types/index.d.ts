@@ -40,14 +40,11 @@ declare module "@types" {
     MyCampagin: undefined,
 
     MakeCampagin: undefined,
-    MakePinPoint: undefined,
-    MakeCoupon: undefined,
 
     SearchCampagin: undefined
   };
   type ModalStackParamList = {
     MakePinPointModal: undefined,
-    MakePinPointQuiz: undefined,
     MakeCouponModal: undefined,
   }
 }
