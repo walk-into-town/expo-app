@@ -17,7 +17,7 @@ const MakeCampagin = () => {
     
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState([]);
-
+    // react native multipart/form-data ajax
     return (
         <ScrollWrapper>
             <Box>
