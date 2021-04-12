@@ -1,24 +1,24 @@
 declare module "@types" {
 
     type PinPoint = {
-        id: string,
+        id?: string,
         name: string,
-        imgs: [string],
-        latitude: float,
-        longitude: float,
-        updateTime: dateTime,
+        imgs: string[],
+        latitude: number,
+        longitude: number,
+        updateTime?: string,
 
         quiz: {
             text: string,
             type: int,
-            choices: [string],
+            choices: string[],
             answer: string,
         },
-        comments: [{
+        comments?: [{
             id: string,
             userId: string,
             text: string,
-            imgs: [string]
+            imgs: string[]
         }]
     }
 }

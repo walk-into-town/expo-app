@@ -12,7 +12,7 @@ export default () => {
             <Button
                 title="나만의 캠페인 만들기"
                 type="clear"
-                onPress={() => navigation.navigate('MakeCampagin')}
+                onPress={() => navigation.navigate('MakeCampagin', {})}
             />
             <SearchCampagin />
             <CampaignList>

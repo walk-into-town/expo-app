@@ -1,3 +1,5 @@
+import { PinPoint } from "@types";
+
 declare module "@types" {
   /* auth */
   interface IUser {
@@ -21,12 +23,15 @@ declare module "@types" {
   /* classes */
   type setState = Dispatch<SetStateAction<string[]>>;
 
-  /* naviagetion */
+  /* navigation */
   type MainStackParamList = {
-    HomeTab: undefined,
+    HomeTab: {
+      screen?: keyof CampaginStackParamList,
+      params?: { pinpoint?: PinPoint }
+    },
     Game: undefined,
     ModalStack: {
-      screen: keyof ModalStackParamList
+      screen: keyof ModalStackParamList,
     }
   };
   type HomeTapParamList = {
@@ -38,9 +43,7 @@ declare module "@types" {
   type CampaginStackParamList = {
     Campagin: undefined,
     MyCampagin: undefined,
-
-    MakeCampagin: undefined,
-
+    MakeCampagin: { pinpoint?: PinPoint },
     SearchCampagin: undefined
   };
   type MyPageStackParamList = {
