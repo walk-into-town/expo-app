@@ -1,11 +1,11 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import MyPage from '../components/MyPage';
 import GamePlay from '../components/GamePlay';
 import Ranking from '../components/Ranking';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CampaginStack from './CampaginStack';
+import MyPageStack from './MyPageStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +26,7 @@ const HomeTab = () => {
                 activeTintColor: "#517fa4",
                 inactiveTintColor: 'gray',
             }}>
-            <Tab.Screen name="MyPage" component={MyPage} />
+            <Tab.Screen name="MyPage" component={MyPageStack} />
             <Tab.Screen name="Campaign" component={CampaginStack} />
             <Tab.Screen name="GamePlay" component={GamePlay} options={{ tabBarBadge: 3 }} />
             <Tab.Screen name="Ranking" component={Ranking} />

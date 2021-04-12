@@ -43,8 +43,13 @@ declare module "@types" {
 
     SearchCampagin: undefined
   };
+  type MyPageStackParamList = {
+    MyPage: undefined,
+    MyCoupon: undefined
+  };
   type ModalStackParamList = {
     MakePinPointModal: undefined,
     MakeCouponModal: undefined,
+    MyCoupon: undefined
   }
 }

@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import MakeCouponModal from '../components/Campagin/MakeCouponModal';
 import MakePinPointModal from '../components/Campagin/MakePinPointModal';
+import MyCoupon from '../components/MyPage/MyCoupon';
 
 interface Props {
 
@@ -21,6 +22,11 @@ const ModalStack = (props: Props) => {
                 name="MakeCouponModal" 
                 component={MakeCouponModal} 
                 options={{ headerTitle: "쿠폰 만들기", headerBackTitleVisible: false }}
+            />
+            <Stack.Screen 
+                name="MyCoupon"
+                component={MyCoupon}
+                options={{ headerTitle: "내 쿠폰", headerBackTitleVisible: false }}
             />
         </Stack.Navigator>
     )
