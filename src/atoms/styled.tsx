@@ -9,6 +9,11 @@ export const Row = styled.View`
     align-items: center;
     width: 100%;
 `
+export const BtsWrapper = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`
 export const ScrollWrapper = styled.ScrollView`
     margin: 0 10px;
 `
