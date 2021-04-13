@@ -6,10 +6,11 @@ import { SubTitle, ScrollWrapper, Box, Row } from '../../atoms/styled';
 import ImgPicker from '../../atoms/ImgPicker';
 import { OutLineButton, TextArea } from '../../atoms';
 import { RouteProp, useRoute } from '@react-navigation/core';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 
 const MakeCampagin = () => {
-    const {params: {pinpoint}} = useRoute<RouteProp<CampaginStackParamList, 'MakeCampagin'>>();
+    const {params: {pinpoint, editIndex}} = useRoute<RouteProp<CampaginStackParamList, 'MakeCampagin'>>();
 
     const mainNav = mainNavigation();
     const campaginNav = campaginNavigation();
@@ -23,13 +24,21 @@ const MakeCampagin = () => {
     // react native multipart/form-data ajax
 
     useEffect(() => {
-        if(pinpoint)
-            setPinPointList([...pinPointList, pinpoint])
-            
+        if(pinpoint === undefined) return;
+        
+        setPinPointList(editIndex !== undefined ? [...pinPointList.slice(0, editIndex), pinpoint, ...pinPointList.splice(editIndex+1)] 
+            : [...pinPointList, pinpoint])
+        
     }, [pinpoint])
 
+    const navToPinPointModal = (item: PinPoint, idx: number) => {
+        mainNav.navigate("ModalStack", { screen: 'MakePinPointModal', params: {pinpoint: item, editIndex: idx} })
+    }
+    const deletePinPoint = (idx: number) => {
+        setPinPointList([...pinPointList.slice(0, idx), ...pinPointList.slice(idx+1)])
+    }
     const submit = () => {
-        
+        campaginNav.navigate("Campagin");
     }
 
     return (
@@ -56,12 +65,23 @@ const MakeCampagin = () => {
                         title="지도에서 보기" 
                         onPress={() => console.log("지도에서 보기")}/>
                 </Row>
-                {pinPointList.map((item, idx) => {
-                    return <Text key={idx}>{item.name}</Text>
-                })}
+                {pinPointList.map((item, idx) => 
+                    <Row key={idx} style={{height: 50}}>
+                        <Text 
+                            style={{fontSize: 18, paddingHorizontal: 20}} 
+                            onPress={() => navToPinPointModal(item, idx)}>
+                            {item.name}
+                        </Text>
+                        <Text>{item.latitude} {item.longitude}</Text>
+                        <Icon 
+                            style={{marginLeft: 'auto', marginRight: 16}}
+                            name="close" 
+                            onPress={() => deletePinPoint(idx)} size={20}/>
+                    </Row>
+                )}
                 <OutLineButton
                     title="핀포인트 추가"
-                    onPress={() => mainNav.navigate("ModalStack", { screen: 'MakePinPointModal' })}
+                    onPress={() => mainNav.navigate("ModalStack", { screen: 'MakePinPointModal', params: {} })}
                 />
             </Box>
             
@@ -69,13 +89,13 @@ const MakeCampagin = () => {
                 <SubTitle>쿠폰 리스트</SubTitle>
                 <OutLineButton
                     title="쿠폰 추가"
-                    onPress={() => mainNav.navigate("ModalStack", { screen: 'MakeCouponModal' })}
+                    onPress={() => mainNav.navigate("ModalStack", { screen: 'MakeCouponModal', params: {} })}
                 />
             </Box>
             
             <Button
                 title="캠페인 만들기"
-                onPress={() => campaginNav.navigate("Campagin")}
+                onPress={submit}
                 style={{marginTop: 20}}
             />
         </ScrollWrapper>

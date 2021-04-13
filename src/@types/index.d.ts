@@ -22,16 +22,22 @@ declare module "@types" {
 
   /* classes */
   type setState = Dispatch<SetStateAction<string[]>>;
+  
 
   /* navigation */
+  type CampaginParams = {
+    pinpoint?: PinPoint,
+    editIndex?: number
+  }
+
   type MainStackParamList = {
     HomeTab: {
       screen?: keyof CampaginStackParamList,
-      params?: { pinpoint?: PinPoint }
     },
     Game: undefined,
     ModalStack: {
       screen: keyof ModalStackParamList,
+      params: CampaginParams
     }
   };
   type HomeTapParamList = {
@@ -43,7 +49,7 @@ declare module "@types" {
   type CampaginStackParamList = {
     Campagin: undefined,
     MyCampagin: undefined,
-    MakeCampagin: { pinpoint?: PinPoint },
+    MakeCampagin: CampaginParams,
     SearchCampagin: undefined
   };
   type MyPageStackParamList = {
@@ -51,7 +57,7 @@ declare module "@types" {
     MyCoupon: undefined
   };
   type ModalStackParamList = {
-    MakePinPointModal: undefined,
+    MakePinPointModal: CampaginParams,
     MakeCouponModal: undefined,
     MyCoupon: undefined
   }

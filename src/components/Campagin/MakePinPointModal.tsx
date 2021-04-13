@@ -1,56 +1,85 @@
-import { PinPoint, CampaginStackParamList } from '@types'
 import React, { useEffect, useState } from 'react'
+import { PinPoint, ModalStackParamList, quizType } from '@types'
+import { campaginNavigation } from '../../navigation/useNavigation'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
+
 import { Alert, View } from 'react-native'
 import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
 import { OutLineButton, TextArea } from '../../atoms'
-import ImgPicker from '../../atoms/ImgPicker'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
 import Icon from 'react-native-vector-icons/EvilIcons';
-import { campaginNavigation } from '../../navigation/useNavigation'
+import ImgPicker from '../../atoms/ImgPicker'
 import { Picker } from '@react-native-picker/picker';
+
 
 const MakePinPointModal = () => {
     const campaginNav = campaginNavigation();
+    const nav = useNavigation();
+    
+    const {params: {pinpoint, editIndex}} = useRoute<RouteProp<ModalStackParamList, 'MakePinPointModal'>>();
 
-    const [title, setTitle] = useState("");
+    const [name, setName] = useState("");
     const [latitude, setLatitude] = useState<number>(1.8);
     const [longitude, setLongitude] = useState<number>(19.9);
+    const [description, setDescription] = useState("")
     const [pinPointImgs, setPinPointImgs] = useState<string[]>([]);
 
     const [quizText, setQuizText] = useState<string>("");
-    const typeBts = ['단답식', '객관식']
-    const [typeIndex, setTypeIndex] = useState<number>(0);
+    const [type, setType] = useState<quizType>("주관식");
     const [choices, setChoices] = useState<string[]>([""]);
     const [answer, setAnswer] = useState<string>("");
     // const [choicesAnswer, setChoicesAnswer] = useState<string>("");
-    const [selectedAnswer, setSelectedAnswer] = useState();
+    const [selectedAnswer, setSelectedAnswer] = useState("");
 
-
-    const hasUnsavedChanges = Boolean(title);
-    // 뒤로가기 방지
-    // 두번 발생하는 버그....
     useEffect(() => {
-        campaginNav.addListener('beforeRemove', (e) => {
-            if (!hasUnsavedChanges) {
-                return;
-            }
+        if(pinpoint === undefined)
+            return;
+   
+        if(editIndex !== undefined){
+            nav.setOptions({headerTitle: "핀포인트 수정하기"})
+        }
 
-            e.preventDefault();
+        setName(pinpoint.name);
+        setLatitude(pinpoint.latitude);
+        setLongitude(pinpoint.longitude);
+        setDescription(pinpoint.description);
 
-            Alert.alert(
-                '정말 취소하시겠어요?',
-                '입력된 내용이 전부 사라집니다.',
-                [
-                    { text: "아니오", style: 'cancel', onPress: () => { } },
-                    {
-                        text: '취소합니다',
-                        style: 'destructive',
-                        onPress: () => campaginNav.dispatch(e.data.action),
-                    },
-                ]
-            );
-        }), [campaginNav, hasUnsavedChanges]
-    })
+        setQuizText(pinpoint.quiz.text);
+        setType(pinpoint.quiz.type);
+        setChoices(pinpoint.quiz.choices);
+        if(pinpoint.quiz.type === '주관식')
+           setAnswer(pinpoint.quiz.answer);
+        else
+            setSelectedAnswer(pinpoint.quiz.answer);
+
+    }, [pinpoint])
+
+
+    // const hasUnsavedChanges = Boolean(name || latitude || longitude || quizText);
+    // // 뒤로가기 방지
+    // // 두번 발생하는 버그.... (밤에 발생???)
+    // useEffect(() => {
+    //     campaginNav.addListener('beforeRemove', (e) => {
+    //         if (!hasUnsavedChanges) {
+    //             return;
+    //         }
+
+    //         e.preventDefault();
+
+    //         Alert.alert(
+    //             '정말 취소하시겠어요?',
+    //             '입력된 내용이 전부 사라집니다.',
+    //             [
+    //                 { text: "아니오", style: 'cancel', onPress: () => { } },
+    //                 {
+    //                     text: '취소합니다',
+    //                     style: 'destructive',
+    //                     onPress: () => campaginNav.dispatch(e.data.action),
+    //                 },
+    //             ]
+    //         );
+    //     }), [campaginNav, hasUnsavedChanges]
+    // })
 
     const changeChoicesText = (text: string, idx: number) => {
         setChoices([...choices.map((e, i) => i === idx ? text : e)]);
@@ -61,27 +90,29 @@ const MakePinPointModal = () => {
     // 핀포인트 업로드
     const submit = () => {
         const pinpoint: PinPoint = {
-            name: title,
+            name: name,
             imgs: pinPointImgs,
             latitude,
             longitude,
+            description,
 
             quiz: {
                 text: quizText,
-                type: typeIndex,
+                type: type,
                 choices,
-                answer,
+                answer: type === '주관식' ? answer : selectedAnswer,
             }
         }
         // mainNav.navigate('HomeTab', { screen: "MakeCampagin", params: { pinpoint } });
-        campaginNav.navigate('MakeCampagin', { pinpoint });
+        campaginNav.navigate('MakeCampagin', { pinpoint, editIndex });
     }
 
 
     return (
         <ScrollWrapper>
             <Input
-                onChangeText={(text: string) => setTitle(text)}
+                value={name}
+                onChangeText={(text: string) => setName(text)}
                 placeholder="핀포인트명을 입력해주세요."
                 style={{ marginTop: 20 }}
             />
@@ -93,26 +124,33 @@ const MakePinPointModal = () => {
                 <Text>위도 {latitude} 경도 {longitude}</Text>
             </Row>
             <ImgPicker useImgs={[pinPointImgs, setPinPointImgs]} />
-            <TextArea placeholder="핀포인트 설명을 입력해주세요." />
+            <TextArea 
+                value={description} 
+                placeholder="핀포인트 설명을 입력해주세요." 
+                onChangeText={(text:string) => setDescription(text)}/>
 
             {/* 퀴즈 만들기 */}
             <SubTitle>퀴즈 만들기</SubTitle>
             <Input
+                value={quizText}
                 onChangeText={(text: string) => setQuizText(text)}
                 placeholder="퀴즈 제목"
             />
 
             <View style={{ margin: 10 }}>
                 <ButtonGroup
-                    onPress={setTypeIndex}
-                    selectedIndex={typeIndex}
-                    buttons={typeBts}
+                    onPress={() => setType(type === '주관식' ? '객관식' : '주관식')}
+                    selectedIndex={type === '주관식' ? 0 : 1}
+                    buttons={["주관식", "객관식"]}
                     textStyle={{ fontSize: 15 }}
                 // selectedButtonStyle={{backgroundColor: "#333D79"}}
                 />
-                {typeIndex === 0 ? <Box>
+                {type === '주관식' ? <Box>
                     <SubTitle>정답</SubTitle>
-                    <Input placeholder="정답을 입력해주세요." onChangeText={text => setAnswer(text)} />
+                    <Input 
+                        value={answer}
+                        placeholder="정답을 입력해주세요." 
+                        onChangeText={text => setAnswer(text)} />
                 </Box>
                     //  객관식 문제
                     : <Box>

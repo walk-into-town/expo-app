@@ -1,5 +1,6 @@
 declare module "@types" {
-
+    type quizType = "객관식" | "주관식";
+    
     type PinPoint = {
         id?: string,
         name: string,
@@ -7,10 +8,11 @@ declare module "@types" {
         latitude: number,
         longitude: number,
         updateTime?: string,
+        description: string
 
         quiz: {
             text: string,
-            type: int,
+            type: quizType,
             choices: string[],
             answer: string,
         },
