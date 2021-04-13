@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { Button, Card, Input, Text } from 'react-native-elements';
+import { Input, Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { BtsWrapper, Row } from './styled';
+import { BtsWrapper } from './styled';
 
 interface Props {
     useTitle:[string, React.Dispatch<React.SetStateAction<string>>]
@@ -30,7 +30,7 @@ const TitleInputModal = (props: Props) => {
     return (
         <View>
             <TouchableOpacity onPress={openModal}>
-                <Text style={{fontSize: 20, fontWeight: '600', alignSelf: "center" ,marginVertical: 30}}> {title || "제목명을 입력해주세요"} </Text>
+                <Text style={{fontSize: 20, fontFamily:"SCDream8", fontWeight: '600', alignSelf: "center" ,marginVertical: 30}}> {title || "제목명을 입력해주세요"} </Text>
             </TouchableOpacity>
 
             <Modal isVisible={isModalVisible} animationOutTiming={5}>

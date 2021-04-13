@@ -14,7 +14,11 @@ export const TextArea = (option: TextInputProps) => (
 
 export const OutLineButton = (props: ButtonProps) => (
     <View style={{width: '100%', alignSelf: 'center'}}>
-        <Button type="outline" {...props} />
+        <Button 
+            type="outline" 
+            titleStyle={{fontFamily: "SCDream8"}} 
+            {...props} 
+        />
     </View>
 )
 export const SubmitButton = (props: ButtonProps) => (

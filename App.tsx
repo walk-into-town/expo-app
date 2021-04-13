@@ -3,10 +3,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthContextProvider } from './src/api/Auth';
 
 import Navigator from "./src/navigation";
-import GlobalStyle from './src/style/global';
+import { useFonts } from 'expo-font';
+import fonts from './src/atoms/fonts';
 
 const App = () => {
-  return (
+
+  const [loaded] = useFonts(fonts);
+  
+  if (!loaded)
+    return null;
+
+  return !loaded ? null : (
     <SafeAreaProvider>
       <AuthContextProvider>
         <Navigator />
