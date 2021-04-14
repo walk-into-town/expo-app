@@ -5,7 +5,7 @@ import { TextArea } from '../../atoms';
 import DateInput from '../../atoms/DateInput';
 import ImgPicker from '../../atoms/ImgPicker';
 import { Container } from '../../atoms/styled'
-import TitleInputModal from '../../atoms/TitleInputModal';
+import InputModal from '../../atoms/InputModal';
 
 interface Props {
 
@@ -20,7 +20,7 @@ const MakeCouponModal = (props: Props) => {
 
     return (
         <Container>
-            <TitleInputModal useTitle={[title, setTitle]}/>
+            <InputModal useText={[title, setTitle]}/>
             
             <TextArea
                 value={description}

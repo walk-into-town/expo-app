@@ -23,6 +23,7 @@ export const Box = styled.View`
 `
 
 export const SubTitle = styled.Text`
+    font-family: "SCDream7";
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 5px;

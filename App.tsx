@@ -10,9 +10,6 @@ const App = () => {
 
   const [loaded] = useFonts(fonts);
   
-  if (!loaded)
-    return null;
-
   return !loaded ? null : (
     <SafeAreaProvider>
       <AuthContextProvider>

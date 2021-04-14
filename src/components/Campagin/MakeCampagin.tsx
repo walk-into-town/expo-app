@@ -7,6 +7,7 @@ import ImgPicker from '../../atoms/ImgPicker';
 import { OutLineButton, TextArea } from '../../atoms';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import InputModal from '../../atoms/InputModal';
 
 
 const MakeCampagin = () => {
@@ -44,15 +45,14 @@ const MakeCampagin = () => {
     return (
         <ScrollWrapper>
             <Box>
-                <Input
-                    onChangeText={(text: string) => setTitle(text)}
-                    placeholder="캠페인 이름"
-                />
+                <InputModal useText={[title, setTitle]} placeholder="캠페인 제목을 입력해주세요"/>
+                
                 <ImgPicker useImgs={[campaginImgs, setCampaginImgs]}/>
 
-                <TextArea
-                    onChangeText={(text: string) => setDepiction(text)}
-                    placeholder="캠페인 설명"
+                <InputModal
+                    useText={[depiction, setDepiction]}
+                    placeholder="캠페인 설명을 입력해주세요."
+                    type="textarea"
                 />
 
                 <Input placeholder="지역 설정"/>
