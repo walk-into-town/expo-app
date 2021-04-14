@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 const ModalStack = (props: Props) => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerTitleStyle: {fontFamily: "SCDream6"} }}>
             <Stack.Screen 
                 name="MakePinPointModal" 
                 component={MakePinPointModal} 

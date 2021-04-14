@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const CampaginStack = () => {
 
     return (
-        <Stack.Navigator >
+        <Stack.Navigator screenOptions={{ headerTitleStyle: {fontFamily: "SCDream6"}, headerBackTitleStyle: {fontFamily: "SCDream5"} }}>
             <Stack.Screen name="Campagin" component={Campagin} options={{ headerShown: false }} />
             <Stack.Screen name="MyCampagin" component={MyCampagin} />
 

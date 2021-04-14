@@ -97,9 +97,10 @@ const MakeCampagin = () => {
                 title="캠페인 만들기"
                 onPress={submit}
                 style={{marginTop: 20}}
+                titleStyle={{fontFamily: "SCDream7"}}
             />
         </ScrollWrapper>
     )
 }
 
-export default MakeCampagin
+export default MakeCampagin;

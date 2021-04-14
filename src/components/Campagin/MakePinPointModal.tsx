@@ -142,7 +142,7 @@ const MakePinPointModal = () => {
                     onPress={() => setType(type === '주관식' ? '객관식' : '주관식')}
                     selectedIndex={type === '주관식' ? 0 : 1}
                     buttons={["주관식", "객관식"]}
-                    textStyle={{ fontSize: 15 }}
+                    textStyle={{ fontSize: 15, fontFamily: "SCDream5" }}
                 // selectedButtonStyle={{backgroundColor: "#333D79"}}
                 />
                 {type === '주관식' ? <Box>
@@ -186,7 +186,8 @@ const MakePinPointModal = () => {
             <Button
                 title="핀포인트 완료"
                 onPress={submit}
-                style={{ marginBottom: 50 }} />
+                style={{ marginBottom: 50 }} 
+                titleStyle={{fontFamily: "SCDream7"}}/>
         </ScrollWrapper>
     )
 }
