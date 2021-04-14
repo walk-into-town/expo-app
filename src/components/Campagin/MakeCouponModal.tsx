@@ -1,26 +1,36 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
-import { Input } from 'react-native-elements';
-import { TextArea } from '../../atoms';
-import DateInput from '../../atoms/DateInput';
-import ImgPicker from '../../atoms/ImgPicker';
-import { Container } from '../../atoms/styled'
+import { Button, Input } from 'react-native-elements';
+import { TextArea, DateInput, ImgPicker, OutLineButton } from '../../atoms';
+import { Container, SubTitle } from '../../atoms/styled'
 import InputModal from '../../atoms/InputModal';
+import { Coupon } from '@types';
 
 interface Props {
 
 }
 
 const MakeCouponModal = (props: Props) => {
-    const [title, setTitle] = useState("");
+    const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [endDate, setEndDate] = useState("");
     const [limit, setLimit] = useState("");
+    const [goods, setGoods] = useState<string[]>([])
     const [couponImgs, setCouponImgs] = useState<string[]>([]);
+
+    const onSubmit = () => {
+        const coupon:Coupon = {
+            name,
+            description,
+            endDate,
+            limit,
+            goods,
+            imgs: couponImgs
+        }
+    }
 
     return (
         <Container>
-            <InputModal useText={[title, setTitle]}/>
+            <InputModal useText={[name, setName]}/>
             
             <TextArea
                 value={description}
@@ -29,6 +39,8 @@ const MakeCouponModal = (props: Props) => {
 
             <ImgPicker useImgs={[couponImgs, setCouponImgs]} />
 
+            <SubTitle>쿠폰 상품</SubTitle>
+
             <Input
                 keyboardType="numeric"
                 value={limit}
@@ -36,7 +48,11 @@ const MakeCouponModal = (props: Props) => {
                 placeholder="쿠폰 배포수" />
 
             <DateInput useDate={[endDate, setEndDate]}/>
-
+            <Button
+                title="쿠폰 추가하기"
+                onPress={onSubmit}
+                style={{marginTop: 30}}
+                titleStyle={{fontFamily: "SCDream7"}}/>
         </Container>
     )
 }
