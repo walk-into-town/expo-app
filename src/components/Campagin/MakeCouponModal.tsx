@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Input } from 'react-native-elements';
+import { Button, Input, Text } from 'react-native-elements';
 import { DateInput, ImgPicker, OutLineButton, InputModal } from '../../atoms';
 import { Container, SubTitle } from '../../atoms/styled'
 import { Coupon } from '@types';
@@ -29,7 +29,9 @@ const MakeCouponModal = (props: Props) => {
 
     return (
         <Container>
-            <InputModal useText={[name, setName]} />
+            <InputModal 
+                useText={[name, setName]} 
+                placeholder="쿠폰명을 입력해주세요"/>
 
             <InputModal
                 useText={[description, setDescription]}
@@ -41,11 +43,12 @@ const MakeCouponModal = (props: Props) => {
             <SubTitle>쿠폰 상품</SubTitle>
             <OutLineButton title="쿠폰 상품 추가" />
 
-            <Input
-                keyboardType="numeric"
-                value={limit}
-                onChangeText={(text: string) => { setLimit(text.replace(/[^0-9]/g, '')) }}
-                placeholder="쿠폰 배포수" />
+            <InputModal
+                useText={[limit, setLimit]}
+                placeholder="쿠폰 배포 수량"
+                type="number"
+                subTitle="해당 개수만큼 배포됩니다."
+                />
 
             <DateInput useDate={[endDate, setEndDate]} />
             <Button

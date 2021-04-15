@@ -9,22 +9,26 @@ import { BtsWrapper } from './styled';
 interface Props {
     useText: [string, React.Dispatch<React.SetStateAction<string>>],
     placeholder?: string,
-    type?: "input" | "textarea"
+    type?: "input" | "textarea" | "number",
+    subTitle?: string
 }
 interface styleInterface {
+    wrapper: StyleProp<TextStyle>,
     text: StyleProp<TextStyle>,
     input: StyleProp<TextStyle>
 }
 const inputStyle: styleInterface = {
-    text: { fontSize: 20, fontFamily: "SCDream8", alignSelf: "center", marginVertical: 30 },
+    wrapper: { marginTop: 30, marginBottom: 20 },
+    text: { fontSize: 20, fontFamily: "SCDream8", alignSelf: "center" },
     input: { color: "#FFF", fontSize: 30, fontFamily: "SCDream6" }
 }
 const textareaStyle: styleInterface = {
+    wrapper: {},
     text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7 },
     input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
 }
 
-const InputModal = ({ useText, placeholder, type = "input" }: Props) => {
+const InputModal = ({ useText, placeholder, type = "input", subTitle }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [text, setText] = useText;
     const [input, setInput] = useState(text);
@@ -42,22 +46,24 @@ const InputModal = ({ useText, placeholder, type = "input" }: Props) => {
     }
 
     return (
-        <View>
+        <View style={type === "textarea" ? textareaStyle.wrapper : inputStyle.wrapper}>
             <TouchableOpacity onPress={openModal}>
-                <Text style={type === "input" ? inputStyle.text : textareaStyle.text}>
+                <Text style={type === "textarea" ? textareaStyle.text : inputStyle.text}>
                     {text || placeholder || "제목명을 입력해주세요"}
                 </Text>
             </TouchableOpacity>
+            <Text style={{ alignSelf: "center", marginTop: 1 }}> {subTitle} </Text>
 
             <Modal isVisible={isModalVisible} animationOutTiming={5} avoidKeyboard>
                 <Input
                     autoFocus
-                    selectionColor={"#FFF"} style={type === "input" ? inputStyle.input : textareaStyle.input}
+                    selectionColor={"#FFF"} style={type === "textarea" ? textareaStyle.input : inputStyle.input}
                     value={input}
-                    onChangeText={(text: string) => setInput(text)}
+                    onChangeText={(text: string) => setInput(type === "number" ? text.replace(/[^0-9]/g, '') : text)}
                     multiline={type === "textarea"}
+                    keyboardType={type === "number" ? "numeric" : "default"}
                     onEndEditing={() => {
-                        if(type==='input') onSubmit();
+                        if (type === 'input') onSubmit();
                     }}
                 />
 
