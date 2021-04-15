@@ -9,26 +9,17 @@ import { BtsWrapper } from './styled';
 interface Props {
     useText: [string, React.Dispatch<React.SetStateAction<string>>],
     placeholder?: string,
+    subTitle?: string,
     type?: "input" | "textarea" | "number",
-    subTitle?: string
+    textFontSize?: number
 }
 interface styleInterface {
     wrapper: StyleProp<TextStyle>,
     text: StyleProp<TextStyle>,
     input: StyleProp<TextStyle>
 }
-const inputStyle: styleInterface = {
-    wrapper: { marginTop: 30, marginBottom: 20 },
-    text: { fontSize: 20, fontFamily: "SCDream8", alignSelf: "center" },
-    input: { color: "#FFF", fontSize: 30, fontFamily: "SCDream6" }
-}
-const textareaStyle: styleInterface = {
-    wrapper: {},
-    text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7 },
-    input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
-}
 
-const InputModal = ({ useText, placeholder, type = "input", subTitle }: Props) => {
+const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSize = 20 }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [text, setText] = useText;
     const [input, setInput] = useState(text);
@@ -43,6 +34,17 @@ const InputModal = ({ useText, placeholder, type = "input", subTitle }: Props) =
     const onSubmit = () => {
         setText(input);
         toggleModal();
+    }
+
+    const inputStyle: styleInterface = {
+        wrapper: { marginTop: 30, marginBottom: 20 },
+        text: { fontSize: textFontSize, fontFamily: "SCDream8", alignSelf: "center" },
+        input: { color: "#FFF", fontSize: 30, fontFamily: "SCDream6" }
+    }
+    const textareaStyle: styleInterface = {
+        wrapper: {},
+        text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7 },
+        input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
     }
 
     return (
@@ -62,9 +64,9 @@ const InputModal = ({ useText, placeholder, type = "input", subTitle }: Props) =
                     onChangeText={(text: string) => setInput(type === "number" ? text.replace(/[^0-9]/g, '') : text)}
                     multiline={type === "textarea"}
                     keyboardType={type === "number" ? "numeric" : "default"}
-                    onEndEditing={() => {
-                        if (type === 'input') onSubmit();
-                    }}
+                // onEndEditing={() => {
+                //     if (type === 'input') onSubmit();
+                // }}
                 />
 
                 <BtsWrapper>

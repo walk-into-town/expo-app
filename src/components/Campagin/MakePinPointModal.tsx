@@ -5,7 +5,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
 import { Alert, View } from 'react-native'
 import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
-import { OutLineButton, TextArea, EvilIcons, ImgPicker } from '../../atoms'
+import { OutLineButton, TextArea, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
 import { Picker } from '@react-native-picker/picker';
 
@@ -13,8 +13,8 @@ import { Picker } from '@react-native-picker/picker';
 const MakePinPointModal = () => {
     const campaginNav = campaginNavigation();
     const nav = useNavigation();
-    
-    const {params: {pinpoint, editIndex}} = useRoute<RouteProp<ModalStackParamList, 'MakePinPointModal'>>();
+
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<ModalStackParamList, 'MakePinPointModal'>>();
 
     const [name, setName] = useState("");
     const [latitude, setLatitude] = useState<number>(1.8);
@@ -30,11 +30,11 @@ const MakePinPointModal = () => {
     const [selectedAnswer, setSelectedAnswer] = useState("");
 
     useEffect(() => {
-        if(pinpoint === undefined)
+        if (pinpoint === undefined)
             return;
-   
-        if(editIndex !== undefined){
-            nav.setOptions({headerTitle: "핀포인트 수정하기"})
+
+        if (editIndex !== undefined) {
+            nav.setOptions({ headerTitle: "핀포인트 수정하기" })
         }
 
         setName(pinpoint.name);
@@ -45,8 +45,8 @@ const MakePinPointModal = () => {
         setQuizText(pinpoint.quiz.text);
         setType(pinpoint.quiz.type);
         setChoices(pinpoint.quiz.choices);
-        if(pinpoint.quiz.type === '주관식')
-           setAnswer(pinpoint.quiz.answer);
+        if (pinpoint.quiz.type === '주관식')
+            setAnswer(pinpoint.quiz.answer);
         else
             setSelectedAnswer(pinpoint.quiz.answer);
 
@@ -101,39 +101,33 @@ const MakePinPointModal = () => {
                 answer: type === '주관식' ? answer : selectedAnswer,
             }
         }
-        // mainNav.navigate('HomeTab', { screen: "MakeCampagin", params: { pinpoint } });
         campaginNav.navigate('MakeCampagin', { pinpoint, editIndex });
     }
 
 
     return (
         <ScrollWrapper>
-            <Input
-                value={name}
-                onChangeText={(text: string) => setName(text)}
-                placeholder="핀포인트명을 입력해주세요."
-                style={{ marginTop: 20 }}
-            />
+            <InputModal
+                useText={[name, setName]}
+                placeholder="핀포인트명을 입력해주세요" />
+
             <Row>
-                <Button
-                    type="clear"
+                <ClearButton 
                     title="위치찾기"
-                    onPress={() => console.log('위치 찾기 api 연동')} />
+                    onPress={() => console.log('위치 찾기 api 연동')}/>
                 <Text>위도 {latitude} 경도 {longitude}</Text>
             </Row>
             <ImgPicker useImgs={[pinPointImgs, setPinPointImgs]} />
-            <TextArea 
-                value={description} 
-                placeholder="핀포인트 설명을 입력해주세요." 
-                onChangeText={(text:string) => setDescription(text)}/>
+
+            <InputModal
+                useText={[description, setDescription]}
+                placeholder="핀포인트 설명을 입력해주세요."
+                type="textarea" />
 
             {/* 퀴즈 만들기 */}
-            <SubTitle>퀴즈 만들기</SubTitle>
-            <Input
-                value={quizText}
-                onChangeText={(text: string) => setQuizText(text)}
-                placeholder="퀴즈 제목"
-            />
+            <InputModal 
+                useText={[quizText, setQuizText]}
+                placeholder="퀴즈 질문을 입력해주세요"/>
 
             <View style={{ margin: 10 }}>
                 <ButtonGroup
@@ -143,13 +137,11 @@ const MakePinPointModal = () => {
                     textStyle={{ fontSize: 15, fontFamily: "SCDream5" }}
                 // selectedButtonStyle={{backgroundColor: "#333D79"}}
                 />
-                {type === '주관식' ? <Box>
-                    <SubTitle>정답</SubTitle>
-                    <Input 
-                        value={answer}
-                        placeholder="정답을 입력해주세요." 
-                        onChangeText={text => setAnswer(text)} />
-                </Box>
+                {type === '주관식' ? 
+                    <InputModal 
+                        useText={[answer, setAnswer]}
+                        placeholder="주관식 정답"
+                        textFontSize={17}/>
                     //  객관식 문제
                     : <Box>
                         <SubTitle>선택지</SubTitle>
@@ -176,7 +168,7 @@ const MakePinPointModal = () => {
                         initValue="정답지 선택"
                         cancelText="취소"
                         onChange={(option)=>{ setChoicesAnswer(option.label); }}
-                    /> */}
+                        /> */}
                     </Box>}
             </View>
 
@@ -184,8 +176,8 @@ const MakePinPointModal = () => {
             <Button
                 title="핀포인트 완료"
                 onPress={submit}
-                style={{ marginBottom: 50 }} 
-                titleStyle={{fontFamily: "SCDream7"}}/>
+                style={{ marginBottom: 50 }}
+                titleStyle={{ fontFamily: "SCDream7" }} />
         </ScrollWrapper>
     )
 }

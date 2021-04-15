@@ -21,6 +21,12 @@ export const OutLineButton = (props: ButtonProps) => (
         />
     </View>
 )
+export const ClearButton = (props: ButtonProps) => (
+    <Button
+        type="clear"
+        titleStyle={{ fontFamily: "SCDream8" }}
+        {...props} />
+)
 export const SubmitButton = (props: ButtonProps) => (
     <View style={{ width: '100%', position: "absolute", bottom: 20 }}>
         <Button {...props} />

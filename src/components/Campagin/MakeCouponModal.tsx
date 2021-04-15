@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Input, Text } from 'react-native-elements';
 import { DateInput, ImgPicker, OutLineButton, InputModal } from '../../atoms';
-import { Container, SubTitle } from '../../atoms/styled'
+import { ScrollWrapper, SubTitle } from '../../atoms/styled'
 import { Coupon } from '@types';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface Props {
 
@@ -11,7 +12,7 @@ interface Props {
 const MakeCouponModal = (props: Props) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [endDate, setEndDate] = useState(new Date());
     const [limit, setLimit] = useState("");
     const [goods, setGoods] = useState<string[]>([])
     const [couponImgs, setCouponImgs] = useState<string[]>([]);
@@ -20,15 +21,16 @@ const MakeCouponModal = (props: Props) => {
         const coupon: Coupon = {
             name,
             description,
-            endDate,
+            endDate: endDate.toISOString(),
             limit,
             goods,
             imgs: couponImgs
         }
+        console.log(coupon)
     }
 
     return (
-        <Container>
+        <ScrollWrapper>
             <InputModal 
                 useText={[name, setName]} 
                 placeholder="쿠폰명을 입력해주세요"/>
@@ -47,16 +49,21 @@ const MakeCouponModal = (props: Props) => {
                 useText={[limit, setLimit]}
                 placeholder="쿠폰 배포 수량"
                 type="number"
-                subTitle="해당 개수만큼 배포됩니다."
+                subTitle="해당 개수만큼 배포됩니다"
                 />
 
-            <DateInput useDate={[endDate, setEndDate]} />
+            <DateTimePicker 
+                value={endDate}
+                display="spinner" 
+                onChange={(event:any, selectedDate: any) => setEndDate(selectedDate || endDate)}
+                minimumDate={new Date()}/>
+
             <Button
                 title="쿠폰 추가하기"
                 onPress={onSubmit}
-                style={{ marginTop: 30 }}
+                style={{ marginVertical: 30 }}
                 titleStyle={{ fontFamily: "SCDream7" }} />
-        </Container>
+        </ScrollWrapper>
     )
 }
 
