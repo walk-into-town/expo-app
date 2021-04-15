@@ -1,4 +1,4 @@
-import { PinPoint } from "@types";
+import { Coupon, PinPoint } from "@types";
 
 declare module "@types" {
   /* auth */
@@ -27,6 +27,7 @@ declare module "@types" {
   /* navigation */
   type CampaginParams = {
     pinpoint?: PinPoint,
+    coupon?: Coupon,
     editIndex?: number
   }
 
@@ -58,7 +59,7 @@ declare module "@types" {
   };
   type ModalStackParamList = {
     MakePinPointModal: CampaginParams,
-    MakeCouponModal: undefined,
+    MakeCouponModal: CampaginParams,
     MyCoupon: undefined
   }
 }

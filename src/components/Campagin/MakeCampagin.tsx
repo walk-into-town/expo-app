@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { PinPoint, CampaginStackParamList } from '@types';
+import { PinPoint, CampaginStackParamList, Coupon } from '@types';
 import { Button, Input, Text } from 'react-native-elements'
 import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
 import { OutLineButton, ImgPicker, InputModal, EvilIcons } from '../../atoms';
@@ -10,7 +10,7 @@ import perventGoBack from '../../hooks/perventGoBack';
 
 
 const MakeCampagin = () => {
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<CampaginStackParamList, 'MakeCampagin'>>();
+    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<CampaginStackParamList, 'MakeCampagin'>>();
 
     const mainNav = mainNavigation();
     const campaginNav = campaginNavigation();
@@ -20,25 +20,34 @@ const MakeCampagin = () => {
     const [depiction, setDepiction] = useState("");
 
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
-    const [couponList, setCouponList] = useState([]);
+    const [couponList, setCouponList] = useState<Coupon[]>([]);
     // react native multipart/form-data ajax
 
     const hasUnsavedChanges = Boolean(title);
-    perventGoBack({hasUnsavedChanges});
+    perventGoBack({ hasUnsavedChanges });
 
     useEffect(() => {
-        if (pinpoint === undefined) return;
-
-        setPinPointList(editIndex !== undefined ? [...pinPointList.slice(0, editIndex), pinpoint, ...pinPointList.splice(editIndex + 1)]
-            : [...pinPointList, pinpoint])
-
-    }, [pinpoint])
+        if (pinpoint) {
+            setPinPointList(editIndex !== undefined ? [...pinPointList.slice(0, editIndex), pinpoint, ...pinPointList.splice(editIndex + 1)]
+                : [...pinPointList, pinpoint])
+        }
+        if (coupon) {
+            setCouponList(editIndex !== undefined ? [...couponList.slice(0, editIndex), coupon, ...couponList.splice(editIndex + 1)]
+                : [...couponList, coupon])
+        }
+    }, [pinpoint, coupon])
 
     const navToPinPointModal = (item: PinPoint, idx: number) => {
         mainNav.navigate("ModalStack", { screen: 'MakePinPointModal', params: { pinpoint: item, editIndex: idx } })
     }
+    const navToCouponModal = (item: Coupon, idx: number) => {
+        mainNav.navigate("ModalStack", { screen: 'MakeCouponModal', params: { coupon: item, editIndex: idx } })
+    }
     const deletePinPoint = (idx: number) => {
         setPinPointList([...pinPointList.slice(0, idx), ...pinPointList.slice(idx + 1)])
+    }
+    const deleteCoupon = (idx: number) => {
+        setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
     const submit = () => {
         campaginNav.navigate("Campagin");
@@ -89,6 +98,20 @@ const MakeCampagin = () => {
 
             <Box>
                 <SubTitle>쿠폰 리스트</SubTitle>
+                {couponList.map((item, idx) =>
+                    <Row key={idx} style={{ height: 50 }}>
+                        <Text
+                            style={{ fontSize: 18, paddingHorizontal: 20 }}
+                            onPress={() => navToCouponModal(item, idx)}>
+                            {item.name}
+                        </Text>
+                        <Text>{item.endDate}</Text>
+                        <EvilIcons
+                            style={{ marginLeft: 'auto', marginRight: 16 }}
+                            name="close"
+                            onPress={() => deleteCoupon(idx)} size={20} />
+                    </Row>
+                )}
                 <OutLineButton
                     title="쿠폰 추가"
                     onPress={() => mainNav.navigate("ModalStack", { screen: 'MakeCouponModal', params: {} })}

@@ -3,7 +3,7 @@ import { PinPoint, ModalStackParamList, quizType } from '@types'
 import { campaginNavigation, modalNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
-import { Alert, View } from 'react-native'
+import { View } from 'react-native'
 import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
 import { OutLineButton, TextArea, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
@@ -13,7 +13,6 @@ import perventGoBack from '../../hooks/perventGoBack'
 
 const MakePinPointModal = () => {
     const campaginNav = campaginNavigation();
-    const modalNav = modalNavigation();
     const nav = useNavigation();
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<ModalStackParamList, 'MakePinPointModal'>>();
@@ -35,12 +34,9 @@ const MakePinPointModal = () => {
     perventGoBack({hasUnsavedChanges})
     
     useEffect(() => {
-        if (pinpoint === undefined)
-            return;
+        if (pinpoint === undefined) return;
 
-        if (editIndex !== undefined) {
-            nav.setOptions({ headerTitle: "핀포인트 수정하기" })
-        }
+        if (editIndex !== undefined) nav.setOptions({ headerTitle: "핀포인트 수정하기" })
 
         setName(pinpoint.name);
         setLatitude(pinpoint.latitude);
