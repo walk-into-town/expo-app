@@ -3,7 +3,7 @@ import { StyleProp, TextStyle, View } from 'react-native'
 import { Input, Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import { FontAwesome } from '.';
+import { FontAwesome } from './icons';
 import { BtsWrapper } from './styled';
 
 interface Props {

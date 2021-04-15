@@ -1,59 +1,11 @@
-import { LightSearchBarProps } from '@types'
-import React from 'react'
-import { TextInputProps, View } from 'react-native'
-import { Button, ButtonProps, Image, Input, SearchBar } from "react-native-elements"
+import { LightSearchBar, NextButton, OutLineButton, SubmitButton, TextArea } from './elements'
+export { LightSearchBar, NextButton, OutLineButton, SubmitButton, TextArea }
 
-export const TextArea = (option: TextInputProps) => (
-    <Input
-        multiline
-        numberOfLines={4}
-        style={{height: 100}}
-        {...option}
-    />
-)
-
-export const OutLineButton = (props: ButtonProps) => (
-    <View style={{width: '100%', alignSelf: 'center'}}>
-        <Button 
-            type="outline" 
-            titleStyle={{fontFamily: "SCDream8"}} 
-            {...props} 
-        />
-    </View>
-)
-export const SubmitButton = (props: ButtonProps) => (
-    <View style={{width: '100%', position: "absolute", bottom: 20}}>
-        <Button {...props}/>
-    </View>
-)
-export const NextButton = (props: { onPress: () => void }) => (
-    <Image
-        onPress={props.onPress}
-        source={require('../../assets/next.png')}
-        style={{ width: 170, height: 77 }} />
-)
-
-export const LightSearchBar = (option: LightSearchBarProps) => {
-    option = {
-        ...option,
-        placeholder: "검색어",
-        cancelButtonTitle: "취소",
-    }
-    return (
-        <SearchBar
-            platform="ios"
-            containerStyle={{ backgroundColor: "transparent" }}
-            {...option}
-        />
-    )
-}
-
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-export {FontAwesome, EvilIcons, Ionicons};
+import { FontAwesome, EvilIcons, Ionicons } from './icons';
+export { FontAwesome, EvilIcons, Ionicons };
 
 import ImgPicker from './ImgPicker';
 import InputModal from './InputModal';
-import DateInput from './DateInput'
-export {ImgPicker, InputModal, DateInput}
+import DateInput from './DateInput';
+
+export { ImgPicker, InputModal, DateInput };

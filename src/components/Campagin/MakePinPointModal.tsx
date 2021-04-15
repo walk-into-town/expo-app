@@ -5,10 +5,8 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
 import { Alert, View } from 'react-native'
 import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
-import { OutLineButton, TextArea } from '../../atoms'
+import { OutLineButton, TextArea, EvilIcons, ImgPicker } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
-import Icon from 'react-native-vector-icons/EvilIcons';
-import ImgPicker from '../../atoms/ImgPicker'
 import { Picker } from '@react-native-picker/picker';
 
 
@@ -160,7 +158,7 @@ const MakePinPointModal = () => {
                             placeholder={`${idx + 1}번 선택지를 입력해주세요.`}
                             value={choice}
                             onChangeText={text => changeChoicesText(text, idx)}
-                            rightIcon={<Icon name='close' size={24} onPress={() => deleteChoices(idx)} />}
+                            rightIcon={<EvilIcons name='close' size={24} onPress={() => deleteChoices(idx)} />}
                         />)}
                         <OutLineButton title="선택지 추가" onPress={() => setChoices([...choices, ""])} />
 

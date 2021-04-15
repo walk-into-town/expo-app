@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Input } from 'react-native-elements';
-import { TextArea, DateInput, ImgPicker, OutLineButton } from '../../atoms';
+import { DateInput, ImgPicker, OutLineButton, InputModal } from '../../atoms';
 import { Container, SubTitle } from '../../atoms/styled'
-import InputModal from '../../atoms/InputModal';
 import { Coupon } from '@types';
 
 interface Props {
@@ -18,7 +17,7 @@ const MakeCouponModal = (props: Props) => {
     const [couponImgs, setCouponImgs] = useState<string[]>([]);
 
     const onSubmit = () => {
-        const coupon:Coupon = {
+        const coupon: Coupon = {
             name,
             description,
             endDate,
@@ -30,16 +29,17 @@ const MakeCouponModal = (props: Props) => {
 
     return (
         <Container>
-            <InputModal useText={[name, setName]}/>
-            
-            <TextArea
-                value={description}
-                onChangeText={(text: string) => setDescription(text)}
-                placeholder="쿠폰의 상세 설명" />
+            <InputModal useText={[name, setName]} />
+
+            <InputModal
+                useText={[description, setDescription]}
+                placeholder="쿠폰의 상세설명을 입력해주세요."
+                type='textarea' />
 
             <ImgPicker useImgs={[couponImgs, setCouponImgs]} />
 
             <SubTitle>쿠폰 상품</SubTitle>
+            <OutLineButton title="쿠폰 상품 추가" />
 
             <Input
                 keyboardType="numeric"
@@ -47,12 +47,12 @@ const MakeCouponModal = (props: Props) => {
                 onChangeText={(text: string) => { setLimit(text.replace(/[^0-9]/g, '')) }}
                 placeholder="쿠폰 배포수" />
 
-            <DateInput useDate={[endDate, setEndDate]}/>
+            <DateInput useDate={[endDate, setEndDate]} />
             <Button
                 title="쿠폰 추가하기"
                 onPress={onSubmit}
-                style={{marginTop: 30}}
-                titleStyle={{fontFamily: "SCDream7"}}/>
+                style={{ marginTop: 30 }}
+                titleStyle={{ fontFamily: "SCDream7" }} />
         </Container>
     )
 }
