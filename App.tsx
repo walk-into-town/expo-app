@@ -9,7 +9,7 @@ import fonts from './src/atoms/fonts';
 const App = () => {
 
   const [loaded] = useFonts(fonts);
-  
+
   return !loaded ? null : (
     <SafeAreaProvider>
       <AuthContextProvider>

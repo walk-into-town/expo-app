@@ -4,18 +4,23 @@ import { DateInput, ImgPicker, OutLineButton, InputModal } from '../../atoms';
 import { ScrollWrapper, SubTitle } from '../../atoms/styled'
 import { Coupon } from '@types';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import perventGoBack from '../../hooks/perventGoBack';
 
 interface Props {
 
 }
 
 const MakeCouponModal = (props: Props) => {
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [endDate, setEndDate] = useState(new Date());
     const [limit, setLimit] = useState("");
     const [goods, setGoods] = useState<string[]>([])
     const [couponImgs, setCouponImgs] = useState<string[]>([]);
+
+    const hasUnsavedChanges = Boolean(name);
+    perventGoBack({hasUnsavedChanges})
 
     const onSubmit = () => {
         const coupon: Coupon = {
@@ -52,6 +57,7 @@ const MakeCouponModal = (props: Props) => {
                 subTitle="해당 개수만큼 배포됩니다"
                 />
 
+            <SubTitle>쿠폰 만기 날짜</SubTitle>
             <DateTimePicker 
                 value={endDate}
                 display="spinner" 

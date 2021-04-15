@@ -5,6 +5,8 @@ import { Button, Input, Text } from 'react-native-elements'
 import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
 import { OutLineButton, ImgPicker, InputModal, EvilIcons } from '../../atoms';
 import { SubTitle, ScrollWrapper, Box, Row } from '../../atoms/styled';
+import { Alert } from 'react-native';
+import perventGoBack from '../../hooks/perventGoBack';
 
 
 const MakeCampagin = () => {
@@ -20,6 +22,9 @@ const MakeCampagin = () => {
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState([]);
     // react native multipart/form-data ajax
+
+    const hasUnsavedChanges = Boolean(title);
+    perventGoBack({hasUnsavedChanges});
 
     useEffect(() => {
         if (pinpoint === undefined) return;

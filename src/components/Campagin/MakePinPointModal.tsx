@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { PinPoint, ModalStackParamList, quizType } from '@types'
-import { campaginNavigation } from '../../navigation/useNavigation'
+import { campaginNavigation, modalNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
 import { Alert, View } from 'react-native'
@@ -8,10 +8,12 @@ import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
 import { OutLineButton, TextArea, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
 import { Picker } from '@react-native-picker/picker';
+import perventGoBack from '../../hooks/perventGoBack'
 
 
 const MakePinPointModal = () => {
     const campaginNav = campaginNavigation();
+    const modalNav = modalNavigation();
     const nav = useNavigation();
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<ModalStackParamList, 'MakePinPointModal'>>();
@@ -29,6 +31,9 @@ const MakePinPointModal = () => {
     // const [choicesAnswer, setChoicesAnswer] = useState<string>("");
     const [selectedAnswer, setSelectedAnswer] = useState("");
 
+    const hasUnsavedChanges = Boolean(name);
+    perventGoBack({hasUnsavedChanges})
+    
     useEffect(() => {
         if (pinpoint === undefined)
             return;
@@ -51,33 +56,6 @@ const MakePinPointModal = () => {
             setSelectedAnswer(pinpoint.quiz.answer);
 
     }, [pinpoint])
-
-
-    // const hasUnsavedChanges = Boolean(name || latitude || longitude || quizText);
-    // // 뒤로가기 방지
-    // // 두번 발생하는 버그.... (밤에 발생???)
-    // useEffect(() => {
-    //     campaginNav.addListener('beforeRemove', (e) => {
-    //         if (!hasUnsavedChanges) {
-    //             return;
-    //         }
-
-    //         e.preventDefault();
-
-    //         Alert.alert(
-    //             '정말 취소하시겠어요?',
-    //             '입력된 내용이 전부 사라집니다.',
-    //             [
-    //                 { text: "아니오", style: 'cancel', onPress: () => { } },
-    //                 {
-    //                     text: '취소합니다',
-    //                     style: 'destructive',
-    //                     onPress: () => campaginNav.dispatch(e.data.action),
-    //                 },
-    //             ]
-    //         );
-    //     }), [campaginNav, hasUnsavedChanges]
-    // })
 
     const changeChoicesText = (text: string, idx: number) => {
         setChoices([...choices.map((e, i) => i === idx ? text : e)]);
