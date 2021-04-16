@@ -4,7 +4,7 @@ import { Coupon, ModalStackParamList } from '@types';
 import { ImgPicker, OutLineButton, InputModal } from '../../atoms';
 import { ScrollWrapper, SubTitle } from '../../atoms/styled'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import perventGoBack from '../../hooks/perventGoBack';
+import perventGoBack from '../../api/perventGoBack';
 import { campaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { isEditCoupon } from '../../api/util';
