@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { PinPoint, ModalStackParamList, quizType } from '@types'
-import { campaginNavigation, modalNavigation } from '../../navigation/useNavigation'
+import { campaginNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
-import { View } from 'react-native'
+import { ImageStore, View } from 'react-native'
 import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
-import { OutLineButton, TextArea, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
+import { OutLineButton, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
 import { Picker } from '@react-native-picker/picker';
 import perventGoBack from '../../hooks/perventGoBack'
-
+import { isEditPinPoint } from '../../api/util'
 
 const MakePinPointModal = () => {
     const campaginNav = campaginNavigation();
@@ -30,9 +30,6 @@ const MakePinPointModal = () => {
     // const [choicesAnswer, setChoicesAnswer] = useState<string>("");
     const [selectedAnswer, setSelectedAnswer] = useState("");
 
-    const hasUnsavedChanges = Boolean(name);
-    perventGoBack({hasUnsavedChanges})
-    
     useEffect(() => {
         if (pinpoint === undefined) return;
 
@@ -60,9 +57,9 @@ const MakePinPointModal = () => {
         setChoices([...choices.filter((e, i) => i !== idx)]);
     }
     // 핀포인트 업로드
-    const submit = () => {
-        const pinpoint: PinPoint = {
-            name: name,
+    const getPinpoint: () => PinPoint = () => {
+        return {
+            name,
             imgs: pinPointImgs,
             latitude,
             longitude,
@@ -75,9 +72,16 @@ const MakePinPointModal = () => {
                 answer: type === '주관식' ? answer : selectedAnswer,
             }
         }
+    }
+    const submit = () => {
+        const pinpoint: PinPoint = getPinpoint();
         campaginNav.navigate('MakeCampagin', { pinpoint, editIndex });
     }
 
+    // const hasUnsavedChanges = Boolean(pinpoint === undefined ? name : isEditPinPoint(pinpoint, getPinpoint()));
+    const hasUnsavedChanges = Boolean(pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
+        : name || pinPointImgs.length || description || quizText || answer);
+    perventGoBack({ hasUnsavedChanges })
 
     return (
         <ScrollWrapper>
@@ -86,9 +90,9 @@ const MakePinPointModal = () => {
                 placeholder="핀포인트명을 입력해주세요" />
 
             <Row>
-                <ClearButton 
+                <ClearButton
                     title="위치찾기"
-                    onPress={() => console.log('위치 찾기 api 연동')}/>
+                    onPress={() => console.log('위치 찾기 api 연동')} />
                 <Text>위도 {latitude} 경도 {longitude}</Text>
             </Row>
             <ImgPicker useImgs={[pinPointImgs, setPinPointImgs]} />
@@ -99,9 +103,9 @@ const MakePinPointModal = () => {
                 type="textarea" />
 
             {/* 퀴즈 만들기 */}
-            <InputModal 
+            <InputModal
                 useText={[quizText, setQuizText]}
-                placeholder="퀴즈 질문을 입력해주세요"/>
+                placeholder="퀴즈 질문을 입력해주세요" />
 
             <View style={{ margin: 10 }}>
                 <ButtonGroup
@@ -111,11 +115,11 @@ const MakePinPointModal = () => {
                     textStyle={{ fontSize: 15, fontFamily: "SCDream5" }}
                 // selectedButtonStyle={{backgroundColor: "#333D79"}}
                 />
-                {type === '주관식' ? 
-                    <InputModal 
+                {type === '주관식' ?
+                    <InputModal
                         useText={[answer, setAnswer]}
                         placeholder="주관식 정답"
-                        textFontSize={17}/>
+                        textFontSize={17} />
                     //  객관식 문제
                     : <Box>
                         <SubTitle>선택지</SubTitle>

@@ -1,32 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Input, Text } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { Coupon, ModalStackParamList } from '@types';
-import { DateInput, ImgPicker, OutLineButton, InputModal } from '../../atoms';
-import { Box, ScrollWrapper, SubTitle } from '../../atoms/styled'
+import { ImgPicker, OutLineButton, InputModal } from '../../atoms';
+import { ScrollWrapper, SubTitle } from '../../atoms/styled'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import perventGoBack from '../../hooks/perventGoBack';
 import { campaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
+import { isEditCoupon } from '../../api/util';
 
 const MakeCouponModal = () => {
     const campaginNav = campaginNavigation();
     const nav = useNavigation();
     const { params: { coupon, editIndex } } = useRoute<RouteProp<ModalStackParamList, 'MakeCouponModal'>>();
 
-    if (editIndex !== undefined) nav.setOptions({ headerTitle: "핀포인트 수정하기" })
-
-    const [name, setName] = useState(coupon?.name || "");
+    const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [endDate, setEndDate] = useState(new Date());
     const [limit, setLimit] = useState("");
     const [goods, setGoods] = useState<string[]>([])
     const [couponImgs, setCouponImgs] = useState<string[]>([]);
 
-    const hasUnsavedChanges = Boolean(name);
-    perventGoBack({ hasUnsavedChanges })
+    useEffect(() => {
+        if (coupon === undefined) return
 
-    const onSubmit = () => {
-        const coupon: Coupon = {
+        if (editIndex !== undefined) nav.setOptions({ headerTitle: "쿠폰 수정하기" })
+
+        setName(coupon.name)
+        setDescription(coupon.description);
+        setCouponImgs(coupon.imgs);
+        setEndDate(new Date(coupon.endDate));
+        setGoods(coupon.goods);
+        setLimit(coupon.limit);
+    }, [coupon])
+
+    const getCoupon: () => Coupon = () => {
+        return {
             name,
             description,
             endDate: endDate.toISOString(),
@@ -34,7 +43,15 @@ const MakeCouponModal = () => {
             goods,
             imgs: couponImgs
         }
-        campaginNav.navigate("MakeCampagin", { coupon, editIndex })
+    }
+    // const hasUnsavedChanges = Boolean(name);
+    const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())
+        : name || description || limit || couponImgs.length
+    )
+    perventGoBack({ hasUnsavedChanges })
+
+    const onSubmit = () => {
+        campaginNav.navigate("MakeCampagin", { coupon: getCoupon(), editIndex })
     }
 
     return (
@@ -68,7 +85,7 @@ const MakeCouponModal = () => {
                 minimumDate={new Date()} />
 
             <Button
-                title="쿠폰 추가하기"
+                title={editIndex !== undefined ? "쿠폰 수정하기" : "쿠폰 추가하기"}
                 onPress={onSubmit}
                 style={{ marginVertical: 30 }}
                 titleStyle={{ fontFamily: "SCDream7" }} />
