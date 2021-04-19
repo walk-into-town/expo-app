@@ -5,7 +5,7 @@ import { Button, Input, Text } from 'react-native-elements'
 import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
 import { OutLineButton, ImgPicker, InputModal, EvilIcons } from '../../atoms';
 import { SubTitle, ScrollWrapper, Box, Row } from '../../atoms/styled';
-import perventGoBack from '../../api/perventGoBack';
+import perventGoBack from '../../util/perventGoBack';
 
 const MakeCampagin = () => {
     const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<CampaginStackParamList, 'MakeCampagin'>>();

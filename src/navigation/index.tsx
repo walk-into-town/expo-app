@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { View, Text } from 'react-native';
-import { useAuthContext } from '../api/Auth';
+import { useAuthContext } from '../util/Auth';
 import HomeTab from './HomeTab';
 import Game from '../components/GamePlay/Game';
 import Login from '../components/Login';

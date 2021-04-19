@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { useAuthContext } from '../../api/Auth';
+import { useAuthContext } from '../../util/Auth';
 import { Container, Row } from '../../atoms/styled';
 import Profile from './Profile';
 import BadgeList from './BadgeList';

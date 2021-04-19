@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, Card, ListItem, Text } from 'react-native-elements';
-import { useAuthContext } from '../../api/Auth';
+import { useAuthContext } from '../../util/Auth';
 
 interface Props {
 

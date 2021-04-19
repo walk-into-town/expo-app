@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import { Input } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/EvilIcons';
-import { useAuthContext } from '../../api/Auth';
+import { useAuthContext } from '../../util/Auth';
 
 
 interface Props {

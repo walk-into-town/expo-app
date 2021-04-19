@@ -8,8 +8,8 @@ import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
 import { OutLineButton, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
 import { Picker } from '@react-native-picker/picker';
-import perventGoBack from '../../api/perventGoBack'
-import { isEditPinPoint } from '../../api/util'
+import perventGoBack from '../../util/perventGoBack'
+import { isEditPinPoint } from '../../util'
 
 const MakePinPointModal = () => {
     const campaginNav = campaginNavigation();
