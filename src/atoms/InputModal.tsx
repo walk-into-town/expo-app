@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { StyleProp, TextStyle, View } from 'react-native'
+import { StyleProp, TextStyle, View, TouchableOpacity } from 'react-native'
 import { Input, Text } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { FontAwesome } from './icons';
 import { BtsWrapper } from './styled';

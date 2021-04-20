@@ -5,6 +5,7 @@ import { Image } from 'react-native-elements'
 import styled from 'styled-components/native'
 import { getRandomCat } from '../../api'
 import useFetch from '../../api/useFetch'
+import LoadingModal from '../../atoms/LoadingModal'
 
 interface Props {
 
@@ -27,6 +28,7 @@ export default (props: Props) => {
                 style={{ width: 200, height: 200 }} />
             <Text>{loading ? "loading" : " "}</Text>
             <Text> {err} </Text>
+            <LoadingModal loading={loading}/>
 
         </Container>
     )
