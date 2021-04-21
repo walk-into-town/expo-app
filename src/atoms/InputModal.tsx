@@ -4,13 +4,16 @@ import { Input, Text } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { FontAwesome } from './icons';
 import { BtsWrapper } from './styled';
+import { Animation, CustomAnimation } from 'react-native-animatable';
 
 interface Props {
     useText: [string, React.Dispatch<React.SetStateAction<string>>],
     placeholder?: string,
     subTitle?: string,
     type?: "input" | "textarea" | "number",
-    textFontSize?: number
+    textFontSize?: number,
+    animationIn?: Animation | CustomAnimation,
+    animationOut?: Animation | CustomAnimation
 }
 interface styleInterface {
     wrapper: StyleProp<TextStyle>,
@@ -18,7 +21,7 @@ interface styleInterface {
     input: StyleProp<TextStyle>
 }
 
-const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSize = 20 }: Props) => {
+const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSize = 20, animationIn, animationOut }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [text, setText] = useText;
     const [input, setInput] = useState(text);
@@ -35,32 +38,51 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
         toggleModal();
     }
 
-    const inputStyle: styleInterface = {
-        wrapper: { marginTop: 30, marginBottom: 20 },
-        text: { fontSize: textFontSize, fontFamily: "SCDream8", alignSelf: "center" },
-        input: { color: "#FFF", fontSize: 30, fontFamily: "SCDream6" }
+    const getStyle = (): styleInterface => {
+        switch (type) {
+            case "input": case "number":
+                return {
+                    wrapper: { marginTop: 30, marginBottom: 20 },
+                    text: { fontSize: textFontSize, fontFamily: "SCDream8", alignSelf: "center" },
+                    input: { color: "#FFF", fontSize: 30, fontFamily: "SCDream6" }
+                }
+            case "textarea":
+                return {
+                    wrapper: {},
+                    text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7 },
+                    input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
+                }
+        }
     }
-    const textareaStyle: styleInterface = {
-        wrapper: {},
-        text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7 },
-        input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
+    const onChangeText = (text: string) => {
+        switch (type) {
+            case "input": case "textarea":
+                return setInput(text);
+            case "number":
+                return setInput(text.replace(/[^0-9]/g, ''));
+        }
     }
 
     return (
-        <View style={type === "textarea" ? textareaStyle.wrapper : inputStyle.wrapper}>
+        <View style={getStyle().wrapper}>
             <TouchableOpacity onPress={openModal}>
-                <Text style={type === "textarea" ? textareaStyle.text : inputStyle.text}>
+                <Text style={getStyle().text}>
                     {text || placeholder || "제목명을 입력해주세요"}
                 </Text>
             </TouchableOpacity>
             <Text style={{ alignSelf: "center", marginTop: 1 }}> {subTitle} </Text>
 
-            <Modal isVisible={isModalVisible} animationOutTiming={5} avoidKeyboard>
+            <Modal 
+                isVisible={isModalVisible}
+                animationIn={animationIn || "zoomIn"}
+                animationOut={animationOut || "fadeOut"}
+                avoidKeyboard
+            >
                 <Input
                     autoFocus
-                    selectionColor={"#FFF"} style={type === "textarea" ? textareaStyle.input : inputStyle.input}
+                    selectionColor={"#FFF"} style={getStyle().input}
                     value={input}
-                    onChangeText={(text: string) => setInput(type === "number" ? text.replace(/[^0-9]/g, '') : text)}
+                    onChangeText={onChangeText}
                     multiline={type === "textarea"}
                     keyboardType={type === "number" ? "numeric" : "default"}
                 // onEndEditing={() => {
