@@ -25,12 +25,12 @@ export const SubmitButton = (props: ButtonProps) => (
         <Button {...props} />
     </View>
 )
-export const NextButton = (props: { onPress: () => void }) => (
-    <Image
-        onPress={props.onPress}
-        source={require('../../assets/next.png')}
-        style={{ width: 170, height: 77 }} />
-)
+// export const NextButton = (props: { onPress: () => void }) => (
+//     <Image
+//         onPress={props.onPress}
+//         source={require('../../assets/next.png')}
+//         style={{ width: 170, height: 77 }} />
+// )
 
 // =================== Input ===================
 

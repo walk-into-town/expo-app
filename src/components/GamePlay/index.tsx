@@ -28,6 +28,7 @@ export default (props: Props) => {
                 style={{ width: 200, height: 200 }} />
             <Text>{loading ? "loading" : " "}</Text>
             <Text> {err} </Text>
+            
             <LoadingModal loading={loading}/>
 
         </Container>
