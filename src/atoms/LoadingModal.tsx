@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image } from 'react-native-elements';
+import { Image, View } from 'react-native';
 import Modal from 'react-native-modal';
 
 const loadingGif = [
@@ -54,10 +54,11 @@ const LoadingModal = ({ loading }: Props) => {
             animationInTiming={1000}
             animationOut={'slideOutRight'}
             animationOutTiming={1000}
-            >
-                <Image
-                    source={gifUri}
-                    style={{ width: "40%", aspectRatio: 1, resizeMode: "contain" }} />
+            backdropOpacity={0.8}
+        >
+            <Image
+                source={gifUri}
+                style={{ width: "20%", aspectRatio: 1, resizeMode: "contain" }} />
         </Modal>
     )
 }

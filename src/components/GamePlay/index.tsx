@@ -1,10 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
-import { Button, Text } from 'react-native'
-import { Image } from 'react-native-elements'
+import { Button, Image, Text } from 'react-native'
 import styled from 'styled-components/native'
 import { getRandomCat } from '../../api'
-import useFetch from '../../api/useFetch'
 import LoadingModal from '../../atoms/LoadingModal'
 
 interface Props {
@@ -28,7 +26,7 @@ export default (props: Props) => {
                 style={{ width: 200, height: 200 }} />
             <Text>{loading ? "loading" : " "}</Text>
             <Text> {err} </Text>
-            
+
             <LoadingModal loading={loading}/>
 
         </Container>
