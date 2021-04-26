@@ -17,28 +17,45 @@ const soundList = [...Object.values(soundPath)]
 export default (props: Props) => {
     const navigation = useNavigation();
     const [sound, setSound] = useState<Audio.Sound>();
+
     const { data, err, loading, refetch } = getRandomCat();
 
+    useEffect(() => {
+        playSound();
+    }, [])
+    // 메모리 누수 방지, 다음 차례의 effect를 실행하기 전에 이전의 렌더링에서 파생된 effect 또한 정리
+    useEffect(() => {
+        return sound ? stopSound : undefined;
+    }, [sound])
 
     const playSound = async() => {
         try {
-            const { sound } = await Audio.Sound.createAsync(require('../../../assets/sound/balloon.mp3'));
+            const path = soundList[Math.floor(Math.random() * soundList.length)]
+            const { sound } = await Audio.Sound.createAsync(path, {isLooping: true});
             setSound(sound);
+            await sound.playAsync();
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
     }
-
-
+    const stopSound = () => {
+        sound?.unloadAsync();
+    }
+    const onPressRandom = () => {
+        stopSound();
+        refetch();
+        playSound();
+    }
 
     return (
         <Container>
             <ClearButton
                 title="play"
                 onPress={() => navigation.navigate("Game")} />
+
             <ClearButton
                 title="RANDOM"
-                onPress={refetch} />
+                onPress={onPressRandom} />
             <Image source={{ uri: data ? data.file : null }}
                 style={{ width: 200, height: 200 }} />
             <Text>{loading ? "loading" : " "}</Text>
@@ -47,8 +64,8 @@ export default (props: Props) => {
             <LoadingModal loading={loading} />
 
             <ClearButton
-                title="PLAY SOUND"
-                onPress={playSound}  />
+                title="STOP SOUND" 
+                onPress={stopSound}/>
 
         </Container>
     )
