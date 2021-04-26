@@ -1,1 +1,1 @@
-export const ip = ""
+export const ip = "https://walk-into-town.ga"

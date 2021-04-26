@@ -45,7 +45,7 @@ interface Props {
 }
 const LoadingModal = ({ loading }: Props) => {
     const gifUri = loadingGif[Math.floor(Math.random() * loadingGif.length)]
-
+    
     return (
         <Modal
             isVisible={loading}

@@ -1,31 +1,34 @@
-import { Member, ModifyMember } from "@types"
+import { RegisterMember, ModifyMember, MemberLoginFetchRes, MemberLogoutFetchRes, MemberRegisterFetchRes, MemberModifyFetchRes, MemberWithdrawFetchRes } from "@types"
 import { ip } from "./ip"
 import useFetch from "./useFetch"
 
+
+
 /* user/member */
-export const login = (id: string, pw: string) => {
+export const memberLogin: MemberLoginFetchRes = (id, pw) => {
     return useFetch(`${ip}/member/login?id=${id}&pw=${pw}`)
 }
 
-export const logout = (id: string) => {
+export const memberLogout: MemberLogoutFetchRes = (id) => {
     return useFetch(`${ip}/member/logout?id=${id}`)
 }
 
-export const register = (data:Member) => {
+
+export const memberRegister: MemberRegisterFetchRes = (data) => {
     return useFetch(`${ip}/member/register`, {
         method: "POST",
         body: JSON.stringify(data)
     })
 }
 
-export const modifyMember = (data:ModifyMember) => {
+export const memberModify: MemberModifyFetchRes = (data) => {
     return useFetch(`${ip}/member/modify`, {
         method: "POST",
         body: JSON.stringify(data)
     })
 }
 
-export const withdrawMember = (data:{id:string, pw:string}) => {
+export const memberWithdraw: MemberWithdrawFetchRes = (data) => {
     return useFetch(`${ip}/member/withdraw`, {
         method: "POST",
         body: JSON.stringify(data)

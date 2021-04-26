@@ -1,6 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
-import { Image } from 'react-native-elements'
+import { Image, View } from 'react-native'
 import styled from 'styled-components/native'
 import { Container } from '../../atoms/styled'
 import LoginForm from './LoginForm'
