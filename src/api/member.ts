@@ -5,8 +5,21 @@ import useFetch from "./useFetch"
 
 
 /* user/member */
-export const memberLogin: MemberLoginFetchRes = (id, pw) => {
-    return useFetch(`${ip}/member/login?id=${id}&pw=${pw}`)
+export const memberLogin: MemberLoginFetchRes = async (data) => {
+
+    try {
+        const res = await fetch(`${ip}/member/login`, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = res.json();
+        return json;
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export const memberLogout: MemberLogoutFetchRes = (id) => {

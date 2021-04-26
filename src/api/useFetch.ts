@@ -7,6 +7,13 @@ const useFetch = (url: RequestInfo, opts?: RequestInit) => {
     const [err, setErr] = useState("");
     const [trigger, setTrigger] = useState(0);
 
+    opts = {
+        ...opts,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }
+
     const refetch = () => {
         setLoading(true);
         setTrigger(new Date().getTime());

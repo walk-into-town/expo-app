@@ -15,6 +15,9 @@ export default ({ }: Props) => {
 
     const { useAuth: { signOut } } = useAuthContext();
     const navigation = myPageNavigation();
+    const onPress = () => {
+
+    }
 
     return (
         <Container style={{ alignItems: "center" }}>

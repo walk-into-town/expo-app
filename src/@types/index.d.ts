@@ -4,14 +4,13 @@ declare module "@types" {
   /* auth */
   interface IUserToken {
     id: string;
-    name: string;
+    nickname: string;
     profileImg: string;
-    
+    seflIntruduction: string;
   }
   interface IAuth {
     isLoading: boolean;
-    isSignout: boolean;
-    userToken: IUserToken;
+    userToken: IUserToken | undefined;
   }
   interface IUseAuth {
     signIn: (data: {id: string, pw: string}) => Promise<void>;
@@ -28,7 +27,7 @@ declare module "@types" {
 
   type BaseDataFetchRes = {
     result: 'success' | 'failed',
-    message?: string,
+    message?: any,
     error?: string
   }
   type UseFetchRes = {

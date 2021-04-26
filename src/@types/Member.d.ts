@@ -21,7 +21,15 @@ declare module "@types" {
         selfIntroduction: string
     }
 
-    type MemberLoginFetchRes = (id: string, pw: string) => { data: BaseDataFetchRes, err: string }
+    type MemberLoginFetchRes = (data: { id: string, pw: string }) => Promise<{
+        result: 'success' | 'failed',
+        message?: {
+            nickname: string
+            profileImg: string
+            seflIntruduction: string
+        }
+        error?: string
+    }>
     type MemberLogoutFetchRes = (id: string) => { data: BaseDataFetchRes, err: string }
     type MemberRegisterFetchRes = (data: RegisterMember) => { data: BaseDataFetchRes, err: string }
     type MemberModifyFetchRes = (data: ModifyMember) => { data: BaseDataFetchRes, err: string }

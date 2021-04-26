@@ -23,7 +23,7 @@ const MyTheme = {
 }
 
 export default () => {
-    const { auth: { isLoading, userToken, isSignout } } = useAuthContext();
+    const { auth: { isLoading, userToken } } = useAuthContext();
 
     if (isLoading)
         return <View><Text>Loading...</Text></View>;
@@ -33,7 +33,7 @@ export default () => {
             <ThemeProvider theme={theme}>
                 <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
                     {
-                        userToken ?
+                        userToken !== null && userToken !== undefined ?
                             <>
                                 <Stack.Screen name="HomeTab" component={HomeTab} />
                                 <Stack.Screen name="Game" component={Game} />

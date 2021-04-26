@@ -17,12 +17,19 @@ const LoginForm = ({ }: Props) => {
     const [id, setId] = useState("")
     const [pw, setPw] = useState("")
 
+    const tmpColor = "#517fa4";
+
     const onClick = () => {
         console.log(id, pw)
     }
-    const { useAuth: { signIn } } = useAuthContext();
+    const { auth: { isLoading }, useAuth: { signIn } } = useAuthContext();
 
-    const tmpColor = "#517fa4";
+    const onPressLogin = async() => {
+        console.log(isLoading);
+        await signIn({id, pw});
+        console.log(isLoading)
+    }
+
 
     return (
         <View style={{marginTop: '30%'}}>
@@ -41,7 +48,7 @@ const LoginForm = ({ }: Props) => {
 
             <BtsWrapper>
                 <Register />
-                <ClearButton title="로그인" onPress={() => signIn({id, pw})}/>
+                <ClearButton title="로그인" onPress={onPressLogin}/>
             </BtsWrapper>
 
             <BtsWrapper>

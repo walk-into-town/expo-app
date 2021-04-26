@@ -1,4 +1,4 @@
-import { IAuthContext, IUseAuth, IUserToken } from "@types";
+import { IAuth, IAuthContext, IUseAuth, IUserToken } from "@types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { API } from "../api";
 import { getStorage, setStorage, rmStorage } from "./AsyncStorage";
@@ -13,34 +13,29 @@ const useAuthContext = () => {
     return context;
 }
 
+
+
 const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
-    const reduce = (prevState: any, action: { type: string; userToken?: IUserToken; }) => {
+    const reduce = (prevState: IAuth, action: { type: string; userToken?: IUserToken; }): IAuth => {
         switch (action.type) {
             case 'RESTORE_TOKEN':
+            case 'SIGN_IN':
                 return {
-                    ...prevState,
                     isLoading: false,
                     userToken: action.userToken,
                 };
-            case 'SIGN_IN':
-                return {
-                    ...prevState,
-                    isSignout: false,
-                    userToken: action.userToken,
-                };
             case 'SIGN_OUT':
+            default:
                 return {
-                    ...prevState,
-                    isSignout: true,
+                    isLoading: false,
                     userToken: undefined,
                 };
         }
     }
     const [auth, dispatch] = useReducer(reduce, {
         isLoading: true,
-        isSignout: false,
-        userToken: null,
+        userToken: undefined,
     });
 
     useEffect(() => {
@@ -54,15 +49,18 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
     const useAuth: IUseAuth = useMemo(() => ({
         signIn: async ({id, pw}) => {
-            const {data, err} = API.memberLogin(id, pw);
-            
-            if(data.result === "failed"){
-                console.log(err)
+            auth.isLoading = true;
+
+            const res = await API.memberLogin({id, pw});
+            console.log("응답", res)
+
+            if(res.result === "failed" || !res.message){
+                console.log(res.error)
                 return;
             }
-
+            const {message: {nickname, profileImg, seflIntruduction}} = res;
             await setStorage("userToken", {id, pw});
-            dispatch({ type: 'SIGN_IN', userToken: undefined });
+            dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, seflIntruduction} });
         },
         signOut: async () => {
             await rmStorage("userToken");
@@ -71,7 +69,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         signUp: async (data) => {
             const tmpUser = { name: "tmpSignup" }
             await setStorage("userToken", tmpUser);
-            dispatch({ type: 'SIGN_IN', userToken: undefined });
+            dispatch({ type: 'SIGN_IN' });
         },
     }), []);
 
