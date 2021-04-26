@@ -4,11 +4,11 @@ import { AuthContextProvider } from './src/util/Auth';
 
 import Navigator from "./src/navigation";
 import { useFonts } from 'expo-font';
-import fonts from './src/atoms/fonts';
+import { fontPath } from './src/atoms/paths';
 
 const App = () => {
 
-  const [loaded] = useFonts(fonts);
+  const [loaded] = useFonts(fontPath);
 
   return !loaded ? null : (
     <SafeAreaProvider>
