@@ -12,6 +12,7 @@ import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
 import { Container, SubTitle } from '../atoms/styled';
 import LoadingModal from '../components/LoadingModal';
+import { useLoadingContext } from '../util/Loading';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,8 @@ const MyTheme = {
 }
 
 export default () => {
-    const { auth: { isLoading, userToken } } = useAuthContext();
+    const { auth: { userToken } } = useAuthContext();
+    const { loading: { isLoading } } = useLoadingContext();
 
     return (
         <NavigationContainer theme={MyTheme}>

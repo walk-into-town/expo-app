@@ -9,20 +9,28 @@ declare module "@types" {
     seflIntruduction: string;
   }
 
-  type ReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN' | 'LOADING'
-  type IReduce = (state: IAuth, action: { type: ReduceAction, userToken?: IUserToken }) => IAuth;
+  type Loading = { isLoading: boolean }
+  type LoadingReduce = (state: Loading, action: { type: 'START' | 'END' }) => Loading
+  interface ILoadingContext {
+    loading: Loading,
+    useLoading: {
+      startLoading: () => void;
+      endLoading: () => void;
+    }
+  }
 
-  interface IAuth {
-    isLoading: boolean;
+  type Auth = {
     userToken: IUserToken | undefined;
   }
-  interface IUseAuth {
-    signIn: (data: {id: string, pw: string}) => Promise<string>;
+  type AuthReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN'
+  type AuthReduce = (state: Auth, action: { type: AuthReduceAction, userToken?: IUserToken }) => Auth;
+  type UseAuth = {
+    signIn: (data: { id: string, pw: string }) => Promise<string>;
     signOut: () => Promise<void>;
   }
   interface IAuthContext {
-    auth: IAuth,
-    useAuth: IUseAuth;
+    auth: Auth,
+    useAuth: UseAuth;
   }
 
   /* classes */

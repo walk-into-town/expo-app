@@ -7,6 +7,7 @@ import { ClearButton } from '../../atoms'
 import LoadingModal from '../LoadingModal'
 import { Audio } from "expo-av"
 import { soundPath } from '../../atoms/paths'
+import { useLoadingContext } from '../../util/Loading'
 
 interface Props {
 
@@ -19,6 +20,8 @@ export default (props: Props) => {
     const [sound, setSound] = useState<Audio.Sound>();
 
     const { data, err, loading, refetch } = getRandomCat();
+    const { useLoading: { startLoading, endLoading } } = useLoadingContext();
+
 
     useEffect(() => {
         playSound();
@@ -27,6 +30,9 @@ export default (props: Props) => {
     useEffect(() => {
         return sound ? stopSound : undefined;
     }, [sound])
+    useEffect(() => {
+        loading ? startLoading() : endLoading();
+    }, [loading]);
 
     const playSound = async() => {
         try {

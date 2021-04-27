@@ -1,3 +1,5 @@
+import { useLoadingContext } from "../util/Loading";
+
 export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | "DELETE", body?: any) => {
     try {
         const res = await fetch(route, {

@@ -5,6 +5,8 @@ import { AuthContextProvider } from './src/util/Auth';
 import Navigator from "./src/navigation";
 import { useFonts } from 'expo-font';
 import { fontPath } from './src/atoms/paths';
+import { LoadingContextProvider } from './src/util/Loading';
+import LoadingModal from './src/components/LoadingModal';
 
 const App = () => {
 
@@ -12,9 +14,11 @@ const App = () => {
 
   return !loaded ? null : (
     <SafeAreaProvider>
-      <AuthContextProvider>
-        <Navigator />
-      </AuthContextProvider>
+      <LoadingContextProvider>
+        <AuthContextProvider>
+          <Navigator />
+        </AuthContextProvider>
+      </LoadingContextProvider>
     </SafeAreaProvider>
   );
 }

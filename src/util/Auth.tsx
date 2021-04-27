@@ -1,7 +1,8 @@
-import { IAuth, IAuthContext, IReduce, IUseAuth, IUserToken, RegisterMember } from "@types";
+import { IAuthContext, AuthReduce, UseAuth } from "@types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { API } from "../api";
 import { getStorage, setStorage, rmStorage } from "./AsyncStorage";
+import { useLoadingContext } from "./Loading";
 
 const AuthContext = createContext<IAuthContext | null>(null);
 
@@ -15,28 +16,22 @@ const useAuthContext = () => {
 
 const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
-    const reduce:IReduce = (_, action) => {
+    const { useLoading: { startLoading, endLoading } } = useLoadingContext();
+
+    const reduce: AuthReduce = (_, action) => {
         switch (action.type) {
             case 'SIGN_IN':
                 return {
-                    isLoading: false,
                     userToken: action.userToken,
                 };
             case 'SIGN_OUT':
             case 'RESTORE_TOKEN':
                 return {
-                    isLoading: false,
                     userToken: undefined,
                 };
-            case 'LOADING':
-                return {
-                    isLoading: true,
-                    userToken: undefined,
-                }
         }
     }
     const [auth, dispatch] = useReducer(reduce, {
-        isLoading: true,
         userToken: undefined,
     });
 
@@ -54,37 +49,43 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         bootAsync();
     }, []);
 
-    const useAuth: IUseAuth = useMemo(() => ({
+    const useAuth: UseAuth = useMemo(() => ({
         signIn: async ({ id, pw }) => {
-            dispatch({ type: "LOADING" })
+            startLoading();
 
-            const {result, error, message} = await API.memberLogin({ id, pw });
+            const { result, error, message } = await API.memberLogin({ id, pw });
 
             if (result === "failed" || !message) {
-                console.log(`[${id} 로그인]`, error)
                 await rmStorage("userToken");
-                dispatch({ type: 'RESTORE_TOKEN'})
-                return error ? error : "";
+                dispatch({ type: 'RESTORE_TOKEN' })
+
+                endLoading();
+                return error ? error : "server error";
             }
             const { nickname, profileImg, seflIntruduction } = message;
             await setStorage("userToken", { id, pw });
             dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, seflIntruduction } });
+
+            endLoading();
             return "";
         },
         signOut: async () => {
-            if(!auth.userToken)
+            if (!auth.userToken)
                 return;
+            startLoading();
 
-            dispatch({ type: "LOADING" })
-            const { result, error} = await API.memberLogout({id: auth.userToken.id});
+            const { result, error } = await API.memberLogout({ id: auth.userToken.id });
             if (result === 'failed') {
                 console.log("[로그아웃 에러]", error)
+                endLoading();
                 return;
             }
-
-            console.log("[로그아웃]")
+            
             await rmStorage("userToken");
-            dispatch({ type: 'SIGN_OUT' })
+            dispatch({ type: 'SIGN_OUT' });
+            console.log("[로그아웃]");
+
+            endLoading();
         }
     }), []);
 
