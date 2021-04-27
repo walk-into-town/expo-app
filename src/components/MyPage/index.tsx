@@ -15,8 +15,9 @@ export default ({ }: Props) => {
 
     const { useAuth: { signOut } } = useAuthContext();
     const navigation = myPageNavigation();
-    const onPress = () => {
-
+    const onPressLogout = () => {
+        console.log("로그아웃 시도")
+        signOut();
     }
 
     return (
@@ -25,7 +26,7 @@ export default ({ }: Props) => {
 
             <Row>
                 <ClearButton title="프로필 편집" onPress={() => { }} type="clear" />
-                <ClearButton title="로그아웃" onPress={signOut} type="clear" />
+                <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
                 <ClearButton title="내 쿠폰함" onPress={() => navigation.navigate('MyCoupon')} type="clear" />
             </Row>
 

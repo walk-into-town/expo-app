@@ -10,6 +10,8 @@ import Login from '../components/Login';
 import ModalStack from './ModalStack';
 import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
+import { Container, SubTitle } from '../atoms/styled';
+import LoadingModal from '../components/LoadingModal';
 
 const Stack = createStackNavigator();
 
@@ -25,15 +27,13 @@ const MyTheme = {
 export default () => {
     const { auth: { isLoading, userToken } } = useAuthContext();
 
-    if (isLoading)
-        return <View><Text>Loading...</Text></View>;
-
     return (
         <NavigationContainer theme={MyTheme}>
             <ThemeProvider theme={theme}>
+                <LoadingModal loading={isLoading} />
                 <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
                     {
-                        userToken !== null && userToken !== undefined ?
+                        userToken !== undefined ?
                             <>
                                 <Stack.Screen name="HomeTab" component={HomeTab} />
                                 <Stack.Screen name="Game" component={Game} />

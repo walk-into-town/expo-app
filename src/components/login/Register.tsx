@@ -5,8 +5,9 @@ import { ClearButton, FontAwesome } from '../../atoms'
 import Modal from 'react-native-modal';
 import { BtsWrapper, Row, SubTitle, WhiteSubTitle, WhiteTitle } from '../../atoms/styled';
 import { WhiteInput } from '../../atoms/elements';
-import { Member } from '@types';
-import { register } from '../../api';
+import { RegisterMember } from '@types';
+import { API } from '../../api';
+import { useAuthContext } from '../../util/Auth';
 
 interface Props {
 
@@ -18,7 +19,6 @@ const Register = (props: Props) => {
     const [pw, setPw] = useState("");
     const [nickname, setNickname] = useState("");
 
-
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
@@ -28,15 +28,25 @@ const Register = (props: Props) => {
         setNickname("");
         toggleModal();
     }
-    const onSubmit = () => {
-        const user:Member = {
+
+    const { useAuth: { signIn } } = useAuthContext();
+
+    const onSubmit = async() => {
+        const user:RegisterMember = {
             id,
             pw,
             nickname,
             isManager: false
         }
-        const { data, err, loading } = register(user)
-        toggleModal();
+        const { result, message, error} = await API.memberRegister(user);
+        if (result === 'success') {
+            console.log("[회원가입 성공]", message)
+            signIn({ id, pw });
+            toggleModal();
+        }
+        else
+            console.log("[회원가입 에러]", error)
+
     }
     return (
         <View>
@@ -52,6 +62,7 @@ const Register = (props: Props) => {
                     value={pw}
                     onChangeText={(text: string) => setPw(text)}
                     placeholder="비밀번호"
+                    secureTextEntry={true}
                 />
                 <WhiteInput
                     value={nickname}

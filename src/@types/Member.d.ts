@@ -1,9 +1,11 @@
+import { BaseDataFetchRes, BaseDataFetchRes } from "@types"
+
 declare module "@types" {
     type RegisterMember = {
         id: string,
         pw: string,
         nickname: string,
-        // isManager: boolean
+        isManager: boolean
     }
 
     type ModifyMember = {
@@ -30,8 +32,8 @@ declare module "@types" {
         }
         error?: string
     }>
-    type MemberLogoutFetchRes = (id: string) => { data: BaseDataFetchRes, err: string }
-    type MemberRegisterFetchRes = (data: RegisterMember) => { data: BaseDataFetchRes, err: string }
+    type MemberLogoutFetchRes = (data: { id: string }) => Promise<BaseDataFetchRes>
+    type MemberRegisterFetchRes = (data: RegisterMember) => Promise<BaseDataFetchRes>
     type MemberModifyFetchRes = (data: ModifyMember) => { data: BaseDataFetchRes, err: string }
-    type MemberWithdrawFetchRes = (id: string, pw: string) => { data: BaseDataFetchRes, err: string }
+    type MemberWithdrawFetchRes = (data: {id: string, pw: string}) => { data: BaseDataFetchRes, err: string }
 }

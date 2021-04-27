@@ -8,14 +8,17 @@ declare module "@types" {
     profileImg: string;
     seflIntruduction: string;
   }
+
+  type ReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN' | 'LOADING'
+  type IReduce = (state: IAuth, action: { type: ReduceAction, userToken?: IUserToken }) => IAuth;
+
   interface IAuth {
     isLoading: boolean;
     userToken: IUserToken | undefined;
   }
   interface IUseAuth {
-    signIn: (data: {id: string, pw: string}) => Promise<void>;
+    signIn: (data: {id: string, pw: string}) => Promise<string>;
     signOut: () => Promise<void>;
-    signUp: (data: RegisterMember) => Promise<void>;
   }
   interface IAuthContext {
     auth: IAuth,
@@ -27,11 +30,11 @@ declare module "@types" {
 
   type BaseDataFetchRes = {
     result: 'success' | 'failed',
-    message?: any,
+    message?: string,
     error?: string
   }
-  type UseFetchRes = {
-    data: any,
+  type UseFetchRes<T> = {
+    data: T,
     loading: boolean;
     err: string,
     refetch: () => void;

@@ -15,7 +15,7 @@ const Profile = (props: Props) => {
                 <ListItem.Content>
                     <Avatar
                         size={'large'}
-                        title={userToken.name}
+                        title={userToken?.nickname}
                         source={{
                             uri: "https://i.imgur.com/fINuUV1.jpg"
                         }}
@@ -31,7 +31,7 @@ const Profile = (props: Props) => {
                 </ListItem.Content>
             </ListItem>
 
-            <Text>{userToken.name} 닉네임</Text>
+            <Text>{userToken?.nickname} 닉네임</Text>
             <Text>자기소개</Text>
         </Card>
     )

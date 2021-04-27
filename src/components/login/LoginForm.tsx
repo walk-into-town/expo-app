@@ -16,20 +16,19 @@ interface Props {
 const LoginForm = ({ }: Props) => {
     const [id, setId] = useState("")
     const [pw, setPw] = useState("")
+    const [error, setError] = useState("");
 
     const tmpColor = "#517fa4";
 
     const onClick = () => {
         console.log(id, pw)
     }
-    const { auth: { isLoading }, useAuth: { signIn } } = useAuthContext();
+    const { useAuth: { signIn } } = useAuthContext();
 
     const onPressLogin = async() => {
-        console.log(isLoading);
-        await signIn({id, pw});
-        console.log(isLoading)
+        const error = await signIn({id, pw});
+        setError(error)
     }
-
 
     return (
         <View style={{marginTop: '30%'}}>
@@ -40,8 +39,8 @@ const LoginForm = ({ }: Props) => {
 
             <Input
                 onChangeText={(text: string) => setPw(text)}
-                errorMessage='ENTER A VALID ERROR HERE'
-                errorStyle={{ color: '#517fa4', textAlign: "center" }}
+                errorMessage={error}
+                errorStyle={{ color: '#517fa4', textAlign: "center", fontSize: 15 }}
                 secureTextEntry={true}
                 inputStyle={{textAlign: "center"}}
             />
@@ -52,7 +51,7 @@ const LoginForm = ({ }: Props) => {
             </BtsWrapper>
 
             <BtsWrapper>
-                <EvilIcons name="sc-telegram" color={tmpColor} size={50} onPress={() => signIn({ id, pw })} />
+                <EvilIcons name="sc-telegram" color={tmpColor} size={50} onPress={onClick}/>
                 <EvilIcons name="sc-github" color={tmpColor} size={50} onPress={onClick} />
                 <EvilIcons name="sc-facebook" color={tmpColor} size={50} onPress={onClick} />
                 <EvilIcons name="sc-google-plus" color={tmpColor} size={50} onPress={onClick} />
