@@ -30,7 +30,8 @@ declare module "@types" {
             profileImg: string
             seflIntruduction: string
         }
-        error?: string
+        error?: string,
+        session: any
     }>
     type MemberLogoutFetchRes = (data: { id: string }) => Promise<BaseDataFetchRes>
     type MemberRegisterFetchRes = (data: RegisterMember) => Promise<BaseDataFetchRes>

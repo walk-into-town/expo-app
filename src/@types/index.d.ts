@@ -26,7 +26,7 @@ declare module "@types" {
   type AuthReduce = (state: Auth, action: { type: AuthReduceAction, userToken?: IUserToken }) => Auth;
   type UseAuth = {
     signIn: (data: { id: string, pw: string }) => Promise<string>;
-    signOut: () => Promise<void>;
+    signOut: (data: { id: string }) => Promise<void>;
   }
   interface IAuthContext {
     auth: Auth,
@@ -39,7 +39,8 @@ declare module "@types" {
   type BaseDataFetchRes = {
     result: 'success' | 'failed',
     message?: string,
-    error?: string
+    error?: string,
+    session: any
   }
   type UseFetchRes<T> = {
     data: T,

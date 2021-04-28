@@ -13,11 +13,13 @@ interface Props {
 
 export default ({ }: Props) => {
 
-    const { useAuth: { signOut } } = useAuthContext();
+    const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
     const navigation = myPageNavigation();
     const onPressLogout = () => {
-        console.log("로그아웃 시도")
-        signOut();
+        if(userToken)
+            signOut({ id: userToken.id });
+        else
+            console.error("userToken 에러")
     }
 
     return (
@@ -25,7 +27,7 @@ export default ({ }: Props) => {
             <Profile />
 
             <Row>
-                <ClearButton title="프로필 편집" onPress={() => { }} type="clear" />
+                <ClearButton title="프로필 편집" onPress={() => {console.log(userToken)}} type="clear" />
                 <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
                 <ClearButton title="내 쿠폰함" onPress={() => navigation.navigate('MyCoupon')} type="clear" />
             </Row>

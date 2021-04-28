@@ -53,37 +53,36 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         signIn: async ({ id, pw }) => {
             startLoading();
 
-            const { result, error, message } = await API.memberLogin({ id, pw });
+            console.log("[로그인 시도]", id, pw)
+            const { result, error, message, session } = await API.memberLogin({ id, pw });
+            dispatch({ type: "RESTORE_TOKEN" })
 
             if (result === "failed" || !message) {
                 await rmStorage("userToken");
                 dispatch({ type: 'RESTORE_TOKEN' })
-
-                endLoading();
-                return error ? error : "server error";
             }
-            const { nickname, profileImg, seflIntruduction } = message;
-            await setStorage("userToken", { id, pw });
-            dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, seflIntruduction } });
-
+            else {
+                const { nickname, profileImg, seflIntruduction } = message;
+                await setStorage("userToken", { id, pw });
+                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, seflIntruduction } });
+                console.log("[로그인 성공]", session)
+            }
             endLoading();
-            return "";
+            return error ? error : "";
         },
-        signOut: async () => {
-            if (!auth.userToken)
-                return;
+        signOut: async ({ id }) => {
             startLoading();
 
-            const { result, error } = await API.memberLogout({ id: auth.userToken.id });
+            const { result, error, session } = await API.memberLogout({ id });
             if (result === 'failed') {
                 console.log("[로그아웃 에러]", error)
                 endLoading();
                 return;
             }
-            
+
             await rmStorage("userToken");
             dispatch({ type: 'SIGN_OUT' });
-            console.log("[로그아웃]");
+            console.log("[로그아웃]", session);
 
             endLoading();
         }
