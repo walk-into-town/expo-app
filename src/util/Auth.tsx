@@ -44,6 +44,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 dispatch({ type: 'RESTORE_TOKEN' })
             else
                 useAuth.signIn(loginData);
+            endLoading();
         };
 
         bootAsync();
@@ -55,11 +56,10 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
             console.log("[로그인 시도]", id, pw)
             const { result, error, message, session } = await API.memberLogin({ id, pw });
-            dispatch({ type: "RESTORE_TOKEN" })
+            dispatch({ type: "RESTORE_TOKEN" });
 
             if (result === "failed" || !message) {
                 await rmStorage("userToken");
-                dispatch({ type: 'RESTORE_TOKEN' })
             }
             else {
                 const { nickname, profileImg, seflIntruduction } = message;
