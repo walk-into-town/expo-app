@@ -85,6 +85,7 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
                     onChangeText={onChangeText}
                     multiline={type === "textarea"}
                     keyboardType={type === "number" ? "numeric" : "default"}
+                    autoCapitalize="none"
                 // onEndEditing={() => {
                 //     if (type === 'input') onSubmit();
                 // }}

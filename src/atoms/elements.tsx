@@ -39,6 +39,7 @@ export const WhiteInput = (option: TextInputProps) => (
         placeholder="아이디"
         selectionColor={"#FFF"}
         inputStyle={{ color: "#FFF", fontSize: 25, fontFamily: "SCDream5" }}
+        autoCapitalize="none"
         {...option}
     />
 )
@@ -48,6 +49,7 @@ export const TextArea = (option: TextInputProps) => (
         multiline
         numberOfLines={4}
         style={{ height: 100 }}
+        autoCapitalize="none"
         {...option}
     />
 )

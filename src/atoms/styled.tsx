@@ -42,3 +42,11 @@ export const WhiteSubTitle = styled.Text`
     margin-bottom: 5px;
     color: white;
 `
+export const WhiteText = styled.Text`
+    font-family: "SCDream3";
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    color: white;
+`
