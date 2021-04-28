@@ -25,6 +25,7 @@ declare module "@types" {
   type AuthReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN'
   type AuthReduce = (state: Auth, action: { type: AuthReduceAction, userToken?: IUserToken }) => Auth;
   type UseAuth = {
+    fakeSignIn: (data: {id: string, pw: string}) => void;
     signIn: (data: { id: string, pw: string }) => Promise<string>;
     signOut: (data: { id: string }) => Promise<void>;
   }

@@ -24,15 +24,16 @@ const LoginForm = ({ }: Props) => {
     const onClick = () => {
         console.log(id, pw)
     }
-    const { useAuth: { signIn } } = useAuthContext();
+    const { useAuth: { signIn, fakeSignIn } } = useAuthContext();
 
     const onPressLogin = async () => {
         if (isBlank([id, pw])) {
             setError("빈칸을 입력해주세요")
             return;
         }
-        const error = await signIn({ id, pw });
-        setError(error)
+        fakeSignIn({ id, pw });
+        // const error = await signIn({ id, pw });
+        // setError(error)
     }
 
     return (

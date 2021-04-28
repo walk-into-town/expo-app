@@ -51,6 +51,11 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
     }, []);
 
     const useAuth: UseAuth = useMemo(() => ({
+        fakeSignIn: ({id, pw}) => {
+            startLoading();
+            dispatch({ type: "SIGN_IN", userToken: { id, nickname: "", profileImg: "", seflIntruduction: ""}});
+            endLoading();
+        },
         signIn: async ({ id, pw }) => {
             startLoading();
 
