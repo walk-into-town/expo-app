@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Card, Image } from 'react-native-elements'
-import { SubTitle } from '../../atoms/styled'
 
 interface Props {
 
@@ -12,7 +11,7 @@ const BadgeList = (props: Props) => {
         <Card containerStyle={{width: "100%"}}>
             <Card.Title>⚜️ 명예 컬렉션 ⚜️</Card.Title>
             <Card.Divider />
-        </Card>
+            </Card>
     )
 }
 

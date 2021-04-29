@@ -9,15 +9,12 @@ import { RegisterMember } from '@types';
 import { API } from '../../api';
 import { useAuthContext } from '../../util/Auth';
 import { isBlank } from '../../util';
-import { useLoadingContext } from '../../util/Loading';
 
 interface Props {
 
 }
 
 const Register = (props: Props) => {
-    const { useLoading: { startLoading, endLoading } } = useLoadingContext();
-
     const [isModalVisible, setModalVisible] = useState(false);
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
@@ -39,11 +36,10 @@ const Register = (props: Props) => {
 
     const onSubmit = async () => {
         const re = /^[a-zA-Z0-9]{4,12}$/
-        if (!re.test(id) || !re.test(pw) || isBlank([nickname])) {
+        if (!re.test(id) || re.test(pw) || isBlank([nickname])) {
             setError("입력을 확인해주세요");
             return;
         }
-        startLoading();
         const user: RegisterMember = {
             id,
             pw,
@@ -58,7 +54,7 @@ const Register = (props: Props) => {
         }
         else
             console.log("[회원가입 에러]", error)
-        endLoading();
+
     }
     return (
         <View>

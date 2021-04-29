@@ -28,8 +28,8 @@ export default ({ }: Props) => {
 
             <Row>
                 <ClearButton title="프로필 편집" onPress={() => {console.log(userToken)}} type="clear" />
-                <ClearButton title="내 쿠폰함" onPress={() => navigation.navigate('MyCoupon')} type="clear" />
                 <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
+                <ClearButton title="내 쿠폰함" onPress={() => navigation.navigate('MyCoupon')} type="clear" />
             </Row>
 
             <BadgeList />
