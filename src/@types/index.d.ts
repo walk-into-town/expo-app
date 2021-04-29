@@ -50,12 +50,6 @@ declare module "@types" {
   }
 
   /* navigation */
-  type CampaginParams = {
-    pinpoint?: PinPoint,
-    coupon?: Coupon,
-    editIndex?: number
-  }
-
   type MainStackParamList = {
     HomeTab: {
       screen?: keyof CampaginStackParamList,
@@ -69,25 +63,34 @@ declare module "@types" {
       screen: keyof ModalStackParamList
     }
   };
+
   type HomeTabParamList = {
     MyPageStack: undefined,
     CampaignStack: undefined,
     GamePlay: undefined,
     Ranking: undefined,
   };
+  type MyPageStackParamList = {
+    MyPage: undefined,
+    MyCoupon: undefined,
+  };
   type CampaginStackParamList = {
     CampaginStack: undefined,
   };
+
   type MakeCampaginStackParamList = {
     MakeCampagin: CampaginParams,
     MakePinPoint: CampaginParams,
     MakeCoupon: CampaginParams,
   };
-  type MyPageStackParamList = {
-    MyPage: undefined,
-    MyCoupon: undefined,
-  };
+  type CampaginParams = {
+    pinpoint?: PinPoint,
+    coupon?: Coupon,
+    editIndex?: number
+  }
+
   type ModalStackParamList = {
     MyCoupon: undefined,
   };
+
 }

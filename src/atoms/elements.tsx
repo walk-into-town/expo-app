@@ -2,6 +2,7 @@ import { LightSearchBarProps } from '@types'
 import React from 'react'
 import { TextInputProps, View } from 'react-native'
 import { Button, ButtonProps, Image, Input, SearchBar } from "react-native-elements"
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
 
 // =================== Button ===================
 
@@ -23,6 +24,12 @@ export const ClearButton = (props: ButtonProps) => (
 export const SubmitButton = (props: ButtonProps) => (
     <View style={{ width: '100%', position: "absolute", bottom: 20 }}>
         <Button {...props} />
+    </View>
+)
+export const HeaderLeftCloseIcon = () => (
+    <View>
+        <EvilIcons name="close" size={30} style={{ color: "blue" }} />
+
     </View>
 )
 // export const NextButton = (props: { onPress: () => void }) => (

@@ -47,7 +47,7 @@ const MakeCampagin = () => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
     const submit = () => {
-        mainNav.navigate("HomeTab", {screen: "CampaginStack"});
+        mainNav.navigate("HomeTab", { screen: "CampaginStack" });
     }
 
     return (

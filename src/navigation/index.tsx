@@ -1,8 +1,6 @@
 import React from 'react';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import { View, Text } from 'react-native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { useAuthContext } from '../util/Auth';
 import HomeTab from './HomeTab';
 import Game from '../components/GamePlay/Game';
@@ -10,7 +8,6 @@ import Login from '../components/Login';
 import ModalStack from './ModalStack';
 import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
-import { Container, SubTitle } from '../atoms/styled';
 import LoadingModal from '../components/LoadingModal';
 import { useLoadingContext } from '../util/Loading';
 import MakeCampaginStack from './MakeCampaginStack';
@@ -38,7 +35,8 @@ export default () => {
                         userToken !== undefined ?
                             <>
                                 <Stack.Screen name="HomeTab" component={HomeTab} />
-                                <Stack.Screen name="MakeCampaginStack" component={MakeCampaginStack} />
+                                <Stack.Screen name="MakeCampaginStack" component={MakeCampaginStack}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} />
                                 <Stack.Screen name="Game" component={Game} />
                                 <Stack.Screen name="ModalStack" component={ModalStack} />
                             </>
@@ -50,6 +48,6 @@ export default () => {
                 </Stack.Navigator>
 
             </ThemeProvider>
-        </NavigationContainer >
+        </NavigationContainer>
     )
 }
