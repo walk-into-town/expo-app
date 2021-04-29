@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { PinPoint, ModalStackParamList, quizType } from '@types'
-import { campaginNavigation } from '../../navigation/useNavigation'
+import { PinPoint, ModalStackParamList, quizType, MakeCampaginStackParamList } from '@types'
+import { makeCampaginNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
-import { ImageStore, View } from 'react-native'
+import { View } from 'react-native'
 import { Input, Button, Text, ButtonGroup } from 'react-native-elements'
 import { OutLineButton, EvilIcons, ImgPicker, InputModal, ClearButton } from '../../atoms'
 import { Box, Row, ScrollWrapper, SubTitle } from '../../atoms/styled'
@@ -11,16 +11,16 @@ import { Picker } from '@react-native-picker/picker';
 import perventGoBack from '../../util/perventGoBack'
 import { isEditPinPoint } from '../../util'
 
-const MakePinPointModal = () => {
-    const campaginNav = campaginNavigation();
+const MakePinPoint = () => {
+    const campaginNav = makeCampaginNavigation();
     const nav = useNavigation();
 
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<ModalStackParamList, 'MakePinPointModal'>>();
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakePinPoint'>>();
 
     const [name, setName] = useState("");
     const [latitude, setLatitude] = useState<number>(1.8);
     const [longitude, setLongitude] = useState<number>(19.9);
-    const [description, setDescription] = useState("")
+    const [description, setDescription] = useState("");
     const [pinPointImgs, setPinPointImgs] = useState<string[]>([]);
 
     const [quizText, setQuizText] = useState<string>("");
@@ -160,4 +160,4 @@ const MakePinPointModal = () => {
     )
 }
 
-export default MakePinPointModal
+export default MakePinPoint;

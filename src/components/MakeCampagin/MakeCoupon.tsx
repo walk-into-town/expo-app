@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native-elements';
-import { Coupon, ModalStackParamList } from '@types';
+import { Coupon, MakeCampaginStackParamList, ModalStackParamList } from '@types';
 import { ImgPicker, OutLineButton, InputModal } from '../../atoms';
 import { ScrollWrapper, SubTitle } from '../../atoms/styled'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import perventGoBack from '../../util/perventGoBack';
-import { campaginNavigation } from '../../navigation/useNavigation';
+import { makeCampaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { isEditCoupon } from '../../util';
 
-const MakeCouponModal = () => {
-    const campaginNav = campaginNavigation();
+const MakeCoupon = () => {
+    const campaginNav = makeCampaginNavigation();
     const nav = useNavigation();
-    const { params: { coupon, editIndex } } = useRoute<RouteProp<ModalStackParamList, 'MakeCouponModal'>>();
+    const { params: { coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCoupon'>>();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -93,4 +93,4 @@ const MakeCouponModal = () => {
     )
 }
 
-export default MakeCouponModal
+export default MakeCoupon;

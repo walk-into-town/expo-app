@@ -1,11 +1,9 @@
 import React from 'react'
-import styled from 'styled-components/native'
 import { useAuthContext } from '../../util/Auth';
 import { Container, Row } from '../../atoms/styled';
 import Profile from './Profile';
 import BadgeList from './BadgeList';
-import { Button } from 'react-native-elements';
-import { mainNavigation, myPageNavigation } from '../../navigation/useNavigation';
+import { myPageNavigation } from '../../navigation/useNavigation';
 import { ClearButton } from '../../atoms';
 
 interface Props {
@@ -14,7 +12,7 @@ interface Props {
 export default ({ }: Props) => {
 
     const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
-    const navigation = myPageNavigation();
+    const myPageNav = myPageNavigation();
     const onPressLogout = () => {
         if(userToken)
             signOut({ id: userToken.id });
@@ -28,7 +26,7 @@ export default ({ }: Props) => {
 
             <Row>
                 <ClearButton title="프로필 편집" onPress={() => {console.log(userToken)}} type="clear" />
-                <ClearButton title="내 쿠폰함" onPress={() => navigation.navigate('MyCoupon')} type="clear" />
+                <ClearButton title="내 쿠폰함" onPress={() => myPageNav.navigate('MyCoupon')} type="clear" />
                 <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
             </Row>
 

@@ -3,17 +3,18 @@ import { Text } from 'react-native-elements';
 import styled from 'styled-components/native';
 import { ClearButton } from '../../atoms';
 import { Container } from '../../atoms/styled';
-import { campaginNavigation } from '../../navigation/useNavigation';
+import { mainNavigation } from '../../navigation/useNavigation';
 import SearchCampagin from './SearchCampagin';
 
 export default () => {
-    const navigation = campaginNavigation();
+    const mainNav = mainNavigation();
+
     return (
         <Container>
             <ClearButton
                 title="나만의 캠페인 만들기"
                 type="clear"
-                onPress={() => navigation.navigate('MakeCampagin', {})}
+                onPress={() => mainNav.navigate('MakeCampaginStack', { screen: "MakeCampagin", params: {}})}
             />
             <SearchCampagin />
             <CampaignList>

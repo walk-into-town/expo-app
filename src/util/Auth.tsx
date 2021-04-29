@@ -52,23 +52,26 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
     const useAuth: UseAuth = useMemo(() => ({
         signIn: async ({ id, pw }) => {
-            startLoading();
+            // startLoading();
 
-            console.log("[로그인 시도]", id, pw)
-            const { result, error, message, session } = await API.memberLogin({ id, pw });
-            dispatch({ type: "RESTORE_TOKEN" });
+            // console.log("[로그인 시도]", id, pw)
+            // const { result, error, message, session } = await API.memberLogin({ id, pw });
+            // dispatch({ type: "RESTORE_TOKEN" });
 
-            if (result === "failed" || !message) {
-                await rmStorage("userToken");
-            }
-            else {
-                const { nickname, profileImg, seflIntruduction } = message;
-                await setStorage("userToken", { id, pw });
-                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, seflIntruduction } });
-                console.log("[로그인 성공]", session)
-            }
-            endLoading();
-            return error ? error : "";
+            // if (result === "failed" || !message) {
+            //     await rmStorage("userToken");
+            // }
+            // else {
+            //     const { nickname, profileImg, seflIntruduction } = message;
+            //     await setStorage("userToken", { id, pw });
+            //     dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, seflIntruduction } });
+            //     console.log("[로그인 성공]", session)
+            // }
+            // endLoading();
+            // return error ? error : "";
+
+            dispatch({ type: 'SIGN_IN', userToken: { id, nickname: "닉네임", profileImg: "", seflIntruduction: "아무노래나 틀어" } });
+            return "";
         },
         signOut: async ({ id }) => {
             startLoading();

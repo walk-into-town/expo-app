@@ -1,4 +1,4 @@
-import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react'
 import MyPage from '../components/MyPage';
 import MyCoupon from '../components/MyPage/MyCoupon';

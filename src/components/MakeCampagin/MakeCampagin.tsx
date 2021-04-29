@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { PinPoint, CampaginStackParamList, Coupon } from '@types';
+import { PinPoint, Coupon, MakeCampaginStackParamList } from '@types';
 import { Button, Input, Text } from 'react-native-elements'
-import { campaginNavigation, mainNavigation } from '../../navigation/useNavigation';
+import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
 import { OutLineButton, ImgPicker, InputModal, EvilIcons } from '../../atoms';
 import { SubTitle, ScrollWrapper, Box, Row } from '../../atoms/styled';
 import perventGoBack from '../../util/perventGoBack';
 
 const MakeCampagin = () => {
-    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<CampaginStackParamList, 'MakeCampagin'>>();
+    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCampagin'>>();
 
     const mainNav = mainNavigation();
-    const campaginNav = campaginNavigation();
+    const makeCampaginNav = makeCampaginNavigation();
 
     const [title, setTitle] = useState("");
     const [campaginImgs, setCampaginImgs] = useState<string[]>([]);
@@ -35,10 +35,10 @@ const MakeCampagin = () => {
     }, [pinpoint, coupon])
 
     const navToPinPointModal = (item: PinPoint, idx: number) => {
-        mainNav.navigate("ModalStack", { screen: 'MakePinPointModal', params: { pinpoint: item, editIndex: idx } })
+        makeCampaginNav.navigate("MakePinPoint", { pinpoint: item, editIndex: idx })
     }
     const navToCouponModal = (item: Coupon, idx: number) => {
-        mainNav.navigate("ModalStack", { screen: 'MakeCouponModal', params: { coupon: item, editIndex: idx } })
+        makeCampaginNav.navigate("MakeCoupon", { coupon: item, editIndex: idx })
     }
     const deletePinPoint = (idx: number) => {
         setPinPointList([...pinPointList.slice(0, idx), ...pinPointList.slice(idx + 1)])
@@ -47,7 +47,7 @@ const MakeCampagin = () => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
     const submit = () => {
-        campaginNav.navigate("Campagin");
+        mainNav.navigate("HomeTab", {screen: "CampaginStack"});
     }
 
     return (
@@ -89,7 +89,7 @@ const MakeCampagin = () => {
                 )}
                 <OutLineButton
                     title="핀포인트 추가"
-                    onPress={() => mainNav.navigate("ModalStack", { screen: 'MakePinPointModal', params: {} })}
+                    onPress={() => makeCampaginNav.navigate('MakePinPoint', {})}
                 />
             </Box>
 
@@ -111,7 +111,7 @@ const MakeCampagin = () => {
                 )}
                 <OutLineButton
                     title="쿠폰 추가"
-                    onPress={() => mainNav.navigate("ModalStack", { screen: 'MakeCouponModal', params: {} })}
+                    onPress={() => makeCampaginNav.navigate("MakeCoupon", {})}
                 />
             </Box>
 

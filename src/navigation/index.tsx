@@ -13,6 +13,7 @@ import { ThemeProvider } from 'styled-components';
 import { Container, SubTitle } from '../atoms/styled';
 import LoadingModal from '../components/LoadingModal';
 import { useLoadingContext } from '../util/Loading';
+import MakeCampaginStack from './MakeCampaginStack';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,6 @@ const MyTheme = {
     colors: {
         ...DefaultTheme.colors,
         // primary: 'rgb(255, 45, 85)',
-
     }
 }
 
@@ -38,6 +38,7 @@ export default () => {
                         userToken !== undefined ?
                             <>
                                 <Stack.Screen name="HomeTab" component={HomeTab} />
+                                <Stack.Screen name="MakeCampaginStack" component={MakeCampaginStack} />
                                 <Stack.Screen name="Game" component={Game} />
                                 <Stack.Screen name="ModalStack" component={ModalStack} />
                             </>

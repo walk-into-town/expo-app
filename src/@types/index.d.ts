@@ -60,31 +60,34 @@ declare module "@types" {
     HomeTab: {
       screen?: keyof CampaginStackParamList,
     },
+    MakeCampaginStack: {
+      screen?: keyof MakeCampaginStackParamList,
+      params: CampaginParams
+    },
     Game: undefined,
     ModalStack: {
-      screen: keyof ModalStackParamList,
-      params: CampaginParams
+      screen: keyof ModalStackParamList
     }
   };
-  type HomeTapParamList = {
-    Home: undefined;
-    Campaign: undefined;
-    GamePlay: undefined;
-    Ranking: undefined;
+  type HomeTabParamList = {
+    MyPageStack: undefined,
+    CampaignStack: undefined,
+    GamePlay: undefined,
+    Ranking: undefined,
   };
   type CampaginStackParamList = {
-    Campagin: undefined,
-    MyCampagin: undefined,
+    CampaginStack: undefined,
+  };
+  type MakeCampaginStackParamList = {
     MakeCampagin: CampaginParams,
-    SearchCampagin: undefined
+    MakePinPoint: CampaginParams,
+    MakeCoupon: CampaginParams,
   };
   type MyPageStackParamList = {
     MyPage: undefined,
-    MyCoupon: undefined
+    MyCoupon: undefined,
   };
   type ModalStackParamList = {
-    MakePinPointModal: CampaginParams,
-    MakeCouponModal: CampaginParams,
-    MyCoupon: undefined
-  }
+    MyCoupon: undefined,
+  };
 }

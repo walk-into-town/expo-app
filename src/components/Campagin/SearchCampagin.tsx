@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { SearchBar, Text } from 'react-native-elements'
+import { Text } from 'react-native-elements'
 import { LightSearchBar } from '../../atoms'
 
 const SearchCampagin = () => {

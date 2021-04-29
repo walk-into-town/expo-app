@@ -11,8 +11,8 @@ const Tab = createBottomTabNavigator();
 
 const HomeTab = () => {
     const iconName: { [key: string]: [string, string] } = {
-        MyPage: ["ios-home-outline", "ios-home"],
-        Campaign: ["ios-flashlight-outline", "ios-flashlight"],
+        MyPageStack: ["ios-home-outline", "ios-home"],
+        CampaginStack: ["ios-flashlight-outline", "ios-flashlight"],
         GamePlay: ["ios-map-outline", "ios-map"],
         Ranking: ["ios-trophy-outline", "ios-trophy"]
     }
@@ -26,8 +26,8 @@ const HomeTab = () => {
                 activeTintColor: "#517fa4",
                 inactiveTintColor: 'gray',
             }}>
-            <Tab.Screen name="MyPage" component={MyPageStack} />
-            <Tab.Screen name="Campaign" component={CampaginStack} />
+            <Tab.Screen name="MyPageStack" component={MyPageStack} />
+            <Tab.Screen name="CampaginStack" component={CampaginStack} />
             <Tab.Screen name="GamePlay" component={GamePlay} options={{ tabBarBadge: 3 }} />
             <Tab.Screen name="Ranking" component={Ranking} />
         </Tab.Navigator>
