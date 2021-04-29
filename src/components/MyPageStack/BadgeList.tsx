@@ -1,7 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
-import { Card, Image } from 'react-native-elements'
-import { SubTitle } from '../../atoms/styled'
+import { Card } from 'react-native-elements'
 
 interface Props {
 

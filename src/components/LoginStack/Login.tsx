@@ -1,17 +1,16 @@
 import React from 'react'
 import { TuseState } from '@types';
-import { View, Image } from 'react-native';
+import { View, Image, NativeSegmentedControlIOSChangeEvent } from 'react-native';
 import { Input } from 'react-native-elements'
 import styled from 'styled-components/native';
 import { BtsWrapper, Container } from '../../atoms/styled';
 import { ClearButton, EvilIcons } from '../../atoms';
 import LoginRegister from '../../container/LoginRegister';
 
-
 interface Props {
     useId: TuseState<string>,
     usePw: TuseState<string>,
-    useError: TuseState<string>,
+    error: string
     onClick: () => void,
     onPressLogin: () => Promise<void>
 }
@@ -21,7 +20,6 @@ const Login = (props: Props) => {
 
     const [id, setId] = props.useId;
     const [pw, setPw] = props.usePw;
-    const [error, setError] = props.useError;
 
     return (
         <Container style={{ backgroundColor: "#FFF" }}>
@@ -38,7 +36,7 @@ const Login = (props: Props) => {
 
                 <Input
                     onChangeText={(text: string) => setPw(text)}
-                    errorMessage={error}
+                    errorMessage={props.error}
                     errorStyle={{ color: tmpColor, textAlign: "center", fontSize: 15 }}
                     secureTextEntry={true}
                     inputStyle={{ textAlign: "center", fontSize: 30 }}

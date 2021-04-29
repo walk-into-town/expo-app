@@ -1,11 +1,11 @@
 import React from 'react'
-import { useAuthContext } from '../util/Auth';
-import { modalNavigation } from '../navigation/useNavigation';
+import { useAuthContext } from '../../util/Auth';
+import { mainNavigation } from '../../navigation/useNavigation';
 
-import Profile from '../components/MyPage/Profile';
-import BadgeList from '../components/MyPage/BadgeList';
-import { ClearButton } from '../atoms';
-import { Container, Row } from '../atoms/styled';
+import Profile from '../../components/MyPageStack/Profile';
+import BadgeList from '../../components/MyPageStack/BadgeList';
+import { ClearButton } from '../../atoms';
+import { Container, Row } from '../../atoms/styled';
 
 interface Props {
 }
@@ -13,7 +13,8 @@ interface Props {
 export default ({ }: Props) => {
 
     const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
-    const modalNav = modalNavigation();
+    const mainNav = mainNavigation();
+
     const onPressLogout = () => {
         if (userToken)
             signOut({ id: userToken.id });
@@ -27,7 +28,7 @@ export default ({ }: Props) => {
 
             <Row>
                 <ClearButton title="프로필 편집" onPress={() => { console.log(userToken) }} type="clear" />
-                <ClearButton title="내 쿠폰함" onPress={() => modalNav.navigate('MyCoupon')} type="clear" />
+                <ClearButton title="내 쿠폰함" onPress={() => mainNav.navigate("ModalNav", { screen: "MyCouponStack" })} type="clear" />
                 <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
             </Row>
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { $$, useAuthContext } from '../util';
 
-import Login from '../components/Login/Login';
+import Login from '../components/LoginStack/Login';
 
 const LoginStack = () => {
     const { useAuth: { signIn } } = useAuthContext();
@@ -25,8 +25,8 @@ const LoginStack = () => {
     return (
         <Login
             useId={[id, setId]}
-            useError={[pw, setPw]}
-            usePw={[error, setError]}
+            usePw={[pw, setPw]}
+            error={error}
             onClick={onClick}
             onPressLogin={onPressLogin}
         />

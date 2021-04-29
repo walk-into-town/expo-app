@@ -1,15 +1,14 @@
 import React from 'react'
-import { createStackNavigator, HeaderBackButton, StackHeaderLeftButtonProps, StackHeaderStyleInterpolator } from '@react-navigation/stack';
-import MakeCampagin from '../components/MakeCampagin/MakeCampagin';
-import MakeCoupon from '../components/MakeCampagin/MakeCoupon';
-import MakePinPoint from '../components/MakeCampagin/MakePinPoint';
+import { createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import MakeCampaginStack from '../container/MakeCampaginNav/MakeCampaginStack';
+import MakePinPointStack from '../container/MakeCampaginNav/MakePinPointStack';
+import MakeCouponStack from '../container/MakeCampaginNav/MakeCouponStack';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
 
 const Stack = createStackNavigator();
 
-const MakeCampaginStack = () => {
+const MakeCampaginNav = () => {
     const CloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
         <TouchableOpacity onPress={onPress}>
             <EvilIcons name="close" size={25} style={{ marginLeft: 5 }} />
@@ -18,21 +17,21 @@ const MakeCampaginStack = () => {
     return (
         <Stack.Navigator screenOptions={{ headerTitleStyle: { fontFamily: "SCDream5", fontSize: 15 }, headerBackTitleVisible: false }}>
             <Stack.Screen
-                name="MakeCampagin"
-                component={MakeCampagin}
+                name="MakeCampaginStack"
+                component={MakeCampaginStack}
                 options={{ headerTitle: "캠페인 만들기", headerLeft: CloseIcon }}
             />
             <Stack.Screen
-                name="MakePinPoint"
-                component={MakePinPoint}
+                name="MakePinPointStack"
+                component={MakePinPointStack}
                 options={{ headerTitle: "핀포인트 만들기" }}
             />
             <Stack.Screen
-                name="MakeCoupon"
-                component={MakeCoupon}
+                name="MakeCouponStack"
+                component={MakeCouponStack}
                 options={{ headerTitle: "쿠폰 만들기" }}
             />
         </Stack.Navigator>
     )
 }
-export default MakeCampaginStack;
+export default MakeCampaginNav;

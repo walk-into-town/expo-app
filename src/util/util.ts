@@ -12,6 +12,9 @@ export const isJsonString = (str: string) => {
 export const isBlank = (v: string[]) => {
     return v.some(s => s.replace(" ", "") === "")
 }
+export const isUndefined = (v: any[]) => {
+    return v.some(e => e === undefined);
+}
 
 const isEqualStringArray = (a: string[], b: string[]) => {
     if (a.length !== b.length)

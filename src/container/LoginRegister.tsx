@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native';
 import { API } from '../api';
 import { ClearButton } from '../atoms';
-import RegisterModal from '../components/Login/RegisterModal';
+import RegisterModal from '../components/LoginStack/RegisterModal';
 import { $$, useAuthContext, useLoadingContext } from '../util';
 
 const LoginRegister = () => {
@@ -58,7 +58,7 @@ const LoginRegister = () => {
                 useError={[error, setError]}
                 useNickname={[nickname, setNickname]}
                 usePw={[pw, setPw]}
-                
+
                 onSubmit={onSubmit}
                 toggleModal={toggleModal}
             />

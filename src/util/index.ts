@@ -7,7 +7,7 @@ export { LoadingContext, useLoadingContext, LoadingContextProvider }
 import perventGoBack from "./perventGoBack";
 export { perventGoBack }
 
-import { isBlank, isEditCoupon, isEditPinPoint, isJsonString } from './util'
+import { isBlank, isEditCoupon, isEditPinPoint, isJsonString, isUndefined } from './util'
 export const $$ = {
-  isBlank, isEditCoupon, isEditPinPoint, isJsonString
+  isBlank, isEditCoupon, isEditPinPoint, isJsonString, isUndefined
 }

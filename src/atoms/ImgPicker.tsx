@@ -4,10 +4,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image, Text } from 'react-native-elements';
 import { Row } from './styled';
 import { OutLineButton } from './elements';
-import { setState } from '@types';
+import { TuseState } from '@types';
 
 
-const ImgPicker = (props: { useImgs: [string[], setState] }) => {
+const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
     const [imgList, setImgList] = props.useImgs;
 
     const pickImage = async () => {

@@ -1,20 +1,20 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import GamePlay from '../components/GamePlay';
-import Ranking from '../components/Ranking';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CampaginStack from './CampaginStack';
-import MyPageStack from './MyPageStack';
+import CampaginStack from '../container/HomeTab/CampaginStack';
+import GameStack from '../container/HomeTab/GameStack';
+import RankingStack from '../container/HomeTab/RankingStack';
+import MyPageNav from './MyPageNav';
 
 const Tab = createBottomTabNavigator();
 
 const HomeTab = () => {
     const iconName: { [key: string]: [string, string] } = {
-        MyPageStack: ["ios-home-outline", "ios-home"],
+        MyPageNav: ["ios-home-outline", "ios-home"],
         CampaginStack: ["ios-flashlight-outline", "ios-flashlight"],
-        GamePlay: ["ios-map-outline", "ios-map"],
-        Ranking: ["ios-trophy-outline", "ios-trophy"]
+        GameStack: ["ios-map-outline", "ios-map"],
+        RankingStack: ["ios-trophy-outline", "ios-trophy"]
     }
     return (
         <Tab.Navigator
@@ -26,10 +26,10 @@ const HomeTab = () => {
                 activeTintColor: "#517fa4",
                 inactiveTintColor: 'gray',
             }}>
-            <Tab.Screen name="MyPageStack" component={MyPageStack} />
+            <Tab.Screen name="MyPageNav" component={MyPageNav} />
             <Tab.Screen name="CampaginStack" component={CampaginStack} />
-            <Tab.Screen name="GamePlay" component={GamePlay} options={{ tabBarBadge: 3 }} />
-            <Tab.Screen name="Ranking" component={Ranking} />
+            <Tab.Screen name="GameStack" component={GameStack} options={{ tabBarBadge: 3 }} />
+            <Tab.Screen name="RankingStack" component={RankingStack} />
         </Tab.Navigator>
     );
 }
