@@ -4,13 +4,11 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { useAuthContext } from '../util/Auth';
 import HomeTab from './HomeTab';
 import Game from '../components/GamePlay/Game';
-import Login from '../components/Login';
 import ModalStack from './ModalStack';
 import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
-import LoadingModal from '../components/LoadingModal';
-import { useLoadingContext } from '../util/Loading';
 import MakeCampaginStack from './MakeCampaginStack';
+import LoginStack from '../container/LoginStack';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +22,6 @@ const MyTheme = {
 
 export default () => {
     const { auth: { userToken } } = useAuthContext();
-    const { loading: { isLoading } } = useLoadingContext();
 
     return (
         <NavigationContainer theme={MyTheme}>
@@ -36,12 +33,13 @@ export default () => {
                                 <Stack.Screen name="HomeTab" component={HomeTab} />
                                 <Stack.Screen name="MakeCampaginStack" component={MakeCampaginStack}
                                     options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} />
-                                <Stack.Screen name="Game" component={Game} />
+                                <Stack.Screen name="GameStack" component={Game}
+                                    options={{ gestureEnabled: false }} />
                                 <Stack.Screen name="ModalStack" component={ModalStack} />
                             </>
                             :
                             <>
-                                <Stack.Screen name="Login" component={Login} />
+                                <Stack.Screen name="LoginStack" component={LoginStack} />
                             </>
                     }
                 </Stack.Navigator>

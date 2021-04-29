@@ -1,6 +1,6 @@
-import { ClearButton, LightSearchBar, HeaderLeftCloseIcon, OutLineButton, SubmitButton, TextArea } from './elements'
-export { ClearButton, LightSearchBar, HeaderLeftCloseIcon, OutLineButton, SubmitButton, TextArea }
-
+import { ClearButton, LightSearchBar, HeaderLeftCloseIcon, OutLineButton, SubmitButton, TextArea, WhiteInput } from './elements'
+export { ClearButton, LightSearchBar, HeaderLeftCloseIcon, OutLineButton, SubmitButton, TextArea, WhiteInput }
+ 
 import { FontAwesome, EvilIcons, Ionicons } from './icons';
 export { FontAwesome, EvilIcons, Ionicons };
 

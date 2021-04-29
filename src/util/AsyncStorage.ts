@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { isJsonString } from ".";
+import { isJsonString } from "./util";
 
 const setStorage = async (key: string, value: string | object) => {
   try {

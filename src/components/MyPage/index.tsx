@@ -3,7 +3,7 @@ import { useAuthContext } from '../../util/Auth';
 import { Container, Row } from '../../atoms/styled';
 import Profile from './Profile';
 import BadgeList from './BadgeList';
-import { myPageNavigation } from '../../navigation/useNavigation';
+import { modalNavigation } from '../../navigation/useNavigation';
 import { ClearButton } from '../../atoms';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 export default ({ }: Props) => {
 
     const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
-    const myPageNav = myPageNavigation();
+    const modalNav = modalNavigation();
     const onPressLogout = () => {
         if(userToken)
             signOut({ id: userToken.id });
@@ -26,7 +26,7 @@ export default ({ }: Props) => {
 
             <Row>
                 <ClearButton title="프로필 편집" onPress={() => {console.log(userToken)}} type="clear" />
-                <ClearButton title="내 쿠폰함" onPress={() => myPageNav.navigate('MyCoupon')} type="clear" />
+                <ClearButton title="내 쿠폰함" onPress={() => modalNav.navigate('MyCoupon')} type="clear" />
                 <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
             </Row>
 
