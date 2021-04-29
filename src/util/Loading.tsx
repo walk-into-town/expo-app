@@ -1,5 +1,6 @@
 import { ILoadingContext, LoadingReduce } from "@types";
 import React, { createContext, useContext, useMemo, useReducer } from "react";
+import LoadingModal from "../components/LoadingModal";
 
 const LoadingContext = createContext<ILoadingContext | null>(null);
 
@@ -31,15 +32,16 @@ const LoadingContextProvider = ({ children }: { children: JSX.Element }) => {
 
     const useLoading = useMemo(() => ({
         startLoading: () => {
-            dispatch({type: "START"});
+            dispatch({ type: "START" });
         },
         endLoading: () => {
-            dispatch({type: "END"})
+            dispatch({ type: "END" })
         }
     }), []);
 
     return (
         <LoadingContext.Provider value={{ loading, useLoading }}>
+            <LoadingModal loading={loading.isLoading} />
             {children}
         </LoadingContext.Provider>
     )

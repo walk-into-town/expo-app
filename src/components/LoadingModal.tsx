@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import Modal from 'react-native-modal';
 import { loadingPath } from '../atoms/paths';
 
@@ -28,4 +28,4 @@ const LoadingModal = ({ loading }: Props) => {
     )
 }
 
-export default LoadingModal
+export default LoadingModal;

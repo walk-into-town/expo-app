@@ -29,7 +29,6 @@ export default () => {
     return (
         <NavigationContainer theme={MyTheme}>
             <ThemeProvider theme={theme}>
-                <LoadingModal loading={isLoading} />
                 <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
                     {
                         userToken !== undefined ?
