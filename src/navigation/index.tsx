@@ -1,13 +1,11 @@
 import React from 'react';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import { View, Text } from 'react-native';
-import { useAuthContext } from '../api/Auth';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import { useAuthContext } from '../util/Auth';
 import HomeTab from './HomeTab';
-import Game from '../components/GamePlay/Game';
-import Login from '../components/Login';
-import ModalStack from './ModalStack';
+import MakeCampaginNav from './MakeCampaginNav';
+import ModalNav from './ModalNav';
+import LoginStack from '../container/LoginStack';
 import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
 
@@ -17,36 +15,33 @@ const MyTheme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: 'rgb(255, 45, 85)',
-
+        // primary: 'rgb(255, 45, 85)',
     }
 }
 
 export default () => {
-    const { auth: { isLoading, userToken, isSignout } } = useAuthContext();
-
-    if (isLoading)
-        return <View><Text>Loading...</Text></View>;
+    const { auth: { userToken } } = useAuthContext();
 
     return (
         <NavigationContainer theme={MyTheme}>
             <ThemeProvider theme={theme}>
                 <Stack.Navigator headerMode="float" screenOptions={{ headerShown: false }}>
                     {
-                        userToken ?
+                        userToken !== undefined ?
                             <>
                                 <Stack.Screen name="HomeTab" component={HomeTab} />
-                                <Stack.Screen name="Game" component={Game} />
-                                <Stack.Screen name="ModalStack" component={ModalStack} />
+                                <Stack.Screen name="MakeCampaginNav" component={MakeCampaginNav}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} />
+                                <Stack.Screen name="ModalNav" component={ModalNav} />
                             </>
                             :
                             <>
-                                <Stack.Screen name="Login" component={Login} />
+                                <Stack.Screen name="LoginStack" component={LoginStack} />
                             </>
                     }
                 </Stack.Navigator>
 
             </ThemeProvider>
-        </NavigationContainer >
+        </NavigationContainer>
     )
 }
