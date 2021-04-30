@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Coupon, MakeCampaginStackParamList } from '@types';
 import { ScrollWrapper } from '../../atoms/styled'
-import perventGoBack from '../../util/perventGoBack';
 import { makeCampaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
-import { $$ } from '../../util';
 import MakeCoupon from '../../components/MakeCouponStack/MakeCoupon';
 import AddCouponGood from '../../components/MakeCouponStack/AddCouponGood';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
 import SubmitCouponButton from '../../components/MakeCouponStack/SubmitCouponButton';
+import perventGoBack from '../../useHook/perventGoBack';
+import { isEditCoupon } from '../../util';
+import useSubmit from '../../useHook/useSubmit';
 
 const MakeCouponStack = () => {
     const campaginNav = makeCampaginNavigation();
@@ -46,14 +47,16 @@ const MakeCouponStack = () => {
         }
     }
 
-    const hasUnsavedChanges = Boolean(coupon ? $$.isEditCoupon(coupon, getCoupon())
+    const { isSubmit, onSubmit } = useSubmit({
+        submitFunc: () => {
+            campaginNav.navigate("MakeCampaginStack", { coupon: getCoupon(), editIndex })
+        }
+    });
+    const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())
         : name || description || limit || couponImgs.length
-    )
-    // perventGoBack({ hasUnsavedChanges })
+    ) && !isSubmit;
+    perventGoBack({ hasUnsavedChanges })
 
-    const onSubmit = async() => {
-        campaginNav.navigate("MakeCampaginStack", { coupon: getCoupon(), editIndex })
-    }
 
     return (
         <ScrollWrapper>

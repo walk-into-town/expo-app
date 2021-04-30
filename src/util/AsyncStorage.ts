@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { isJsonString } from "./util";
+import { isJsonString } from ".";
 
 const setStorage = async (key: string, value: string | object) => {
   try {
@@ -17,7 +17,7 @@ const getStorage = async (key: string) => {
     if (!jsonValue) return null;
 
     if (isJsonString(jsonValue)) return JSON.parse(jsonValue);
-    
+
     return jsonValue;
   } catch (e) {
     console.log(e);

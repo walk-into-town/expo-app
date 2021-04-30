@@ -1,7 +1,7 @@
 import { IAuthContext, AuthReduce, UseAuth } from "@types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { API } from "../api";
-import { getStorage, setStorage, rmStorage } from "./AsyncStorage";
+import { getStorage, setStorage, rmStorage } from "../util/AsyncStorage";
 import { useLoadingContext } from "./Loading";
 
 const AuthContext = createContext<IAuthContext | null>(null);
@@ -97,6 +97,5 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         </AuthContext.Provider>
     )
 }
-
 
 export { AuthContext, useAuthContext, AuthContextProvider }

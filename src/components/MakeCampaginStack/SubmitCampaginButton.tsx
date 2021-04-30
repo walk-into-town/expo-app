@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-native-elements';
 
 interface Props {
-    onSubmit: () => Promise<void>
+    onSubmit: () => void
 }
 
 const SubmitCampaginButton = (props: Props) => {

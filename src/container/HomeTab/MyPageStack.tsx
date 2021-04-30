@@ -1,6 +1,6 @@
 import React from 'react'
-import { useAuthContext } from '../../util/Auth';
 import { mainNavigation } from '../../navigation/useNavigation';
+import { useAuthContext } from '../../useHook';
 
 import Profile from '../../components/MyPageStack/Profile';
 import BadgeList from '../../components/MyPageStack/BadgeList';

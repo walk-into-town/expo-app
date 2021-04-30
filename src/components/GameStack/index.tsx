@@ -7,7 +7,7 @@ import { ClearButton } from '../../atoms'
 import LoadingModal from '../LoadingModal'
 import { Audio } from "expo-av"
 import { soundPath } from '../../atoms/paths'
-import { useLoadingContext } from '../../util/Loading'
+import { useLoadingContext } from '../../useHook'
 
 interface Props {
 
@@ -15,7 +15,7 @@ interface Props {
 
 const soundList = [...Object.values(soundPath)]
 
-export default (props: Props) => {
+const GameTest = (props: Props) => {
     const navigation = useNavigation();
     const [sound, setSound] = useState<Audio.Sound>();
 
@@ -34,10 +34,10 @@ export default (props: Props) => {
         loading ? startLoading() : endLoading();
     }, [loading]);
 
-    const playSound = async() => {
+    const playSound = async () => {
         try {
             const path = soundList[Math.floor(Math.random() * soundList.length)]
-            const { sound } = await Audio.Sound.createAsync(path, {isLooping: true});
+            const { sound } = await Audio.Sound.createAsync(path, { isLooping: true });
             setSound(sound);
             await sound.playAsync();
         } catch (error) {
@@ -70,8 +70,8 @@ export default (props: Props) => {
             <LoadingModal loading={loading} />
 
             <ClearButton
-                title="STOP SOUND" 
-                onPress={stopSound}/>
+                title="STOP SOUND"
+                onPress={stopSound} />
 
         </Container>
     )
@@ -82,3 +82,4 @@ const Container = styled.View`
     align-items: center;
     justify-content: center;
 `
+export default GameTest;

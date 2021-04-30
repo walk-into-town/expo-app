@@ -1,15 +1,14 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
+import GameTest from '../../components/GameStack';
 
 interface Props {
-    
+
 }
 
 const GameStack = (props: Props) => {
     return (
-        <View>
-            <Text></Text>
-        </View>
+        <GameTest />
     )
 }
 

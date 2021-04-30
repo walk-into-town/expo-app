@@ -3,7 +3,7 @@ import { Button } from 'react-native-elements';
 
 interface Props {
     editIndex: number | undefined,
-    onSubmit: () => Promise<void>,
+    onSubmit: () => void,
 }
 
 const SubmitCouponButton = ({ editIndex, onSubmit }: Props) => {

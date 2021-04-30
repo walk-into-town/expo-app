@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { $$, useAuthContext } from '../util';
 
 import Login from '../components/LoginStack/Login';
+import { useAuthContext } from '../useHook';
+import { isBlank } from '../util';
 
 const LoginStack = () => {
     const { useAuth: { signIn } } = useAuthContext();
@@ -14,7 +15,7 @@ const LoginStack = () => {
     }
 
     const onPressLogin = async () => {
-        if ($$.isBlank([id, pw])) {
+        if (isBlank([id, pw])) {
             setError("빈칸을 입력해주세요")
             return;
         }

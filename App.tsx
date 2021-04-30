@@ -1,12 +1,12 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AuthContextProvider } from './src/util/Auth';
 
 import Navigator from "./src/navigation";
 import { useFonts } from 'expo-font';
 import { fontPath } from './src/atoms/paths';
-import { LoadingContextProvider } from './src/util/Loading';
-import LoadingModal from './src/components/LoadingModal';
+import { AuthContextProvider } from './src/useHook/Auth';
+import { LoadingContextProvider } from './src/useHook/Loading';
+
 
 const App = () => {
 

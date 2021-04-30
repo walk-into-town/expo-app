@@ -4,11 +4,12 @@ import { makeCampaginNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
 import { ScrollWrapper } from '../../atoms/styled'
-import perventGoBack from '../../util/perventGoBack'
-import { $$ } from '../../util'
+import perventGoBack from '../../useHook/perventGoBack'
 import MakePinPoint from '../../components/MakePinPointStack/MakePinPoint'
 import MakeQuiz from '../../components/MakePinPointStack/MakeQuiz'
 import SubmitPinPointButton from '../../components/MakePinPointStack/SubmitPinPointButton'
+import { isEditPinPoint } from '../../util'
+import useSubmit from '../../useHook/useSubmit'
 
 const MakePinPointStack = () => {
     const campaginNav = makeCampaginNavigation();
@@ -65,13 +66,15 @@ const MakePinPointStack = () => {
             }
         }
     }
-    const onSubmit = async () => {
-        const pinpoint: PinPoint = getPinpoint();
-        campaginNav.navigate('MakeCampaginStack', { pinpoint, editIndex });
-    }
 
-    const hasUnsavedChanges = Boolean(pinpoint ? $$.isEditPinPoint(pinpoint, getPinpoint())
-        : name || pinPointImgs.length || description || quizText || answer);
+    const { isSubmit, onSubmit } = useSubmit({
+        submitFunc: () => {
+            const pinpoint: PinPoint = getPinpoint();
+            campaginNav.navigate('MakeCampaginStack', { pinpoint, editIndex });
+        }
+    });
+    const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
+        : name || pinPointImgs.length || description || quizText || answer)) && !isSubmit;
     perventGoBack({ hasUnsavedChanges })
 
     return (
