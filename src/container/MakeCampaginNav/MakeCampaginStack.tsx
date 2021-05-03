@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { PinPoint, Coupon, MakeCampaginStackParamList, MakePinPoint, MakeCoupon } from '@types';
+import { MakeCampaginStackParamList, MakePinPoint, MakeCoupon } from '@types';
 import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
 import { perventGoBack, useSubmit } from '../../useHook';
 
@@ -8,6 +8,8 @@ import { ScrollWrapper, SubmitButton } from '../../atoms';
 import CampaginBox from '../../components/MakeCampaginStack/CampaginBox';
 import PinPointListBox from '../../components/MakeCampaginStack/PinPointListBox';
 import CouponListBox from '../../components/MakeCampaginStack/CouponListBox';
+import { isBlank } from '../../util';
+import DefaultAlert from '../../atoms/DefaultAlert';
 
 const MakeCampaginStack = () => {
     const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCampaginStack'>>();
@@ -33,7 +35,6 @@ const MakeCampaginStack = () => {
 
     // PinPointList
     const navToPinPointModal = (item?: MakePinPoint, idx?: number) => {
-        // 새로운 핀포인트를 만들 땐 비어 있는 pinpoint를 보내게 된다.
         makeCampaginNav.navigate("MakePinPointStack", { pinpoint: item, editIndex: idx })
     }
     const deletePinPoint = (idx: number) => {
@@ -50,6 +51,14 @@ const MakeCampaginStack = () => {
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
+            if (isBlank([title, depiction])) {
+                DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+                return;
+            }
+            if(pinPointList.length === 0){
+                DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
+                return;
+            }
             mainNav.navigate("HomeTab", { screen: "CampaignStack" });
         }
     });

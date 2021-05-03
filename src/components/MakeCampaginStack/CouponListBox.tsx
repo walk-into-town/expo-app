@@ -20,7 +20,6 @@ const CouponListBox = ({ couponList, navToCouponModal, deleteCoupon }: Props) =>
                         onPress={() => navToCouponModal(item, idx)}>
                         {item.name}
                     </Text>
-                    <Text>{item.endDate}</Text>
                     <EvilIcons
                         style={{ marginLeft: 'auto', marginRight: 16 }}
                         name="close"

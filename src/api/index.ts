@@ -5,7 +5,9 @@ export const getRandomCat = () => {
 }
 
 import { memberLogin, memberLogout, memberModify, memberRegister, memberWithdraw } from "./member";
+import { campaginCreate, campaginReadAll } from "./campagin"
 
 export const API = {
     memberLogin, memberLogout, memberModify, memberRegister, memberWithdraw,
+    campaginCreate, campaginReadAll
 }
