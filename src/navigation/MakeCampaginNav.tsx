@@ -11,11 +11,11 @@ const Stack = createStackNavigator();
 const MakeCampaginNav = () => {
     const CloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
         <TouchableOpacity onPress={onPress}>
-            <EvilIcons name="close" size={25} style={{ marginLeft: 5 }} />
+            <EvilIcons name="close" size={27} style={{ marginLeft: 3 }} />
         </TouchableOpacity>
     )
     return (
-        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontFamily: "SCDream5", fontSize: 15 }, headerBackTitleVisible: false }}>
+        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontSize: 15 }, headerBackTitleVisible: false }}>
             <Stack.Screen
                 name="MakeCampaginStack"
                 component={MakeCampaginStack}

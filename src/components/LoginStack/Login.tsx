@@ -3,8 +3,7 @@ import { TuseState } from '@types';
 import { View, Image, NativeSegmentedControlIOSChangeEvent } from 'react-native';
 import { Input } from 'react-native-elements'
 import styled from 'styled-components/native';
-import { BtsWrapper, Container } from '../../atoms/styled';
-import { ClearButton, EvilIcons } from '../../atoms';
+import { BtsWrapper, Container, ClearButton, EvilIcons } from '../../atoms';
 import LoginRegister from '../../container/LoginRegister';
 
 interface Props {

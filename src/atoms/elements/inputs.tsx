@@ -1,3 +1,4 @@
+import React from 'react';
 import { LightSearchBarProps } from "@types"
 import { TextInputProps } from "react-native"
 import { Input, SearchBar } from "react-native-elements"

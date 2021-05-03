@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { mainNavigation } from '../../navigation/useNavigation';
+
 import { Text } from 'react-native-elements';
-import { Container } from '../../atoms/styled';
-import { ClearButton } from '../../atoms';
+import { Container, ClearButton } from '../../atoms';
 import SearchCampagin from '../../components/CampaginStack/SearchCampagin';
 import CampaginList from '../../components/CampaginStack/CampaginList';
 

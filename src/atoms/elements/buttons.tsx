@@ -1,3 +1,4 @@
+import React from 'react';
 import { SubmitButtonProps } from "@types"
 import { View } from "react-native"
 import { ButtonProps } from "react-native-elements"

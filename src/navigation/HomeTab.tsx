@@ -25,6 +25,7 @@ const HomeTab = () => {
             tabBarOptions={{
                 activeTintColor: "#517fa4",
                 inactiveTintColor: "gray",
+                showLabel: false
             }}>
             <Tab.Screen name="MyPageNav" component={MyPageNav} />
             <Tab.Screen name="CampaginStack" component={CampaginStack} />

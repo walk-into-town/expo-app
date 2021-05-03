@@ -52,7 +52,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
 
     const useAuth: UseAuth = useMemo(() => ({
         signIn: async ({ id, pw }) => {
-            // startLoading();
+            startLoading();
 
             // console.log("[로그인 시도]", id, pw)
             // const { result, error, message, session } = await API.memberLogin({ id, pw });
@@ -71,21 +71,22 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             // return error ? error : "";
 
             dispatch({ type: 'SIGN_IN', userToken: { id, nickname: "닉네임", profileImg: "", seflIntruduction: "아무노래나 틀어" } });
+            endLoading();
             return "";
         },
         signOut: async ({ id }) => {
             startLoading();
 
-            const { result, error, session } = await API.memberLogout({ id });
-            if (result === 'failed') {
-                console.log("[로그아웃 에러]", error)
-                endLoading();
-                return;
-            }
+            // const { result, error, session } = await API.memberLogout({ id });
+            // if (result === 'failed') {
+            //     console.log("[로그아웃 에러]", error)
+            //     endLoading();
+            //     return;
+            // }
 
             await rmStorage("userToken");
             dispatch({ type: 'SIGN_OUT' });
-            console.log("[로그아웃]", session);
+            // console.log("[로그아웃]", session);
 
             endLoading();
         }
