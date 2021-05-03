@@ -1,33 +1,29 @@
-import { RegisterMember, ModifyMember, MemberLoginFetchRes, MemberLogoutFetchRes, MemberRegisterFetchRes, MemberModifyFetchRes, MemberWithdrawFetchRes } from "@types"
+import { BaseFetchRes, MemberLoginRes, ModifyMember, RegisterMember } from "@types"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
-import useFetch from "./useFetch"
-
-
 
 /* user/member */
-export const memberLogin: MemberLoginFetchRes = async (data) => {
+type MemberLoginFetch = (data: { id: string, pw: string }) => BaseFetchRes<MemberLoginRes>
+export const memberLogin: MemberLoginFetch = async (data) => {
     return baseFetch(`${ip}/member/login`, "POST", data);
 }
 
-export const memberLogout: MemberLogoutFetchRes = (data) => {
+type MemberLogoutFetch = (data: { id: string }) => BaseFetchRes<string>
+export const memberLogout: MemberLogoutFetch = (data) => {
     return baseFetch(`${ip}/member/logout`, "POST", data);
 }
- 
-export const memberRegister: MemberRegisterFetchRes = async(data) => {
+
+type MemberRegisterFetch = (data: RegisterMember) => BaseFetchRes<string>
+export const memberRegister: MemberRegisterFetch = async (data) => {
     return baseFetch(`${ip}/member/register`, "POST", data);
 }
 
-export const memberModify: MemberModifyFetchRes = (data) => {
-    return useFetch(`${ip}/member/modify`, {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
+type MemberModifyFetch = (data: ModifyMember) => BaseFetchRes<string>
+export const memberModify: MemberModifyFetch = (data) => {
+    return baseFetch(`${ip}/member/modify`, "POST", data);
 }
 
-export const memberWithdraw: MemberWithdrawFetchRes = (data) => {
-    return useFetch(`${ip}/member/withdraw`, {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
+type MemberWithdrawFetch = (data: { id: string }) => BaseFetchRes<string>
+export const memberWithdraw: MemberWithdrawFetch = (data) => {
+    return baseFetch(`${ip}/member/withdraw`, "POST", data);
 }

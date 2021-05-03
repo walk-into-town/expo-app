@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { $$, useAuthContext } from '../util';
+import { useAuthContext } from '../useHook'
+import { isBlank } from '../util'
 
-import Login from '../components/LoginStack/Login';
+import Login from '../components/LoginStack/Login'
 
 const LoginStack = () => {
-    const { useAuth: { signIn } } = useAuthContext();
     const [id, setId] = useState("")
     const [pw, setPw] = useState("")
     const [error, setError] = useState(" ");
@@ -13,8 +13,9 @@ const LoginStack = () => {
         console.log(id, pw)
     }
 
+    const { useAuth: { signIn } } = useAuthContext();
     const onPressLogin = async () => {
-        if ($$.isBlank([id, pw])) {
+        if (isBlank([id, pw])) {
             setError("빈칸을 입력해주세요")
             return;
         }

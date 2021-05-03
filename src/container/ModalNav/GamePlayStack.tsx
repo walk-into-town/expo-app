@@ -1,15 +1,17 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import { ScrollWrapper } from '../../atoms'
+import Game from '../../components/GameStack/Game'
 
 interface Props {
-    
+
 }
 
 const GamePlayStack = (props: Props) => {
     return (
-        <View>
-            <Text></Text>
-        </View>
+        <ScrollWrapper>
+            <Game />
+        </ScrollWrapper>
     )
 }
 

@@ -1,8 +1,7 @@
 import { TuseState } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
-import { ClearButton, ImgPicker, InputModal } from '../../atoms'
-import { Row } from '../../atoms/styled'
+import { Row, ClearButton, ImgPicker, InputModal } from '../../atoms'
 
 interface Props {
     useName: TuseState<string>,

@@ -2,8 +2,7 @@ import { PinPoint } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
-import { EvilIcons, OutLineButton } from '../../atoms'
-import { Box, Row, SubTitle } from '../../atoms/styled'
+import { Box, Row, SubTitle, EvilIcons, OutLineButton } from '../../atoms'
 
 interface Props {
     pinPointList: PinPoint[],

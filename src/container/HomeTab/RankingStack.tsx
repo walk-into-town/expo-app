@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text } from 'react-native'
-import { Container } from '../../atoms/styled'
+import { Container } from '../../atoms'
 
 interface Props {
 

@@ -4,7 +4,9 @@ import { View } from 'react-native';
 import { API } from '../api';
 import { ClearButton } from '../atoms';
 import RegisterModal from '../components/LoginStack/RegisterModal';
-import { $$, useAuthContext, useLoadingContext } from '../util';
+import { useAuthContext, useLoadingContext } from '../useHook';
+
+import { isBlank } from '../util';
 
 const LoginRegister = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext();
@@ -27,7 +29,7 @@ const LoginRegister = () => {
 
     const onSubmit = async () => {
         const re = /^[a-zA-Z0-9]{4,12}$/
-        if (!re.test(id) || !re.test(pw) || $$.isBlank([nickname])) {
+        if (!re.test(id) || !re.test(pw) || isBlank([nickname])) {
             setError("입력을 확인해주세요");
             return;
         }

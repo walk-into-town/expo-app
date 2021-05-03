@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { StyleProp, TextStyle, View, TouchableOpacity } from 'react-native'
-import { Input, Text } from 'react-native-elements';
 import Modal from 'react-native-modal';
-import { FontAwesome } from './icons';
-import { BtsWrapper } from './styled';
 import { Animation, CustomAnimation } from 'react-native-animatable';
+
+import { Input, Text } from 'react-native-elements';
+import { BtsWrapper } from './elements/layouts';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
     useText: [string, React.Dispatch<React.SetStateAction<string>>],
@@ -72,7 +73,7 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
             </TouchableOpacity>
             <Text style={{ alignSelf: "center", marginTop: 1 }}> {subTitle} </Text>
 
-            <Modal 
+            <Modal
                 isVisible={isModalVisible}
                 animationIn={animationIn || "zoomIn"}
                 animationOut={animationOut || "fadeOut"}

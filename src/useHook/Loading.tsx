@@ -47,5 +47,4 @@ const LoadingContextProvider = ({ children }: { children: JSX.Element }) => {
     )
 }
 
-
 export { LoadingContext, useLoadingContext, LoadingContextProvider }

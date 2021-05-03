@@ -1,13 +1,13 @@
 import React from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import { useAuthContext } from '../util/Auth';
 import HomeTab from './HomeTab';
 import MakeCampaginNav from './MakeCampaginNav';
 import ModalNav from './ModalNav';
 import LoginStack from '../container/LoginStack';
 import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
+import { useAuthContext } from '../useHook';
 
 const Stack = createStackNavigator();
 

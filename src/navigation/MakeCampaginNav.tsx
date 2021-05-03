@@ -3,19 +3,19 @@ import { createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigat
 import MakeCampaginStack from '../container/MakeCampaginNav/MakeCampaginStack';
 import MakePinPointStack from '../container/MakeCampaginNav/MakePinPointStack';
 import MakeCouponStack from '../container/MakeCampaginNav/MakeCouponStack';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 const Stack = createStackNavigator();
 
 const MakeCampaginNav = () => {
     const CloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
         <TouchableOpacity onPress={onPress}>
-            <EvilIcons name="close" size={25} style={{ marginLeft: 5 }} />
+            <EvilIcons name="close" size={25} style={{ marginLeft: 4 }} />
         </TouchableOpacity>
     )
     return (
-        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontFamily: "SCDream5", fontSize: 15 }, headerBackTitleVisible: false }}>
+        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontSize: 15 }, headerBackTitleVisible: false }}>
             <Stack.Screen
                 name="MakeCampaginStack"
                 component={MakeCampaginStack}

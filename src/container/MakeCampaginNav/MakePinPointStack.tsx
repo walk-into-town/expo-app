@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { PinPoint, quizType, MakeCampaginStackParamList } from '@types'
-import { makeCampaginNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
+import { makeCampaginNavigation } from '../../navigation/useNavigation'
+import { isEditPinPoint } from '../../util'
+import { useSubmit, perventGoBack } from '../../useHook'
 
-import { ScrollWrapper } from '../../atoms/styled'
-import perventGoBack from '../../util/perventGoBack'
-import { $$ } from '../../util'
+import { SubmitButton, ScrollWrapper } from '../../atoms'
 import MakePinPoint from '../../components/MakePinPointStack/MakePinPoint'
 import MakeQuiz from '../../components/MakePinPointStack/MakeQuiz'
-import SubmitPinPointButton from '../../components/MakePinPointStack/SubmitPinPointButton'
 
 const MakePinPointStack = () => {
     const campaginNav = makeCampaginNavigation();
@@ -65,13 +64,15 @@ const MakePinPointStack = () => {
             }
         }
     }
-    const onSubmit = async () => {
-        const pinpoint: PinPoint = getPinpoint();
-        campaginNav.navigate('MakeCampaginStack', { pinpoint, editIndex });
-    }
 
-    const hasUnsavedChanges = Boolean(pinpoint ? $$.isEditPinPoint(pinpoint, getPinpoint())
-        : name || pinPointImgs.length || description || quizText || answer);
+    const { isSubmit, onSubmit } = useSubmit({
+        submitFunc: () => {
+            const pinpoint: PinPoint = getPinpoint();
+            campaginNav.navigate('MakeCampaginStack', { pinpoint, editIndex });
+        }
+    });
+    const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
+        : name || pinPointImgs.length || description || quizText || answer)) && !isSubmit;
     perventGoBack({ hasUnsavedChanges })
 
     return (
@@ -92,7 +93,7 @@ const MakePinPointStack = () => {
                 useSelectedAnswer={[selectedAnswer, setSelectedAnswer]}
             />
 
-            <SubmitPinPointButton onSubmit={onSubmit} />
+            <SubmitButton title="핀포인트 완료" onPress={onSubmit} />
         </ScrollWrapper>
     )
 }

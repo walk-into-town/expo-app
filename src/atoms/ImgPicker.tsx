@@ -1,10 +1,11 @@
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { Image, Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Image, Text } from 'react-native-elements';
-import { Row } from './styled';
-import { OutLineButton } from './elements';
+import { Text } from 'react-native-elements';
 import { TuseState } from '@types';
+import { OutLineButton } from './elements/buttons';
+import { Row } from './elements/layouts';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
@@ -40,12 +41,13 @@ const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
             <Text>* 사진을 클릭하면 삭제 됩니다.</Text>
             <Row>
                 {imgList.map((uri, idx) =>
-                    <Image
-                        key={idx}
-                        source={{ uri: uri }}
-                        onPress={() => onImgPress(idx)}
-                        style={{ width: 100, height: 100 }}
-                    />
+                    <TouchableOpacity onPress={() => onImgPress(idx)}>
+                        <Image
+                            key={idx}
+                            source={{ uri: uri }}
+                            style={{ width: 100, height: 100 }}
+                        />
+                    </TouchableOpacity>
                 )}
             </Row>
         </View>

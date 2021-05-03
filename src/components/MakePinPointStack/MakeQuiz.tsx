@@ -3,8 +3,7 @@ import { quizType, TuseState } from '@types'
 import React from 'react'
 import { View } from 'react-native'
 import { ButtonGroup, Input } from 'react-native-elements'
-import { EvilIcons, InputModal, OutLineButton } from '../../atoms'
-import { Box, SubTitle } from '../../atoms/styled'
+import { Box, SubTitle, EvilIcons, InputModal, OutLineButton } from '../../atoms'
 
 interface Props {
     useQuizText: TuseState<string>,

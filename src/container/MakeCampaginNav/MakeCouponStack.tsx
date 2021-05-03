@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Coupon, MakeCampaginStackParamList } from '@types';
-import { ScrollWrapper } from '../../atoms/styled'
-import perventGoBack from '../../util/perventGoBack';
 import { makeCampaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
-import { $$ } from '../../util';
+import { perventGoBack, useSubmit } from '../../useHook';
+import { isEditCoupon } from '../../util';
+
+import { ScrollWrapper, SubmitButton } from '../../atoms';
 import MakeCoupon from '../../components/MakeCouponStack/MakeCoupon';
-import AddCouponGood from '../../components/MakeCouponStack/AddCouponGood';
+import AddCouponGoods from '../../components/MakeCouponStack/AddCouponGoods';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
-import SubmitCouponButton from '../../components/MakeCouponStack/SubmitCouponButton';
 
 const MakeCouponStack = () => {
     const campaginNav = makeCampaginNavigation();
@@ -46,14 +46,15 @@ const MakeCouponStack = () => {
         }
     }
 
-    const hasUnsavedChanges = Boolean(coupon ? $$.isEditCoupon(coupon, getCoupon())
+    const { isSubmit, onSubmit } = useSubmit({
+        submitFunc: () => {
+            campaginNav.navigate("MakeCampaginStack", { coupon: getCoupon(), editIndex })
+        }
+    });
+    const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())
         : name || description || limit || couponImgs.length
-    )
-    // perventGoBack({ hasUnsavedChanges })
-
-    const onSubmit = async() => {
-        campaginNav.navigate("MakeCampaginStack", { coupon: getCoupon(), editIndex })
-    }
+    ) && !isSubmit;
+    perventGoBack({ hasUnsavedChanges });
 
     return (
         <ScrollWrapper>
@@ -63,10 +64,10 @@ const MakeCouponStack = () => {
                 useCouponImgs={[couponImgs, setCouponImgs]}
                 useLimit={[limit, setLimit]}
             />
-            <AddCouponGood useGoods={[goods, setGoods]} />
+            <AddCouponGoods useGoods={[goods, setGoods]} />
             <EndDatePicker useEndDate={[endDate, setEndDate]} />
 
-            <SubmitCouponButton editIndex={editIndex} onSubmit={onSubmit} />
+            <SubmitButton title={editIndex !== undefined ? "쿠폰 수정하기" : "쿠폰 추가하기"} onPress={onSubmit} />
         </ScrollWrapper>
     )
 }

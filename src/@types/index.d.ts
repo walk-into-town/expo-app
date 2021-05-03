@@ -5,12 +5,13 @@ declare module "@types" {
   type TuseState<T> = [T, Dispatch<SetStateAction<T>>];
   type TsetState<T> = Dispatch<SetStateAction<T>>;
 
-  type BaseDataFetchRes = {
+  type BaseFetchRes<T> = Promise<{
     result: 'success' | 'failed',
-    message?: string,
+    message?: T,
     error?: string,
     session: any
-  }
+  }>
+  
   type UseFetchRes<T> = {
     data: T,
     loading: boolean;

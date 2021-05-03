@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { PinPoint, Coupon, MakeCampaginStackParamList } from '@types';
-import { ScrollWrapper } from '../../atoms/styled';
 import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
+import { perventGoBack, useSubmit } from '../../useHook';
+
+import { ScrollWrapper, SubmitButton } from '../../atoms';
 import CampaginBox from '../../components/MakeCampaginStack/CampaginBox';
 import PinPointListBox from '../../components/MakeCampaginStack/PinPointListBox';
-import { $$, perventGoBack } from '../../util';
 import CouponListBox from '../../components/MakeCampaginStack/CouponListBox';
-import SubmitCampaginButton from '../../components/MakeCampaginStack/SubmitCampaginButton';
 
 const MakeCampaginStack = () => {
     const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCampaginStack'>>();
@@ -19,9 +19,6 @@ const MakeCampaginStack = () => {
     const [depiction, setDepiction] = useState("");
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState<Coupon[]>([]);
-
-    const hasUnsavedChanges = Boolean(title || depiction || campaginImgs.length || pinPointList.length || couponList.length);
-    perventGoBack({ hasUnsavedChanges });
 
     useEffect(() => {
         if (pinpoint) {
@@ -36,7 +33,8 @@ const MakeCampaginStack = () => {
 
     // PinPointList
     const navToPinPointModal = (item?: PinPoint, idx?: number) => {
-        makeCampaginNav.navigate("MakePinPointStack", $$.isUndefined([item, idx]) ? {} : { pinpoint: item, editIndex: idx })
+        // 새로운 핀포인트를 만들 땐 비어 있는 pinpoint를 보내게 된다.
+        makeCampaginNav.navigate("MakePinPointStack", { pinpoint: item, editIndex: idx })
     }
     const deletePinPoint = (idx: number) => {
         setPinPointList([...pinPointList.slice(0, idx), ...pinPointList.slice(idx + 1)])
@@ -44,15 +42,19 @@ const MakeCampaginStack = () => {
 
     // CouponList
     const navToCouponModal = (item?: Coupon, idx?: number) => {
-        makeCampaginNav.navigate("MakeCouponStack", $$.isUndefined([item, idx]) ? {} : { coupon: item, editIndex: idx })
+        makeCampaginNav.navigate("MakeCouponStack", { coupon: item, editIndex: idx })
     }
     const deleteCoupon = (idx: number) => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
 
-    const onSubmit = async () => {
-        mainNav.navigate("HomeTab", { screen: "CampaignStack" });
-    }
+    const { isSubmit, onSubmit } = useSubmit({
+        submitFunc: async () => {
+            mainNav.navigate("HomeTab", { screen: "CampaignStack" });
+        }
+    });
+    const hasUnsavedChanges = Boolean(title || depiction || campaginImgs.length || pinPointList.length || couponList.length) && !isSubmit;
+    perventGoBack({ hasUnsavedChanges });
 
     return (
         <ScrollWrapper>
@@ -74,7 +76,7 @@ const MakeCampaginStack = () => {
                 navToCouponModal={navToCouponModal}
             />
 
-            <SubmitCampaginButton onSubmit={onSubmit} />
+            <SubmitButton title={"캠페인 만들기"} onPress={onSubmit} />
         </ScrollWrapper>
     )
 }

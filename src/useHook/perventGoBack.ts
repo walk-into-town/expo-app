@@ -3,16 +3,15 @@ import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/core';
 
 interface Props {
-    hasUnsavedChanges: boolean,
-    isSubmit?: boolean
+    hasUnsavedChanges: boolean
 }
 
-const perventGoBack = ({ hasUnsavedChanges, isSubmit=false }: Props) => {
+const perventGoBack = ({ hasUnsavedChanges }: Props) => {
     const navigation = useNavigation();
 
     React.useEffect(() =>
         navigation.addListener('beforeRemove', (e) => {
-            if (!hasUnsavedChanges || isSubmit) return;
+            if (!hasUnsavedChanges) return;
 
             e.preventDefault();
             Alert.alert(

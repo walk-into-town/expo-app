@@ -1,6 +1,6 @@
 import React from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { SubTitle } from '../../atoms/styled'
+import { SubTitle } from '../../atoms'
 import { TuseState } from '@types';
 
 interface Props {

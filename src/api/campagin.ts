@@ -1,9 +1,9 @@
 import { ip } from "./ip"
-import useFetch from "./useFetch"
+import { BaseFetchRes, MakeCampagin } from "@types"
+import { baseFetch } from "./baseFetch"
 
-export const addCampagin = () => {
-    return useFetch(`${ip}/campaign/register`, {
-        method: "POST",
-        
-    })
+
+type CampaginCreateFetch = (data: MakeCampagin) => BaseFetchRes<string>;
+export const campaginCreate: CampaginCreateFetch = (data) => {
+    return baseFetch(`${ip}/campaign`, "POST", data);
 }
