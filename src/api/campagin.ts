@@ -9,6 +9,5 @@ export const campaginCreate: CampaginCreateFetch = (data) => {
 }
 
 export const campaginReadAll: () => BaseFetchRes<Campagin[]> = () => {
-    // return baseFetch(`${ip}/campaign`, "GET");
-    return baseFetch(`${ip}/campaign/inquiry`, "POST");
+    return baseFetch(`${ip}/campaign`, "GET");
 }

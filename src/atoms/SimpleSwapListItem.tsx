@@ -2,6 +2,7 @@ import React from 'react'
 import { Animated, View } from 'react-native'
 import { ListItem } from 'react-native-elements';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { colorCode } from './color';
 
 interface Props {
     text: string;
@@ -20,7 +21,7 @@ const SimpleSwapListItem = ({ text, onText, onDelete }: Props) => {
             <View style={{ width: 80, flexDirection: 'row-reverse', }}>
                 <Animated.Text style={{ transform: [{ translateX: trans }] }}>
                     <ListItem containerStyle={{ backgroundColor: "transparent" }}>
-                        <ListItem.Title onPress={onDelete} style={{ color: "#ff3b30" }}>삭제</ListItem.Title>
+                        <ListItem.Title onPress={onDelete} style={{ color: colorCode.appleRed }}>삭제</ListItem.Title>
                     </ListItem>
                 </Animated.Text>
             </View>

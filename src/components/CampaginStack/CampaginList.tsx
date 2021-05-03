@@ -1,9 +1,9 @@
 import { Campagin } from '@types'
 import React from 'react'
-import { View, Text } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { Avatar } from 'react-native-elements/dist/avatar/Avatar'
 import styled from 'styled-components/native'
+import { isBlank } from '../../util'
 //  https://github.com/kohver/react-native-touchable-scale
 
 interface Props {
@@ -11,9 +11,12 @@ interface Props {
 }
 
 const CampaginCard = ({ campagin }: { campagin: Campagin }) => {
+    const getDefaultImg = (uri: string) => {
+        return !isBlank([uri]) ? uri : "https://pgnqdrjultom1827145.cdn.ntruss.com/img/1d/07/1d0703352c93061e01f2df12715bc04b7fa152f6d509113c1d6b67794219c595_v1.jpg";
+    }
     return (
         <ListItem>
-            <Avatar source={{ uri: campagin.imgs[0] }} />
+            <Avatar source={{ uri: getDefaultImg(campagin.imgs[0]) }} />
             <ListItem.Content>
                 <ListItem.Title>
                     {campagin.name}
@@ -28,7 +31,7 @@ const CampaginCard = ({ campagin }: { campagin: Campagin }) => {
                     {campagin.updateTime}
                 </ListItem.Subtitle>
             </ListItem.Content>
-            <ListItem.Chevron color="white" />
+            <ListItem.Chevron />
         </ListItem>
     )
 }
@@ -36,9 +39,11 @@ const CampaginCard = ({ campagin }: { campagin: Campagin }) => {
 const CampaginList = ({ campaginList }: Props) => {
     return (
         <Wrapper>
-            { campaginList.map((campagin, idx) => {
-                <CampaginCard key={idx} campagin={campagin} />
-            })}
+            {
+                campaginList.map((campagin, idx) =>
+                    <CampaginCard key={idx} campagin={campagin} />
+                )
+            }
         </Wrapper>
     )
 }

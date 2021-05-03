@@ -1,22 +1,20 @@
 import { TuseState } from '@types'
 import React, { useState } from 'react'
-import { isBlank } from '../../util';
 
-import { Animated, TouchableOpacity, View } from 'react-native';
-import { Button, Input, ListItem, Text } from 'react-native-elements';
+import { TouchableOpacity, View } from 'react-native';
+import { Input } from 'react-native-elements';
 import Modal from 'react-native-modal';
-import { BtsWrapper, EvilIcons, FontAwesome, OutLineButton, SubTitle } from '../../atoms'
-
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import SimpleSwapListItem from '../../atoms/SimpleSwapListItem';
+import { BtsWrapper, FontAwesome, OutLineButton, SubTitle, SimpleSwapListItem } from '../atoms';
+import { isBlank } from '../util';
 
 
 interface Props {
-    useGoods: TuseState<string[]>;
+    title: string,
+    useTextList: TuseState<string[]>;
 }
 
-const AddCouponGoods = (props: Props) => {
-    const [goods, setGoods] = props.useGoods;
+const InputSwapList = (props: Props) => {
+    const [text, setText] = props.useTextList;
     const [isModalVisible, setModalVisible] = useState(false);
     const [input, setInput] = useState("");
     const [editIdx, setEditIdx] = useState(-1)
@@ -34,31 +32,31 @@ const AddCouponGoods = (props: Props) => {
     const onCheck = () => {
         if (!isBlank([input])) {
             if (editIdx !== -1) {
-                goods[editIdx] = input;
-                setGoods(goods);
+                text[editIdx] = input;
+                setText(text);
             }
             else
-                setGoods([...goods, input]);
+                setText([...text, input]);
         }
         toggleModal();
     }
     const onDelete = (idx: number) => {
-        setGoods([...goods.slice(0, idx), ...goods.slice(idx + 1)])
+        setText([...text.slice(0, idx), ...text.slice(idx + 1)])
     }
 
     return (
         <View>
-            <SubTitle>쿠폰 상품</SubTitle>
+            <SubTitle>{props.title}</SubTitle>
             {
-                goods.map((v, idx) =>
+                text.map((v, idx) =>
                     <SimpleSwapListItem key={idx}
                         text={v}
                         onText={() => onEdit(idx, v)}
-                        onDelete={() => onDelete(idx)} 
+                        onDelete={() => onDelete(idx)}
                     />
                 )
             }
-            <OutLineButton title="쿠폰 상품 추가" onPress={toggleModal} style={{ marginTop: 4 }} />
+            <OutLineButton title={`${props.title} 추가`} onPress={toggleModal} style={{ marginTop: 4 }} />
 
             <Modal
                 isVisible={isModalVisible}
@@ -89,4 +87,4 @@ const AddCouponGoods = (props: Props) => {
     )
 }
 
-export default AddCouponGoods
+export default InputSwapList

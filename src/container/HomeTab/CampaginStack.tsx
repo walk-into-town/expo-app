@@ -13,7 +13,14 @@ const CampaginStack = () => {
 
     const [value, setValue] = useState("")
     const [searchText, setSearchText] = useState("")
-    const [campaginList, setCamPaginList] = useState<Campagin[]>([]);
+    const [campaginList, setCamPaginList] = useState<Campagin[]>([{
+        name: "이정연 식수",
+        description: "소공의 자랑",
+        imgs: [""],
+        region: "",
+        pinpoints: [],
+        coupons: []
+    }]);
 
     useEffect(() => {
         const getAllCampagin = async () => {

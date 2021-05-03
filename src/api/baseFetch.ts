@@ -10,6 +10,7 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
             },
             signal: controller.signal
         });
+        console.log(res.text())
         return await res.json();
     } catch (e) {
         console.log("baseFetch 에러", e);

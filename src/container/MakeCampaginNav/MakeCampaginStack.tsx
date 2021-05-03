@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { MakeCampaginStackParamList, MakePinPoint, MakeCoupon } from '@types';
+import { MakeCampaginStackParamList, MakePinPoint, MakeCoupon, MakeCampagin } from '@types';
 import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
-import { perventGoBack, useSubmit } from '../../useHook';
+import { perventGoBack, useAuthContext, useLoadingContext, useSubmit } from '../../useHook';
 
 import { ScrollWrapper, SubmitButton } from '../../atoms';
 import CampaginBox from '../../components/MakeCampaginStack/CampaginBox';
@@ -10,15 +10,18 @@ import PinPointListBox from '../../components/MakeCampaginStack/PinPointListBox'
 import CouponListBox from '../../components/MakeCampaginStack/CouponListBox';
 import { isBlank } from '../../util';
 import DefaultAlert from '../../atoms/DefaultAlert';
+import { API } from '../../api';
 
 const MakeCampaginStack = () => {
+    const { auth: { userToken } } = useAuthContext();
+    const { useLoading: { endLoading, startLoading } } = useLoadingContext();
     const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCampaginStack'>>();
     const mainNav = mainNavigation();
     const makeCampaginNav = makeCampaginNavigation();
 
     const [title, setTitle] = useState("");
     const [campaginImgs, setCampaginImgs] = useState<string[]>([]);
-    const [depiction, setDepiction] = useState("");
+    const [description, setDescription] = useState("");
     const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
     const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
 
@@ -49,20 +52,45 @@ const MakeCampaginStack = () => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
 
+    const getCampagin = (): MakeCampagin => {
+        if (userToken === undefined) throw new Error("userToken undefined error");
+
+        return {
+            ownner: userToken.id,
+            name: title,
+            description,
+            imgs: campaginImgs,
+            pinpoints: pinPointList,
+            coupons: couponList,
+            region: ""
+        }
+    }
+    /* 캠페인 제작 송신 */
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
-            if (isBlank([title, depiction])) {
+            if (isBlank([title, description])) {
                 DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
                 return;
             }
-            if(pinPointList.length === 0){
+            if (pinPointList.length === 0) {
                 DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
                 return;
             }
-            mainNav.navigate("HomeTab", { screen: "CampaignStack" });
+            const campagin = getCampagin();
+            console.log(campagin)
+            startLoading();
+            const { result, message, error } = await API.campaginCreate(campagin);
+            endLoading();
+            if (result === "success") {
+                DefaultAlert({ title: "캠페인 생성 완료", subTitle: message ? message : "", btColor: "default" })
+                mainNav.navigate("HomeTab", { screen: "CampaignStack" });
+            }
+            else {
+                DefaultAlert({ title: "오류", subTitle: error ? error : "" })
+            }
         }
     });
-    const hasUnsavedChanges = Boolean(title || depiction || campaginImgs.length || pinPointList.length || couponList.length) && !isSubmit;
+    const hasUnsavedChanges = Boolean(title || description || campaginImgs.length || pinPointList.length || couponList.length) && !isSubmit;
     perventGoBack({ hasUnsavedChanges });
 
     return (
@@ -70,7 +98,7 @@ const MakeCampaginStack = () => {
             <CampaginBox
                 useTitle={[title, setTitle]}
                 useCampaginImgs={[campaginImgs, setCampaginImgs]}
-                useDepiction={[depiction, setDepiction]}
+                useDescription={[description, setDescription]}
             />
 
             <PinPointListBox

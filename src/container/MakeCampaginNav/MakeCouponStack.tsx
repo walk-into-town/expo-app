@@ -7,7 +7,6 @@ import { isBlank, isEditCoupon } from '../../util';
 
 import { ScrollWrapper, SubmitButton } from '../../atoms';
 import CouponBaseInputs from '../../components/MakeCouponStack/CouponBaseInputs';
-import AddCouponGoods from '../../components/MakeCouponStack/AddCouponGoods';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
 import PaymentConditionPicker from '../../components/MakeCouponStack/PaymentConditionPicker';
 import DefaultAlert from '../../atoms/DefaultAlert';
@@ -19,9 +18,9 @@ const MakeCouponStack = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [couponImgs, setCouponImgs] = useState<string[]>([]);
+    const [couponImgs, setCouponImgs] = useState<string>("");
     const [limit, setLimit] = useState("");
-    const [goods, setGoods] = useState<string[]>([]);
+    const [goods, setGoods] = useState<string>("");
     const now = new Date();
     const [endDate, setEndDate] = useState(new Date(now.setFullYear(now.getFullYear() + 1)));
     // -1 : 캠페인 클리어, 값: pinPointList index
@@ -73,8 +72,8 @@ const MakeCouponStack = () => {
                 useDescription={[description, setDescription]}
                 useCouponImgs={[couponImgs, setCouponImgs]}
                 useLimit={[limit, setLimit]}
+                useGoods={[goods, setGoods]}
             />
-            <AddCouponGoods useGoods={[goods, setGoods]} />
             <EndDatePicker useEndDate={[endDate, setEndDate]} />
             <PaymentConditionPicker
                 pinPointList={pinPointList}
