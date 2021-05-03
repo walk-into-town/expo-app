@@ -75,8 +75,7 @@ const MakePinPointStack = () => {
     // FindPinPoint
     const navToFindPinPointLocationModal = () => {
         const pinpoint: PinPoint = getPinpoint();
-        console.log(pinpoint.latitude)
-        campaginNav.navigate("FindPinPointLocationStack",{pinpoint, editIndex})
+        campaginNav.navigate("FindPinPointLocationStack", { pinpoint, editIndex })
     }
 
     const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
