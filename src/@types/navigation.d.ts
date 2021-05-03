@@ -31,6 +31,7 @@ declare module "@types" {
         MakeCampaginStack: CampaginParams,
         MakePinPointStack: CampaginParams,
         MakeCouponStack: CampaginParams,
+        FindPinPointLocationStack: CampaginParams
     };
     type CampaginParams = {
         pinpoint?: PinPoint,

@@ -9,6 +9,7 @@ interface Props {
     useLongitude: TuseState<number>,
     usePinPointImgs: TuseState<string[]>,
     useDescription: TuseState<string>,
+    navToFindPinPointLocationModal: () => void
 }
 
 const MakePinPoint = (props: Props) => {
@@ -28,7 +29,7 @@ const MakePinPoint = (props: Props) => {
             <Row>
                 <ClearButton
                     title="위치찾기"
-                    onPress={() => console.log('위치 찾기 api 연동')}
+                    onPress={() => props.navToFindPinPointLocationModal()}
                 />
                 <Text>위도 {latitude} 경도 {longitude}</Text>
             </Row>

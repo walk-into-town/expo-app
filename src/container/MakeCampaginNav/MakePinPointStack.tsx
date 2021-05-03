@@ -71,6 +71,14 @@ const MakePinPointStack = () => {
             campaginNav.navigate('MakeCampaginStack', { pinpoint, editIndex });
         }
     });
+
+    // FindPinPoint
+    const navToFindPinPointLocationModal = () => {
+        const pinpoint: PinPoint = getPinpoint();
+        console.log(pinpoint.latitude)
+        campaginNav.navigate("FindPinPointLocationStack",{pinpoint, editIndex})
+    }
+
     const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
         : name || pinPointImgs.length || description || quizText || answer)) && !isSubmit;
     perventGoBack({ hasUnsavedChanges })
@@ -83,6 +91,8 @@ const MakePinPointStack = () => {
                 useLongitude={[longitude, setLongitude]}
                 usePinPointImgs={[pinPointImgs, setPinPointImgs]}
                 useDescription={[description, setDescription]}
+                navToFindPinPointLocationModal={navToFindPinPointLocationModal}
+
             />
 
             <MakeQuiz
