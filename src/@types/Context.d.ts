@@ -29,7 +29,7 @@ declare module "@types" {
         id: string;
         nickname: string;
         profileImg: string;
-        seflIntruduction: string;
+        selfIntroduction: string;
     }
 
 }

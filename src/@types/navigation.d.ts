@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -8,7 +8,7 @@ declare module "@types" {
         },
         MakeCampaginNav: {
             screen?: keyof MakeCampaginStackParamList,
-            params: CampaginParams
+            params: MakeCampaginParams
         },
         ModalNav: {
             screen: keyof ModalStackParamList
@@ -28,14 +28,18 @@ declare module "@types" {
     };
 
     type MakeCampaginStackParamList = {
-        MakeCampaginStack: CampaginParams,
-        MakePinPointStack: CampaginParams,
-        MakeCouponStack: CampaginParams,
+        MakeCampaginStack: MakeCampaginParams,
+        MakePinPointStack: MakeCampaginParams,
+        MakeCouponStack: {
+            pinPointList?: MakePinPoint[],
+            coupon?: MakeCoupon,
+            editIndex?: number
+        },
         FindPinPointLocationStack: CampaginParams
     };
-    type CampaginParams = {
-        pinpoint?: PinPoint,
-        coupon?: Coupon,
+    type MakeCampaginParams = {
+        pinpoint?: MakePinPoint,
+        coupon?: MakeCoupon,
         editIndex?: number
     }
 

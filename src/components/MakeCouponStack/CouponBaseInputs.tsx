@@ -9,7 +9,7 @@ interface Props {
     useLimit: TuseState<string>,
 }
 
-const MakeCoupon = (props: Props) => {
+const CouponBaseInputs = (props: Props) => {
     const [name, setName] = props.useName;
     const [description, setDescription] = props.useDescription;
     const [couponImgs, setCouponImgs] = props.useCouponImgs;
@@ -38,4 +38,4 @@ const MakeCoupon = (props: Props) => {
     )
 }
 
-export default MakeCoupon
+export default CouponBaseInputs

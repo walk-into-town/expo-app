@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { PinPoint, Coupon, MakeCampaginStackParamList } from '@types';
+import { PinPoint, Coupon, MakeCampaginStackParamList, MakePinPoint, MakeCoupon } from '@types';
 import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
 import { perventGoBack, useSubmit } from '../../useHook';
 
@@ -17,8 +17,8 @@ const MakeCampaginStack = () => {
     const [title, setTitle] = useState("");
     const [campaginImgs, setCampaginImgs] = useState<string[]>([]);
     const [depiction, setDepiction] = useState("");
-    const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
-    const [couponList, setCouponList] = useState<Coupon[]>([]);
+    const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
+    const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
 
     useEffect(() => {
         if (pinpoint) {
@@ -32,7 +32,7 @@ const MakeCampaginStack = () => {
     }, [pinpoint, coupon])
 
     // PinPointList
-    const navToPinPointModal = (item?: PinPoint, idx?: number) => {
+    const navToPinPointModal = (item?: MakePinPoint, idx?: number) => {
         // 새로운 핀포인트를 만들 땐 비어 있는 pinpoint를 보내게 된다.
         makeCampaginNav.navigate("MakePinPointStack", { pinpoint: item, editIndex: idx })
     }
@@ -41,8 +41,8 @@ const MakeCampaginStack = () => {
     }
 
     // CouponList
-    const navToCouponModal = (item?: Coupon, idx?: number) => {
-        makeCampaginNav.navigate("MakeCouponStack", { coupon: item, editIndex: idx })
+    const navToCouponModal = (item?: MakeCoupon, idx?: number) => {
+        makeCampaginNav.navigate("MakeCouponStack", { coupon: item, editIndex: idx, pinPointList })
     }
     const deleteCoupon = (idx: number) => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])

@@ -19,6 +19,6 @@ declare module "@types" {
         issued?: int,
         limit: int,
         imgs: string[],
-        paymentCondition: string
+        paymentCondition: number
     }
 }
