@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 const MakeCampaginNav = () => {
     const CloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
         <TouchableOpacity onPress={onPress}>
-            <EvilIcons name="close" size={27} style={{ marginLeft: 3 }} />
+            <EvilIcons name="close" size={25} style={{ marginLeft: 4 }} />
         </TouchableOpacity>
     )
     return (

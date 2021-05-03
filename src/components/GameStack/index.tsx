@@ -7,6 +7,7 @@ import { ClearButton, soundPath } from '../../atoms'
 import LoadingModal from '../LoadingModal'
 import { Audio } from "expo-av"
 import { useLoadingContext } from '../../useHook'
+import { mainNavigation } from '../../navigation/useNavigation'
 
 interface Props {
 
@@ -15,7 +16,7 @@ interface Props {
 const soundList = [...Object.values(soundPath)]
 
 const GameTest = (props: Props) => {
-    const navigation = useNavigation();
+    const mainNav = mainNavigation();
     const [sound, setSound] = useState<Audio.Sound>();
 
     const { data, err, loading, refetch } = getRandomCat();
@@ -56,7 +57,7 @@ const GameTest = (props: Props) => {
         <Container>
             <ClearButton
                 title="play"
-                onPress={() => navigation.navigate("Game")} />
+                onPress={() => mainNav.navigate('ModalNav', { screen: "GamePlayStack" })} />
 
             <ClearButton
                 title="RANDOM"

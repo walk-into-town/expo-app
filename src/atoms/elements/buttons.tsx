@@ -1,8 +1,7 @@
 import React from 'react';
 import { SubmitButtonProps } from "@types"
 import { View } from "react-native"
-import { ButtonProps } from "react-native-elements"
-import { Button } from "react-native-elements/dist/buttons/Button"
+import { Button, ButtonProps } from "react-native-elements"
 
 export const OutLineButton = (props: ButtonProps) => (
     <View style={{ width: '100%', alignSelf: 'center' }}>

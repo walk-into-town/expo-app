@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text } from 'react-native'
-import { Button, Image } from 'react-native-elements/'
+import { Image, Text } from 'react-native'
+import { Button } from 'react-native-elements/'
 import styled from 'styled-components/native'
 
 interface Props {

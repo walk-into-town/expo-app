@@ -40,5 +40,6 @@ declare module "@types" {
 
     type ModalStackParamList = {
         MyCouponStack: undefined,
+        GamePlayStack: undefined
     };
 }
