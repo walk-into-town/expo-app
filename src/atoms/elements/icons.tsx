@@ -6,7 +6,5 @@ import { View } from 'react-native';
 export { FontAwesome, EvilIcons, Ionicons };
 
 export const HeaderLeftCloseIcon = () => (
-    <View>
-        <EvilIcons name="close" size={30} style={{ color: "blue" }} />
-    </View>
+    <EvilIcons name="close" size={30} style={{ color: "blue" }} />
 )

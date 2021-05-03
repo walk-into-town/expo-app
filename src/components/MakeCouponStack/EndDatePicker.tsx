@@ -8,6 +8,7 @@ interface Props {
 }
 
 const EndDatePicker = (props: Props) => {
+    const today = new Date()
     const [endDate, setEndDate] = props.useEndDate;
 
     return (
@@ -17,7 +18,7 @@ const EndDatePicker = (props: Props) => {
                 value={endDate}
                 display="spinner"
                 onChange={(_: any, selectedDate: any) => setEndDate(selectedDate || endDate)}
-                minimumDate={new Date()}
+                minimumDate={new Date(today.setDate(today.getDate() + 1))}
             />
         </>
     )

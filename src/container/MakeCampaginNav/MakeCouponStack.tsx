@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Coupon, MakeCampaginStackParamList, MakeCoupon } from '@types';
+import { MakeCampaginStackParamList, MakeCoupon } from '@types';
 import { makeCampaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { perventGoBack, useSubmit } from '../../useHook';
-import { isEditCoupon } from '../../util';
+import { isBlank, isEditCoupon } from '../../util';
 
 import { ScrollWrapper, SubmitButton } from '../../atoms';
 import CouponBaseInputs from '../../components/MakeCouponStack/CouponBaseInputs';
 import AddCouponGoods from '../../components/MakeCouponStack/AddCouponGoods';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
 import PaymentConditionPicker from '../../components/MakeCouponStack/PaymentConditionPicker';
+import DefaultAlert from '../../atoms/DefaultAlert';
 
 const MakeCouponStack = () => {
     const campaginNav = makeCampaginNavigation();
@@ -21,7 +22,8 @@ const MakeCouponStack = () => {
     const [couponImgs, setCouponImgs] = useState<string[]>([]);
     const [limit, setLimit] = useState("");
     const [goods, setGoods] = useState<string[]>([]);
-    const [endDate, setEndDate] = useState(new Date());
+    const now = new Date();
+    const [endDate, setEndDate] = useState(new Date(now.setFullYear(now.getFullYear() + 1)));
     // -1 : 캠페인 클리어, 값: pinPointList index
     const [paymentCondition, setPaymentCondition] = useState(-1);
 
@@ -52,6 +54,10 @@ const MakeCouponStack = () => {
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: () => {
+            if (isBlank([name, description, limit])) {
+                DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+                return;
+            }
             campaginNav.navigate("MakeCampaginStack", { coupon: getCoupon(), editIndex })
         }
     });
@@ -70,8 +76,8 @@ const MakeCouponStack = () => {
             />
             <AddCouponGoods useGoods={[goods, setGoods]} />
             <EndDatePicker useEndDate={[endDate, setEndDate]} />
-            <PaymentConditionPicker 
-                pinPointList={pinPointList} 
+            <PaymentConditionPicker
+                pinPointList={pinPointList}
                 usePaymentCondition={[paymentCondition, setPaymentCondition]}
             />
 
