@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { PinPoint, quizType, MakeCampaginStackParamList } from '@types'
-import { makeCampaginNavigation } from '../../navigation/useNavigation'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
+import { makeCampaginNavigation } from '../../navigation/useNavigation'
+import { isEditPinPoint } from '../../util'
+import { useSubmit, perventGoBack } from '../../useHook'
 
-import { ScrollWrapper } from '../../atoms/styled'
-import perventGoBack from '../../useHook/perventGoBack'
+import { SubmitButton, ScrollWrapper } from '../../atoms'
 import MakePinPoint from '../../components/MakePinPointStack/MakePinPoint'
 import MakeQuiz from '../../components/MakePinPointStack/MakeQuiz'
-import SubmitPinPointButton from '../../components/MakePinPointStack/SubmitPinPointButton'
-import { isEditPinPoint } from '../../util'
-import useSubmit from '../../useHook/useSubmit'
 
 const MakePinPointStack = () => {
     const campaginNav = makeCampaginNavigation();
@@ -95,7 +93,7 @@ const MakePinPointStack = () => {
                 useSelectedAnswer={[selectedAnswer, setSelectedAnswer]}
             />
 
-            <SubmitPinPointButton onSubmit={onSubmit} />
+            <SubmitButton title="핀포인트 완료" onPress={onSubmit} />
         </ScrollWrapper>
     )
 }

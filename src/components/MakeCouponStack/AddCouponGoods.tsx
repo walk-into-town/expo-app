@@ -1,14 +1,12 @@
 import { TuseState } from '@types'
 import React from 'react'
-import { View, Text } from 'react-native'
-import { OutLineButton } from '../../atoms'
-import { SubTitle } from '../../atoms/styled'
+import { OutLineButton, SubTitle } from '../../atoms'
 
 interface Props {
     useGoods: TuseState<string[]>;
 }
 
-const AddCouponGood = (props: Props) => {
+const AddCouponGoods = (props: Props) => {
     const [goods, setGoods] = props.useGoods;
     return (
         <>
@@ -18,4 +16,4 @@ const AddCouponGood = (props: Props) => {
     )
 }
 
-export default AddCouponGood
+export default AddCouponGoods

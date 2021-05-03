@@ -7,5 +7,5 @@ export { LoadingContext, useLoadingContext, LoadingContextProvider }
 import perventGoBack from "./perventGoBack"
 export { perventGoBack }
 
-import usesubmit from "./useSubmit"
-export { usesubmit }
+import useSubmit from "./useSubmit"
+export { useSubmit }

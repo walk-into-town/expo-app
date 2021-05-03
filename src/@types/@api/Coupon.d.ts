@@ -7,6 +7,18 @@ declare module "@types" {
         endDate: string,
         issued?: int,
         limit: int,
-        imgs: string[]
+        imgs: string[],
+    }
+    
+    type MakeCoupon = {
+        id?: string,
+        name: string,
+        description: string,
+        goods: string[],
+        endDate: string,
+        issued?: int,
+        limit: int,
+        imgs: string[],
+        paymentCondition: string
     }
 }

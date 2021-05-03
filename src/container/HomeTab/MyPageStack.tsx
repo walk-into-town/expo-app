@@ -4,8 +4,7 @@ import { useAuthContext } from '../../useHook';
 
 import Profile from '../../components/MyPageStack/Profile';
 import BadgeList from '../../components/MyPageStack/BadgeList';
-import { ClearButton } from '../../atoms';
-import { Container, Row } from '../../atoms/styled';
+import { ClearButton, Container, Row } from '../../atoms';
 
 interface Props {
 }

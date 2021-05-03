@@ -2,9 +2,9 @@ import React from 'react';
 import { Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Image, Text } from 'react-native-elements';
-import { Row } from './styled';
-import { OutLineButton } from './elements';
 import { TuseState } from '@types';
+import { OutLineButton } from './elements/buttons';
+import { Row } from './elements/layouts';
 
 
 const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {

@@ -3,8 +3,8 @@ import { createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigat
 import MakeCampaginStack from '../container/MakeCampaginNav/MakeCampaginStack';
 import MakePinPointStack from '../container/MakeCampaginNav/MakePinPointStack';
 import MakeCouponStack from '../container/MakeCampaginNav/MakeCouponStack';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 const Stack = createStackNavigator();
 

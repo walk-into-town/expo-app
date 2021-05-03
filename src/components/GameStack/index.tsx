@@ -3,10 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { Button, Image, Text } from 'react-native'
 import styled from 'styled-components/native'
 import { getRandomCat } from '../../api'
-import { ClearButton } from '../../atoms'
+import { ClearButton, soundPath } from '../../atoms'
 import LoadingModal from '../LoadingModal'
 import { Audio } from "expo-av"
-import { soundPath } from '../../atoms/paths'
 import { useLoadingContext } from '../../useHook'
 
 interface Props {

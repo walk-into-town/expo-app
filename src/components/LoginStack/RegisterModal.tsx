@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TuseState } from '@types';
 import { TouchableOpacity } from 'react-native'
 import Modal from 'react-native-modal';
-import { WhiteInput } from '../../atoms'
-import { BtsWrapper, WhiteText, WhiteTitle } from '../../atoms/styled';
+import { WhiteInput, BtsWrapper, WhiteText, WhiteTitle } from '../../atoms'
 
 
 interface Props {

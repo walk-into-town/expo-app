@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { PinPoint, Coupon, MakeCampaginStackParamList } from '@types';
-import { ScrollWrapper } from '../../atoms/styled';
 import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
+import { perventGoBack, useSubmit } from '../../useHook';
+
+import { ScrollWrapper } from '../../atoms';
 import CampaginBox from '../../components/MakeCampaginStack/CampaginBox';
 import PinPointListBox from '../../components/MakeCampaginStack/PinPointListBox';
 import CouponListBox from '../../components/MakeCampaginStack/CouponListBox';
 import SubmitCampaginButton from '../../components/MakeCampaginStack/SubmitCampaginButton';
-import perventGoBack from '../../useHook/perventGoBack';
-import useSubmit from '../../useHook/useSubmit';
 
 const MakeCampaginStack = () => {
     const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCampaginStack'>>();

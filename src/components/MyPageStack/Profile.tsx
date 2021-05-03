@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, Card, ListItem, Text } from 'react-native-elements';
-import { SubTitle } from '../../atoms/styled';
+import { SubTitle } from '../../atoms';
 import { useAuthContext } from '../../useHook';
 
 interface Props {

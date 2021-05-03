@@ -1,8 +1,9 @@
-import useFetch from "./useFetch"
+import useFetch from "../useHook/useFetch";
 
 export const getRandomCat = () => {
     return useFetch("http://aws.random.cat/meow");
 }
+
 import { memberLogin, memberLogout, memberModify, memberRegister, memberWithdraw } from "./member";
 
 export const API = {

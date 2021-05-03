@@ -23,4 +23,20 @@ declare module "@types" {
             imgs: string[]
         }]
     }
+
+    type MakePinPoint = {
+        id?: string,
+        name: string,
+        imgs: string[],
+        latitude: number,
+        longitude: number,
+        description: string
+
+        quiz: {
+            text: string,
+            type: quizType,
+            choices: string[],
+            answer: string,
+        },
+    }
 }

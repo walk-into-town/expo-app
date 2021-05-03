@@ -1,8 +1,7 @@
 import { Coupon } from '@types'
 import React from 'react'
 import { Text } from 'react-native'
-import { EvilIcons, OutLineButton } from '../../atoms'
-import { Box, Row, SubTitle } from '../../atoms/styled'
+import { Box, Row, SubTitle, EvilIcons, OutLineButton } from '../../atoms'
 
 interface Props {
     couponList: Coupon[],
