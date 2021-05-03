@@ -1,15 +1,10 @@
 import { TuseState } from '@types';
 import React from 'react'
-import { GooglePlaceSearchBar } from '../../atoms/GoogleMap';
-
 import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapView from 'react-native-maps';
-import { GooglePlaceDetail, GooglePlaceData } from 'react-native-google-places-autocomplete';
-import { Container, Box, Googleplace } from '../../atoms/elements/layouts';
+import { Container, Box } from '../../atoms/elements/layouts';
 import { SubTitle } from '../../atoms/elements/texts';
 import { Text } from 'react-native-elements';
-
-const GOOGLE_PLACES_API_KEY = 'AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw';
 
 interface Props {
     useLatitude: TuseState<number>,
@@ -17,9 +12,10 @@ interface Props {
 
 }
 
-const FindPinPointLocation = (props: Props) => {
+const FindOnMap = (props: Props) => {
     const [latitude, setLatitude] = props.useLatitude;
     const [longitude, setLongitude] = props.useLongitude;
+
 
     const onPressMap = (e: { nativeEvent: { coordinate: any; } }) => {
         const { coordinate } = e.nativeEvent
@@ -28,35 +24,9 @@ const FindPinPointLocation = (props: Props) => {
     }
 
 
-    const getPlaceDetails = (data: GooglePlaceData, detail: GooglePlaceDetail | null) => {
-        if (detail === null) return;
-
-        const { geometry: { location } } = detail
-        setLatitude(location.lat)
-        setLongitude(location.lng)
-    }
-
-
 
     return (
         <Container>
-            <Box>
-                <SubTitle>위치 검색</SubTitle>
-            </Box>
-
-            <Googleplace>
-                <GooglePlaceSearchBar
-                    placeholder='장소 검색'
-                    query={{
-                        key: GOOGLE_PLACES_API_KEY,
-                        language: 'ko'
-                    }}
-                    onPress={getPlaceDetails}
-                    onFail={(error) => console.log(error)}
-                    fetchDetails={true}
-                />
-            </Googleplace>
-
             <Box>
                 <SubTitle>지도에서 보기</SubTitle>
             </Box>
@@ -77,4 +47,4 @@ const FindPinPointLocation = (props: Props) => {
 }
 
 
-export default FindPinPointLocation;
+export default FindOnMap;

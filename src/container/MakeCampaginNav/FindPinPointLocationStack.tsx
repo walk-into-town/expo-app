@@ -3,11 +3,13 @@ import { MakeCampaginStackParamList } from '@types'
 import { makeCampaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
-import FindPinPointLocation from '../../components/FindPinPointLocationStack/FindPinPointLocation';
+import FindOnMap from '../../components/FindPinPointLocationStack/FindOnMap';
 import { Container } from '../../atoms/elements/layouts';
 import { SubmitButton } from '../../atoms';
 import { Alert } from 'react-native';
 import * as Location from 'expo-location';
+import { GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
+import FindOnGooglePlace from '../../components/FindPinPointLocationStack/FindOnGooglePlace';
 
 
 
@@ -31,19 +33,38 @@ const FindPinPointLocationStack = () => {
 
 
     useEffect(() => {
+        //clean up을 위한 변수
+        let isEnd = false;
         const getLocation = async () => {
             try {
                 await Location.requestPermissionsAsync();
                 const { coords } = await Location.getCurrentPositionAsync();
-                setLatitude(coords.latitude)
-                setLongitude(coords.longitude)
+                if (!isEnd) {
+                    setLatitude(coords.latitude)
+                    setLongitude(coords.longitude)
+                }
+
             } catch (error) {
-                Alert.alert("Can't find you");
+                if (!isEnd) {
+                    Alert.alert("Can't find you");
+                }
+
             }
         }
         if (!latitude && !longitude)
             getLocation();
+
+        return () => { isEnd = true }
     }, []);
+
+
+    const getPlaceDetails = (data: GooglePlaceData, detail: GooglePlaceDetail | null) => {
+        if (detail === null) return;
+
+        const { geometry: { location } } = detail
+        setLatitude(location.lat)
+        setLongitude(location.lng)
+    }
 
 
 
@@ -60,7 +81,10 @@ const FindPinPointLocationStack = () => {
 
     return (
         <Container>
-            <FindPinPointLocation
+            <FindOnGooglePlace
+                getPlaceDetails={getPlaceDetails}
+            />
+            <FindOnMap
                 useLatitude={[latitude, setLatitude]}
                 useLongitude={[longitude, setLongitude]}
             />
