@@ -1,11 +1,11 @@
-import { Coupon } from '@types'
+import { Coupon, MakeCoupon } from '@types'
 import React from 'react'
 import { Text } from 'react-native'
 import { Box, Row, SubTitle, EvilIcons, OutLineButton } from '../../atoms'
 
 interface Props {
-    couponList: Coupon[],
-    navToCouponModal: (item?: Coupon, idx?: number) => void,
+    couponList: MakeCoupon[],
+    navToCouponModal: (item?: MakeCoupon, idx?: number) => void,
     deleteCoupon: (idx: number) => void
 }
 

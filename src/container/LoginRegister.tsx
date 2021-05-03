@@ -46,8 +46,10 @@ const LoginRegister = () => {
             signIn({ id, pw });
             toggleModal();
         }
-        else
+        else {
             console.log("[회원가입 에러]", error)
+            setError(error ? error : " ");
+        }
         endLoading();
     }
 

@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Coupon, MakeCampaginStackParamList } from '@types';
+import { Coupon, MakeCampaginStackParamList, MakeCoupon } from '@types';
 import { makeCampaginNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { perventGoBack, useSubmit } from '../../useHook';
 import { isEditCoupon } from '../../util';
 
 import { ScrollWrapper, SubmitButton } from '../../atoms';
-import MakeCoupon from '../../components/MakeCouponStack/MakeCoupon';
+import CouponBaseInputs from '../../components/MakeCouponStack/CouponBaseInputs';
 import AddCouponGoods from '../../components/MakeCouponStack/AddCouponGoods';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
+import PaymentConditionPicker from '../../components/MakeCouponStack/PaymentConditionPicker';
 
 const MakeCouponStack = () => {
     const campaginNav = makeCampaginNavigation();
     const nav = useNavigation();
-    const { params: { coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCouponStack'>>();
+    const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCouponStack'>>();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -21,6 +22,8 @@ const MakeCouponStack = () => {
     const [limit, setLimit] = useState("");
     const [goods, setGoods] = useState<string[]>([]);
     const [endDate, setEndDate] = useState(new Date());
+    // -1 : 캠페인 클리어, 값: pinPointList index
+    const [paymentCondition, setPaymentCondition] = useState(-1);
 
     useEffect(() => {
         if (coupon === undefined) return
@@ -35,14 +38,15 @@ const MakeCouponStack = () => {
         setLimit(coupon.limit);
     }, [coupon])
 
-    const getCoupon: () => Coupon = () => {
+    const getCoupon: () => MakeCoupon = () => {
         return {
             name,
             description,
             endDate: endDate.toISOString(),
             limit,
             goods,
-            imgs: couponImgs
+            imgs: couponImgs,
+            paymentCondition
         }
     }
 
@@ -58,7 +62,7 @@ const MakeCouponStack = () => {
 
     return (
         <ScrollWrapper>
-            <MakeCoupon
+            <CouponBaseInputs
                 useName={[name, setName]}
                 useDescription={[description, setDescription]}
                 useCouponImgs={[couponImgs, setCouponImgs]}
@@ -66,6 +70,10 @@ const MakeCouponStack = () => {
             />
             <AddCouponGoods useGoods={[goods, setGoods]} />
             <EndDatePicker useEndDate={[endDate, setEndDate]} />
+            <PaymentConditionPicker 
+                pinPointList={pinPointList} 
+                usePaymentCondition={[paymentCondition, setPaymentCondition]}
+            />
 
             <SubmitButton title={editIndex !== undefined ? "쿠폰 수정하기" : "쿠폰 추가하기"} onPress={onSubmit} />
         </ScrollWrapper>
