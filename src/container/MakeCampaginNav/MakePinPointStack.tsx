@@ -16,8 +16,8 @@ const MakePinPointStack = () => {
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakePinPointStack'>>();
 
     const [name, setName] = useState("");
-    const [latitude, setLatitude] = useState<number>(1.8);
-    const [longitude, setLongitude] = useState<number>(19.9);
+    const [latitude, setLatitude] = useState<number>(0);
+    const [longitude, setLongitude] = useState<number>(0);
     const [description, setDescription] = useState("");
     const [pinPointImgs, setPinPointImgs] = useState<string[]>([]);
 

@@ -35,7 +35,7 @@ declare module "@types" {
             coupon?: MakeCoupon,
             editIndex?: number
         },
-        FindPinPointLocationStack: CampaginParams
+        FindPinPointLocationStack: MakeCampaginParams
     };
     type MakeCampaginParams = {
         pinpoint?: MakePinPoint,
