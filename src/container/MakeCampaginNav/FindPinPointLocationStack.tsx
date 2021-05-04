@@ -80,6 +80,7 @@ const FindPinPointLocationStack = () => {
 
 
     return (
+        
         <Container>
             <FindOnGooglePlace
                 getPlaceDetails={getPlaceDetails}
