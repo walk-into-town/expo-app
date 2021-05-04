@@ -67,7 +67,7 @@ const MakeCampaginStack = () => {
         }
     }
     /* 캠페인 제작 송신 */
-    const makingCampagin = async() => {
+    const onCreateCampagin = async() => {
         if (isBlank([title, description])) {
             DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
             return;
@@ -129,7 +129,7 @@ const MakeCampaginStack = () => {
                 navToCouponModal={navToCouponModal}
             />
 
-            <SubmitButton title={"캠페인 만들기"} onPress={onSubmit} />
+            <SubmitButton title={"캠페인 만들기"} onPress={onCreateCampagin} />
         </ScrollWrapper>
     )
 }

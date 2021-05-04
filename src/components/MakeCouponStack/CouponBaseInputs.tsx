@@ -6,7 +6,7 @@ import SingleImgPicker from '../../atoms/SingleImgPicker';
 interface Props {
     useName: TuseState<string>,
     useDescription: TuseState<string>,
-    useCouponImgs: TuseState<string>,
+    useCouponImg: TuseState<string>,
     useLimit: TuseState<string>,
     useGoods: TuseState<string>,
 }
@@ -14,7 +14,7 @@ interface Props {
 const CouponBaseInputs = (props: Props) => {
     const [name, setName] = props.useName;
     const [description, setDescription] = props.useDescription;
-    const [couponImgs, setCouponImgs] = props.useCouponImgs;
+    const [couponImg, setCouponImg] = props.useCouponImg;
     const [limit, setLimit] = props.useLimit;
     const [goods, setGoods] = props.useGoods;
 
@@ -29,7 +29,7 @@ const CouponBaseInputs = (props: Props) => {
                 placeholder="쿠폰의 상세설명을 입력해주세요."
                 type='textarea' />
 
-            <SingleImgPicker useImgs={[couponImgs, setCouponImgs]} />
+            <SingleImgPicker useImgs={[couponImg, setCouponImg]} />
 
             <InputModal
                 useText={[limit, setLimit]}

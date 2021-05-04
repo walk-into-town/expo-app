@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import { mainNavigation } from '../../navigation/useNavigation';
 
-import { Text } from 'react-native-elements';
 import { Container, ClearButton } from '../../atoms';
-import SearchCampagin from '../../components/CampaginStack/SearchCampagin';
+import CampaginSearchBar from '../../components/CampaginStack/CampaginSearchBar';
 import CampaginList from '../../components/CampaginStack/CampaginList';
 import { API } from '../../api';
-import { Campagin } from '@types';
+import { SearchCampagin } from '@types';
+
+const dummy: SearchCampagin = {
+    id: "zxcvasdfqwer",
+    ownner: "aaaa",
+    name: "이정연 식수",
+    description: "소공의 자랑",
+    imgs: [],
+    region: "임시",
+    pinpoints: ["q", "a", "b", "c", "d"],
+    coupons: ["qiweuy6t"],
+    updateTime: new Date().toISOString(),
+    comments: []
+}
 
 const CampaginStack = () => {
     const mainNav = mainNavigation();
 
     const [value, setValue] = useState("")
-    const [searchText, setSearchText] = useState("")
-    const [campaginList, setCamPaginList] = useState<Campagin[]>([{
-        name: "이정연 식수",
-        description: "소공의 자랑",
-        imgs: [""],
-        region: "",
-        pinpoints: [],
-        coupons: [],
-        updateTime: new Date()
-    }]);
+    const [searchText, setSearchText] = useState("금오톡톡")
+    const [campaginList, setCamPaginList] = useState<SearchCampagin[]>([dummy]);
 
     useEffect(() => {
-        const getAllCampagin = async () => {
-            const { result, error, message } = await API.campaginReadAll();
-            console.log(result, message, error)
+        const getSearchCampagin = async () => {
+            const { result, error, message } = await API.campaginSearch(searchText);
+            console.log(result, message, error);
+            if (message !== undefined)
+                setCamPaginList([dummy, ...message]);
         }
-        getAllCampagin();
-    }, [])
+        getSearchCampagin();
+    }, [searchText])
 
     return (
         <Container>
@@ -38,7 +44,7 @@ const CampaginStack = () => {
                 type="clear"
                 onPress={() => mainNav.navigate('MakeCampaginNav', { screen: "MakeCampaginStack", params: {} })}
             />
-            <SearchCampagin
+            <CampaginSearchBar
                 useValue={[value, setValue]}
                 useSearchText={[searchText, setSearchText]}
             />

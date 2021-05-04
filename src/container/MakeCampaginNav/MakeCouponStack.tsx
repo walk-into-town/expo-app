@@ -18,7 +18,7 @@ const MakeCouponStack = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [couponImgs, setCouponImgs] = useState<string>("");
+    const [couponImg, setCouponImg] = useState<string>("");
     const [limit, setLimit] = useState("");
     const [goods, setGoods] = useState<string>("");
     const now = new Date();
@@ -33,7 +33,7 @@ const MakeCouponStack = () => {
 
         setName(coupon.name)
         setDescription(coupon.description);
-        setCouponImgs(coupon.imgs);
+        setCouponImg(coupon.img);
         setEndDate(new Date(coupon.endDate));
         setGoods(coupon.goods);
         setLimit(coupon.limit);
@@ -46,7 +46,7 @@ const MakeCouponStack = () => {
             endDate: endDate.toISOString(),
             limit,
             goods,
-            imgs: couponImgs,
+            img: couponImg,
             paymentCondition
         }
     }
@@ -61,7 +61,7 @@ const MakeCouponStack = () => {
         }
     });
     const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())
-        : name || description || limit || couponImgs.length
+        : name || description || limit || couponImg.length
     ) && !isSubmit;
     perventGoBack({ hasUnsavedChanges });
 
@@ -70,7 +70,7 @@ const MakeCouponStack = () => {
             <CouponBaseInputs
                 useName={[name, setName]}
                 useDescription={[description, setDescription]}
-                useCouponImgs={[couponImgs, setCouponImgs]}
+                useCouponImg={[couponImg, setCouponImg]}
                 useLimit={[limit, setLimit]}
                 useGoods={[goods, setGoods]}
             />

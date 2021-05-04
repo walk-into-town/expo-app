@@ -1,22 +1,26 @@
-import { Campagin } from '@types'
+import { Campagin, SearchCampagin } from '@types'
 import React from 'react'
-import { View } from 'react-native'
 
 import { ListItem, Text } from 'react-native-elements'
 import { Avatar } from 'react-native-elements/dist/avatar/Avatar'
 import { Row, ScrollWrapper, TitleBadge } from '../../atoms'
-import { getDateAfter, isBlank } from '../../util'
+import { getDateAfter, isBlank, isUndefined } from '../../util'
 //  https://github.com/kohver/react-native-touchable-scale
 
 interface Props {
-    campaginList: Campagin[]
+    campaginList: SearchCampagin[]
 }
 
-const CampaginCard = ({ campagin }: { campagin: Campagin }) => {
-    const uri = !isBlank([campagin.imgs[0]]) ? campagin.imgs[0] : "https://pgnqdrjultom1827145.cdn.ntruss.com/img/1d/07/1d0703352c93061e01f2df12715bc04b7fa152f6d509113c1d6b67794219c595_v1.jpg";
+const CampaginCard = ({ campagin }: { campagin: SearchCampagin }) => {
+    const uri = campagin.imgs.length ? campagin.imgs[0] : "https://pgnqdrjultom1827145.cdn.ntruss.com/img/1d/07/1d0703352c93061e01f2df12715bc04b7fa152f6d509113c1d6b67794219c595_v1.jpg";
     const badgeList: string[] = [];
-    if (campagin.updateTime < getDateAfter(30))
+    if (new Date(campagin.updateTime) < getDateAfter(30))
         badgeList.push("신규");
+
+    const getCommentsNum = (): string => {
+        const len = campagin.comments ? campagin.comments.length : 0
+        return len > 100 ? `(100+)` : `(${len})`
+    }
 
     const getLineTrd = (): string => {
         var res = `핀포인트 ${campagin.pinpoints.length}개`;
@@ -26,15 +30,15 @@ const CampaginCard = ({ campagin }: { campagin: Campagin }) => {
     }
 
     return (
-        <ListItem bottomDivider>
+        <ListItem bottomDivider onLongPress={() => console.log("캠페인 ID: ", campagin.id)}>
             <Avatar source={{ uri }} size={'large'} title='이미지 로딩중' />
-            <ListItem.Content >
+            <ListItem.Content>
                 <Row style={{ marginVertical: 2 }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{campagin.name}</Text>
                     {badgeList.map((v, i) => <TitleBadge key={i} title={v} backgroundColor={'#ff3b30'} />)}
                 </Row>
                 <ListItem.Subtitle style={{ fontSize: 13, marginVertical: 2 }}>
-                    ✨ <Text style={{ fontWeight: 'bold' }}>4.8</Text> (100+)
+                    ✨ <Text style={{ fontWeight: 'bold' }}>4.8</Text> {getCommentsNum()}
                 </ListItem.Subtitle>
                 <ListItem.Subtitle style={{ fontSize: 13, marginVertical: 2 }}>
                     {getLineTrd()}
