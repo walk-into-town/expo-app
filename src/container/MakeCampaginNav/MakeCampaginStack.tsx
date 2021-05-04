@@ -4,12 +4,11 @@ import { MakeCampaginStackParamList, MakePinPoint, MakeCoupon, MakeCampagin } fr
 import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
 import { perventGoBack, useAuthContext, useLoadingContext, useSubmit } from '../../useHook';
 
-import { ScrollWrapper, SubmitButton } from '../../atoms';
+import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
 import CampaginBox from '../../components/MakeCampaginStack/CampaginBox';
 import PinPointListBox from '../../components/MakeCampaginStack/PinPointListBox';
 import CouponListBox from '../../components/MakeCampaginStack/CouponListBox';
 import { isBlank } from '../../util';
-import DefaultAlert from '../../atoms/DefaultAlert';
 import { API } from '../../api';
 
 const MakeCampaginStack = () => {
@@ -30,11 +29,13 @@ const MakeCampaginStack = () => {
             setPinPointList(editIndex !== undefined ? [...pinPointList.slice(0, editIndex), pinpoint, ...pinPointList.splice(editIndex + 1)]
                 : [...pinPointList, pinpoint])
         }
+    }, [pinpoint])
+    useEffect(() => {
         if (coupon) {
             setCouponList(editIndex !== undefined ? [...couponList.slice(0, editIndex), coupon, ...couponList.splice(editIndex + 1)]
                 : [...couponList, coupon])
         }
-    }, [pinpoint, coupon])
+    }, [coupon])
 
     // PinPointList
     const navToPinPointModal = (item?: MakePinPoint, idx?: number) => {
@@ -62,35 +63,50 @@ const MakeCampaginStack = () => {
             imgs: campaginImgs,
             pinpoints: pinPointList,
             coupons: couponList,
-            region: ""
+            region: "임시지역"
         }
     }
     /* 캠페인 제작 송신 */
+    const makingCampagin = async() => {
+        if (isBlank([title, description])) {
+            DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+            return;
+        }
+        if (pinPointList.length === 0) {
+            DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
+            return;
+        }
+
+        startLoading();
+        const { result, message, error } = await API.campaginCreate(getCampagin());
+        if (result === "success") {
+            DefaultAlert({
+                title: "캠페인 생성 완료",
+                subTitle: message ? message : "",
+                btColor: "default",
+                onPress: () => {
+                    endLoading();
+                    onSubmit();
+                }
+            })
+        }
+        else {
+            DefaultAlert({
+                title: "오류",
+                subTitle: error ? error : "",
+                onPress: () => {
+                    endLoading();
+                }
+            })
+        }
+    }
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
-            if (isBlank([title, description])) {
-                DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
-                return;
-            }
-            if (pinPointList.length === 0) {
-                DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
-                return;
-            }
-            const campagin = getCampagin();
-            console.log(campagin)
-            startLoading();
-            const { result, message, error } = await API.campaginCreate(campagin);
-            endLoading();
-            if (result === "success") {
-                DefaultAlert({ title: "캠페인 생성 완료", subTitle: message ? message : "", btColor: "default" })
-                mainNav.navigate("HomeTab", { screen: "CampaignStack" });
-            }
-            else {
-                DefaultAlert({ title: "오류", subTitle: error ? error : "" })
-            }
+            mainNav.navigate("HomeTab", { screen: "CampaignStack" })
         }
     });
-    const hasUnsavedChanges = Boolean(title || description || campaginImgs.length || pinPointList.length || couponList.length) && !isSubmit;
+    const hasUnsavedChanges = Boolean(title || description || campaginImgs.length || pinPointList.length || couponList.length)
+         && !isSubmit;
     perventGoBack({ hasUnsavedChanges });
 
     return (
