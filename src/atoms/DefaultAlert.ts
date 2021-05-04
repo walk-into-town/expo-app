@@ -7,7 +7,12 @@ interface Props {
     onPress?: () => void
 }
 
-const DefaultAlert = ({ title, subTitle, btColor = "destructive", onPress = () => {} }: Props) => {
+const DefaultAlert = ({
+    title,
+    subTitle,
+    btColor = "destructive",
+    onPress = () => {}
+}: Props) => {
 
     Alert.alert(
         title,

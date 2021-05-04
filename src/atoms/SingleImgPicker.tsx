@@ -1,10 +1,8 @@
 import React from 'react';
 import { Image, Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Text } from 'react-native-elements';
 import { TuseState } from '@types';
-import { ClearButton, OutLineButton } from './elements/buttons';
-import { Row } from './elements/layouts';
+import { ClearButton } from './elements/buttons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
