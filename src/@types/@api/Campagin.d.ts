@@ -7,7 +7,7 @@ declare module "@types" {
         name: string,
         imgs: string[],
         description: string,
-        updateTime?: dateTime,
+        updateTime?: string,
         region: string
 
         pinpoints: PinPoint[],
@@ -17,8 +17,28 @@ declare module "@types" {
             userId: string,
             text: string,
             rated: int,
-            imgs: [string]
+            imgs: string[]
         }]
+    }
+
+    type SearchCampagin = {
+        id: string,
+        ownner: string,
+        name: string,
+        imgs: string[],
+        description: string,
+        updateTime: string,
+        region: string
+
+        pinpoints: string[],
+        coupons: string[],
+        comments: [{
+            id: string,
+            userId: string,
+            text: string,
+            rated: int,
+            imgs: string[]
+        }] | []
     }
 
     type MakeCampagin = {

@@ -33,6 +33,7 @@ export const LightSearchBar = (option: LightSearchBarProps) => {
         <SearchBar
             platform="ios"
             containerStyle={{ backgroundColor: "transparent" }}
+            autoCapitalize="none"
             {...option}
         />
     )

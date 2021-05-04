@@ -8,7 +8,7 @@ interface Props {
     useSearchText: TuseState<string>
 }
 
-const SearchCampagin = (props: Props) => {
+const CampaginSearchBar = (props: Props) => {
     const [value, setValue] = props.useValue;
     const [text, setText] = props.useSearchText;
 
@@ -24,4 +24,4 @@ const SearchCampagin = (props: Props) => {
     )
 }
 
-export default SearchCampagin
+export default CampaginSearchBar

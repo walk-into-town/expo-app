@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { BaseFetchRes, Campagin, MakeCampagin } from "@types"
+import { BaseFetchRes, Campagin, MakeCampagin, SearchCampagin } from "@types"
 import { baseFetch } from "./baseFetch"
 
 
@@ -8,7 +8,10 @@ export const campaginCreate: CampaginCreateFetch = (data) => {
     return baseFetch(`${ip}/campaign`, "POST", data);
 }
 
-export const campaginReadAll: () => BaseFetchRes<Campagin[]> = () => {
-    // return baseFetch(`${ip}/campaign`, "GET");
-    return baseFetch(`${ip}/campaign/inquiry`, "POST");
+export const campaginReadAll: () => BaseFetchRes<SearchCampagin[]> = () => {
+    return baseFetch(`${ip}/campaign?type=name&value=금오`, "GET");
+}
+
+export const campaginSearch: (text: string) => BaseFetchRes<SearchCampagin[]> = (text) => {
+    return baseFetch(`${ip}/campaign?type=name&value=${text}`, "GET");
 }

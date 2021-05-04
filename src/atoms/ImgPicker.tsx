@@ -41,9 +41,8 @@ const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
             <Text>* 사진을 클릭하면 삭제 됩니다.</Text>
             <Row>
                 {imgList.map((uri, idx) =>
-                    <TouchableOpacity onPress={() => onImgPress(idx)}>
+                    <TouchableOpacity key={idx} onPress={() => onImgPress(idx)}>
                         <Image
-                            key={idx}
                             source={{ uri: uri }}
                             style={{ width: 100, height: 100 }}
                         />

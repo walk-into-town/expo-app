@@ -31,5 +31,11 @@ export const isEditPinPoint = (a: PinPoint, b: PinPoint) => {
 }
 export const isEditCoupon = (a: Coupon, b: Coupon) => {
   return a.name !== b.name || a.description !== b.description
-    || a.endDate !== b.endDate || a.limit !== b.limit || !isEqualStringArray(a.imgs, b.imgs)
+    || a.endDate !== b.endDate || a.limit !== b.limit || a.img !== b.img
+}
+
+
+export const getDateAfter = (dayAfter: number) => {
+  const now = new Date();
+  return new Date(now.setDate(now.getDate() + dayAfter));
 }
