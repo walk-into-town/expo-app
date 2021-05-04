@@ -1,3 +1,5 @@
+import React from 'react';
+import { Text } from "react-native-elements";
 import styled from "styled-components/native";
 
 export const SubTitle = styled.Text`
@@ -31,3 +33,25 @@ export const WhiteText = styled.Text`
     margin-left: 5px;
     color: white;
 `
+
+interface ITitleBade {
+    title: string,
+    backgroundColor: '#ff3b30' | 'black'
+}
+export const TitleBadge = (props: ITitleBade) => {
+    return (
+        <Text style={{
+            fontSize: 11,
+            fontWeight: 'bold',
+            color: 'white',
+            backgroundColor: props.backgroundColor,
+            borderRadius: 9,
+            overflow: "hidden",
+            marginLeft: 4,
+            paddingHorizontal: 5,
+            paddingVertical: 3,
+        }}>
+            {props.title}
+        </Text>
+    )
+}

@@ -32,6 +32,7 @@ const PinPointListBox = ({ pinPointList, navToPinPointModal, deletePinPoint }: P
             <OutLineButton
                 title="핀포인트 추가"
                 onPress={() => navToPinPointModal()}
+                style={{ marginTop: 10 }}
             />
         </Box>
     )

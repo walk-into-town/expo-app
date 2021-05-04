@@ -24,7 +24,7 @@ const CouponListBox = ({ couponList, navToCouponModal, deleteCoupon }: Props) =>
             <OutLineButton
                 title="쿠폰 추가"
                 onPress={() => navToCouponModal()}
-                style={{marginTop: 5}}
+                style={{marginTop: 10}}
             />
         </Box>
     )

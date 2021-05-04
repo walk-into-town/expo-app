@@ -19,12 +19,13 @@ const CampaginStack = () => {
         imgs: [""],
         region: "",
         pinpoints: [],
-        coupons: []
+        coupons: [],
+        updateTime: new Date()
     }]);
 
     useEffect(() => {
         const getAllCampagin = async () => {
-            const { result, session, error, message } = await API.campaginReadAll();
+            const { result, error, message } = await API.campaginReadAll();
             console.log(result, message, error)
         }
         getAllCampagin();
@@ -41,7 +42,6 @@ const CampaginStack = () => {
                 useValue={[value, setValue]}
                 useSearchText={[searchText, setSearchText]}
             />
-            <Text style={{ textAlign: "center" }}>{searchText}</Text>
 
             <CampaginList
                 campaginList={campaginList}

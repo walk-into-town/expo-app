@@ -7,8 +7,8 @@ export { LightSearchBar, TextArea, WhiteInput }
 import { Box, BtsWrapper, Container, Row, ScrollWrapper } from "./elements/layouts"
 export { Box, BtsWrapper, Container, Row, ScrollWrapper }
 
-import { SubTitle, WhiteSubTitle, WhiteText, WhiteTitle } from "./elements/texts"
-export { SubTitle, WhiteSubTitle, WhiteText, WhiteTitle }
+import { SubTitle, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge } from "./elements/texts"
+export { SubTitle, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge }
 
 import { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon } from './elements/icons';
 export { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon };
@@ -16,10 +16,12 @@ export { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon };
 import ImgPicker from './ImgPicker';
 import InputModal from './InputModal';
 import DateInput from './DateInput';
-export { ImgPicker, InputModal, DateInput };
+import DefaultAlert from './DefaultAlert'
+export { ImgPicker, InputModal, DateInput, DefaultAlert };
 
 import { fontPath, loadingPath, soundPath } from './paths'
 export { fontPath, loadingPath, soundPath }
 
 import SimpleSwapListItem from "./SimpleSwapListItem"
 export { SimpleSwapListItem }
+
