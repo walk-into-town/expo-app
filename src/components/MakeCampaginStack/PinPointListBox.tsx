@@ -1,8 +1,10 @@
 import { PinPoint } from '@types'
+import axios from 'axios'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
-import { Box, Row, SubTitle, EvilIcons, OutLineButton } from '../../atoms'
+import { Box, Row, SubTitle, EvilIcons, OutLineButton, ClearButton } from '../../atoms'
+import useAxios from '../../useHook/useAxios'
 
 interface Props {
     pinPointList: PinPoint[],
@@ -11,8 +13,27 @@ interface Props {
 }
 
 const PinPointListBox = ({ pinPointList, navToPinPointModal, deletePinPoint }: Props) => {
+    const setCampaignLocation = async ()=>{
+        if(pinPointList!==undefined){
+            const lat = pinPointList[0].latitude
+            const long = pinPointList[0].longitude
+            const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`);
+            console.log(data);
+        }
+
+        else Alert.alert('핀포인트 먼저 설정해주세요')
+            
+    }
+
     return (
         <Box>
+            <Row>
+                <ClearButton
+                    title="지역 설정"
+                    onPress={setCampaignLocation}
+                />
+                <Text></Text>
+            </Row>
             <Row>
                 <SubTitle>핀포인트 리스트</SubTitle>
                 <Button type="clear" titleStyle={{ fontSize: 13, color: "black" }}
