@@ -13,4 +13,9 @@ declare module "@types" {
         onPress: () => void;
         option?: ButtonProps;
     };
+
+    interface ITitleBadge {
+        title: string,
+        backgroundColor: '#ff3b30' | 'black'
+    }
 }

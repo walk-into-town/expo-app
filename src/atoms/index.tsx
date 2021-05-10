@@ -1,5 +1,5 @@
-import { ClearButton, OutLineButton, SubmitButton } from "./elements/buttons";
-export { ClearButton, OutLineButton, SubmitButton }
+import { ClearButton, OutLineButton, SubmitButton, ButtonTabs } from "./elements/buttons";
+export { ClearButton, OutLineButton, SubmitButton, ButtonTabs }
 
 import { LightSearchBar, TextArea, WhiteInput } from "./elements/inputs"
 export { LightSearchBar, TextArea, WhiteInput }

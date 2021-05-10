@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { mainNavigation } from '../../navigation/useNavigation';
+import { mainNavigation, modalNavigation } from '../../navigation/useNavigation';
 
 import { Container, ClearButton } from '../../atoms';
 import CampaginSearchBar from '../../components/CampaginStack/CampaginSearchBar';

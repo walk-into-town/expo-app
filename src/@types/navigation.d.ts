@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampagin } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -8,10 +8,11 @@ declare module "@types" {
         },
         MakeCampaginNav: {
             screen?: keyof MakeCampaginStackParamList,
-            params: MakeCampaginParams
+            params: MakeCampaginStackParamList[keyof MakeCampaginParams]
         },
         ModalNav: {
             screen: keyof ModalStackParamList
+            params: ModalStackParamList[keyof ModalStackParamList]
         }
     };
 
@@ -45,6 +46,10 @@ declare module "@types" {
 
     type ModalStackParamList = {
         MyCouponStack: undefined,
-        GamePlayStack: undefined
-    };
+        GamePlayStack: undefined,
+        CampaginDetailStack: CampaginDetailParams
+    }
+    type CampaginDetailParams = {
+        campagin: SearchCampagin
+    }
 }

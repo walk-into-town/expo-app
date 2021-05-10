@@ -1,3 +1,4 @@
+import { ITitleBadge } from '@types';
 import React from 'react';
 import { Text } from "react-native-elements";
 import styled from "styled-components/native";
@@ -34,11 +35,7 @@ export const WhiteText = styled.Text`
     color: white;
 `
 
-interface ITitleBade {
-    title: string,
-    backgroundColor: '#ff3b30' | 'black'
-}
-export const TitleBadge = (props: ITitleBade) => {
+export const TitleBadge = (props: ITitleBadge) => {
     return (
         <Text style={{
             fontSize: 11,
