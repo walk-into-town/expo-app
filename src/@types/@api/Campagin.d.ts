@@ -12,13 +12,15 @@ declare module "@types" {
 
         pinpoints: PinPoint[],
         coupons: Coupon[],
-        comments?: [{
-            id: string,
-            userId: string,
-            text: string,
-            rated: int,
-            imgs: string[]
-        }]
+        comments: CampaginComment[]
+    }
+    type CampaginComment = {
+        id: string,
+        userId: string,
+        text: string,
+        rated: int,
+        imgs: string[],
+        updateTime: string
     }
 
     type SearchCampagin = {
@@ -32,13 +34,7 @@ declare module "@types" {
 
         pinpoints: string[],
         coupons: string[],
-        comments: [{
-            id: string,
-            userId: string,
-            text: string,
-            rated: int,
-            imgs: string[]
-        }] | []
+        comments: CampaginComment[]
     }
 
     type MakeCampagin = {

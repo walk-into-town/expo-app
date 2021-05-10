@@ -2,7 +2,7 @@ import { Alert } from 'react-native'
 
 interface Props {
     title: string,
-    subTitle: string,
+    subTitle?: string,
     btColor?: "destructive" | "default" | "cancel"
     onPress?: () => void
 }

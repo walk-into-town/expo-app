@@ -7,8 +7,8 @@ export { LightSearchBar, TextArea, WhiteInput }
 import { Box, BtsWrapper, Container, Row, ScrollWrapper } from "./elements/layouts"
 export { Box, BtsWrapper, Container, Row, ScrollWrapper }
 
-import { SubTitle, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge } from "./elements/texts"
-export { SubTitle, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge }
+import { Title, SubTitle, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge } from "./elements/texts"
+export { Title, SubTitle, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge }
 
 import { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon } from './elements/icons';
 export { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon };

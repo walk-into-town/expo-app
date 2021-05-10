@@ -3,6 +3,13 @@ import React from 'react';
 import { Text } from "react-native-elements";
 import styled from "styled-components/native";
 
+export const Title = styled.Text`
+    font-family: "SCDream8";
+    font-size: 22px;
+    margin-bottom: 10px;
+    align-self: center;
+`
+
 export const SubTitle = styled.Text`
     font-family: "SCDream7";
     font-size: 16px;

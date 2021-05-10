@@ -41,8 +41,9 @@ export const ButtonTabs = (props: ButtonTabProps) => (
             onPress={props.onPress}
             buttons={props.buttons}
             innerBorderStyle={{ width: 0 }}
-            containerStyle={{ marginVertical: 0, marginHorizontal: 0, borderWidth: 0 }}
+            containerStyle={{ marginVertical: 0, marginHorizontal: 0, borderWidth: 0, height: 50 }}
             buttonStyle={{ borderBottomWidth: 1, borderColor: "#ececec" }}
+            textStyle={{ fontSize: 17 }}
             selectedTextStyle={{ color: "black", fontWeight: "bold" }}
             selectedButtonStyle={{
                 backgroundColor: "white",
