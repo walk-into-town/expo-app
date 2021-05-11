@@ -2,15 +2,33 @@ import React from 'react'
 import { Animated, View } from 'react-native'
 import { ListItem } from 'react-native-elements';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { colorCode } from './color';
+import { colorCode } from '../color';
 
-interface Props {
+interface DefaultListItemProps {
+    title: string,
+    onPress: () => void
+}
+export const DefaultListItem = ({ title, onPress }: DefaultListItemProps) => {
+    return (
+        <ListItem
+            bottomDivider
+            onPress={onPress}
+            containerStyle={{ backgroundColor: "white" }}
+        >
+            <ListItem.Content>
+                <ListItem.Subtitle style={{ fontFamily: "SCDream4", fontSize: 13 }}>{title}</ListItem.Subtitle>
+            </ListItem.Content>
+            <ListItem.Chevron />
+        </ListItem>
+    )
+}
+
+interface SimpleSwapListItemProps {
     text: string;
     onText: () => void;
     onDelete: () => void;
 }
-
-const SimpleSwapListItem = ({ text, onText, onDelete }: Props) => {
+export const SimpleSwapListItem = ({ text, onText, onDelete }: SimpleSwapListItemProps) => {
 
     const renderRightActions = (progress: Animated.AnimatedInterpolation, dragX: Animated.AnimatedInterpolation) => {
         const trans = progress.interpolate({
@@ -36,5 +54,3 @@ const SimpleSwapListItem = ({ text, onText, onDelete }: Props) => {
         </Swipeable>
     )
 }
-
-export default SimpleSwapListItem

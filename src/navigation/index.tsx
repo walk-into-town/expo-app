@@ -31,8 +31,10 @@ export default () => {
                             <>
                                 <Stack.Screen name="HomeTab" component={HomeTab}
                                     options={{ cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }} />
+                                
                                 <Stack.Screen name="MakeCampaginNav" component={MakeCampaginNav}
                                     options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} />
+                                
                                 <Stack.Screen name="ModalNav" component={ModalNav} />
                             </>
                             :

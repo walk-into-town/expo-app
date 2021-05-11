@@ -1,12 +1,24 @@
+import { ITitleBadge } from '@types';
 import React from 'react';
 import { Text } from "react-native-elements";
 import styled from "styled-components/native";
+
+export const Title = styled.Text`
+    font-family: "SCDream8";
+    font-size: 22px;
+    margin-bottom: 10px;
+    align-self: center;
+`
 
 export const SubTitle = styled.Text`
     font-family: "SCDream7";
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 5px;
+`
+export const Text3 = styled.Text`
+    font-family: "SCDream3";
+    font-size: 12px;
 `
 
 export const WhiteTitle = styled.Text`
@@ -34,11 +46,7 @@ export const WhiteText = styled.Text`
     color: white;
 `
 
-interface ITitleBade {
-    title: string,
-    backgroundColor: '#ff3b30' | 'black'
-}
-export const TitleBadge = (props: ITitleBade) => {
+export const TitleBadge = (props: ITitleBadge) => {
     return (
         <Text style={{
             fontSize: 11,
