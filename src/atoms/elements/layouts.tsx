@@ -8,6 +8,15 @@ export const Row = styled.View`
     align-items: center;
     width: 100%;
 `
+export const RowButtonBoxWrapper = styled.View`
+    height: 70px;
+    flex-direction: row;
+`
+export const ButtonBox = styled.Text`
+    flex: 1;
+    text-align: center;
+`
+
 export const BtsWrapper = styled.View`
     flex-direction: row;
     align-items: center;
@@ -25,4 +34,8 @@ export const Googleplace = styled.View`
     flex: 0.5;
     padding: 10px;
     background-color: #ecf0f1;
+`
+
+export const WhiteView = styled.View`
+    background-color: white;
 `

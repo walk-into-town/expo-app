@@ -16,6 +16,10 @@ export const SubTitle = styled.Text`
     font-weight: 600;
     margin-bottom: 5px;
 `
+export const Text3 = styled.Text`
+    font-family: "SCDream3";
+    font-size: 12px;
+`
 
 export const WhiteTitle = styled.Text`
     font-family: "SCDream9";

@@ -12,7 +12,7 @@ declare module "@types" {
         },
         ModalNav: {
             screen: keyof ModalStackParamList
-            params: ModalStackParamList[keyof ModalStackParamList]
+            params?: ModalStackParamList[keyof ModalStackParamList]
         }
     };
 
