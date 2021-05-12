@@ -4,9 +4,8 @@ import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { Input } from 'react-native-elements';
 import Modal from 'react-native-modal';
-import { BtsWrapper, FontAwesome, OutLineButton, SubTitle, SimpleSwapListItem } from '../atoms';
+import { BtsWrapper, FontAwesome, OutLineButton, SimpleSwapListItem, SubTitle } from '../atoms';
 import { isBlank } from '../util';
-
 
 interface Props {
     title: string,

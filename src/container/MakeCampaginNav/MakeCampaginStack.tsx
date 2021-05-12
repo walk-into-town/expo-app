@@ -67,7 +67,7 @@ const MakeCampaginStack = () => {
         }
     }
     /* 캠페인 제작 송신 */
-    const onCreateCampagin = async() => {
+    const onCreateCampagin = async () => {
         if (isBlank([title, description])) {
             DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
             return;
@@ -78,11 +78,11 @@ const MakeCampaginStack = () => {
         }
 
         startLoading();
-        const { result, message, error } = await API.campaginCreate(getCampagin());
+        const { result, data, error, errdesc } = await API.campaginCreate(getCampagin());
         if (result === "success") {
             DefaultAlert({
                 title: "캠페인 생성 완료",
-                subTitle: message ? message : "",
+                subTitle: data ? data : "",
                 btColor: "default",
                 onPress: () => {
                     endLoading();
@@ -92,8 +92,8 @@ const MakeCampaginStack = () => {
         }
         else {
             DefaultAlert({
-                title: "오류",
-                subTitle: error ? error : "",
+                title: error,
+                subTitle: errdesc,
                 onPress: () => {
                     endLoading();
                 }
@@ -106,7 +106,7 @@ const MakeCampaginStack = () => {
         }
     });
     const hasUnsavedChanges = Boolean(title || description || campaginImgs.length || pinPointList.length || couponList.length)
-         && !isSubmit;
+        && !isSubmit;
     perventGoBack({ hasUnsavedChanges });
 
     return (

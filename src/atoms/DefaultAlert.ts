@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 
 interface Props {
-    title: string,
+    title?: string,
     subTitle?: string,
     btColor?: "destructive" | "default" | "cancel"
     onPress?: () => void
@@ -15,7 +15,7 @@ const DefaultAlert = ({
 }: Props) => {
 
     Alert.alert(
-        title,
+        title || "error",
         subTitle,
         [
             { text: "확인", style: btColor, onPress: onPress }

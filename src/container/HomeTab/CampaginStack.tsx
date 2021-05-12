@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { mainNavigation } from '../../navigation/useNavigation';
 
-import { Container, ClearButton } from '../../atoms';
+import { Container, ClearButton, DefaultAlert } from '../../atoms';
 import CampaginSearchBar from '../../components/CampaginStack/CampaginSearchBar';
 import CampaginList from '../../components/CampaginStack/CampaginList';
 import { API } from '../../api';
@@ -29,10 +29,13 @@ const CampaginStack = () => {
 
     useEffect(() => {
         const getSearchCampagin = async () => {
-            const { result, error, message } = await API.campaginSearch(searchText);
-            console.log(result, message, error);
-            if (message !== undefined)
-                setCamPaginList([dummy, ...message]);
+            const { result, error, errdesc, data } = await API.campaginSearch(searchText);
+            if(result === "failed" || error !== undefined || errdesc !== undefined){
+                DefaultAlert({title: error, subTitle: errdesc})
+                return;
+            }
+            if (data !== undefined)
+                setCamPaginList([dummy, ...data]);
         }
         getSearchCampagin();
     }, [searchText])

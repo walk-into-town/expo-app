@@ -25,6 +25,10 @@ export default () => {
             DefaultAlert({ title: "userToken 에러" });
     }
 
+    const onWithdrawal = () => {
+        
+    }
+
     return (
         <Container>
             <ScrollView>

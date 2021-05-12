@@ -23,4 +23,4 @@ import { fontPath, loadingPath, soundPath } from './paths'
 export { fontPath, loadingPath, soundPath }
 
 import { DefaultListItem, SimpleSwapListItem } from "./elements/listItems"
-
+export { DefaultListItem, SimpleSwapListItem }
