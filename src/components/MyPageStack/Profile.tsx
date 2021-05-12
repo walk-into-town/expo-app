@@ -19,7 +19,7 @@ const Profile = (props: Props) => {
     }
 
     return (
-        <WhiteView style={{ paddingVertical: 20 }}>
+        <WhiteView style={{ paddingVertical: 20, marginTop: 10 }}>
             <ListItem>
                 <ListItem.Content>
                     <Avatar

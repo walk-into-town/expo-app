@@ -6,15 +6,16 @@ import CampaginStack from '../container/HomeTab/CampaginStack';
 import GameStack from '../container/HomeTab/GameStack';
 import RankingStack from '../container/HomeTab/RankingStack';
 import MyPageNav from './MyPageNav';
+import { colorCode } from '../atoms/color';
 
 const Tab = createBottomTabNavigator();
 
 const HomeTab = () => {
     const iconName: { [key: string]: [string, string] } = {
-        MyPageNav: ["ios-home-outline", "ios-home"],
-        CampaginStack: ["ios-flashlight-outline", "ios-flashlight"],
         GameStack: ["ios-map-outline", "ios-map"],
-        RankingStack: ["ios-trophy-outline", "ios-trophy"]
+        CampaginStack: ["ios-flashlight-outline", "ios-flashlight"],
+        RankingStack: ["ios-trophy-outline", "ios-trophy"],
+        MyPageNav: ["ios-person-outline", "ios-person"],
     }
     return (
         <Tab.Navigator
@@ -23,14 +24,14 @@ const HomeTab = () => {
                     <Ionicons name={iconName[name][focused ? 1 : 0]} size={size} color={color} />
             })}
             tabBarOptions={{
-                activeTintColor: "#517fa4",
+                activeTintColor: colorCode.primary,
                 inactiveTintColor: "gray",
                 showLabel: false
             }}>
-            <Tab.Screen name="MyPageNav" component={MyPageNav} />
+            <Tab.Screen name="GameStack" component={GameStack} />
             <Tab.Screen name="CampaginStack" component={CampaginStack} />
-            <Tab.Screen name="GameStack" component={GameStack} options={{ tabBarBadge: 3 }} />
-            <Tab.Screen name="RankingStack" component={RankingStack} />
+            <Tab.Screen name="RankingStack" component={RankingStack} options={{ tabBarBadge: 3 }} />
+            <Tab.Screen name="MyPageNav" component={MyPageNav} />
         </Tab.Navigator>
     );
 }

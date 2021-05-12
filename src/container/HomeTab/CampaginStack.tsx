@@ -6,6 +6,7 @@ import CampaginSearchBar from '../../components/CampaginStack/CampaginSearchBar'
 import CampaginList from '../../components/CampaginStack/CampaginList';
 import { API } from '../../api';
 import { SearchCampagin } from '@types';
+import { ScrollView } from 'react-native';
 
 const dummy: SearchCampagin = {
     id: "zxcvasdfqwer",
@@ -21,8 +22,6 @@ const dummy: SearchCampagin = {
 }
 
 const CampaginStack = () => {
-    const mainNav = mainNavigation();
-
     const [value, setValue] = useState("")
     const [searchText, setSearchText] = useState("금오톡톡")
     const [campaginList, setCamPaginList] = useState<SearchCampagin[]>([dummy]);
@@ -30,8 +29,8 @@ const CampaginStack = () => {
     useEffect(() => {
         const getSearchCampagin = async () => {
             const { result, error, errdesc, data } = await API.campaginSearch(searchText);
-            if(result === "failed" || error !== undefined || errdesc !== undefined){
-                DefaultAlert({title: error, subTitle: errdesc})
+            if (result === "failed" || error !== undefined || errdesc !== undefined) {
+                DefaultAlert({ title: error, subTitle: errdesc })
                 return;
             }
             if (data !== undefined)
@@ -42,19 +41,15 @@ const CampaginStack = () => {
 
     return (
         <Container>
-            <ClearButton
-                title="나만의 캠페인 만들기"
-                type="clear"
-                onPress={() => mainNav.navigate('MakeCampaginNav', { screen: "MakeCampaginStack", params: {} })}
-            />
             <CampaginSearchBar
                 useValue={[value, setValue]}
                 useSearchText={[searchText, setSearchText]}
             />
-
-            <CampaginList
-                campaginList={campaginList}
-            />
+            <ScrollView>
+                <CampaginList
+                    campaginList={campaginList}
+                />
+            </ScrollView>
         </Container>
     )
 }
