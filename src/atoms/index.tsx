@@ -10,8 +10,8 @@ export { Box, BtsWrapper, Container, Row, ScrollWrapper, WhiteView, Googleplace,
 import { Title, SubTitle, Text3, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge } from "./elements/texts"
 export { Title, SubTitle, Text3, WhiteSubTitle, WhiteText, WhiteTitle, TitleBadge }
 
-import { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon } from './elements/icons';
-export { FontAwesome, EvilIcons, Ionicons, HeaderLeftCloseIcon };
+import { FontAwesome, EvilIcons, Ionicons, Feather, HeaderLeftCloseIcon, HeaderLeftBackIcon } from './elements/icons';
+export { FontAwesome, EvilIcons, Ionicons, Feather, HeaderLeftCloseIcon, HeaderLeftBackIcon };
 
 import ImgPicker from './ImgPicker';
 import InputModal from './InputModal';
@@ -23,4 +23,7 @@ import { fontPath, loadingPath, soundPath } from './paths'
 export { fontPath, loadingPath, soundPath }
 
 import { DefaultListItem, SimpleSwapListItem } from "./elements/listItems"
+export { DefaultListItem, SimpleSwapListItem }
 
+import { colorCode } from "./color"
+export { colorCode }

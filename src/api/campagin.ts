@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { BaseFetchRes, Campagin, Coupon, MakeCampagin, PinPoint, SearchCampagin } from "@types"
+import { ApiSearchParams, BaseFetchRes, Campagin, Coupon, MakeCampagin, PinPoint, SearchCampagin } from "@types"
 import { baseFetch } from "./baseFetch"
 
 
@@ -16,17 +16,18 @@ export const campaginSearch: (text: string) => BaseFetchRes<SearchCampagin[]> = 
     return baseFetch(`${ip}/campaign?type=name&value=${text}`, "GET");
 }
 
+// 미리 생성
+type CampaginParticiapte = (data: { userId: string, camId: string }) => BaseFetchRes<boolean>
+export const campaginParticiapte: CampaginParticiapte = (data) => {
+    return baseFetch(`${ip}/campagin/particiapte`, "POST")
+}
 
-type PinPointReadFetch = (data: { type: "list" | "single", id: string },) => BaseFetchRes<PinPoint[]>
+type PinPointReadFetch = (data: ApiSearchParams) => BaseFetchRes<PinPoint[]>
 export const pinPointRead: PinPointReadFetch = (data) => {
     return baseFetch(`${ip}/campagin/pinpoint?type${data.type}&id=${data.id}`, "GET");
 }
 
-type CouponReadFetch = (data: string[]) => BaseFetchRes<Coupon[]>
+type CouponReadFetch = (data: ApiSearchParams) => BaseFetchRes<Coupon[]>
 export const couponRead: CouponReadFetch = (data) => {
-    // var url = new URL(`${ip}/campagin/pinpoint`);
-    // const params = data.map(v => { return [ "id", v ] })
-    // url.search = new URLSearchParams(params).toString();
-    // console.log(url)
-    return baseFetch(`${ip}/campagin/coupon`, "GET");
+    return baseFetch(`${ip}/campagin/coupon?type${data.type}&id=${data.id}`, "GET");
 }

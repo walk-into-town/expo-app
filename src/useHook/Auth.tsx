@@ -55,14 +55,15 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             startLoading();
 
             console.log("[로그인 시도]", id, pw)
-            const { result, error, message, session } = await API.memberLogin({ id, pw });
+            const { result, error, errdesc, data, session } = await API.memberLogin({ id, pw });
             dispatch({ type: "RESTORE_TOKEN" });
 
-            if (result === "failed" || !message) {
+            if (result === "failed" || !data) {
                 await rmStorage("userToken");
+                console.log("[로그인 실패]", error, errdesc)
             }
             else {
-                const { nickname, profileImg, selfIntroduction } = message;
+                const { nickname, profileImg, selfIntroduction } = data;
                 await setStorage("userToken", { id, pw });
                 dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, selfIntroduction } });
                 console.log("[로그인 성공]", session)

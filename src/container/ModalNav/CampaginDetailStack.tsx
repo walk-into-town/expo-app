@@ -18,22 +18,22 @@ const CampaginDetailStack = () => {
     const [couponList, setCouponList] = useState<Coupon[]>([]);
 
     useEffect(() => {
-        // const getPinPoints = async () => {
-        //     const { result, error, message } = await API.pinPointRead({type: 'list', id: campagin.id});
-        //     if (result === "failed" || message === undefined)
-        //         return DefaultAlert({ title: "핀포인트 가져오기 실패", subTitle: error })
-            
-        //         setPinPointList(message)
-        // }
-        // getPinPoints();
-        // const getCoupons = async () => {
-        //     const { result, error, message } = await API.couponRead(campagin.coupons);
-        //     if (result === "failed" || message === undefined)
-        //         return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: error })
+        const getPinPoints = async () => {
+            const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', id: campagin.id });
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: "핀포인트 가져오기 실패", subTitle: error })
 
-        //     setCouponList(message)
-        // }
-        // getCoupons();
+            setPinPointList(data)
+        }
+        getPinPoints();
+        const getCoupons = async () => {
+            const { result, data, error, errdesc } = await API.couponRead({ type: 'list', id: campagin.id });
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: error })
+
+            setCouponList(data)
+        }
+        getCoupons();
     }, [])
 
     return (
@@ -48,7 +48,7 @@ const CampaginDetailStack = () => {
                     viewList={[<PinPointListTab />, <CouponListTab />]}
                 />
 
-                <CommentList commentList={campagin.comments}/>
+                <CommentList commentList={campagin.comments} />
 
             </ScrollView>
         </Container>

@@ -1,16 +1,22 @@
-import React from 'react'
-import { Image } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { Image, ImageSourcePropType } from 'react-native';
 import Modal from 'react-native-modal';
 import { loadingPath } from '../atoms/paths';
 
-const loadingGif = [...Object.values(loadingPath)]
+const loadingGif: ImageSourcePropType[] = [...Object.values(loadingPath)]
 
 interface Props {
     loading: boolean;
 }
 const LoadingModal = ({ loading }: Props) => {
-    const gifUri = loadingGif[Math.floor(Math.random() * loadingGif.length)]
-    
+    const [idx, setIdx] = useState(0);
+
+    useEffect(() => {
+        if (loading) {
+            setIdx(Math.floor(Math.random() * loadingGif.length));
+        }
+    }, [loading])
+
     return (
         <Modal
             isVisible={loading}
@@ -22,7 +28,7 @@ const LoadingModal = ({ loading }: Props) => {
             backdropOpacity={0.8}
         >
             <Image
-                source={gifUri}
+                source={loadingGif[idx]}
                 style={{ width: "20%", aspectRatio: 1, resizeMode: "contain" }} />
         </Modal>
     )

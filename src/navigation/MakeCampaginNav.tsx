@@ -4,23 +4,24 @@ import MakeCampaginStack from '../container/MakeCampaginNav/MakeCampaginStack';
 import MakePinPointStack from '../container/MakeCampaginNav/MakePinPointStack';
 import MakeCouponStack from '../container/MakeCampaginNav/MakeCouponStack';
 import FindPinPointLocationStack from '../container/MakeCampaginNav/FindPinPointLocationStack';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import { colorCode, HeaderLeftCloseIcon, HeaderLeftBackIcon } from '../atoms';
 
 const Stack = createStackNavigator();
 
 const MakeCampaginNav = () => {
-    const CloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
-        <TouchableOpacity onPress={onPress}>
-            <EvilIcons name="close" size={25} style={{ marginLeft: 4 }} />
-        </TouchableOpacity>
-    )
+
     return (
-        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontSize: 15 }, headerBackTitleVisible: false }}>
+        <Stack.Navigator
+            screenOptions={{
+                headerTitleStyle: { fontSize: 15, color: colorCode.primary },
+                headerBackTitleVisible: false,
+                headerLeft: HeaderLeftBackIcon
+            }}
+        >
             <Stack.Screen
                 name="MakeCampaginStack"
                 component={MakeCampaginStack}
-                options={{ headerTitle: "캠페인 만들기", headerLeft: CloseIcon }}
+                options={{ headerTitle: "캠페인 만들기", headerLeft: HeaderLeftCloseIcon }}
             />
             <Stack.Screen
                 name="MakePinPointStack"
@@ -33,9 +34,9 @@ const MakeCampaginNav = () => {
                 options={{ headerTitle: "쿠폰 만들기" }}
             />
             <Stack.Screen
-                name="FindPinPointLocationStack" 
+                name="FindPinPointLocationStack"
                 component={FindPinPointLocationStack}
-                options={{ headerTitle: "핀포인트 위치 찾기"}}
+                options={{ headerTitle: "핀포인트 위치 찾기" }}
             />
         </Stack.Navigator>
     )

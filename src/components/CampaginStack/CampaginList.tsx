@@ -11,16 +11,16 @@ interface Props {
 
 const CampaginList = ({ campaginList }: Props) => {
     return (
-        <ScrollView>
+        <>
             {
                 campaginList.map((campagin, idx) =>
-                    <CampaginCard 
-                        key={idx} 
-                        campagin={campagin}     
+                    <CampaginCard
+                        key={idx}
+                        campagin={campagin}
                     />
                 )
             }
-        </ScrollView>
+        </>
     )
 }
 export default CampaginList;
