@@ -1,11 +1,12 @@
+import { Coupon } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
 
 interface Props {
-    
+    couponList: Coupon[]
 }
 
-const PinPointListTab = (props: Props) => {
+const CouponListTab = (props: Props) => {
     return (
         <View>
             <Text></Text>
@@ -13,4 +14,4 @@ const PinPointListTab = (props: Props) => {
     )
 }
 
-export default PinPointListTab
+export default CouponListTab

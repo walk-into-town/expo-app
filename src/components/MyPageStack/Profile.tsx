@@ -1,3 +1,4 @@
+import { MemberInfoRes } from '@types';
 import React from 'react'
 import { View } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
@@ -7,10 +8,10 @@ import { mainNavigation } from '../../navigation/useNavigation';
 import { useAuthContext } from '../../useHook';
 
 interface Props {
-
+    memberInfo: MemberInfoRes
 }
 
-const Profile = (props: Props) => {
+const Profile = ({ memberInfo }: Props) => {
     const { auth: { userToken } } = useAuthContext();
     const mainNav = mainNavigation();
 
@@ -33,21 +34,21 @@ const Profile = (props: Props) => {
 
                 <ListItem.Content>
                     <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToCoupon()}>
-                        <SubTitle>10</SubTitle>
+                        <SubTitle>{memberInfo.myCampaign}</SubTitle>
                         <Text3>제작한 캠페인</Text3>
                     </TouchableOpacity>
                 </ListItem.Content>
 
                 <ListItem.Content>
                     <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToCoupon()}>
-                        <SubTitle>1</SubTitle>
+                        <SubTitle>{memberInfo.playingCampaign}</SubTitle>
                         <Text3>참여중 캠페인</Text3>
                     </TouchableOpacity>
                 </ListItem.Content >
 
                 <ListItem.Content>
                     <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToCoupon()}>
-                        <SubTitle>1</SubTitle>
+                        <SubTitle>{memberInfo.clearCampaign}</SubTitle>
                         <Text3>클리어</Text3>
                     </TouchableOpacity>
                 </ListItem.Content>

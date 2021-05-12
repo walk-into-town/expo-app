@@ -1,11 +1,11 @@
-import { CampaginComment } from '@types'
+import { CampaignComment } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface Props {
-    comment: CampaginComment
+    comment: CampaignComment
 }
 
 const Comment = ({ comment }: Props) => {

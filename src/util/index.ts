@@ -23,6 +23,7 @@ const isEqualStringArray = (a: string[], b: string[]) => {
   return a.find((item, i) => item !== b[i]) === undefined;
 }
 
+// check 
 export const isEditPinPoint = (a: PinPoint, b: PinPoint) => {
   const aq = a.quiz, bq = b.quiz;
   return a.name !== b.name || a.description !== b.description || a.latitude !== b.latitude || a.longitude !== b.longitude
@@ -34,7 +35,7 @@ export const isEditCoupon = (a: Coupon, b: Coupon) => {
     || a.endDate !== b.endDate || a.limit !== b.limit || a.img !== b.img
 }
 
-
+// time
 export const getDateAfter = (dayAfter: number) => {
   const now = new Date();
   return new Date(now.setDate(now.getDate() + dayAfter));

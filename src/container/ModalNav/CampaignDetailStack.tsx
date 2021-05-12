@@ -5,13 +5,13 @@ import { Text } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { API } from '../../api';
 import { ButtonTabs, Container, DefaultAlert, OutLineButton } from '../../atoms';
-import CommentList from '../../components/CampaginDetailStack/CommentList';
-import CouponListTab from '../../components/CampaginDetailStack/CouponListTab';
-import PinPointListTab from '../../components/CampaginDetailStack/PinPointListTab';
-import ProfileCard from '../../components/CampaginDetailStack/ProfileCard';
+import CommentList from '../../components/CampaignDetailStack/CommentList';
+import CouponListTab from '../../components/CampaignDetailStack/CouponListTab';
+import PinPointListTab from '../../components/CampaignDetailStack/PinPointListTab';
+import ProfileCard from '../../components/CampaignDetailStack/ProfileCard';
 
-const CampaginDetailStack = () => {
-    const { params: { campagin } } = useRoute<RouteProp<ModalStackParamList, 'CampaginDetailStack'>>();
+const CampaignDetailStack = () => {
+    const { params: { campagin } } = useRoute<RouteProp<ModalStackParamList, 'CampaignDetailStack'>>();
 
     const [value, setValue] = useState(0);
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
@@ -45,14 +45,19 @@ const CampaginDetailStack = () => {
                     selectedIndex={value}
                     onPress={setValue}
                     buttons={["핀포인트 리스트", "쿠폰 리스트"]}
-                    viewList={[<PinPointListTab />, <CouponListTab />]}
+                    viewList={[
+                        <PinPointListTab pinPointList={pinPointList}/>, 
+                        <CouponListTab couponList={couponList}/>
+                    ]}
                 />
 
-                <CommentList commentList={campagin.comments} />
+                <CommentList 
+                    commentList={campagin.comments} 
+                />
 
             </ScrollView>
         </Container>
     )
 }
 
-export default CampaginDetailStack
+export default CampaignDetailStack

@@ -5,17 +5,17 @@ import { Box, ImgPicker, InputModal } from '../../atoms'
 
 interface Props {
     useTitle: TuseState<string>,
-    useCampaginImgs: TuseState<string[]>,
+    useCampaignImgs: TuseState<string[]>,
     useDescription: TuseState<string>,
 }
 
-const CampaginBox = (props: Props) => {
+const CampaignBox = (props: Props) => {
 
     return (
         <Box>
             <InputModal useText={props.useTitle} placeholder="캠페인 제목을 입력해주세요" />
 
-            <ImgPicker useImgs={props.useCampaginImgs} />
+            <ImgPicker useImgs={props.useCampaignImgs} />
 
             <InputModal
                 useText={props.useDescription}
@@ -28,4 +28,4 @@ const CampaginBox = (props: Props) => {
     )
 }
 
-export default CampaginBox
+export default CampaignBox

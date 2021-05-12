@@ -1,7 +1,7 @@
 import { Coupon, MakeCoupon, MakePinPoint, PinPoint } from "@types";
 
 declare module "@types" {
-    type Campagin = {
+    type Campaign = {
         id?: string,
         ownner?: string,
         name: string,
@@ -12,9 +12,9 @@ declare module "@types" {
 
         pinpoints: PinPoint[],
         coupons: Coupon[],
-        comments: CampaginComment[]
+        comments: CampaignComment[]
     }
-    type CampaginComment = {
+    type CampaignComment = {
         id: string,
         userId: string,
         text: string,
@@ -23,7 +23,7 @@ declare module "@types" {
         updateTime: string
     }
 
-    type SearchCampagin = {
+    type SearchCampaign = {
         id: string,
         ownner: string,
         name: string,
@@ -34,10 +34,10 @@ declare module "@types" {
 
         pinpoints: string[],
         coupons: string[],
-        comments: CampaginComment[]
+        comments: CampaignComment[]
     }
 
-    type MakeCampagin = {
+    type MakeCampaign = {
         id?: string,
         ownner: string,
         name: string,

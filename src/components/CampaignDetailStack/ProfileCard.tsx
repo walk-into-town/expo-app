@@ -1,11 +1,11 @@
-import { SearchCampagin } from '@types'
+import { SearchCampaign } from '@types'
 import React from 'react'
 import { Text } from 'react-native'
 import { Card } from 'react-native-elements'
 import { OutLineButton, Title } from '../../atoms'
 
 interface Props {
-    campagin: SearchCampagin
+    campagin: SearchCampaign
 }
 
 const ProfileCard = ({ campagin }: Props) => {

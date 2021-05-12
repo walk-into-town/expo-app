@@ -1,4 +1,4 @@
-import { ITitleBadge, SearchCampagin } from '@types';
+import { ITitleBadge, SearchCampaign } from '@types';
 import React from 'react'
 import { Text } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements';
@@ -7,10 +7,10 @@ import { mainNavigation } from '../../navigation/useNavigation';
 import { getDateAfter } from '../../util';
 
 interface Props {
-    campagin: SearchCampagin
+    campagin: SearchCampaign
 }
 
-const CampaginCard = ({ campagin }: Props) => {
+const CampaignCard = ({ campagin }: Props) => {
     const mainNav = mainNavigation();
 
     const uri = campagin.imgs.length ? campagin.imgs[0] : "https://pgnqdrjultom1827145.cdn.ntruss.com/img/1d/07/1d0703352c93061e01f2df12715bc04b7fa152f6d509113c1d6b67794219c595_v1.jpg";
@@ -31,9 +31,9 @@ const CampaginCard = ({ campagin }: Props) => {
         return res;
     }
 
-    const navToCampaginDetail = () => {
+    const navToCampaignDetail = () => {
         mainNav.navigate("ModalNav", {
-            screen: 'CampaginDetailStack',
+            screen: 'CampaignDetailStack',
             params: { campagin }
         })
     }
@@ -41,7 +41,7 @@ const CampaginCard = ({ campagin }: Props) => {
     return (
         <ListItem
             bottomDivider
-            onPress={navToCampaginDetail}
+            onPress={navToCampaignDetail}
             onLongPress={() => console.log("캠페인 ID: ", campagin.id)}
         >
             <Avatar source={{ uri }} size={'large'} title='이미지 로딩중' />
@@ -70,4 +70,4 @@ const CampaginCard = ({ campagin }: Props) => {
     )
 }
 
-export default CampaginCard
+export default CampaignCard

@@ -12,7 +12,11 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
             },
             signal: controller.signal
         });
-        // console.log(await res.text()) // JSON Parse error: Unrecognized token '<' 일 때 에러 코드 보는 용도
+        if(res.status === 404)
+            throw new Error(await res.text())
+        if(res.status === 400)
+            throw new Error("응답 400 에러")
+
         return await res.json();
     } catch (e) {
         console.log("baseFetch 에러", e);

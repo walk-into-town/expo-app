@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { mainNavigation } from '../../navigation/useNavigation';
 
 import { Container, ClearButton, DefaultAlert } from '../../atoms';
-import CampaginSearchBar from '../../components/CampaginStack/CampaginSearchBar';
-import CampaginList from '../../components/CampaginStack/CampaginList';
+import CampaignSearchBar from '../../components/CampaignStack/CampaignSearchBar';
+import CampaignList from '../../components/CampaignStack/CampaignList';
 import { API } from '../../api';
-import { SearchCampagin } from '@types';
+import { SearchCampaign } from '@types';
 import { ScrollView } from 'react-native';
 
-const dummy: SearchCampagin = {
+const dummy: SearchCampaign = {
     id: "zxcvasdfqwer",
     ownner: "aaaa",
     name: "이정연 식수",
@@ -21,13 +20,13 @@ const dummy: SearchCampagin = {
     comments: []
 }
 
-const CampaginStack = () => {
-    const [value, setValue] = useState("")
-    const [searchText, setSearchText] = useState("금오톡톡")
-    const [campaginList, setCamPaginList] = useState<SearchCampagin[]>([dummy]);
+const CampaignStack = () => {
+    const [value, setValue] = useState("test")
+    const [searchText, setSearchText] = useState("test")
+    const [campaginList, setCamPaginList] = useState<SearchCampaign[]>([dummy]);
 
     useEffect(() => {
-        const getSearchCampagin = async () => {
+        const getSearchCampaign = async () => {
             const { result, error, errdesc, data } = await API.campaginSearch(searchText);
             if (result === "failed" || error !== undefined || errdesc !== undefined) {
                 DefaultAlert({ title: error, subTitle: errdesc })
@@ -36,17 +35,17 @@ const CampaginStack = () => {
             if (data !== undefined)
                 setCamPaginList([dummy, ...data]);
         }
-        getSearchCampagin();
+        getSearchCampaign();
     }, [searchText])
 
     return (
         <Container>
-            <CampaginSearchBar
+            <CampaignSearchBar
                 useValue={[value, setValue]}
                 useSearchText={[searchText, setSearchText]}
             />
             <ScrollView>
-                <CampaginList
+                <CampaignList
                     campaginList={campaginList}
                 />
             </ScrollView>
@@ -54,4 +53,4 @@ const CampaginStack = () => {
     )
 }
 
-export default CampaginStack;
+export default CampaignStack;

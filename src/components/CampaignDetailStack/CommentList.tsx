@@ -1,11 +1,11 @@
-import { CampaginComment } from '@types'
+import { CampaignComment } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
 import { SubTitle } from '../../atoms'
 import Comment from './Comment'
 
 interface Props {
-    commentList: CampaginComment[]
+    commentList: CampaignComment[]
 }
 
 const CommentList = ({ commentList }: Props) => {

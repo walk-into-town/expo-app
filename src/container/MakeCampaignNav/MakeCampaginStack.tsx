@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { MakeCampaginStackParamList, MakePinPoint, MakeCoupon, MakeCampagin } from '@types';
-import { mainNavigation, makeCampaginNavigation } from '../../navigation/useNavigation';
+import { MakeCampaignStackParamList, MakePinPoint, MakeCoupon, MakeCampaign } from '@types';
+import { mainNavigation, makeCampaignNavigation } from '../../navigation/useNavigation';
 import { perventGoBack, useAuthContext, useLoadingContext, useSubmit } from '../../useHook';
 
 import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
-import CampaginBox from '../../components/MakeCampaginStack/CampaginBox';
-import PinPointListBox from '../../components/MakeCampaginStack/PinPointListBox';
-import CouponListBox from '../../components/MakeCampaginStack/CouponListBox';
+import CampaignBox from '../../components/MakeCampaignStack/CampaignBox';
+import PinPointListBox from '../../components/MakeCampaignStack/PinPointListBox';
+import CouponListBox from '../../components/MakeCampaignStack/CouponListBox';
 import { isBlank } from '../../util';
 import { API } from '../../api';
 
-const MakeCampaginStack = () => {
+const MakeCampaignStack = () => {
     const { auth: { userToken } } = useAuthContext();
     const { useLoading: { endLoading, startLoading } } = useLoadingContext();
-    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCampaginStack'>>();
+    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'MakeCampaignStack'>>();
     const mainNav = mainNavigation();
-    const makeCampaginNav = makeCampaginNavigation();
+    const makeCampaignNav = makeCampaignNavigation();
 
     const [title, setTitle] = useState("");
-    const [campaginImgs, setCampaginImgs] = useState<string[]>([]);
+    const [campaginImgs, setCampaignImgs] = useState<string[]>([]);
     const [description, setDescription] = useState("");
     const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
     const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
@@ -39,7 +39,7 @@ const MakeCampaginStack = () => {
 
     // PinPointList
     const navToPinPointModal = (item?: MakePinPoint, idx?: number) => {
-        makeCampaginNav.navigate("MakePinPointStack", { pinpoint: item, editIndex: idx })
+        makeCampaignNav.navigate("MakePinPointStack", { pinpoint: item, editIndex: idx })
     }
     const deletePinPoint = (idx: number) => {
         setPinPointList([...pinPointList.slice(0, idx), ...pinPointList.slice(idx + 1)])
@@ -47,13 +47,13 @@ const MakeCampaginStack = () => {
 
     // CouponList
     const navToCouponModal = (item?: MakeCoupon, idx?: number) => {
-        makeCampaginNav.navigate("MakeCouponStack", { coupon: item, editIndex: idx, pinPointList })
+        makeCampaignNav.navigate("MakeCouponStack", { coupon: item, editIndex: idx, pinPointList })
     }
     const deleteCoupon = (idx: number) => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
 
-    const getCampagin = (): MakeCampagin => {
+    const getCampaign = (): MakeCampaign => {
         if (userToken === undefined) throw new Error("userToken undefined error");
 
         return {
@@ -67,7 +67,7 @@ const MakeCampaginStack = () => {
         }
     }
     /* 캠페인 제작 송신 */
-    const onCreateCampagin = async () => {
+    const onCreateCampaign = async () => {
         if (isBlank([title, description])) {
             DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
             return;
@@ -78,7 +78,7 @@ const MakeCampaginStack = () => {
         }
 
         startLoading();
-        const { result, data, error, errdesc } = await API.campaginCreate(getCampagin());
+        const { result, data, error, errdesc } = await API.campaginCreate(getCampaign());
         if (result === "success") {
             DefaultAlert({
                 title: "캠페인 생성 완료",
@@ -111,9 +111,9 @@ const MakeCampaginStack = () => {
 
     return (
         <ScrollWrapper>
-            <CampaginBox
+            <CampaignBox
                 useTitle={[title, setTitle]}
-                useCampaginImgs={[campaginImgs, setCampaginImgs]}
+                useCampaignImgs={[campaginImgs, setCampaignImgs]}
                 useDescription={[description, setDescription]}
             />
 
@@ -129,9 +129,9 @@ const MakeCampaginStack = () => {
                 navToCouponModal={navToCouponModal}
             />
 
-            <SubmitButton title={"캠페인 만들기"} onPress={onCreateCampagin} />
+            <SubmitButton title={"캠페인 만들기"} onPress={onCreateCampaign} />
         </ScrollWrapper>
     )
 }
 
-export default MakeCampaginStack;
+export default MakeCampaignStack;

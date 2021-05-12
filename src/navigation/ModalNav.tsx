@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import CampaginDetailStack from '../container/ModalNav/CampaginDetailStack';
+import CampaignDetailStack from '../container/ModalNav/CampaignDetailStack';
 import GamePlayStack from '../container/ModalNav/GamePlayStack';
 import MyCouponStack from '../container/ModalNav/MyCouponStack';
 
@@ -24,8 +24,8 @@ const ModalNav = (props: Props) => {
                 options={{ headerTitle: "게임 플레이", headerBackTitleVisible: false }}
             />
             <Stack.Screen 
-                name="CampaginDetailStack"
-                component={CampaginDetailStack}
+                name="CampaignDetailStack"
+                component={CampaignDetailStack}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

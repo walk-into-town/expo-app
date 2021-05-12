@@ -40,9 +40,9 @@ const LoginRegister = () => {
             nickname,
             isManager: false
         }
-        const { result, message, error } = await API.memberRegister(user);
+        const { result, data, error } = await API.memberRegister(user);
         if (result === 'success') {
-            console.log("[회원가입 성공]", message)
+            console.log("[회원가입 성공]", data)
             signIn({ id, pw });
             toggleModal();
         }
