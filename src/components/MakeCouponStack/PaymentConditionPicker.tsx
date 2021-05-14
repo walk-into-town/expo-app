@@ -21,10 +21,11 @@ const PaymentConditionPicker = ({ pinPointList = [], usePaymentCondition }: Prop
                 onValueChange={(itemValue, itemIndex) =>
                     setPaymentCondition(itemValue)
                 }>
-                <Picker.Item label="캠페인 클리어시" value={-1} />
+                <Picker.Item label="캠페인 클리어시" key={-1} value={-1} />
                 {pinPointList.map((v, idx) => <Picker.Item
                     label={v.name}
                     value={idx}
+                    key={idx}
                 />)}
             </Picker>
         </View>

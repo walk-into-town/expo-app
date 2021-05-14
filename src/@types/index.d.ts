@@ -7,15 +7,22 @@ declare module "@types" {
 
   type BaseFetchRes<T> = Promise<{
     result: 'success' | 'failed',
-    message?: T,
+    data?: T,
     error?: string,
+    errdesc?: string,
     session: any
   }>
-  
+
   type UseFetchRes<T> = {
     data: T,
     loading: boolean;
     err: string,
     refetch: () => void;
+  }
+
+  // list: 캠패인의 id로 조회, single: 해당 객체 id로 조회
+  type ApiSearchParams = {
+    type: "list" | "single",
+    id: string
   }
 }

@@ -3,22 +3,21 @@ declare module "@types" {
         id?: string,
         name: string,
         description: string,
-        goods: string[],
+        goods: string,
         endDate: string,
         issued?: int,
         limit: int,
-        imgs: string[],
+        img: string,
     }
     
     type MakeCoupon = {
         id?: string,
         name: string,
         description: string,
-        goods: string[],
+        goods: string,
         endDate: string,
-        issued?: int,
         limit: int,
-        imgs: string[],
+        img: string,
         paymentCondition: number
     }
 }

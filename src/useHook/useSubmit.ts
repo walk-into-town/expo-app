@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 interface Props {
     submitFunc: () => void
 }
-
 type UseSubmit = (props: Props) => {
     isSubmit: boolean,
     onSubmit: () => void

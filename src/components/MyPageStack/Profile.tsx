@@ -1,6 +1,9 @@
 import React from 'react'
-import { Avatar, Card, ListItem, Text } from 'react-native-elements';
-import { SubTitle } from '../../atoms';
+import { View } from 'react-native';
+import { Avatar, ListItem } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SubTitle, Text3, WhiteView } from '../../atoms';
+import { mainNavigation } from '../../navigation/useNavigation';
 import { useAuthContext } from '../../useHook';
 
 interface Props {
@@ -8,10 +11,15 @@ interface Props {
 }
 
 const Profile = (props: Props) => {
-
     const { auth: { userToken } } = useAuthContext();
+    const mainNav = mainNavigation();
+
+    const navToCoupon = () => {
+        mainNav.navigate("ModalNav", { screen: "MyCouponStack" })
+    }
+
     return (
-        <Card containerStyle={{ width: '100%' }}>
+        <WhiteView style={{ paddingVertical: 20, marginTop: 10 }}>
             <ListItem>
                 <ListItem.Content>
                     <Avatar
@@ -22,19 +30,34 @@ const Profile = (props: Props) => {
                         }}
                     />
                 </ListItem.Content>
+
                 <ListItem.Content>
-                    <SubTitle style={{ alignSelf: 'center' }}>10</SubTitle>
-                    <Text style={{ alignSelf: 'center' }}>만든 캠페인</Text>
+                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToCoupon()}>
+                        <SubTitle>10</SubTitle>
+                        <Text3>제작한 캠페인</Text3>
+                    </TouchableOpacity>
                 </ListItem.Content>
+
                 <ListItem.Content>
-                    <SubTitle style={{ alignSelf: 'center' }}>1</SubTitle>
-                    <Text style={{ alignSelf: 'center' }}>참여중 캠페인</Text>
+                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToCoupon()}>
+                        <SubTitle>1</SubTitle>
+                        <Text3>참여중 캠페인</Text3>
+                    </TouchableOpacity>
+                </ListItem.Content >
+
+                <ListItem.Content>
+                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToCoupon()}>
+                        <SubTitle>1</SubTitle>
+                        <Text3>클리어</Text3>
+                    </TouchableOpacity>
                 </ListItem.Content>
             </ListItem>
 
-            <SubTitle>{userToken?.nickname}</SubTitle>
-            <Text>자기소개</Text>
-        </Card>
+            <View style={{ marginLeft: 20 }}>
+                <SubTitle>{userToken?.nickname}</SubTitle>
+                <Text3>자기소개</Text3>
+            </View>
+        </WhiteView>
     )
 }
 

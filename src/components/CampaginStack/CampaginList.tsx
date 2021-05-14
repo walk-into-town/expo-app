@@ -1,21 +1,26 @@
+import { SearchCampagin } from '@types'
 import React from 'react'
-import { View, Text } from 'react-native'
-import styled from 'styled-components/native'
+import { ScrollView } from 'react-native'
+
+import CampaginCard from './CampaginCard'
+//  https://github.com/kohver/react-native-touchable-scale
 
 interface Props {
-
+    campaginList: SearchCampagin[]
 }
 
-const CampaginList = (props: Props) => {
+const CampaginList = ({ campaginList }: Props) => {
     return (
-        <Wrapper>
-            <Text>Recommend Campaign List</Text>
-        </Wrapper>
+        <>
+            {
+                campaginList.map((campagin, idx) =>
+                    <CampaginCard
+                        key={idx}
+                        campagin={campagin}
+                    />
+                )
+            }
+        </>
     )
 }
-
-const Wrapper = styled.View`
-    padding-top: 10%;
-`
-
 export default CampaginList;

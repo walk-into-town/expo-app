@@ -25,11 +25,17 @@ const isEqualStringArray = (a: string[], b: string[]) => {
 
 export const isEditPinPoint = (a: PinPoint, b: PinPoint) => {
   const aq = a.quiz, bq = b.quiz;
-  return a.name !== b.name || a.description !== b.description || a.latitude !== b.latitude
-    || aq.answer !== bq.answer || aq.text !== bq.answer || aq.type !== bq.type
+  return a.name !== b.name || a.description !== b.description || a.latitude !== b.latitude || a.longitude !== b.longitude
+    || aq.answer !== bq.answer || aq.text !== bq.text || aq.type !== bq.type
     || !isEqualStringArray(aq.choices, bq.choices) || !isEqualStringArray(a.imgs, b.imgs);
 }
 export const isEditCoupon = (a: Coupon, b: Coupon) => {
   return a.name !== b.name || a.description !== b.description
-    || a.endDate !== b.endDate || a.limit !== b.limit || !isEqualStringArray(a.imgs, b.imgs)
+    || a.endDate !== b.endDate || a.limit !== b.limit || a.img !== b.img
+}
+
+
+export const getDateAfter = (dayAfter: number) => {
+  const now = new Date();
+  return new Date(now.setDate(now.getDate() + dayAfter));
 }

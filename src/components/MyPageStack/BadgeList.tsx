@@ -1,5 +1,6 @@
 import React from 'react'
-import { Card } from 'react-native-elements'
+import { Card, Divider, ListItem, Text } from 'react-native-elements'
+import { SubTitle, WhiteView } from '../../atoms'
 
 interface Props {
 
@@ -7,10 +8,19 @@ interface Props {
 
 const BadgeList = (props: Props) => {
     return (
-        <Card containerStyle={{width: "100%"}}>
-            <Card.Title>⚜️ 명예 컬렉션 ⚜️</Card.Title>
-            <Card.Divider />
-        </Card>
+        <WhiteView style={{ marginVertical: 10 }}>
+            <ListItem>
+                <ListItem.Content style={{alignItems: "center"}}>
+                    <Text style={{ fontFamily: "SCDream7" }}>⚜️ 명예 컬렉션 ⚜️</Text>
+                </ListItem.Content>
+            </ListItem>
+
+            <Divider />
+
+            <ListItem>
+
+            </ListItem>
+        </WhiteView>
     )
 }
 

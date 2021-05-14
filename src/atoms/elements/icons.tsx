@@ -2,11 +2,20 @@ import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { View } from 'react-native';
-export { FontAwesome, EvilIcons, Ionicons };
+import Feather from 'react-native-vector-icons/Feather';
+import { StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colorCode } from '../color';
+export { FontAwesome, EvilIcons, Ionicons, Feather };
 
-export const HeaderLeftCloseIcon = () => (
-    <View>
-        <EvilIcons name="close" size={30} style={{ color: "blue" }} />
-    </View>
+export const HeaderLeftCloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
+    <TouchableOpacity onPress={onPress} >
+        <EvilIcons name="close" size={25} style={{ marginLeft: 4, color: colorCode.primary }} />
+    </TouchableOpacity >
+)
+
+export const HeaderLeftBackIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
+    <TouchableOpacity onPress={onPress} >
+        <EvilIcons name="arrow-left" size={25} style={{ marginLeft: 4, color: colorCode.primary }} />
+    </TouchableOpacity >
 )

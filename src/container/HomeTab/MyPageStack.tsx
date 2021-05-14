@@ -1,38 +1,55 @@
 import React from 'react'
-import { mainNavigation } from '../../navigation/useNavigation';
 import { useAuthContext } from '../../useHook';
 
 import Profile from '../../components/MyPageStack/Profile';
 import BadgeList from '../../components/MyPageStack/BadgeList';
-import { ClearButton, Container, Row } from '../../atoms';
+import { Container, DefaultAlert } from '../../atoms';
+import { ScrollView } from 'react-native';
+import Settings from '../../components/MyPageStack/Settings';
+import Playground from '../../components/MyPageStack/Playground';
+import { mainNavigation } from '../../navigation/useNavigation';
+import { API } from '../../api';
 
-interface Props {
-}
-
-export default ({ }: Props) => {
+export default () => {
 
     const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
     const mainNav = mainNavigation();
 
-    const onPressLogout = () => {
+    const navToCoupon = () => {
+        mainNav.navigate("ModalNav", { screen: "MyCouponStack" })
+    }
+
+    const onLogout = () => {
         if (userToken)
             signOut({ id: userToken.id });
         else
-            console.error("userToken 에러")
+            DefaultAlert({ title: "userToken 에러" });
+    }
+
+    const onWithdrawal = async () => {
+        if (userToken === undefined) {
+            DefaultAlert({ title: "유저 토큰 오류" })
+            return;
+        }
+        const { result, data, error, errdesc } = await API.memberWithdraw({ id: userToken.id })
+        if(result === "failed" || data === undefined){
+            DefaultAlert({ title: error, subTitle: errdesc })
+            return;
+        }
+        // onLogout();
     }
 
     return (
-        <Container style={{ alignItems: "center" }}>
-            <Profile />
-
-            <Row>
-                <ClearButton title="프로필 편집" onPress={() => { console.log(userToken) }} type="clear" />
-                <ClearButton title="내 쿠폰함" onPress={() => mainNav.navigate("ModalNav", { screen: "MyCouponStack" })} type="clear" />
-                <ClearButton title="로그아웃" onPress={onPressLogout} type="clear" />
-            </Row>
-
-            <BadgeList />
-
+        <Container>
+            <ScrollView>
+                <Profile />
+                <BadgeList />
+                <Playground
+                    navToCoupon={navToCoupon}
+                    onLogout={onLogout}
+                />
+                <Settings />
+            </ScrollView>
         </Container>
     )
 }

@@ -6,7 +6,7 @@ import { Box, ImgPicker, InputModal } from '../../atoms'
 interface Props {
     useTitle: TuseState<string>,
     useCampaginImgs: TuseState<string[]>,
-    useDepiction: TuseState<string>,
+    useDescription: TuseState<string>,
 }
 
 const CampaginBox = (props: Props) => {
@@ -18,7 +18,7 @@ const CampaginBox = (props: Props) => {
             <ImgPicker useImgs={props.useCampaginImgs} />
 
             <InputModal
-                useText={props.useDepiction}
+                useText={props.useDescription}
                 placeholder="캠페인 설명을 입력해주세요."
                 type="textarea"
             />
