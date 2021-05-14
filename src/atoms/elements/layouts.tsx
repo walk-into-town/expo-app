@@ -31,7 +31,7 @@ export const Box = styled.View`
 `
 
 export const Googleplace = styled.View`
-    flex: 0.6;
+    flex: 0.61;
     padding: 10px;
 `
 
