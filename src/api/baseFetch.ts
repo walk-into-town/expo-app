@@ -12,10 +12,10 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
             },
             signal: controller.signal
         });
-        if(res.status === 404)
-            throw new Error(await res.text())
-        if(res.status === 400)
-            throw new Error("응답 400 에러")
+        if(res.ok === false){
+            console.log(await res.text())
+            throw new Error(`응답 코드 [${res.status}] 에러`)
+        }
 
         return await res.json();
     } catch (e) {

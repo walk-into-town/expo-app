@@ -16,12 +16,14 @@ declare module "@types" {
             choices: string[],
             answer: string,
         },
-        comments?: [{
-            id: string,
-            userId: string,
-            text: string,
-            imgs: string[]
-        }]
+        comments?: PinPointComment[],
+        coupons?: string[]
+    }
+    type PinPointComment = {
+        id: string,
+        userId: string,
+        text: string,
+        imgs: string[]
     }
 
     type MakePinPoint = {

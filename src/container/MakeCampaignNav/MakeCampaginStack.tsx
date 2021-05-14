@@ -78,6 +78,7 @@ const MakeCampaignStack = () => {
         }
 
         startLoading();
+        console.log(getCampaign())
         const { result, data, error, errdesc } = await API.campaginCreate(getCampaign());
         if (result === "success") {
             DefaultAlert({

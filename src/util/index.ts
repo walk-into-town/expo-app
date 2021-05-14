@@ -1,5 +1,6 @@
 import { Coupon, PinPoint } from "@types";
 
+// type check
 export const isJsonString = (str: string) => {
   try {
     JSON.parse(str);
@@ -39,4 +40,12 @@ export const isEditCoupon = (a: Coupon, b: Coupon) => {
 export const getDateAfter = (dayAfter: number) => {
   const now = new Date();
   return new Date(now.setDate(now.getDate() + dayAfter));
+}
+
+export const toCommonDate = (time: string) => {
+  return time.slice(0, 10).replaceAll('-', '.');
+}
+
+export const toCommonDateTime = (time: string) => {
+  return `${toCommonDate(time)} ${time.slice(11, 19)}`
 }

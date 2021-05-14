@@ -43,7 +43,7 @@ export const ButtonTabs = (props: ButtonTabProps) => (
             innerBorderStyle={{ width: 0 }}
             containerStyle={{ marginVertical: 0, marginHorizontal: 0, borderWidth: 0, height: 50 }}
             buttonStyle={{ borderBottomWidth: 1, borderColor: "#ececec" }}
-            textStyle={{ fontSize: 17 }}
+            textStyle={{ fontSize: 14, fontFamily: "SCDream6" }}
             selectedTextStyle={{ color: "black", fontWeight: "bold" }}
             selectedButtonStyle={{
                 backgroundColor: "white",

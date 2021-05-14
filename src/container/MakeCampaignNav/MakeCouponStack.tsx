@@ -37,6 +37,7 @@ const MakeCouponStack = () => {
         setEndDate(new Date(coupon.endDate));
         setGoods(coupon.goods);
         setLimit(coupon.limit);
+        setPaymentCondition(coupon.paymentCondition);
     }, [coupon])
 
     const getCoupon: () => MakeCoupon = () => {

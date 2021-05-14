@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -45,11 +45,20 @@ declare module "@types" {
     }
 
     type ModalStackParamList = {
+        MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
         GamePlayStack: undefined,
-        CampaignDetailStack: CampaignDetailParams
+        CampaignDetailStack: CampaignDetailParams,
+        PinPointDetailStack: PinPointDetailParams,
+        CouponDetailStack: CouponDetailParams
     }
     type CampaignDetailParams = {
         campagin: SearchCampaign
+    }
+    type PinPointDetailParams = {
+        pinpoint: PinPoint
+    }
+    type CouponDetailParams = {
+        coupon: Coupon
     }
 }

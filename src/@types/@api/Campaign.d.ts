@@ -17,12 +17,19 @@ declare module "@types" {
     type CampaignComment = {
         id: string,
         userId: string,
+        nickname: string,
+        profileImg: string,
         text: string,
         rated: int,
         imgs: string[],
         updateTime: string
     }
 
+    type SearchProps = {
+        type: 'name' | 'region' | 'id' | 'ownner',
+        condition: 'exact' | 'part',
+        value: string
+    }
     type SearchCampaign = {
         id: string,
         ownner: string,
