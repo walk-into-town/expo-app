@@ -10,7 +10,7 @@ export { FontAwesome, EvilIcons, Ionicons, Feather };
 
 export const HeaderLeftCloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
     <TouchableOpacity onPress={onPress} >
-        <EvilIcons name="close" size={25} style={{ marginLeft: 4, color: colorCode.primary }} />
+        <EvilIcons name="close-o" size={25} style={{ marginLeft: 4, color: colorCode.primary }} />
     </TouchableOpacity >
 )
 

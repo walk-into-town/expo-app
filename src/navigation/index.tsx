@@ -53,7 +53,8 @@ export default () => {
                                 />
 
                                 <Stack.Screen name="MakeCampaignNav" component={MakeCampaignNav}
-                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} />
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} 
+                                />
 
                                 <Stack.Screen name="ModalNav" component={ModalNav} />
                             </>

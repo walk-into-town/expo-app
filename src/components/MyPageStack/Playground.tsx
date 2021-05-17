@@ -5,15 +5,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import commingSoon from '../commingSoon'
 
 interface PlaygroundProps {
+    onLogout: () => void,
     navToCoupon: () => void,
-    onLogout: () => void
+    navToProfileEdit: () => void,
 }
 const Playground = (props: PlaygroundProps) => {
     return (
         <View style={{ backgroundColor: "white" }}>
             <View style={styled.Wrapper}>
                 <ButtonBox title="설정" onPress={commingSoon} />
-                <ButtonBox title="프로필 편집" onPress={commingSoon} />
+                <ButtonBox title="프로필 편집" onPress={props.navToProfileEdit} />
                 <ButtonBox title="쿠폰함" onPress={props.navToCoupon} />
             </View>
             <View style={styled.Wrapper}>

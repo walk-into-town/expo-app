@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useAuthContext } from '../../useHook';
 
-import Profile from '../../components/MyPageStack/Profile';
-import BadgeList from '../../components/MyPageStack/BadgeList';
 import { Container, DefaultAlert } from '../../atoms';
 import { ScrollView } from 'react-native';
+import Profile from '../../components/MyPageStack/Profile';
+import BadgeList from '../../components/MyPageStack/BadgeList';
 import Settings from '../../components/MyPageStack/Settings';
 import Playground from '../../components/MyPageStack/Playground';
 import { mainNavigation } from '../../navigation/useNavigation';
@@ -37,6 +37,9 @@ export default () => {
     const navToCoupon = () => {
         mainNav.navigate("ModalNav", { screen: "MyCouponStack" })
     }
+    const navToProfileEdit = () => {
+        mainNav.navigate("ModalNav", { screen: "MyProfileEditStack" })
+    }
     const onLogout = () => {
         if (userToken)
             signOut({ id: userToken.id });
@@ -64,8 +67,9 @@ export default () => {
                 <Profile memberInfo={memberInfo} />
                 <BadgeList />
                 <Playground
-                    navToCoupon={navToCoupon}
                     onLogout={onLogout}
+                    navToCoupon={navToCoupon}
+                    navToProfileEdit={navToProfileEdit}
                 />
                 <Settings />
             </ScrollView>

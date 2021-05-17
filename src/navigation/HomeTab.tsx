@@ -1,12 +1,11 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import CampaignStack from '../container/HomeTab/CampaignStack';
 import GameStack from '../container/HomeTab/GameStack';
 import RankingStack from '../container/HomeTab/RankingStack';
-import MyPageNav from './MyPageNav';
-import { colorCode } from '../atoms/color';
+import MyPageStack from '../container/HomeTab/MyPageStack';
+import { colorCode, Ionicons } from '../atoms';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +14,7 @@ const HomeTab = () => {
         GameStack: ["ios-map-outline", "ios-map"],
         CampaignStack: ["ios-flashlight-outline", "ios-flashlight"],
         RankingStack: ["ios-trophy-outline", "ios-trophy"],
-        MyPageNav: ["ios-person-outline", "ios-person"],
+        MyPageStack: ["ios-person-outline", "ios-person"],
     }
     return (
         <Tab.Navigator
@@ -31,7 +30,7 @@ const HomeTab = () => {
             <Tab.Screen name="GameStack" component={GameStack} />
             <Tab.Screen name="CampaignStack" component={CampaignStack} />
             <Tab.Screen name="RankingStack" component={RankingStack} options={{ tabBarBadge: 3 }} />
-            <Tab.Screen name="MyPageNav" component={MyPageNav} />
+            <Tab.Screen name="MyPageStack" component={MyPageStack} />
         </Tab.Navigator>
     );
 }

@@ -1,10 +1,12 @@
-import { createStackNavigator } from '@react-navigation/stack'
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
+import { colorCode, HeaderLeftBackIcon, HeaderLeftCloseIcon } from '../atoms';
 import CampaignDetailStack from '../container/ModalNav/CampaignDetailStack';
 import CouponDetailStack from '../container/ModalNav/CouponDetailStack';
 import GamePlayStack from '../container/ModalNav/GamePlayStack';
 import MyCouponStack from '../container/ModalNav/MyCouponStack';
 import MyDetailStack from '../container/ModalNav/MyDetailStack';
+import MyProfileEditStack from '../container/ModalNav/MyProfileEditStack';
 import PinPointDetailStack from '../container/ModalNav/PinPointDetailStack';
 
 interface Props {
@@ -15,22 +17,41 @@ const Stack = createStackNavigator();
 
 const ModalNav = (props: Props) => {
     return (
-        <Stack.Navigator screenOptions={{ headerTitleStyle: { fontFamily: "SCDream6" } }}>
-            <Stack.Screen 
+        <Stack.Navigator screenOptions={{
+            headerTitleStyle: { fontSize: 15, color: colorCode.primary },
+            headerBackTitleVisible: false,
+            headerLeft: HeaderLeftBackIcon
+        }}>
+            {/* 마이 페이지 */}
+            <Stack.Screen
                 name="MyDetailStack"
                 component={MyDetailStack}
+                options={{ headerTitle: "나의 캠페인" }}
+
             />
             <Stack.Screen
                 name="MyCouponStack"
                 component={MyCouponStack}
-                options={{ headerTitle: "내 쿠폰", headerBackTitleVisible: false }}
+                options={{ headerTitle: "내 쿠폰" }}
             />
-            <Stack.Screen 
+            <Stack.Screen
+                name="MyProfileEditStack"
+                component={MyProfileEditStack}
+                options={{
+                    headerTitle: "프로필 편집",
+                    headerLeft: HeaderLeftCloseIcon,
+                }}
+            />
+
+            {/* 게임 */}
+            <Stack.Screen
                 name="GamePlayStack"
                 component={GamePlayStack}
-                options={{ headerTitle: "게임 플레이", headerBackTitleVisible: false }}
+                options={{ headerTitle: "게임 플레이" }}
             />
-            <Stack.Screen 
+
+            {/* 캠페인 상세 페이지 */}
+            <Stack.Screen
                 name="CampaignDetailStack"
                 component={CampaignDetailStack}
                 options={{ headerShown: false }}

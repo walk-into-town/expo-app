@@ -17,15 +17,10 @@ declare module "@types" {
     };
 
     type HomeTabParamList = {
-        MyPageNav: {
-            screen?: keyof MyPageStackParamList
-        },
+        MyPageStack: undefined,
         CampaignStack: undefined,
         GameStack: undefined,
         RankingStack: undefined,
-    };
-    type MyPageStackParamList = {
-        MyPageStack: undefined,
     };
 
     type MakeCampaignStackParamList = {
@@ -47,7 +42,10 @@ declare module "@types" {
     type ModalStackParamList = {
         MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
+        MyProfileEditStack: undefined
+
         GamePlayStack: undefined,
+
         CampaignDetailStack: CampaignDetailParams,
         PinPointDetailStack: PinPointDetailParams,
         CouponDetailStack: CouponDetailParams

@@ -1,8 +1,8 @@
 import { ClearButton, OutLineButton, SubmitButton, ButtonTabs } from "./elements/buttons";
 export { ClearButton, OutLineButton, SubmitButton, ButtonTabs }
 
-import { LightSearchBar, TextArea, WhiteInput } from "./elements/inputs"
-export { LightSearchBar, TextArea, WhiteInput }
+import { LightSearchBar, TextArea, WhiteInput, WhiteInputArea } from "./elements/inputs"
+export { LightSearchBar, TextArea, WhiteInput, WhiteInputArea }
 
 import { Box, BtsWrapper, Container, Row, ScrollWrapper, WhiteView, Googleplace, RowButtonBoxWrapper, ButtonBox } from "./elements/layouts"
 export { Box, BtsWrapper, Container, Row, ScrollWrapper, WhiteView, Googleplace, RowButtonBoxWrapper, ButtonBox }
