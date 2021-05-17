@@ -1,16 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TuseState } from '@types'
 import { View } from 'react-native'
 import { LightSearchBar } from '../../atoms'
 
 interface Props {
-    useValue: TuseState<string>,
     useSearchText: TuseState<string>
 }
 
 const CampaignSearchBar = (props: Props) => {
-    const [value, setValue] = props.useValue;
     const [text, setText] = props.useSearchText;
+    const [value, setValue] = useState(text);
 
     return (
         <View style={{ width: "100%" }}>

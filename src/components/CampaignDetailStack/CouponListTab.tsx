@@ -8,18 +8,19 @@ interface Props {
 }
 
 const CouponListTab = ({ couponList }: Props) => {
-    const EmptyMessage = () => <SubTitle style={{ marginTop: 20, marginBottom: 20, textAlign: "center" }}>텅</SubTitle>
+    if (couponList.length === 0)
+        return <SubTitle style={{ marginTop: 20, marginBottom: 20, textAlign: "center" }}>텅</SubTitle>
+
     return (
         <View>
             {
-                couponList.length === 0 ? <EmptyMessage />
-                    : couponList.map((v, idx) => (
-                        <DefaultListItem
-                            key={idx}
-                            title={v.name}
-                            onPress={() => console.log(v.id)}
-                        />
-                    ))
+                couponList.map((v, idx) => (
+                    <DefaultListItem
+                        key={idx}
+                        title={v.name}
+                        onPress={() => console.log(v.id)}
+                    />
+                ))
             }
         </View>
     )

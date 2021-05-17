@@ -2,22 +2,24 @@ import { SearchCampaign } from '@types'
 import React from 'react'
 import { Text } from 'react-native'
 import { Card } from 'react-native-elements'
-import { OutLineButton, Title } from '../../atoms'
+import { ClearButton, Text3, Title } from '../../atoms'
 import { toCommonDate } from '../../util'
 
 interface Props {
     campagin: SearchCampaign
+    onParticipate: () => Promise<void>
 }
 
-const ProfileCard = ({ campagin }: Props) => {
+const ProfileCard = ({ campagin, onParticipate }: Props) => {
+
+
     return (
         <Card containerStyle={{ marginBottom: 20 }}>
             <Title>{campagin.name}</Title>
-            <Text>{toCommonDate(campagin.updateTime)}</Text>
-            <Text>{campagin.description}</Text>
-            <Text>{campagin.region}</Text>
+            <Text3>{toCommonDate(campagin.updateTime)} {campagin.ownner} {campagin.region}</Text3>
+            <Text style={{ marginTop: 3, marginBottom: 20 }}>{campagin.description}</Text>
 
-            <OutLineButton title="캠페인 참여하기" style={{ marginTop: 10 }} />
+            <ClearButton title="캠페인 참여하기" onPress={() => onParticipate()} />
         </Card>
     )
 }

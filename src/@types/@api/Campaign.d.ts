@@ -20,16 +20,12 @@ declare module "@types" {
         nickname: string,
         profileImg: string,
         text: string,
-        rated: int,
+        rated: number,
         imgs: string[],
         updateTime: string
     }
 
-    type SearchProps = {
-        type: 'name' | 'region' | 'id' | 'ownner',
-        condition: 'exact' | 'part',
-        value: string
-    }
+    // 캠페인 검색
     type SearchCampaign = {
         id: string,
         ownner: string,
@@ -43,7 +39,15 @@ declare module "@types" {
         coupons: string[],
         comments: CampaignComment[]
     }
+    type CampaginSearchType = 'name' | 'region' | 'id' | 'ownner';
+    type CampaginSearchCondition = 'part' | 'exact';
+    type CampaginSearchParams = {
+        type: CampaginSearchType,
+        condition: CampaginSearchCondition,
+        value: string
+    }
 
+    // 캠페인 만들기
     type MakeCampaign = {
         id?: string,
         ownner: string,

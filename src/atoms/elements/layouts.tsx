@@ -6,7 +6,6 @@ export const Container = styled.SafeAreaView`
 export const Row = styled.View`
     flex-direction: row;
     align-items: center;
-    width: 100%;
 `
 export const RowButtonBoxWrapper = styled.View`
     height: 70px;

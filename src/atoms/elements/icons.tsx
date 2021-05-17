@@ -19,3 +19,7 @@ export const HeaderLeftBackIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
         <EvilIcons name="arrow-left" size={25} style={{ marginLeft: 4, color: colorCode.primary }} />
     </TouchableOpacity >
 )
+
+export const RateStarIcon = () => (
+    <FontAwesome name="star" size={17} style={{ color: colorCode.primary }} />
+)

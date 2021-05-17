@@ -17,7 +17,8 @@ export const ClearButton = (props: ButtonProps) => (
     <Button
         type="clear"
         titleStyle={{ fontFamily: "SCDream8" }}
-        {...props} />
+        {...props} 
+    />
 )
 export const SubmitButton = (props: SubmitButtonProps) => (
     <Button

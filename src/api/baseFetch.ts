@@ -3,16 +3,15 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
     const timeoutId = setTimeout(() => controller.abort(), 4000);
     try {
         const res = await fetch(route, {
-            credentials: "same-origin",
             method: method,
             body: JSON.stringify(body),
             headers: {
                 Accept: "application/json",
                 'Content-Type': 'application/json',
             },
-            signal: controller.signal
+            signal: controller.signal,
         });
-        if(res.ok === false){
+        if (res.ok === false && res.status !== 402) {
             console.log(await res.text())
             throw new Error(`응답 코드 [${res.status}] 에러`)
         }

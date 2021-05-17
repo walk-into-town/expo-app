@@ -4,7 +4,7 @@ import { Container, DefaultAlert, BadgeButton } from '../../atoms';
 import CampaignSearchBar from '../../components/CampaignStack/CampaignSearchBar';
 import CampaignList from '../../components/CampaignStack/CampaignList';
 import { API } from '../../api';
-import { SearchCampaign } from '@types';
+import { CampaginSearchCondition, CampaginSearchType, SearchCampaign } from '@types';
 import { ScrollView, View } from 'react-native';
 import CampaginSortFilter from '../../components/CampaignStack/CampaginSortFilter';
 
@@ -22,19 +22,21 @@ const dummy: SearchCampaign = {
 }
 
 const CampaignStack = () => {
-    const [value, setValue] = useState("test")
-    const [searchText, setSearchText] = useState("test")
+    const [searchText, setSearchText] = useState("")
+    const [type, setType] = useState<CampaginSearchType>("name")
+    const [condition, setCondition] = useState<CampaginSearchCondition>("part")
     const [campaginList, setCamPaginList] = useState<SearchCampaign[]>([dummy]);
 
     useEffect(() => {
         const getSearchCampaign = async () => {
-            const { result, error, errdesc, data } = await API.campaginSearch(searchText);
-            if (result === "failed" || error !== undefined || errdesc !== undefined) {
+            const { result, error, errdesc, data } = searchText === "" ? await API.campaginReadAll()
+                : await API.campaginSearch({ condition, type, value: searchText });
+
+            if (result === "failed" || data === undefined) {
                 DefaultAlert({ title: error, subTitle: errdesc })
                 return;
             }
-            if (data !== undefined)
-                setCamPaginList([dummy, ...data]);
+            setCamPaginList([dummy, ...data]);
         }
         getSearchCampaign();
     }, [searchText])
@@ -42,11 +44,11 @@ const CampaignStack = () => {
     return (
         <Container>
             <CampaignSearchBar
-                useValue={[value, setValue]}
                 useSearchText={[searchText, setSearchText]}
             />
             <CampaginSortFilter
-
+                useType={[type, setType]}
+                useCondition={[condition, setCondition]}
             />
 
             <ScrollView>

@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { ApiSearchParams, BaseFetchRes, Campaign, Coupon, MakeCampaign, PinPoint, SearchCampaign } from "@types"
+import { ApiSearchParams, BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaginSearchParams, SearchCampaign } from "@types"
 import { baseFetch } from "./baseFetch"
 
 
@@ -9,17 +9,18 @@ export const campaginCreate: CampaignCreateFetch = (data) => {
 }
 
 export const campaginReadAll: () => BaseFetchRes<SearchCampaign[]> = () => {
-    return baseFetch(`${ip}/campaign?type=name&value=금오`, "GET");
+    return baseFetch(`${ip}/campaign/scan`, "GET");
 }
 
-export const campaginSearch: (text: string) => BaseFetchRes<SearchCampaign[]> = (text) => {
-    return baseFetch(`${ip}/campaign?type=name&value=${text}`, "GET");
+type CampaginSearchFetch = (params: CampaginSearchParams) => BaseFetchRes<SearchCampaign[]>
+export const campaginSearch: CampaginSearchFetch = ({ condition, type, value }) => {
+    return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
 }
 
-// 미리 생성
-type CampaignParticiapte = (data: { userId: string, camId: string }) => BaseFetchRes<boolean>
+type CampaignParticiapte = (data: { uid: string, cid: string }) => BaseFetchRes<boolean>
 export const campaginParticiapte: CampaignParticiapte = (data) => {
-    return baseFetch(`${ip}/campagin/particiapte`, "POST")
+    console.log("=====data", data)
+    return baseFetch(`${ip}/campaign/particiapte/campaign`, "POST", data)
 }
 
 type PinPointReadFetch = (data: ApiSearchParams) => BaseFetchRes<PinPoint[]>

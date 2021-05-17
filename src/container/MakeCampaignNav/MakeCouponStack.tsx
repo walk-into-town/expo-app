@@ -5,11 +5,10 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { perventGoBack, useSubmit } from '../../useHook';
 import { isBlank, isEditCoupon } from '../../util';
 
-import { ScrollWrapper, SubmitButton } from '../../atoms';
+import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
 import CouponBaseInputs from '../../components/MakeCouponStack/CouponBaseInputs';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
 import PaymentConditionPicker from '../../components/MakeCouponStack/PaymentConditionPicker';
-import DefaultAlert from '../../atoms/DefaultAlert';
 
 const MakeCouponStack = () => {
     const campaginNav = makeCampaignNavigation();
