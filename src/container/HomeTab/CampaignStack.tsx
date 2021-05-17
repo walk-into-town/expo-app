@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-import { Container, ClearButton, DefaultAlert } from '../../atoms';
+import { Container, DefaultAlert, BadgeButton } from '../../atoms';
 import CampaignSearchBar from '../../components/CampaignStack/CampaignSearchBar';
 import CampaignList from '../../components/CampaignStack/CampaignList';
 import { API } from '../../api';
 import { SearchCampaign } from '@types';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import CampaginSortFilter from '../../components/CampaignStack/CampaginSortFilter';
 
 const dummy: SearchCampaign = {
     id: "zxcvasdfqwer",
@@ -44,6 +45,10 @@ const CampaignStack = () => {
                 useValue={[value, setValue]}
                 useSearchText={[searchText, setSearchText]}
             />
+            <CampaginSortFilter
+
+            />
+
             <ScrollView>
                 <CampaignList
                     campaginList={campaginList}
