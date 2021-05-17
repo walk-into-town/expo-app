@@ -1,20 +1,20 @@
-import { SearchCampagin } from '@types'
+import { SearchCampaign } from '@types'
 import React from 'react'
 import { ScrollView } from 'react-native'
 
-import CampaginCard from './CampaginCard'
+import CampaignCard from './CampaignCard'
 //  https://github.com/kohver/react-native-touchable-scale
 
 interface Props {
-    campaginList: SearchCampagin[]
+    campaginList: SearchCampaign[]
 }
 
-const CampaginList = ({ campaginList }: Props) => {
+const CampaignList = ({ campaginList }: Props) => {
     return (
         <>
             {
                 campaginList.map((campagin, idx) =>
-                    <CampaginCard
+                    <CampaignCard
                         key={idx}
                         campagin={campagin}
                     />
@@ -23,4 +23,4 @@ const CampaginList = ({ campaginList }: Props) => {
         </>
     )
 }
-export default CampaginList;
+export default CampaignList;

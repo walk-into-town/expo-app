@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { PinPoint, quizType, MakeCampaginStackParamList } from '@types'
+import { PinPoint, quizType, MakeCampaignStackParamList } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
-import { makeCampaginNavigation } from '../../navigation/useNavigation'
+import { makeCampaignNavigation } from '../../navigation/useNavigation'
 import { isBlank, isEditPinPoint } from '../../util'
 import { useSubmit, perventGoBack } from '../../useHook'
 
-import { SubmitButton, ScrollWrapper } from '../../atoms'
+import { SubmitButton, ScrollWrapper, DefaultAlert } from '../../atoms'
 import MakePinPoint from '../../components/MakePinPointStack/MakePinPoint'
 import MakeQuiz from '../../components/MakePinPointStack/MakeQuiz'
-import DefaultAlert from '../../atoms/DefaultAlert'
 
 const MakePinPointStack = () => {
-    const campaginNav = makeCampaginNavigation();
+    const campaginNav = makeCampaignNavigation();
     const nav = useNavigation();
 
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakePinPointStack'>>();
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'MakePinPointStack'>>();
 
     const [name, setName] = useState("");
     const [latitude, setLatitude] = useState<number>(0);
@@ -75,14 +74,14 @@ const MakePinPointStack = () => {
                 DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "" })
                 return;
             }
-            if (isBlank(type === "주관식" ? [answer] : choices)){
-                DefaultAlert({ title: "퀴즈 오류", subTitle: "퀴즈에 비어 있는 값이 있으면 안됩니다."})
+            if (isBlank(type === "주관식" ? [answer] : choices)) {
+                DefaultAlert({ title: "퀴즈 오류", subTitle: "퀴즈에 비어 있는 값이 있으면 안됩니다." })
                 return;
             }
 
 
             const pinpoint: PinPoint = getPinpoint();
-            campaginNav.navigate('MakeCampaginStack', { pinpoint, editIndex });
+            campaginNav.navigate('MakeCampaignStack', { pinpoint, editIndex });
         }
     });
     const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())

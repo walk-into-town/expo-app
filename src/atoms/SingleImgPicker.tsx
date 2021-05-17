@@ -5,11 +5,18 @@ import { TuseState } from '@types';
 import { ClearButton } from './elements/buttons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
-const SingleImgPicker = (props: { useImgs: TuseState<string> }) => {
+interface props {
+    useImgs: TuseState<string>,
+    prevFunc?: () => void,
+    afterFunc?: () => void
+}
+const SingleImgPicker = (props: props) => {
     const [img, setImg] = props.useImgs;
 
     const pickImage = async () => {
+        if (props.prevFunc)
+            props.prevFunc();
+
         (async () => {
             if (Platform.OS !== 'web') {
                 const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -27,6 +34,8 @@ const SingleImgPicker = (props: { useImgs: TuseState<string> }) => {
         if (!result.cancelled) {
             setImg(result.uri);
         }
+        if (props.afterFunc)
+            props.afterFunc();
     };
 
     return (

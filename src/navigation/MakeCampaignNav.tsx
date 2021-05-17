@@ -1,14 +1,14 @@
 import React from 'react'
 import { createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import MakeCampaginStack from '../container/MakeCampaginNav/MakeCampaginStack';
-import MakePinPointStack from '../container/MakeCampaginNav/MakePinPointStack';
-import MakeCouponStack from '../container/MakeCampaginNav/MakeCouponStack';
-import FindPinPointLocationStack from '../container/MakeCampaginNav/FindPinPointLocationStack';
+import MakeCampaignStack from '../container/MakeCampaignNav/MakeCampaginStack';
+import MakePinPointStack from '../container/MakeCampaignNav/MakePinPointStack';
+import MakeCouponStack from '../container/MakeCampaignNav/MakeCouponStack';
+import FindPinPointLocationStack from '../container/MakeCampaignNav/FindPinPointLocationStack';
 import { colorCode, HeaderLeftCloseIcon, HeaderLeftBackIcon } from '../atoms';
 
 const Stack = createStackNavigator();
 
-const MakeCampaginNav = () => {
+const MakeCampaignNav = () => {
 
     return (
         <Stack.Navigator
@@ -19,8 +19,8 @@ const MakeCampaginNav = () => {
             }}
         >
             <Stack.Screen
-                name="MakeCampaginStack"
-                component={MakeCampaginStack}
+                name="MakeCampaignStack"
+                component={MakeCampaignStack}
                 options={{ headerTitle: "캠페인 만들기", headerLeft: HeaderLeftCloseIcon }}
             />
             <Stack.Screen
@@ -41,4 +41,4 @@ const MakeCampaginNav = () => {
         </Stack.Navigator>
     )
 }
-export default MakeCampaginNav;
+export default MakeCampaignNav;

@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampagin } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -6,9 +6,9 @@ declare module "@types" {
         HomeTab: {
             screen?: keyof HomeTabParamList,
         },
-        MakeCampaginNav: {
-            screen?: keyof MakeCampaginStackParamList,
-            params: MakeCampaginStackParamList[keyof MakeCampaginParams]
+        MakeCampaignNav: {
+            screen?: keyof MakeCampaignStackParamList,
+            params: MakeCampaignStackParamList[keyof MakeCampaignParams]
         },
         ModalNav: {
             screen: keyof ModalStackParamList
@@ -17,39 +17,46 @@ declare module "@types" {
     };
 
     type HomeTabParamList = {
-        MyPageNav: {
-            screen?: keyof MyPageStackParamList
-        },
+        MyPageStack: undefined,
         CampaignStack: undefined,
         GameStack: undefined,
         RankingStack: undefined,
     };
-    type MyPageStackParamList = {
-        MyPageStack: undefined,
-    };
 
-    type MakeCampaginStackParamList = {
-        MakeCampaginStack: MakeCampaginParams,
-        MakePinPointStack: MakeCampaginParams,
+    type MakeCampaignStackParamList = {
+        MakeCampaignStack: MakeCampaignParams,
+        MakePinPointStack: MakeCampaignParams,
         MakeCouponStack: {
             pinPointList?: MakePinPoint[],
             coupon?: MakeCoupon,
             editIndex?: number
         },
-        FindPinPointLocationStack: MakeCampaginParams
+        FindPinPointLocationStack: MakeCampaignParams
     };
-    type MakeCampaginParams = {
+    type MakeCampaignParams = {
         pinpoint?: MakePinPoint,
         coupon?: MakeCoupon,
         editIndex?: number
     }
 
     type ModalStackParamList = {
+        MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
+        MyProfileEditStack: undefined
+
         GamePlayStack: undefined,
-        CampaginDetailStack: CampaginDetailParams
+
+        CampaignDetailStack: CampaignDetailParams,
+        PinPointDetailStack: PinPointDetailParams,
+        CouponDetailStack: CouponDetailParams
     }
-    type CampaginDetailParams = {
-        campagin: SearchCampagin
+    type CampaignDetailParams = {
+        campagin: SearchCampaign
+    }
+    type PinPointDetailParams = {
+        pinpoint: PinPoint
+    }
+    type CouponDetailParams = {
+        coupon: Coupon
     }
 }

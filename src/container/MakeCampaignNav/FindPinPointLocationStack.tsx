@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { MakeCampaginStackParamList } from '@types'
-import { makeCampaginNavigation } from '../../navigation/useNavigation';
+import { MakeCampaignStackParamList } from '@types'
+import { makeCampaignNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
 import FindOnMap from '../../components/FindPinPointLocationStack/FindOnMap';
@@ -14,10 +14,10 @@ import FindOnGooglePlace from '../../components/FindPinPointLocationStack/FindOn
 
 
 const FindPinPointLocationStack = () => {
-    const makeCampaginNav = makeCampaginNavigation();
+    const makeCampaignNav = makeCampaignNavigation();
     const nav = useNavigation();
 
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaginStackParamList, 'FindPinPointLocationStack'>>();
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'FindPinPointLocationStack'>>();
 
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
@@ -74,7 +74,7 @@ const FindPinPointLocationStack = () => {
         pinpoint.latitude = latitude
         pinpoint.longitude = longitude
 
-        makeCampaginNav.navigate('MakePinPointStack', { pinpoint, editIndex });
+        makeCampaignNav.navigate('MakePinPointStack', { pinpoint, editIndex });
     }
 
 

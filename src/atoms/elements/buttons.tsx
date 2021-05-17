@@ -1,7 +1,8 @@
 import React from 'react';
-import { SubmitButtonProps } from "@types"
+import { BadgeButtonProps, SubmitButtonProps } from "@types"
 import { View } from "react-native"
 import { Button, ButtonGroup, ButtonProps } from "react-native-elements"
+import { colorCode } from '../color';
 
 export const OutLineButton = (props: ButtonProps) => (
     <View style={{ width: '100%', alignSelf: 'center' }}>
@@ -16,7 +17,8 @@ export const ClearButton = (props: ButtonProps) => (
     <Button
         type="clear"
         titleStyle={{ fontFamily: "SCDream8" }}
-        {...props} />
+        {...props} 
+    />
 )
 export const SubmitButton = (props: SubmitButtonProps) => (
     <Button
@@ -24,6 +26,17 @@ export const SubmitButton = (props: SubmitButtonProps) => (
         onPress={props.onPress}
         style={{ marginVertical: 30 }}
         titleStyle={{ fontFamily: "SCDream7" }}
+        {...props.option}
+    />
+)
+
+export const BadgeButton = (props: BadgeButtonProps) => (
+    <Button
+        title={props.title}
+        onPress={props.onPress}
+        type="clear"
+        buttonStyle={{ borderRadius: 50, borderColor: colorCode.primary, borderWidth: .7 }}
+        titleStyle={{ fontFamily: "SCDream7", fontSize: 12, color: colorCode.primary }}
         {...props.option}
     />
 )
@@ -43,7 +56,7 @@ export const ButtonTabs = (props: ButtonTabProps) => (
             innerBorderStyle={{ width: 0 }}
             containerStyle={{ marginVertical: 0, marginHorizontal: 0, borderWidth: 0, height: 50 }}
             buttonStyle={{ borderBottomWidth: 1, borderColor: "#ececec" }}
-            textStyle={{ fontSize: 17 }}
+            textStyle={{ fontSize: 14, fontFamily: "SCDream6" }}
             selectedTextStyle={{ color: "black", fontWeight: "bold" }}
             selectedButtonStyle={{
                 backgroundColor: "white",

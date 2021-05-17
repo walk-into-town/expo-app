@@ -12,7 +12,7 @@ interface Props {
 const CouponListBox = ({ couponList, navToCouponModal, deleteCoupon }: Props) => {
     return (
         <Box>
-            <SubTitle>쿠폰 리스트</SubTitle>
+            <SubTitle style={{ marginTop: 10 }}>쿠폰 리스트</SubTitle>
             {couponList.map((item, idx) =>
                 <SimpleSwapListItem
                     key={idx}

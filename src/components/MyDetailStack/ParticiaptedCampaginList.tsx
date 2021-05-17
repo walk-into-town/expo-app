@@ -5,12 +5,12 @@ interface Props {
     
 }
 
-const CouponListTab = (props: Props) => {
+const ParticiaptedCampaginList = (props: Props) => {
     return (
         <View>
-            <Text></Text>
+            <Text>ParticiaptedCampaginList</Text>
         </View>
     )
 }
 
-export default CouponListTab
+export default ParticiaptedCampaginList

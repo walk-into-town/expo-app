@@ -1,7 +1,7 @@
 import { Coupon, MakeCoupon, MakePinPoint, PinPoint } from "@types";
 
 declare module "@types" {
-    type Campagin = {
+    type Campaign = {
         id?: string,
         ownner?: string,
         name: string,
@@ -12,18 +12,21 @@ declare module "@types" {
 
         pinpoints: PinPoint[],
         coupons: Coupon[],
-        comments: CampaginComment[]
+        comments: CampaignComment[]
     }
-    type CampaginComment = {
+    type CampaignComment = {
         id: string,
         userId: string,
+        nickname: string,
+        profileImg: string,
         text: string,
-        rated: int,
+        rated: number,
         imgs: string[],
         updateTime: string
     }
 
-    type SearchCampagin = {
+    // 캠페인 검색
+    type SearchCampaign = {
         id: string,
         ownner: string,
         name: string,
@@ -34,10 +37,18 @@ declare module "@types" {
 
         pinpoints: string[],
         coupons: string[],
-        comments: CampaginComment[]
+        comments: CampaignComment[]
+    }
+    type CampaginSearchType = 'name' | 'region' | 'id' | 'ownner';
+    type CampaginSearchCondition = 'part' | 'exact';
+    type CampaginSearchParams = {
+        type: CampaginSearchType,
+        condition: CampaginSearchCondition,
+        value: string
     }
 
-    type MakeCampagin = {
+    // 캠페인 만들기
+    type MakeCampaign = {
         id?: string,
         ownner: string,
         name: string,

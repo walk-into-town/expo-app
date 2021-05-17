@@ -5,12 +5,12 @@ interface Props {
     
 }
 
-const PinPointListTab = (props: Props) => {
+const MakedCampaignList = (props: Props) => {
     return (
         <View>
-            <Text></Text>
+            <Text>MakedCampaignList</Text>
         </View>
     )
 }
 
-export default PinPointListTab
+export default MakedCampaignList

@@ -3,16 +3,19 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
     const timeoutId = setTimeout(() => controller.abort(), 4000);
     try {
         const res = await fetch(route, {
-            credentials: "same-origin",
             method: method,
             body: JSON.stringify(body),
             headers: {
                 Accept: "application/json",
                 'Content-Type': 'application/json',
             },
-            signal: controller.signal
+            signal: controller.signal,
         });
-        // console.log(await res.text()) // JSON Parse error: Unrecognized token '<' 일 때 에러 코드 보는 용도
+        if (res.ok === false && res.status !== 402) {
+            console.log(await res.text())
+            throw new Error(`응답 코드 [${res.status}] 에러`)
+        }
+
         return await res.json();
     } catch (e) {
         console.log("baseFetch 에러", e);

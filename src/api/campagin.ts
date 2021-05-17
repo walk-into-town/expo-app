@@ -1,33 +1,34 @@
 import { ip } from "./ip"
-import { ApiSearchParams, BaseFetchRes, Campagin, Coupon, MakeCampagin, PinPoint, SearchCampagin } from "@types"
+import { ApiSearchParams, BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaginSearchParams, SearchCampaign } from "@types"
 import { baseFetch } from "./baseFetch"
 
 
-type CampaginCreateFetch = (data: MakeCampagin) => BaseFetchRes<string>;
-export const campaginCreate: CampaginCreateFetch = (data) => {
+type CampaignCreateFetch = (data: MakeCampaign) => BaseFetchRes<string>;
+export const campaginCreate: CampaignCreateFetch = (data) => {
     return baseFetch(`${ip}/campaign`, "POST", data);
 }
 
-export const campaginReadAll: () => BaseFetchRes<SearchCampagin[]> = () => {
-    return baseFetch(`${ip}/campaign?type=name&value=금오`, "GET");
+export const campaginReadAll: () => BaseFetchRes<SearchCampaign[]> = () => {
+    return baseFetch(`${ip}/campaign/scan`, "GET");
 }
 
-export const campaginSearch: (text: string) => BaseFetchRes<SearchCampagin[]> = (text) => {
-    return baseFetch(`${ip}/campaign?type=name&value=${text}`, "GET");
+type CampaginSearchFetch = (params: CampaginSearchParams) => BaseFetchRes<SearchCampaign[]>
+export const campaginSearch: CampaginSearchFetch = ({ condition, type, value }) => {
+    return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
 }
 
-// 미리 생성
-type CampaginParticiapte = (data: { userId: string, camId: string }) => BaseFetchRes<boolean>
-export const campaginParticiapte: CampaginParticiapte = (data) => {
-    return baseFetch(`${ip}/campagin/particiapte`, "POST")
+type CampaignParticiapte = (data: { uid: string, cid: string }) => BaseFetchRes<boolean>
+export const campaginParticiapte: CampaignParticiapte = (data) => {
+    console.log("=====data", data)
+    return baseFetch(`${ip}/campaign/particiapte/campaign`, "POST", data)
 }
 
 type PinPointReadFetch = (data: ApiSearchParams) => BaseFetchRes<PinPoint[]>
 export const pinPointRead: PinPointReadFetch = (data) => {
-    return baseFetch(`${ip}/campagin/pinpoint?type${data.type}&id=${data.id}`, "GET");
+    return baseFetch(`${ip}/campaign/pinpoint?type=${data.type}&id=${data.id}`, "GET");
 }
 
 type CouponReadFetch = (data: ApiSearchParams) => BaseFetchRes<Coupon[]>
 export const couponRead: CouponReadFetch = (data) => {
-    return baseFetch(`${ip}/campagin/coupon?type${data.type}&id=${data.id}`, "GET");
+    return baseFetch(`${ip}/campaign/coupon?type=${data.type}&id=${data.id}`, "GET");
 }

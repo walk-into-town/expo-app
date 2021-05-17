@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { MakeCampaginStackParamList, MakeCoupon } from '@types';
-import { makeCampaginNavigation } from '../../navigation/useNavigation';
+import { MakeCampaignStackParamList, MakeCoupon } from '@types';
+import { makeCampaignNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { perventGoBack, useSubmit } from '../../useHook';
 import { isBlank, isEditCoupon } from '../../util';
 
-import { ScrollWrapper, SubmitButton } from '../../atoms';
+import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
 import CouponBaseInputs from '../../components/MakeCouponStack/CouponBaseInputs';
 import EndDatePicker from '../../components/MakeCouponStack/EndDatePicker';
 import PaymentConditionPicker from '../../components/MakeCouponStack/PaymentConditionPicker';
-import DefaultAlert from '../../atoms/DefaultAlert';
 
 const MakeCouponStack = () => {
-    const campaginNav = makeCampaginNavigation();
+    const campaginNav = makeCampaignNavigation();
     const nav = useNavigation();
-    const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaginStackParamList, 'MakeCouponStack'>>();
+    const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaignStackParamList, 'MakeCouponStack'>>();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -37,6 +36,7 @@ const MakeCouponStack = () => {
         setEndDate(new Date(coupon.endDate));
         setGoods(coupon.goods);
         setLimit(coupon.limit);
+        setPaymentCondition(coupon.paymentCondition);
     }, [coupon])
 
     const getCoupon: () => MakeCoupon = () => {
@@ -57,7 +57,7 @@ const MakeCouponStack = () => {
                 DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
                 return;
             }
-            campaginNav.navigate("MakeCampaginStack", { coupon: getCoupon(), editIndex })
+            campaginNav.navigate("MakeCampaignStack", { coupon: getCoupon(), editIndex })
         }
     });
     const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())

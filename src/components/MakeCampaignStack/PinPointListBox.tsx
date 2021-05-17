@@ -2,7 +2,7 @@ import { PinPoint } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
-import { Box, Row, SubTitle, EvilIcons, OutLineButton, SimpleSwapListItem } from '../../atoms'
+import { Box, Row, SubTitle, EvilIcons, OutLineButton, SimpleSwapListItem, colorCode } from '../../atoms'
 
 interface Props {
     pinPointList: PinPoint[],
@@ -13,11 +13,13 @@ interface Props {
 const PinPointListBox = ({ pinPointList, navToPinPointModal, deletePinPoint }: Props) => {
     return (
         <Box>
+            <Text style={{color: colorCode.gray}}>* 리스트를 옆으로 스왑하면 삭제할 수 있습니다.</Text>
             <Row>
                 <SubTitle>핀포인트 리스트</SubTitle>
                 <Button type="clear" titleStyle={{ fontSize: 13, color: "black" }}
                     title="지도에서 보기"
-                    onPress={() => console.log("지도에서 보기")} />
+                    onPress={() => console.log("지도에서 보기")} 
+                />
             </Row>
             {
                 pinPointList.map((item, idx) =>
