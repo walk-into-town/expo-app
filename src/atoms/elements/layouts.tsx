@@ -28,6 +28,9 @@ export const ScrollWrapper = styled.ScrollView`
 export const Box = styled.View`
     margin: 10px 0;
 `
+export const PaddingBox = styled.View`
+    padding: 10px 20px;
+`
 
 export const Googleplace = styled.View`
     flex: 0.5;

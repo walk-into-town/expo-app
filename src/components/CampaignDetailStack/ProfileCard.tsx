@@ -14,7 +14,7 @@ const ProfileCard = ({ campagin, onParticipate }: Props) => {
 
 
     return (
-        <Card containerStyle={{ marginBottom: 20 }}>
+        <Card containerStyle={{ marginBottom: 20, borderRadius: 5 }}>
             <Title>{campagin.name}</Title>
             <Text3>{toCommonDate(campagin.updateTime)} {campagin.ownner} {campagin.region}</Text3>
             <Text style={{ marginTop: 3, marginBottom: 20 }}>{campagin.description}</Text>

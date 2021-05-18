@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { TuseState } from '@types';
 import { ClearButton } from './elements/buttons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { colorCode } from './color';
 
 interface props {
     useImgs: TuseState<string>,
@@ -42,7 +43,7 @@ const SingleImgPicker = (props: props) => {
         <View style={{ marginBottom: 20, width: "100%", alignItems: "center" }}>
             {
                 img === "" ?
-                    <View style={{ borderWidth: .5, borderColor: "#0099cc" }}>
+                    <View style={{ borderWidth: .5, borderColor: colorCode.primary }}>
                         <ClearButton title="사진 추가" onPress={pickImage} style={{ justifyContent: 'center', width: 200, height: 200 }} />
                     </View>
                     :

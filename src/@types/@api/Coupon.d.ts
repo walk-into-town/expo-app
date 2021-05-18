@@ -5,8 +5,8 @@ declare module "@types" {
         description: string,
         goods: string,
         endDate: string,
-        issued?: int,
-        limit: int,
+        issued?: number,
+        limit: number,
         img: string,
     }
     
@@ -16,7 +16,7 @@ declare module "@types" {
         description: string,
         goods: string,
         endDate: string,
-        limit: int,
+        limit: number,
         img: string,
         paymentCondition: number
     }

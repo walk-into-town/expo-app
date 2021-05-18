@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { CampaignComment, Coupon, ModalStackParamList, PinPoint } from '@types';
+import { CampaignComment, Coupon, ModalNavParamList, PinPoint } from '@types';
 import React, { useEffect, useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler';
 import { API } from '../../api';
@@ -8,15 +8,17 @@ import CommentList from '../../components/CampaignDetailStack/CommentList';
 import CouponListTab from '../../components/CampaignDetailStack/CouponListTab';
 import PinPointListTab from '../../components/CampaignDetailStack/PinPointListTab';
 import ProfileCard from '../../components/CampaignDetailStack/ProfileCard';
+import Footer from '../../components/Footer';
+import { modalNavigation } from '../../navigation/useNavigation';
 import { useAuthContext, useLoadingContext } from '../../useHook';
 
 const CampaignDetailStack = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext()
     const { auth: { userToken } } = useAuthContext()
-    if (userToken === undefined) return;
+    if (userToken === undefined) return <></>;
+    const { params: { campaign: campagin } } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
 
-    const { params: { campagin } } = useRoute<RouteProp<ModalStackParamList, 'CampaignDetailStack'>>();
-
+    // state
     const [value, setValue] = useState(0);
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState<Coupon[]>([]);
@@ -40,6 +42,16 @@ const CampaignDetailStack = () => {
         getCoupons();
     }, [])
 
+    // navigation
+    const modalNav = modalNavigation();
+    const navtoPinPointDetail = (pinpoint: PinPoint) => {
+        modalNav.navigate('PinPointDetailStack', { pinpoint, campaignName: campagin.name })
+    }
+    const navToCouponDetail = (coupon: Coupon) => {
+        modalNav.navigate('CouponDetailStack', { coupon, campaignName: campagin.name })
+    }
+
+    // usecase
     const onParticipate = async () => {
         startLoading();
         const { result, data, error, errdesc } = await API.campaginParticiapte({ cid: campagin.id, uid: userToken.id })
@@ -78,8 +90,8 @@ const CampaignDetailStack = () => {
                     onPress={setValue}
                     buttons={["핀포인트 리스트", "쿠폰 리스트"]}
                     viewList={[
-                        <PinPointListTab pinPointList={pinPointList} />,
-                        <CouponListTab couponList={couponList} />
+                        <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail}  />,
+                        <CouponListTab couponList={couponList} navToCouponDetail={navToCouponDetail}/>
                     ]}
                 />
 
@@ -87,6 +99,7 @@ const CampaignDetailStack = () => {
                     commentList={[...campagin.comments, tmpComment]}
                 />
 
+                <Footer />
             </ScrollView>
         </Container>
     )

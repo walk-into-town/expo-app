@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { MakeCampaignStackParamList, MakePinPoint, MakeCoupon, MakeCampaign } from '@types';
+import { MakeCampaignNavParamList, MakePinPoint, MakeCoupon, MakeCampaign } from '@types';
 import { mainNavigation, makeCampaignNavigation } from '../../navigation/useNavigation';
 import { perventGoBack, useAuthContext, useLoadingContext, useSubmit } from '../../useHook';
 
@@ -14,7 +14,7 @@ import { API } from '../../api';
 const MakeCampaignStack = () => {
     const { auth: { userToken } } = useAuthContext();
     const { useLoading: { endLoading, startLoading } } = useLoadingContext();
-    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'MakeCampaignStack'>>();
+    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakeCampaignStack'>>();
     const mainNav = mainNavigation();
     const makeCampaignNav = makeCampaignNavigation();
 
@@ -78,7 +78,6 @@ const MakeCampaignStack = () => {
         }
 
         startLoading();
-        console.log(getCampaign())
         const { result, data, error, errdesc } = await API.campaginCreate(getCampaign());
         if (result === "success") {
             DefaultAlert({

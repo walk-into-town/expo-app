@@ -7,7 +7,7 @@ import { ClearButton, soundPath } from '../../atoms'
 import LoadingModal from '../LoadingModal'
 import { Audio } from "expo-av"
 import { useLoadingContext } from '../../useHook'
-import { mainNavigation } from '../../navigation/useNavigation'
+import { gameNavigation, mainNavigation } from '../../navigation/useNavigation'
 
 interface Props {
 
@@ -57,7 +57,7 @@ const GameTest = (props: Props) => {
         <Container>
             <ClearButton
                 title="play"
-                onPress={() => mainNav.navigate('ModalNav', { screen: "GamePlayStack" })} />
+                onPress={() => mainNav.navigate('GameNav', { screen: "GamePlayStack" })} />
 
             <ClearButton
                 title="RANDOM"

@@ -7,7 +7,7 @@ declare module "@types" {
         imgs: string[],
         latitude: number,
         longitude: number,
-        updateTime?: string,
+        updateTime: string,
         description: string
 
         quiz: {

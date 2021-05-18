@@ -20,6 +20,6 @@ export const HeaderLeftBackIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
     </TouchableOpacity >
 )
 
-export const RateStarIcon = () => (
-    <FontAwesome name="star" size={17} style={{ color: colorCode.primary }} />
+export const RateStarIcon = ({ toggle }: { toggle: boolean }) => (
+    <FontAwesome name={toggle ? "star" : "star-o"} size={17} style={{ color: colorCode.primary }} />
 )

@@ -34,7 +34,7 @@ const CampaignCard = ({ campagin }: Props) => {
     const navToCampaignDetail = () => {
         mainNav.navigate("ModalNav", {
             screen: 'CampaignDetailStack',
-            params: { campagin }
+            params: { campaign: campagin }
         })
     }
 

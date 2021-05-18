@@ -7,15 +7,19 @@ declare module "@types" {
             screen?: keyof HomeTabParamList,
         },
         MakeCampaignNav: {
-            screen?: keyof MakeCampaignStackParamList,
-            params: MakeCampaignStackParamList[keyof MakeCampaignParams]
+            screen?: keyof MakeCampaignNavParamList,
+            params: MakeCampaignNavParamList[keyof MakeCampaignParams]
         },
+        GameNav: {
+            screen?: keyof GameNavParamList
+        }
         ModalNav: {
-            screen: keyof ModalStackParamList
-            params?: ModalStackParamList[keyof ModalStackParamList]
+            screen: keyof ModalNavParamList
+            params?: ModalNavParamList[keyof ModalNavParamList]
         }
     };
 
+    // 홈 화면
     type HomeTabParamList = {
         MyPageStack: undefined,
         CampaignStack: undefined,
@@ -23,7 +27,8 @@ declare module "@types" {
         RankingStack: undefined,
     };
 
-    type MakeCampaignStackParamList = {
+    // 캠페인 만들기
+    type MakeCampaignNavParamList = {
         MakeCampaignStack: MakeCampaignParams,
         MakePinPointStack: MakeCampaignParams,
         MakeCouponStack: {
@@ -39,24 +44,30 @@ declare module "@types" {
         editIndex?: number
     }
 
-    type ModalStackParamList = {
+    // 게임
+    type GameNavParamList = {
+        GamePlayStack: undefined,
+    }
+
+    // 모달 화면
+    type ModalNavParamList = {
         MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
         MyProfileEditStack: undefined
-
-        GamePlayStack: undefined,
 
         CampaignDetailStack: CampaignDetailParams,
         PinPointDetailStack: PinPointDetailParams,
         CouponDetailStack: CouponDetailParams
     }
     type CampaignDetailParams = {
-        campagin: SearchCampaign
+        campaign: SearchCampaign
     }
     type PinPointDetailParams = {
+        campaignName: string,
         pinpoint: PinPoint
     }
     type CouponDetailParams = {
+        campaignName: string,
         coupon: Coupon
     }
 }

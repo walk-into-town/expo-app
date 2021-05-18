@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PinPoint, quizType, MakeCampaignStackParamList } from '@types'
+import { PinPoint, quizType, MakeCampaignNavParamList } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 import { makeCampaignNavigation } from '../../navigation/useNavigation'
 import { isBlank, isEditPinPoint } from '../../util'
@@ -13,7 +13,7 @@ const MakePinPointStack = () => {
     const campaginNav = makeCampaignNavigation();
     const nav = useNavigation();
 
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'MakePinPointStack'>>();
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakePinPointStack'>>();
 
     const [name, setName] = useState("");
     const [latitude, setLatitude] = useState<number>(0);

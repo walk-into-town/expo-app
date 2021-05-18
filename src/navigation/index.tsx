@@ -11,6 +11,7 @@ import { useAuthContext } from '../useHook';
 import { colorCode, EvilIcons } from '../atoms';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { mainNavigation } from './useNavigation';
+import GameNav from './GameNav';
 
 const Stack = createStackNavigator();
 
@@ -41,7 +42,9 @@ export default () => {
                     {
                         userToken !== undefined ?
                             <>
-                                <Stack.Screen name="HomeTab" component={HomeTab}
+                                <Stack.Screen
+                                    name="HomeTab"
+                                    component={HomeTab}
                                     options={{
                                         cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
                                         headerShown: true,
@@ -52,10 +55,16 @@ export default () => {
                                     }}
                                 />
 
-                                <Stack.Screen name="MakeCampaignNav" component={MakeCampaignNav}
-                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} 
+                                <Stack.Screen
+                                    name="MakeCampaignNav"
+                                    component={MakeCampaignNav}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }}
                                 />
-
+                                <Stack.Screen
+                                    name="GameNav"
+                                    component={GameNav}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
+                                />
                                 <Stack.Screen name="ModalNav" component={ModalNav} />
                             </>
                             :
