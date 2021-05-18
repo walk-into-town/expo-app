@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { MakeCampaignNavParamList, MakePinPoint, MakeCoupon, MakeCampaign } from '@types';
-import { mainNavigation, makeCampaignNavigation } from '../../navigation/useNavigation';
-import { perventGoBack, useAuthContext, useLoadingContext, useSubmit } from '../../useHook';
+import { perventGoBack, useAuthContext, useLoadingContext, useSubmit, mainNavigation, makeCampaignNavigation } from '../../useHook';
 
 import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
 import CampaignBox from '../../components/MakeCampaignStack/CampaignBox';

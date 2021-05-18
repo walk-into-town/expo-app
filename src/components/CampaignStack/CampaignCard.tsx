@@ -3,7 +3,7 @@ import React from 'react'
 import { Text } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements';
 import { Row, TitleBadge } from '../../atoms';
-import { mainNavigation } from '../../navigation/useNavigation';
+import { mainNavigation } from '../../useHook';
 import { getDateAfter } from '../../util';
 
 interface Props {

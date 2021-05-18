@@ -1,8 +1,7 @@
 import { Coupon } from '@types'
 import React from 'react'
-import { View, Text } from 'react-native'
-import { DefaultListItem, SubTitle, Title } from '../../atoms'
-import { modalNavigation } from '../../navigation/useNavigation'
+import { View } from 'react-native'
+import { DefaultListItem, SubTitle } from '../../atoms'
 
 interface Props {
     couponList: Coupon[],

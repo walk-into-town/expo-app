@@ -9,8 +9,7 @@ import CouponListTab from '../../components/CampaignDetailStack/CouponListTab';
 import PinPointListTab from '../../components/CampaignDetailStack/PinPointListTab';
 import ProfileCard from '../../components/CampaignDetailStack/ProfileCard';
 import Footer from '../../components/Footer';
-import { modalNavigation } from '../../navigation/useNavigation';
-import { useAuthContext, useLoadingContext } from '../../useHook';
+import { useAuthContext, useLoadingContext, modalNavigation } from '../../useHook';
 
 const CampaignDetailStack = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext()

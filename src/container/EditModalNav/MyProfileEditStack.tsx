@@ -26,7 +26,7 @@ const MyProfileEditStack = (props: Props) => {
     }
 
     return (
-        <Container style={{paddingHorizontal: 20, paddingVertical: 20}}>
+        <Container style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
             <SingleImgPicker useImgs={[profileImg, setProfileImg]} />
 
             <InputModal

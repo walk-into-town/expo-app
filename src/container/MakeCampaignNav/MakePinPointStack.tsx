@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { PinPoint, quizType, MakeCampaignNavParamList, MakePinPoint } from '@types'
+import { quizType, MakeCampaignNavParamList, MakePinPoint } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
-import { makeCampaignNavigation } from '../../navigation/useNavigation'
 import { isBlank, isEditPinPoint } from '../../util'
-import { useSubmit, perventGoBack } from '../../useHook'
+import { useSubmit, perventGoBack, makeCampaignNavigation } from '../../useHook'
 
 import { SubmitButton, ScrollWrapper, DefaultAlert } from '../../atoms'
 import MakePinPointView from '../../components/MakePinPointStack/MakePinPointView'

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { MakeCampaignNavParamList, MakeCoupon } from '@types';
-import { makeCampaignNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
-import { perventGoBack, useSubmit } from '../../useHook';
+import { perventGoBack, useSubmit, makeCampaignNavigation } from '../../useHook';
 import { isBlank, isEditCoupon } from '../../util';
 
 import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';

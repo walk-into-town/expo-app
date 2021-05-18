@@ -12,10 +12,14 @@ declare module "@types" {
         },
         GameNav: {
             screen?: keyof GameNavParamList
-        }
+        },
         ModalNav: {
             screen: keyof ModalNavParamList
             params?: ModalNavParamList[keyof ModalNavParamList]
+        },
+        EditModalNav: {
+            screen: keyof EditModalNavParamList
+            params?: EditModalNavParamList[keyof EditModalNavParamList]
         }
     };
 
@@ -53,7 +57,6 @@ declare module "@types" {
     type ModalNavParamList = {
         MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
-        MyProfileEditStack: undefined
 
         CampaignDetailStack: CampaignDetailParams,
         PinPointDetailStack: PinPointDetailParams,
@@ -69,5 +72,12 @@ declare module "@types" {
     type CouponDetailParams = {
         campaignName: string,
         coupon: Coupon
+    }
+
+    // 편집 모달 화면
+    type EditModalNavParamList = {
+        MyProfileEditStack: undefined,
+        WriteCampaignCommentStack: undefined
+
     }
 }

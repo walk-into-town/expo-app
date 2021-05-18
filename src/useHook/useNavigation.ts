@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from "@react-navigation/core";
-import { GameNavParamList } from "@types";
+import { EditModalParamList, GameNavParamList } from "@types";
 import { MainStackParamList, MakeCampaignNavParamList, ModalNavParamList } from "@types";
 
 const mainNavigation = () => {
@@ -14,5 +14,8 @@ const gameNavigation = () => {
 const modalNavigation = () => {
     return useNavigation<NavigationProp<ModalNavParamList>>();
 }
+const editModalNavigation = () => {
+    return useNavigation<NavigationProp<EditModalParamList>>();
+}
 
-export { mainNavigation, makeCampaignNavigation, gameNavigation, modalNavigation }
+export { mainNavigation, makeCampaignNavigation, gameNavigation, modalNavigation, editModalNavigation }

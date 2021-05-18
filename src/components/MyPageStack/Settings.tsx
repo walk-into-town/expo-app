@@ -1,7 +1,7 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { DefaultListItem } from '../../atoms/elements/listItems'
-import { mainNavigation } from '../../navigation/useNavigation';
+import { mainNavigation } from '../../useHook';
 import commingSoon from '../commingSoon';
 import Footer from '../Footer';
 

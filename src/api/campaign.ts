@@ -19,8 +19,7 @@ export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) 
 
 type CampaignParticiapte = (data: { uid: string, cid: string }) => BaseFetchRes<boolean>
 export const campaignParticiapte: CampaignParticiapte = (data) => {
-    console.log("=====data", data)
-    return baseFetch(`${ip}/campaign/particiapte/campaign`, "POST", data)
+    return baseFetch(`${ip}/campaign/particiapte/campaign`, "PUT", data)
 }
 
 type PinPointReadFetch = (data: ApiSearchParams) => BaseFetchRes<PinPoint[]>

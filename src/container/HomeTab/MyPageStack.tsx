@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useAuthContext } from '../../useHook';
+import { mainNavigation, useAuthContext } from '../../useHook';
 
 import { Container, DefaultAlert } from '../../atoms';
 import { ScrollView } from 'react-native';
@@ -7,7 +7,6 @@ import Profile from '../../components/MyPageStack/Profile';
 import BadgeList from '../../components/MyPageStack/BadgeList';
 import Settings from '../../components/MyPageStack/Settings';
 import Playground from '../../components/MyPageStack/Playground';
-import { mainNavigation } from '../../navigation/useNavigation';
 import { API } from '../../api';
 import { MemberInfoRes } from '@types';
 
@@ -38,7 +37,7 @@ export default () => {
         mainNav.navigate("ModalNav", { screen: "MyCouponStack" })
     }
     const navToProfileEdit = () => {
-        mainNav.navigate("ModalNav", { screen: "MyProfileEditStack" })
+        mainNav.navigate("EditModalNav", { screen: "MyProfileEditStack" })
     }
     const onLogout = () => {
         if (userToken)
