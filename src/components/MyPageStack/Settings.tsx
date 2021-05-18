@@ -1,8 +1,9 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { DefaultListItem } from '../../atoms/elements/listItems'
-import { mainNavigation } from '../../navigation/useNavigation';
+import { mainNavigation } from '../../useHook';
 import commingSoon from '../commingSoon';
+import Footer from '../Footer';
 
 interface Props {
 
@@ -20,9 +21,7 @@ const Settings = (props: Props) => {
             <DefaultListItem title="회원탈퇴" onPress={() => commingSoon()} />
             <DefaultListItem title="현재 버전 10.27.0" onPress={() => commingSoon()} />
 
-            <Text style={{ fontSize: 10, color: "gray", textAlign: "center", marginVertical: 20 }}>
-                Copyright Walk-Into-Town in KIT, All Rights Reserved
-            </Text>
+            <Footer />
         </View>
     )
 }

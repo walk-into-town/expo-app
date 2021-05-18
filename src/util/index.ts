@@ -1,4 +1,4 @@
-import { Coupon, PinPoint } from "@types";
+import { Coupon, MakePinPoint } from "@types";
 
 // type check
 export const isJsonString = (str: string) => {
@@ -25,7 +25,7 @@ const isEqualStringArray = (a: string[], b: string[]) => {
 }
 
 // check 
-export const isEditPinPoint = (a: PinPoint, b: PinPoint) => {
+export const isEditPinPoint = (a: MakePinPoint, b: MakePinPoint) => {
   const aq = a.quiz, bq = b.quiz;
   return a.name !== b.name || a.description !== b.description || a.latitude !== b.latitude || a.longitude !== b.longitude
     || aq.answer !== bq.answer || aq.text !== bq.text || aq.type !== bq.type

@@ -4,18 +4,20 @@ import { View } from 'react-native'
 import { DefaultListItem } from '../../atoms'
 
 interface Props {
-    pinPointList: PinPoint[]
+    pinPointList: PinPoint[],
+    navtoPinPointDetail: (pinpoint: PinPoint) => void
 }
 
-const PinPointListTab = ({ pinPointList }: Props) => {
+const PinPointListTab = ({ pinPointList, navtoPinPointDetail }: Props) => {
+
     return (
         <View>
             {
                 pinPointList.map((v, idx) => (
-                    <DefaultListItem 
-                        key={idx} 
+                    <DefaultListItem
+                        key={idx}
                         title={v.name}
-                        onPress={() => console.log(v.id)}
+                        onPress={() => navtoPinPointDetail(v)}
                     />
                 ))
             }

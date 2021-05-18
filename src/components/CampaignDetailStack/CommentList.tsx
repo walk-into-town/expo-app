@@ -10,7 +10,7 @@ interface Props {
 
 const CommentList = ({ commentList }: Props) => {
     return (
-        <View style={{ backgroundColor: "white", marginTop: 10, paddingHorizontal: 10 }}>
+        <View style={{ backgroundColor: "white", marginTop: 10, paddingHorizontal: 10, minHeight: 300 }}>
             <Row style={{ marginTop: 10 }}>
                 <SubTitle>
                     최근 리뷰 {commentList.length}개

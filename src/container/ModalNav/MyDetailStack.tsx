@@ -1,7 +1,7 @@
 import { RouteProp, useRoute } from '@react-navigation/core';
-import { ModalStackParamList } from '@types';
+import { ModalNavParamList } from '@types';
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { ButtonTabs } from '../../atoms'
 import ClearedCampaignList from '../../components/MyDetailStack/ClearedCampaignList';
 import MakedCampaignList from '../../components/MyDetailStack/MakedCampaignList';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const MyDetailStack = (props: Props) => {
-    const { params: { selectedIndex } } = useRoute<RouteProp<ModalStackParamList, 'MyDetailStack'>>();
+    const { params: { selectedIndex } } = useRoute<RouteProp<ModalNavParamList, 'MyDetailStack'>>();
 
     const [value, setValue] = useState(0);
     

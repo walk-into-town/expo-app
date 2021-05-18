@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { MakeCampaignStackParamList } from '@types'
-import { makeCampaignNavigation } from '../../navigation/useNavigation';
+import { MakeCampaignNavParamList } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
+import { makeCampaignNavigation } from '../../useHook';
 
 import FindOnMap from '../../components/FindPinPointLocationStack/FindOnMap';
-import { Container } from '../../atoms/elements/layouts';
-import { SubmitButton } from '../../atoms';
+import { SubmitButton, Container } from '../../atoms';
 import { Alert } from 'react-native';
 import * as Location from 'expo-location';
 import { GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
@@ -17,7 +16,7 @@ const FindPinPointLocationStack = () => {
     const makeCampaignNav = makeCampaignNavigation();
     const nav = useNavigation();
 
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'FindPinPointLocationStack'>>();
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'FindPinPointLocationStack'>>();
 
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
@@ -80,7 +79,7 @@ const FindPinPointLocationStack = () => {
 
 
     return (
-        
+
         <Container>
             <FindOnGooglePlace
                 getPlaceDetails={getPlaceDetails}

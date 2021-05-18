@@ -1,12 +1,10 @@
-import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { colorCode, HeaderLeftBackIcon, HeaderLeftCloseIcon } from '../atoms';
+import { colorCode, HeaderLeftBackIcon } from '../atoms';
 import CampaignDetailStack from '../container/ModalNav/CampaignDetailStack';
 import CouponDetailStack from '../container/ModalNav/CouponDetailStack';
-import GamePlayStack from '../container/ModalNav/GamePlayStack';
 import MyCouponStack from '../container/ModalNav/MyCouponStack';
 import MyDetailStack from '../container/ModalNav/MyDetailStack';
-import MyProfileEditStack from '../container/ModalNav/MyProfileEditStack';
 import PinPointDetailStack from '../container/ModalNav/PinPointDetailStack';
 
 interface Props {
@@ -33,21 +31,6 @@ const ModalNav = (props: Props) => {
                 name="MyCouponStack"
                 component={MyCouponStack}
                 options={{ headerTitle: "내 쿠폰" }}
-            />
-            <Stack.Screen
-                name="MyProfileEditStack"
-                component={MyProfileEditStack}
-                options={{
-                    headerTitle: "프로필 편집",
-                    headerLeft: HeaderLeftCloseIcon,
-                }}
-            />
-
-            {/* 게임 */}
-            <Stack.Screen
-                name="GamePlayStack"
-                component={GamePlayStack}
-                options={{ headerTitle: "게임 플레이" }}
             />
 
             {/* 캠페인 상세 페이지 */}

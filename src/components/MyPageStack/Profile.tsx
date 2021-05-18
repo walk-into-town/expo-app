@@ -4,8 +4,7 @@ import { View } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SubTitle, Text3, WhiteView } from '../../atoms';
-import { mainNavigation } from '../../navigation/useNavigation';
-import { useAuthContext } from '../../useHook';
+import { useAuthContext, mainNavigation } from '../../useHook';
 
 interface Props {
     memberInfo: MemberInfoRes

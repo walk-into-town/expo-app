@@ -1,13 +1,14 @@
 import { Coupon } from '@types'
 import React from 'react'
-import { View, Text } from 'react-native'
-import { DefaultListItem, SubTitle, Title } from '../../atoms'
+import { View } from 'react-native'
+import { DefaultListItem, SubTitle } from '../../atoms'
 
 interface Props {
-    couponList: Coupon[]
+    couponList: Coupon[],
+    navToCouponDetail: (coupon: Coupon) => void
 }
 
-const CouponListTab = ({ couponList }: Props) => {
+const CouponListTab = ({ couponList, navToCouponDetail }: Props) => {
     if (couponList.length === 0)
         return <SubTitle style={{ marginTop: 20, marginBottom: 20, textAlign: "center" }}>텅</SubTitle>
 
@@ -18,7 +19,7 @@ const CouponListTab = ({ couponList }: Props) => {
                     <DefaultListItem
                         key={idx}
                         title={v.name}
-                        onPress={() => console.log(v.id)}
+                        onPress={() => navToCouponDetail(v)}
                     />
                 ))
             }
