@@ -11,7 +11,7 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
             },
             signal: controller.signal,
         });
-        // 400: 알 수 없음, 401: DB 에러, 402: 요청 에러
+        // 400: 알 수 없음, 401: DB 에러, 402: 요청 에러(사용자에게 문제)
         if (res.ok === false && res.status !== 402) {
             console.log(await res.text())
             throw new Error(`응답 코드 [${res.status}] 에러`)
