@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { colorCode, HeaderLeftCloseIcon } from '../atoms';
+import { colorCode, HeaderLeftCloseIcon, HeaderRightCheckIcon } from '../atoms';
 import MyProfileEditStack from '../container/EditModalNav/MyProfileEditStack';
 import WriteCampaignCommentStack from '../container/EditModalNav/WriteCampaignCommentStack';
 
@@ -13,7 +13,7 @@ const EditModalNav = () => {
             screenOptions={{
                 headerTitleStyle: { fontSize: 15, color: colorCode.primary },
                 headerBackTitleVisible: false,
-                headerLeft: HeaderLeftCloseIcon
+                headerLeft: HeaderLeftCloseIcon,
             }}
         >
             <Stack.Screen
@@ -26,9 +26,6 @@ const EditModalNav = () => {
             <Stack.Screen
                 name="WriteCampaignCommentStack"
                 component={WriteCampaignCommentStack}
-                options={{
-                    headerTitle: "프로필 편집",
-                }}
             />
         </Stack.Navigator>
     )

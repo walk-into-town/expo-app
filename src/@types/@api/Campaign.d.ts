@@ -24,6 +24,12 @@ declare module "@types" {
         imgs: string[],
         updateTime: string
     }
+    type MakeCampaignComment = {
+        cid: string,
+        rated: number,
+        text: string,
+        imgs: string[],
+    }
 
     // 캠페인 검색
     type SearchCampaign = {

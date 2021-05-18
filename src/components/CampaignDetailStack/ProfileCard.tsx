@@ -6,30 +6,29 @@ import { ClearButton, EvilIcons, Row, Text3, Title } from '../../atoms'
 import { toCommonDate } from '../../util'
 
 interface Props {
-    campagin: SearchCampaign
+    campaign: SearchCampaign
     onParticipate: () => Promise<void>
 }
 
-const ProfileCard = ({ campagin, onParticipate }: Props) => {
+const ProfileCard = ({ campaign, onParticipate }: Props) => {
 
 
     return (
         <Card containerStyle={{ marginBottom: 20, borderRadius: 5 }}>
-            <Title>{campagin.name}</Title>
+            <Title>{campaign.name}</Title>
             <Row>
                 <EvilIcons name="clock" size={20} />
-                <Text3> {toCommonDate(campagin.updateTime)}</Text3>
+                <Text3> {toCommonDate(campaign.updateTime)}</Text3>
             </Row>
             <Row>
                 <EvilIcons name="user" size={20} />
-                <Text3>{campagin.ownner}</Text3>
+                <Text3>{campaign.ownner}</Text3>
             </Row>
             <Row>
                 <EvilIcons name="tag" size={20} />
-                <Text3>{campagin.region}</Text3>
+                <Text3>{campaign.region}</Text3>
             </Row>
-            <Text style={{ marginTop: 3, marginBottom: 20 }}>{campagin.description}</Text>
-
+            <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaign.description}</Text>
 
             <ClearButton title="캠페인 참여하기" onPress={() => onParticipate()} />
         </Card>

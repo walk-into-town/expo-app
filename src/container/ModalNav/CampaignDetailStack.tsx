@@ -9,13 +9,13 @@ import CouponListTab from '../../components/CampaignDetailStack/CouponListTab';
 import PinPointListTab from '../../components/CampaignDetailStack/PinPointListTab';
 import ProfileCard from '../../components/CampaignDetailStack/ProfileCard';
 import Footer from '../../components/Footer';
-import { useAuthContext, useLoadingContext, modalNavigation } from '../../useHook';
+import { useAuthContext, useLoadingContext, modalNavigation, mainNavigation, editModalNavigation } from '../../useHook';
 
 const CampaignDetailStack = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext()
     const { auth: { userToken } } = useAuthContext()
     if (userToken === undefined) return <></>;
-    const { params: { campaign: campagin } } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
+    const { params: { campaign } } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
 
     // state
     const [value, setValue] = useState(0);
@@ -24,7 +24,7 @@ const CampaignDetailStack = () => {
 
     useEffect(() => {
         const getPinPoints = async () => {
-            const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', id: campagin.id });
+            const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', id: campaign.id });
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: "핀포인트 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
@@ -32,7 +32,7 @@ const CampaignDetailStack = () => {
         }
         getPinPoints();
         const getCoupons = async () => {
-            const { result, data, error, errdesc } = await API.couponRead({ type: 'list', id: campagin.id });
+            const { result, data, error, errdesc } = await API.couponRead({ type: 'list', id: campaign.id });
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
@@ -43,17 +43,21 @@ const CampaignDetailStack = () => {
 
     // navigation
     const modalNav = modalNavigation();
+    const mainNav = mainNavigation();
     const navtoPinPointDetail = (pinpoint: PinPoint) => {
-        modalNav.navigate('PinPointDetailStack', { pinpoint, campaignName: campagin.name })
+        modalNav.navigate('PinPointDetailStack', { pinpoint, campaignName: campaign.name })
     }
     const navToCouponDetail = (coupon: Coupon) => {
-        modalNav.navigate('CouponDetailStack', { coupon, campaignName: campagin.name })
+        modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name })
+    }
+    const navToWriteComment = () => {
+        mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { cid: campaign.id, cname: campaign.name } })
     }
 
     // usecase
     const onParticipate = async () => {
         startLoading();
-        const { result, data, error, errdesc } = await API.campaignParticiapte({ cid: campagin.id, uid: userToken.id })
+        const { result, data, error, errdesc } = await API.campaignParticiapte({ cid: campaign.id, uid: userToken.id })
         endLoading();
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "캠페인 참여 실패", subTitle: `${error} ${errdesc}` })
@@ -80,7 +84,7 @@ const CampaignDetailStack = () => {
         <Container>
             <ScrollView>
                 <ProfileCard
-                    campagin={campagin}
+                    campaign={campaign}
                     onParticipate={onParticipate}
                 />
 
@@ -95,7 +99,8 @@ const CampaignDetailStack = () => {
                 />
 
                 <CommentList
-                    commentList={[...campagin.comments, tmpComment]}
+                    commentList={[...campaign.comments, tmpComment]}
+                    navToWriteComment={navToWriteComment}
                 />
 
                 <Footer />
