@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { PinPoint, quizType, MakeCampaignNavParamList } from '@types'
+import { PinPoint, quizType, MakeCampaignNavParamList, MakePinPoint } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 import { makeCampaignNavigation } from '../../navigation/useNavigation'
 import { isBlank, isEditPinPoint } from '../../util'
 import { useSubmit, perventGoBack } from '../../useHook'
 
 import { SubmitButton, ScrollWrapper, DefaultAlert } from '../../atoms'
-import MakePinPoint from '../../components/MakePinPointStack/MakePinPoint'
+import MakePinPointView from '../../components/MakePinPointStack/MakePinPointView'
 import MakeQuiz from '../../components/MakePinPointStack/MakeQuiz'
 
 const MakePinPointStack = () => {
@@ -48,7 +48,7 @@ const MakePinPointStack = () => {
     }, [pinpoint])
 
     // 핀포인트 업로드
-    const getPinpoint: () => PinPoint = () => {
+    const getPinpoint: () => MakePinPoint = () => {
         return {
             name,
             imgs: pinPointImgs,
@@ -80,7 +80,7 @@ const MakePinPointStack = () => {
             }
 
 
-            const pinpoint: PinPoint = getPinpoint();
+            const pinpoint: MakePinPoint = getPinpoint();
             campaginNav.navigate('MakeCampaignStack', { pinpoint, editIndex });
         }
     });
@@ -90,13 +90,13 @@ const MakePinPointStack = () => {
 
     // FindPinPoint
     const navToFindPinPointLocationModal = () => {
-        const pinpoint: PinPoint = getPinpoint();
+        const pinpoint: MakePinPoint = getPinpoint();
         campaginNav.navigate("FindPinPointLocationStack", { pinpoint, editIndex })
     }
 
     return (
         <ScrollWrapper>
-            <MakePinPoint
+            <MakePinPointView
                 useName={[name, setName]}
                 useLatitude={[latitude, setLatitude]}
                 useLongitude={[longitude, setLongitude]}

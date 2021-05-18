@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MakeCampaignStackParamList } from '@types'
+import { MakeCampaignNavParamList } from '@types'
 import { makeCampaignNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 
@@ -17,7 +17,7 @@ const FindPinPointLocationStack = () => {
     const makeCampaignNav = makeCampaignNavigation();
     const nav = useNavigation();
 
-    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignStackParamList, 'FindPinPointLocationStack'>>();
+    const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'FindPinPointLocationStack'>>();
 
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
@@ -80,7 +80,7 @@ const FindPinPointLocationStack = () => {
 
 
     return (
-        
+
         <Container>
             <FindOnGooglePlace
                 getPlaceDetails={getPlaceDetails}

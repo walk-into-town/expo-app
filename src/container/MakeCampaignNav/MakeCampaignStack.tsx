@@ -19,7 +19,7 @@ const MakeCampaignStack = () => {
     const makeCampaignNav = makeCampaignNavigation();
 
     const [title, setTitle] = useState("");
-    const [campaginImgs, setCampaignImgs] = useState<string[]>([]);
+    const [campaignImgs, setCampaignImgs] = useState<string[]>([]);
     const [description, setDescription] = useState("");
     const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
     const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
@@ -60,7 +60,7 @@ const MakeCampaignStack = () => {
             ownner: userToken.id,
             name: title,
             description,
-            imgs: campaginImgs,
+            imgs: campaignImgs,
             pinpoints: pinPointList,
             coupons: couponList,
             region: "임시지역"
@@ -78,7 +78,7 @@ const MakeCampaignStack = () => {
         }
 
         startLoading();
-        const { result, data, error, errdesc } = await API.campaginCreate(getCampaign());
+        const { result, data, error, errdesc } = await API.campaignCreate(getCampaign());
         if (result === "success") {
             DefaultAlert({
                 title: "캠페인 생성 완료",
@@ -105,7 +105,7 @@ const MakeCampaignStack = () => {
             mainNav.navigate("HomeTab", { screen: "CampaignStack" })
         }
     });
-    const hasUnsavedChanges = Boolean(title || description || campaginImgs.length || pinPointList.length || couponList.length)
+    const hasUnsavedChanges = Boolean(title || description || campaignImgs.length || pinPointList.length || couponList.length)
         && !isSubmit;
     perventGoBack({ hasUnsavedChanges });
 
@@ -113,7 +113,7 @@ const MakeCampaignStack = () => {
         <ScrollWrapper>
             <CampaignBox
                 useTitle={[title, setTitle]}
-                useCampaignImgs={[campaginImgs, setCampaignImgs]}
+                useCampaignImgs={[campaignImgs, setCampaignImgs]}
                 useDescription={[description, setDescription]}
             />
 

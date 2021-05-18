@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MakeCampaignStackParamList, MakeCoupon } from '@types';
+import { MakeCampaignNavParamList, MakeCoupon } from '@types';
 import { makeCampaignNavigation } from '../../navigation/useNavigation';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { perventGoBack, useSubmit } from '../../useHook';
@@ -13,7 +13,7 @@ import PaymentConditionPicker from '../../components/MakeCouponStack/PaymentCond
 const MakeCouponStack = () => {
     const campaginNav = makeCampaignNavigation();
     const nav = useNavigation();
-    const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaignStackParamList, 'MakeCouponStack'>>();
+    const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakeCouponStack'>>();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -35,7 +35,7 @@ const MakeCouponStack = () => {
         setCouponImg(coupon.img);
         setEndDate(new Date(coupon.endDate));
         setGoods(coupon.goods);
-        setLimit(coupon.limit);
+        setLimit(coupon.limit.toString());
         setPaymentCondition(coupon.paymentCondition);
     }, [coupon])
 
@@ -44,7 +44,7 @@ const MakeCouponStack = () => {
             name,
             description,
             endDate: endDate.toISOString(),
-            limit,
+            limit: Number(limit),
             goods,
             img: couponImg,
             paymentCondition

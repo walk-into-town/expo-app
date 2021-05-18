@@ -5,9 +5,9 @@ export const getRandomCat = () => {
 }
 
 import * as member from "./member";
-import * as campagin from "./campagin"
+import * as campaign from "./campaign"
 
 export const API = {
     ...member,
-    ...campagin
+    ...campaign
 }

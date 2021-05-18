@@ -1,11 +1,11 @@
 import { Picker } from '@react-native-picker/picker'
-import { PinPoint, TuseState } from '@types'
-import React, { useState } from 'react'
+import { MakePinPoint, TuseState } from '@types'
+import React from 'react'
 import { View, Text } from 'react-native'
 import { SubTitle } from '../../atoms'
 
 interface Props {
-    pinPointList?: PinPoint[]
+    pinPointList?: MakePinPoint[]
     usePaymentCondition: TuseState<number>
 }
 

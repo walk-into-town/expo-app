@@ -25,7 +25,7 @@ const PinPointDetailStack = (props: Props) => {
             <View style={{ height: 200 }}>
                 <Image style={{ position: "absolute", width: "100%", height: 250 }} source={{ uri: "https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg" }} />
             </View>
-            <Card containerStyle={{ borderRadius: 4 }}>
+            <Card containerStyle={{ borderRadius: 4, marginBottom: 20 }}>
                 <Title>{pinpoint.name}</Title>
                 <Text3 style={{ textAlign: "center" }}>{pinpoint.description}</Text3>
             </Card>
@@ -59,7 +59,7 @@ const PinPointDetailStack = (props: Props) => {
                 <Row>
                     <SubTitle>댓글 {pinpoint.comments?.length}</SubTitle>
                     <View style={{ marginLeft: 'auto' }}>
-                        <BadgeButton title="댓글 적기" onPress={() => { }} />
+                        <BadgeButton title="댓글 달기" onPress={() => { }} />
                     </View>
                 </Row>
                 {

@@ -1,6 +1,6 @@
 import { TuseState } from '@types'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text, View } from 'react-native'
 import { Row, ClearButton, ImgPicker, InputModal } from '../../atoms'
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
     navToFindPinPointLocationModal: () => void
 }
 
-const MakePinPoint = (props: Props) => {
+const MakePinPointView = (props: Props) => {
     const [name, setName] = props.useName;
     const [latitude, setLatitude] = props.useLatitude;
     const [longitude, setLongitude] = props.useLongitude;
@@ -20,7 +20,7 @@ const MakePinPoint = (props: Props) => {
     const [description, setDescription] = props.useDescription;
 
     return (
-        <>
+        <View>
             <InputModal
                 useText={[name, setName]}
                 placeholder="핀포인트명을 입력해주세요"
@@ -40,8 +40,8 @@ const MakePinPoint = (props: Props) => {
                 placeholder="핀포인트 설명을 입력해주세요."
                 type="textarea"
             />
-        </>
+        </View>
     )
 }
 
-export default MakePinPoint
+export default MakePinPointView

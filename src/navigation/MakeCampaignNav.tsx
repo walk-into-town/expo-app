@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import MakeCampaignStack from '../container/MakeCampaignNav/MakeCampaginStack';
+import MakeCampaignStack from '../container/MakeCampaignNav/MakeCampaignStack';
 import MakePinPointStack from '../container/MakeCampaignNav/MakePinPointStack';
 import MakeCouponStack from '../container/MakeCampaignNav/MakeCouponStack';
 import FindPinPointLocationStack from '../container/MakeCampaignNav/FindPinPointLocationStack';

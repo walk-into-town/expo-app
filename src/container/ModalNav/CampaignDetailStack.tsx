@@ -54,7 +54,7 @@ const CampaignDetailStack = () => {
     // usecase
     const onParticipate = async () => {
         startLoading();
-        const { result, data, error, errdesc } = await API.campaginParticiapte({ cid: campagin.id, uid: userToken.id })
+        const { result, data, error, errdesc } = await API.campaignParticiapte({ cid: campagin.id, uid: userToken.id })
         endLoading();
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "캠페인 참여 실패", subTitle: `${error} ${errdesc}` })
@@ -90,8 +90,8 @@ const CampaignDetailStack = () => {
                     onPress={setValue}
                     buttons={["핀포인트 리스트", "쿠폰 리스트"]}
                     viewList={[
-                        <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail}  />,
-                        <CouponListTab couponList={couponList} navToCouponDetail={navToCouponDetail}/>
+                        <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail} />,
+                        <CouponListTab couponList={couponList} navToCouponDetail={navToCouponDetail} />
                     ]}
                 />
 

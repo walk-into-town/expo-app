@@ -39,11 +39,11 @@ declare module "@types" {
         coupons: string[],
         comments: CampaignComment[]
     }
-    type CampaginSearchType = 'name' | 'region' | 'id' | 'ownner';
-    type CampaginSearchCondition = 'part' | 'exact';
-    type CampaginSearchParams = {
-        type: CampaginSearchType,
-        condition: CampaginSearchCondition,
+    type CampaignSearchType = 'name' | 'region' | 'id' | 'ownner';
+    type CampaignSearchCondition = 'part' | 'exact';
+    type CampaignSearchParams = {
+        type: CampaignSearchType,
+        condition: CampaignSearchCondition,
         value: string
     }
 
