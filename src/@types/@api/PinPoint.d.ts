@@ -2,7 +2,7 @@ declare module "@types" {
     type quizType = "객관식" | "주관식";
     
     type PinPoint = {
-        id?: string,
+        id: string,
         name: string,
         imgs: string[],
         latitude: number,
@@ -23,7 +23,9 @@ declare module "@types" {
         id: string,
         userId: string,
         text: string,
-        imgs: string[]
+        rated: string,
+        imgs: string[],
+        updateTime: string
     }
 
     type MakePinPoint = {

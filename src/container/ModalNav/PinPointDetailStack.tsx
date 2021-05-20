@@ -6,6 +6,7 @@ import { Card, Divider, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
 import { BadgeButton, PaddingBox, Row, SubTitle, Text3, Title } from '../../atoms'
 import Footer from '../../components/Footer'
+import { mainNavigation } from '../../useHook'
 import { toCommonDateTime } from '../../util'
 
 interface Props {
@@ -15,10 +16,15 @@ interface Props {
 const PinPointDetailStack = (props: Props) => {
     const { params: { pinpoint, campaignName } } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>();
 
+    const mainNav = mainNavigation();
     const nav = useNavigation();
     useEffect(() => {
         nav.setOptions({ headerTitle: `${campaignName}의 핀포인트` })
     }, [campaignName])
+    const navToWriteComment = () => {
+        mainNav.navigate("EditModalNav", { screen: "WritePinPointCommentStack", params: { pid: pinpoint.id, pname: pinpoint.name } })
+    }
+
 
     return (
         <ScrollView>
@@ -55,11 +61,11 @@ const PinPointDetailStack = (props: Props) => {
             </PaddingBox>
             <Divider />
 
-            <PaddingBox style={{minHeight: 200}}>
+            <PaddingBox style={{ minHeight: 200 }}>
                 <Row>
                     <SubTitle>댓글 {pinpoint.comments?.length}</SubTitle>
                     <View style={{ marginLeft: 'auto' }}>
-                        <BadgeButton title="댓글 달기" onPress={() => { }} />
+                        <BadgeButton title="댓글 달기" onPress={navToWriteComment} />
                     </View>
                 </Row>
                 {

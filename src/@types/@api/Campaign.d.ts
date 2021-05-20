@@ -22,7 +22,7 @@ declare module "@types" {
         text: string,
         rated: number,
         imgs: string[],
-        updateTime: string
+        updateTime?: string
     }
     type MakeCampaignComment = {
         cid: string,
@@ -45,7 +45,15 @@ declare module "@types" {
         coupons: string[],
         comments: CampaignComment[]
     }
-    type CampaignSearchType = 'name' | 'region' | 'id' | 'ownner';
+    type CampaignSearchType = 'name' | 'region' | 'id' | 'owner';
+    type CampaignSearchTypeText = {
+        [key: string]: string
+        name: string
+        region: string
+        id: string
+        owner: string
+    }
+
     type CampaignSearchCondition = 'part' | 'exact';
     type CampaignSearchParams = {
         type: CampaignSearchType,
@@ -64,5 +72,23 @@ declare module "@types" {
 
         pinpoints: MakePinPoint[],
         coupons: MakeCoupon[],
+    }
+
+    // 참여중인 캠페인
+    type PlayingCampaign = {
+        id: string,
+        name: string,
+        description: string,
+        cleared: boolean,
+        imgs: string[],
+        pinpoints: string[],
+    }
+
+    // 내가 만든 캠페인
+    type MyCampaign = {
+        id: string,
+        name: string,
+        imgs: string[],
+        description: string
     }
 }

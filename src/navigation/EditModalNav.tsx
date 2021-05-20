@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { colorCode, HeaderLeftCloseIcon, HeaderRightCheckIcon } from '../atoms';
 import MyProfileEditStack from '../container/EditModalNav/MyProfileEditStack';
 import WriteCampaignCommentStack from '../container/EditModalNav/WriteCampaignCommentStack';
+import WritePinPointCommentStack from '../container/EditModalNav/WritePinPointCommentStack';
 
 const Stack = createStackNavigator();
 
@@ -23,9 +24,14 @@ const EditModalNav = () => {
                     headerTitle: "프로필 편집",
                 }}
             />
+            {/* 리뷰, 평가 */}
             <Stack.Screen
                 name="WriteCampaignCommentStack"
                 component={WriteCampaignCommentStack}
+            />
+            <Stack.Screen
+                name="WritePinPointCommentStack"
+                component={WritePinPointCommentStack}
             />
         </Stack.Navigator>
     )

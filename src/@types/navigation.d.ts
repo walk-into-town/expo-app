@@ -78,5 +78,6 @@ declare module "@types" {
     type EditModalNavParamList = {
         MyProfileEditStack: undefined,
         WriteCampaignCommentStack: { cid: string, cname: string }
+        WritePinPointCommentStack: { pid: string, pname: string }
     }
 }

@@ -5,9 +5,11 @@ export const getRandomCat = () => {
 }
 
 import * as member from "./member";
-import * as campaign from "./campaign"
+import * as campaign from "./campaign";
+import * as pinpoint from "./pinpoint";
 
 export const API = {
     ...member,
-    ...campaign
+    ...campaign,
+    ...pinpoint
 }
