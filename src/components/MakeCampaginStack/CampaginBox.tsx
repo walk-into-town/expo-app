@@ -23,7 +23,6 @@ const CampaginBox = (props: Props) => {
                 type="textarea"
             />
 
-            <Input placeholder="지역 설정" />
         </Box>
     )
 }

@@ -11,9 +11,13 @@ declare module "@types" {
             params: MakeCampaginStackParamList[keyof MakeCampaginParams]
         },
         ModalNav: {
-            screen: keyof ModalStackParamList
+            screen: keyof ModalStackParamList,
             params?: ModalStackParamList[keyof ModalStackParamList]
-        }
+        },
+        GamePlayNav: {
+            screen: keyof GamePlayStackParamList,
+            params?: GamePlayStackParamList[keyof GamePlayParams]
+        },
     };
 
     type HomeTabParamList = {
@@ -51,5 +55,14 @@ declare module "@types" {
     }
     type CampaginDetailParams = {
         campagin: SearchCampagin
+    }
+
+    type GamePlayStackParamList = {
+        CampaignViewStack: undefined
+
+    }
+
+    type GamePlayParams = {
+        pinpoint?: Pinpoint,
     }
 }

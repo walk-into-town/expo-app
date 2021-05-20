@@ -57,7 +57,7 @@ const GameTest = (props: Props) => {
         <Container>
             <ClearButton
                 title="play"
-                onPress={() => mainNav.navigate('ModalNav', { screen: "GamePlayStack" })} />
+                onPress={() => mainNav.navigate('ModalNav', { screen: 'GamePlayStack' })} />
 
             <ClearButton
                 title="RANDOM"
