@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampagin } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -6,63 +6,88 @@ declare module "@types" {
         HomeTab: {
             screen?: keyof HomeTabParamList,
         },
-        MakeCampaginNav: {
-            screen?: keyof MakeCampaginStackParamList,
-            params: MakeCampaginStackParamList[keyof MakeCampaginParams]
+        MakeCampaignNav: {
+            screen?: keyof MakeCampaignNavParamList,
+            params: MakeCampaignNavParamList[keyof MakeCampaignParams]
+        },
+        GameNav: {
+            screen?: keyof GameNavParamList
         },
         ModalNav: {
-            screen: keyof ModalStackParamList,
-            params?: ModalStackParamList[keyof ModalStackParamList]
+
+            screen: keyof ModalNavParamList
+            params?: ModalNavParamList[keyof ModalNavParamList]
         },
-        GamePlayNav: {
-            screen: keyof GamePlayStackParamList,
-            params?: GamePlayStackParamList[keyof GamePlayParams]
-        },
+        EditModalNav: {
+            screen: keyof EditModalNavParamList
+            params?: EditModalNavParamList[keyof EditModalNavParamList]
+        }
     };
 
+    // 홈 화면
     type HomeTabParamList = {
-        MyPageNav: {
-            screen?: keyof MyPageStackParamList
-        },
+        MyPageStack: undefined,
         CampaignStack: undefined,
         GameStack: undefined,
         RankingStack: undefined,
     };
-    type MyPageStackParamList = {
-        MyPageStack: undefined,
-    };
 
-    type MakeCampaginStackParamList = {
-        MakeCampaginStack: MakeCampaginParams,
-        MakePinPointStack: MakeCampaginParams,
+    // 캠페인 만들기
+    type MakeCampaignNavParamList = {
+        MakeCampaignStack: MakeCampaignParams,
+        MakePinPointStack: MakeCampaignParams,
         MakeCouponStack: {
             pinPointList?: MakePinPoint[],
             coupon?: MakeCoupon,
             editIndex?: number
         },
-        FindPinPointLocationStack: MakeCampaginParams
+        FindPinPointLocationStack: MakeCampaignParams
     };
-    type MakeCampaginParams = {
+    type MakeCampaignParams = {
         pinpoint?: MakePinPoint,
         coupon?: MakeCoupon,
         editIndex?: number
     }
 
-    type ModalStackParamList = {
-        MyCouponStack: undefined,
+    // 게임
+    type GameNavParamList = {
         GamePlayStack: undefined,
-        CampaginDetailStack: CampaginDetailParams
-    }
-    type CampaginDetailParams = {
-        campagin: SearchCampagin
     }
 
-    type GamePlayStackParamList = {
-        CampaignViewStack: undefined
+    // 모달 화면
+    type ModalNavParamList = {
+        MyDetailStack: { selectedIndex: number },
+        MyCouponStack: undefined,
+
+        CampaignDetailStack: CampaignDetailParams,
+        PinPointDetailStack: PinPointDetailParams,
+        CouponDetailStack: CouponDetailParams
+    }
+    type CampaignDetailParams = {
+        campaign: SearchCampaign
+    }
+    type PinPointDetailParams = {
+        campaignName: string,
+        pinpoint: PinPoint
+    }
+    type CouponDetailParams = {
+        campaignName: string,
+        coupon: Coupon
+    }
+
+    // 편집 모달 화면
+    type EditModalNavParamList = {
+        MyProfileEditStack: undefined,
+        WriteCampaignCommentStack: undefined
 
     }
 
-    type GamePlayParams = {
-        pinpoint?: Pinpoint,
-    }
+    // type GamePlayStackParamList = {
+    //     CampaignViewStack: undefined
+
+    // }
+
+    // type GamePlayParams = {
+    //     pinpoint?: Pinpoint,
+    // }
 }

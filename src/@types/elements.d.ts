@@ -9,10 +9,17 @@ declare module "@types" {
     };
 
     type SubmitButtonProps = {
+        option?: ButtonProps;
         title: string;
         onPress: () => void;
-        option?: ButtonProps;
     };
+
+    type BadgeButtonProps = {
+        option?: ButtonProps;
+        title: string;
+        onPress: () => void;
+        color?: string
+    }
 
     interface ITitleBadge {
         title: string,

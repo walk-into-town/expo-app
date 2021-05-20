@@ -1,16 +1,18 @@
 import React from 'react';
-import { DefaultTheme, NavigationContainer, useNavigation } from '@react-navigation/native';
-import { CardStyleInterpolators, createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigation/stack';
-import HomeTab from './HomeTab';
-import MakeCampaginNav from './MakeCampaginNav';
-import ModalNav from './ModalNav';
-import LoginStack from '../container/LoginStack';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+import { mainNavigation, useAuthContext } from '../useHook';
+
 import theme from '../style/theme';
 import { ThemeProvider } from 'styled-components';
-import { useAuthContext } from '../useHook';
+import HomeTab from './HomeTab';
+import MakeCampaignNav from './MakeCampaignNav';
+import ModalNav from './ModalNav';
+import GameNav from './GameNav';
+import LoginStack from '../container/LoginStack';
 import { colorCode, EvilIcons } from '../atoms';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { mainNavigation } from './useNavigation';
+import EditModalNav from './EditModalNav';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +30,7 @@ export default () => {
     const AddIcon = () => {
         const mainNav = mainNavigation();
         return (
-            <TouchableOpacity onPress={() => mainNav.navigate('MakeCampaginNav', { screen: "MakeCampaginStack", params: {} })}>
+            <TouchableOpacity onPress={() => mainNav.navigate('MakeCampaignNav', { screen: "MakeCampaignStack", params: {} })}>
                 <EvilIcons name="plus" size={25} style={{ color: colorCode.primary, marginRight: 5 }} />
             </TouchableOpacity>
         )
@@ -41,7 +43,9 @@ export default () => {
                     {
                         userToken !== undefined ?
                             <>
-                                <Stack.Screen name="HomeTab" component={HomeTab}
+                                <Stack.Screen
+                                    name="HomeTab"
+                                    component={HomeTab}
                                     options={{
                                         cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
                                         headerShown: true,
@@ -52,10 +56,25 @@ export default () => {
                                     }}
                                 />
 
-                                <Stack.Screen name="MakeCampaginNav" component={MakeCampaginNav}
-                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }} />
-
-                                <Stack.Screen name="ModalNav" component={ModalNav} />
+                                <Stack.Screen
+                                    name="MakeCampaignNav"
+                                    component={MakeCampaignNav}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }}
+                                />
+                                <Stack.Screen
+                                    name="GameNav"
+                                    component={GameNav}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
+                                />
+                                <Stack.Screen
+                                    name="ModalNav"
+                                    component={ModalNav}
+                                />
+                                <Stack.Screen
+                                    name="EditModalNav"
+                                    component={EditModalNav}
+                                    options={{ gestureEnabled: false, cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }}
+                                />
                             </>
                             :
                             <>

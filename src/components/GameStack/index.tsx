@@ -1,13 +1,11 @@
-import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { Button, Image, Text } from 'react-native'
+import { Image, Text } from 'react-native'
 import styled from 'styled-components/native'
 import { getRandomCat } from '../../api'
 import { ClearButton, soundPath } from '../../atoms'
 import LoadingModal from '../LoadingModal'
 import { Audio } from "expo-av"
-import { useLoadingContext } from '../../useHook'
-import { mainNavigation } from '../../navigation/useNavigation'
+import { useLoadingContext, mainNavigation } from '../../useHook'
 
 interface Props {
 
@@ -57,8 +55,7 @@ const GameTest = (props: Props) => {
         <Container>
             <ClearButton
                 title="play"
-                onPress={() => mainNav.navigate('ModalNav', { screen: 'GamePlayStack' })} />
-
+                onPress={() => mainNav.navigate('GameNav', { screen: "GamePlayStack" })} />
             <ClearButton
                 title="RANDOM"
                 onPress={onPressRandom} />

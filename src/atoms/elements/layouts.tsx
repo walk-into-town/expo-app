@@ -6,7 +6,6 @@ export const Container = styled.SafeAreaView`
 export const Row = styled.View`
     flex-direction: row;
     align-items: center;
-    width: 100%;
 `
 export const RowButtonBoxWrapper = styled.View`
     height: 70px;
@@ -28,6 +27,9 @@ export const ScrollWrapper = styled.ScrollView`
 
 export const Box = styled.View`
     margin: 10px 0;
+`
+export const PaddingBox = styled.View`
+    padding: 10px 20px;
 `
 
 export const Googleplace = styled.View`

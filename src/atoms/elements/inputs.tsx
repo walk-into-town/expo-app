@@ -5,10 +5,22 @@ import { Input, SearchBar } from "react-native-elements"
 
 export const WhiteInput = (option: TextInputProps) => (
     <Input
-        placeholder="아이디"
+        placeholder="입력해주세요."
         selectionColor={"#FFF"}
         inputStyle={{ color: "#FFF", fontSize: 25, fontFamily: "SCDream5" }}
         autoCapitalize="none"
+        {...option}
+    />
+)
+export const WhiteInputArea = (option: TextInputProps) => (
+    <Input
+        placeholder="입력해주세요."
+        selectionColor={"#FFF"}
+        style={{ height: 100 }}
+        inputStyle={{ color: "#FFF", fontSize: 17, fontFamily: "SCDream5" }}
+        autoCapitalize="none"
+        multiline
+        numberOfLines={4}
         {...option}
     />
 )

@@ -1,8 +1,8 @@
-import { BaseFetchRes, MemberLoginRes, ModifyMember, RegisterMember } from "@types"
+import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, RegisterMember } from "@types"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
 
-/* user/member */
+// 로그인
 type MemberLoginFetch = (data: { id: string, pw: string }) => BaseFetchRes<MemberLoginRes>
 export const memberLogin: MemberLoginFetch = async (data) => {
     return baseFetch(`${ip}/member/login`, "POST", data);
@@ -16,6 +16,12 @@ export const memberLogout: MemberLogoutFetch = (data) => {
 type MemberRegisterFetch = (data: RegisterMember) => BaseFetchRes<string>
 export const memberRegister: MemberRegisterFetch = async (data) => {
     return baseFetch(`${ip}/member`, "POST", data);
+}
+
+// 마이페이지 
+type MemberInfoReadFetch = (data: { id: string }) => BaseFetchRes<MemberInfoRes>
+export const memberInfoRead: MemberInfoReadFetch = (data) => {
+    return baseFetch(`${ip}/member?id=${data.id}`, "GET");
 }
 
 type MemberModifyFetch = (data: ModifyMember) => BaseFetchRes<string>

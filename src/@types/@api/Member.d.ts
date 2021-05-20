@@ -22,4 +22,10 @@ declare module "@types" {
         profileImg: string,
         selfIntroduction: string
     }
+    
+    type MemberInfoRes = {
+        playingCampaign: number,
+        myCampaign: number,
+        clearCampaign: number
+    }
 }
