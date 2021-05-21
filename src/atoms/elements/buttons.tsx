@@ -17,7 +17,7 @@ export const ClearButton = (props: ButtonProps) => (
     <Button
         type="clear"
         titleStyle={{ fontFamily: "SCDream8" }}
-        {...props} 
+        {...props}
     />
 )
 export const SubmitButton = (props: SubmitButtonProps) => (
@@ -30,16 +30,19 @@ export const SubmitButton = (props: SubmitButtonProps) => (
     />
 )
 
-export const BadgeButton = (props: BadgeButtonProps) => (
-    <Button
+export const BadgeButton = (props: BadgeButtonProps) => {
+    const color = props.color || colorCode.primary;
+    
+
+    return <Button
         title={props.title}
         onPress={props.onPress}
         type="clear"
-        buttonStyle={{ borderRadius: 50, borderColor: colorCode.primary, borderWidth: .7 }}
+        buttonStyle={{ borderRadius: 50, borderColor: props.color || colorCode.primary, borderWidth: .7 }}
         titleStyle={{ fontFamily: "SCDream7", fontSize: 12, color: colorCode.primary }}
         {...props.option}
     />
-)
+}
 
 type ButtonTabProps = {
     selectedIndex: number;

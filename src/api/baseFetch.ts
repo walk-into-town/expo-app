@@ -1,4 +1,6 @@
-export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | "DELETE", body?: any, isFormData?: boolean) => {
+import { DefaultAlert } from "../atoms";
+
+export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | "DELETE", body?: any) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
     try {
@@ -7,7 +9,7 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
             body: JSON.stringify(body),
             headers: {
                 Accept: "application/json",
-                'Content-Type': !isFormData ? 'application/json' : 'multipart/form-data',
+                'Content-Type': 'application/json',
             },
             signal: controller.signal,
         });
@@ -19,7 +21,8 @@ export const baseFetch = async (route: string, method: "POST" | "GET" | "PUT" | 
 
         return await res.json();
     } catch (e) {
-        console.log("baseFetch 에러", e);
+        DefaultAlert({ title: "통신 오류" })
+        console.log(`[baseFetch 오류] ${e.toString()}`)
         return { result: "failed", error: e.toString() };
     } finally {
         clearTimeout(timeoutId);

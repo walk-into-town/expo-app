@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { BadgeButton, WhiteTitle } from '../../atoms'
 import Modal from 'react-native-modal'
+import { ScrollView } from 'react-native-gesture-handler'
 
 interface Props {
     useType: TuseState<CampaignSearchType>
@@ -23,19 +24,24 @@ const CampaignSortFilter = (props: Props) => {
     }
 
     const onSelectType = (type: string) => {
-        setType(type as CampaignSearchType);
+        setType(type as CampaignSearchType); // 편법.
         toggleTypeModal();
     }
 
     return (
         <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
-            <BadgeButton title={`검색조건 - ${typeText[type]}`} onPress={toggleTypeModal} />
+            <ScrollView horizontal>
+                <BadgeButton title={`검색조건 - ${typeText[type]}`} onPress={toggleTypeModal}/>
+                <BadgeButton title="초기화" onPress={() => { }} />
+                <BadgeButton title="핀포인트 많은 순" onPress={() => { }} />
+                <BadgeButton title="쿠폰 많은 순" onPress={() => { }} />
+                <BadgeButton title="별점 높은 순" onPress={() => { }} />
+                <BadgeButton title="리뷰 많은 순" onPress={() => { }} />
+            </ScrollView>
             <Modal isVisible={typeModalVisible} avoidKeyboard animationIn={'pulse'} animationOut={'fadeOut'}>
                 {Object.keys(typeText).map((v, idx) => {
-                    if (v in typeText)
-                        return <WhiteTitle onPress={() => onSelectType(v)} key={idx}>{typeText[v]}</WhiteTitle>
-                }
-                )}
+                    return <WhiteTitle onPress={() => onSelectType(v)} key={idx}>{typeText[v]}</WhiteTitle>
+                })}
             </Modal>
         </View>
     )
