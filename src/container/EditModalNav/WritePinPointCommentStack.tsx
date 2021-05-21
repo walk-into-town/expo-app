@@ -30,11 +30,12 @@ const WritePinPointCommentStack = (props: Props) => {
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
-            const { result, data, error, errdesc } = await API.pinpointCommentCreate({ pid, "comments[text]": text, "comments[userId]": userToken.id })
+            const body = { id: pid, comments: { userId: userToken.id, text } };
+            const { result, data, error, errdesc } = await API.pinpointCommentCreate(body);
             if (result === "failed" || data === undefined) {
                 DefaultAlert({ title: error, subTitle: errdesc })
+                return;
             }
-            console.log(data)
             nav.goBack();
         }
     })

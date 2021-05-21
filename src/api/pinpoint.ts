@@ -4,9 +4,11 @@ import { ip } from "./ip";
 
 // 핀포인트 댓글
 type pCommentCreateFetch = (data: {
-    pid: string,
-    "comments[userId]": string,
-    "comments[text]": string,
+    id: string,
+    comments: {
+        userId: string,
+        text: string
+    },
     img?: string
 }) => BaseFetchRes<PinPointComment>
 export const pinpointCommentCreate: pCommentCreateFetch = (data) => {

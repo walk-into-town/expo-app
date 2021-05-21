@@ -26,6 +26,10 @@ export const HeaderRightCheckIcon = ({ onPress }: { onPress: () => void }) => (
     </TouchableOpacity >
 )
 
-export const RateStarIcon = ({ toggle, size }: { toggle: boolean, size?: number }) => (
+export const RateStarIcon = ({ toggle, size }: { toggle?: boolean, size?: number }) => (
     <FontAwesome name={toggle ? "star" : "star-o"} size={size || 17} style={{ color: colorCode.primary }} />
+)
+
+export const LikeIcon = ({ toggle, size }: { toggle?: boolean, size?: number }) => (
+    <FontAwesome name={toggle ? "heart" : "heart-o"} size={size || 17} style={{ color: colorCode.primary }} />
 )

@@ -32,14 +32,15 @@ export const SubmitButton = (props: SubmitButtonProps) => (
 
 export const BadgeButton = (props: BadgeButtonProps) => {
     const color = props.color || colorCode.primary;
-    
+    const mainColor = props.backgroundToggle ? "white" : color;
+    const backgroundColor = props.backgroundToggle ? color : "white";
 
     return <Button
         title={props.title}
         onPress={props.onPress}
         type="clear"
-        buttonStyle={{ borderRadius: 50, borderColor: props.color || colorCode.primary, borderWidth: .7 }}
-        titleStyle={{ fontFamily: "SCDream7", fontSize: 12, color: colorCode.primary }}
+        buttonStyle={{ borderRadius: 50, borderColor: mainColor, borderWidth: .7, backgroundColor }}
+        titleStyle={{ fontFamily: "SCDream7", fontSize: 12, color: mainColor }}
         {...props.option}
     />
 }

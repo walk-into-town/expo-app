@@ -1,8 +1,9 @@
 import { PinPointComment } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
-import { ListItem } from 'react-native-elements'
-import { BadgeButton, PaddingBox, Row, SubTitle, Text3 } from '../../atoms'
+import { Avatar, ListItem } from 'react-native-elements'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { BadgeButton, colorCode, LikeIcon, PaddingBox, Row, SubTitle, Text3 } from '../../atoms'
 
 interface Props {
     comments: PinPointComment[],
@@ -19,12 +20,18 @@ const PinPointCommentBox = ({ comments, navToWriteComment }: Props) => {
                 </View>
             </Row>
             {
-                comments.map((v, idx) => {
-                    <ListItem key={idx}>
-                        <Text3>{v.userId}</Text3>
-                        <Text3>{v.text}</Text3>
+                comments.map((v, idx) => (
+                    <ListItem key={idx} containerStyle={{ backgroundColor: colorCode.background }}>
+                        <Avatar source={{ uri: v.profileImg }} rounded />
+                        <ListItem.Content>
+                            <Text>{v.nickname} {v.userId}</Text>
+                            <Text3>{v.text}</Text3>
+                        </ListItem.Content>
+                        <TouchableOpacity>
+                            <LikeIcon toggle={false} size={15}/>
+                        </TouchableOpacity>
                     </ListItem>
-                })
+                ))
             }
         </PaddingBox>
     )

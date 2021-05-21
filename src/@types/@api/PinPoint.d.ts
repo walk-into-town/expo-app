@@ -1,6 +1,6 @@
 declare module "@types" {
     type quizType = "객관식" | "주관식";
-    
+
     type PinPoint = {
         id: string,
         name: string,
@@ -22,8 +22,10 @@ declare module "@types" {
     type PinPointComment = {
         id: string,
         userId: string,
+        nickname: string,
+        profileImg: string,
         text: string,
-        rated: string,
+        rated: number,
         imgs: string[],
         updateTime: string
     }
