@@ -23,6 +23,6 @@ declare module "@types" {
 
     interface ITitleBadge {
         title: string,
-        backgroundColor: '#ff3b30' | 'black'
+        backgroundColor: string
     }
 }

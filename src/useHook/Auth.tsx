@@ -58,7 +58,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             const { result, error, errdesc, data, session } = await API.memberLogin({ id, pw });
             dispatch({ type: "RESTORE_TOKEN" });
 
-            if (result === "failed" || !data) {
+            if (result === "failed" || data === undefined) {
                 await rmStorage("userToken");
                 console.log("[로그인 실패]", error, errdesc)
             }
@@ -69,7 +69,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 console.log("[로그인 성공]", session)
             }
             endLoading();
-            return error ? error : "";
+            return errdesc ? errdesc : "";
 
             // dispatch({ type: 'SIGN_IN', userToken: { id, nickname: "닉네임", profileImg: "", seflIntruduction: "아무노래나 틀어" } });
             // endLoading();

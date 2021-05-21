@@ -16,8 +16,8 @@ declare module "@types" {
             choices: string[],
             answer: string,
         },
-        comments?: PinPointComment[],
-        coupons?: string[]
+        comments: PinPointComment[],
+        coupons: string[]
     }
     type PinPointComment = {
         id: string,

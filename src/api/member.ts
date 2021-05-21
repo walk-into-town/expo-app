@@ -35,12 +35,12 @@ export const memberWithdraw: MemberWithdrawFetch = (data) => {
 }
 
 // 나의 캠페인 정보
-type MemberPlayingCampaginFetch = (userId: string) => BaseFetchRes<PlayingCampaign>
-export const memberPlayingCampagin: MemberPlayingCampaginFetch = (userId) => {
-    return baseFetch(`${ip}/member/playing?id=${userId}}`, "GET");
+type MemberPlayingcampaignFetch = (userId: string) => BaseFetchRes<PlayingCampaign[]>
+export const memberPlayingCampaign: MemberPlayingcampaignFetch = (userId) => {
+    return baseFetch(`${ip}/member/playing?id=${userId}`, "GET");
 }
 
-type MemberMyCampaginFetch = (userId: string) => BaseFetchRes<MyCampaign>
-export const memberMyCampagin: MemberMyCampaginFetch = (userId) => {
-    return baseFetch(`${ip}/member/my?id=${userId}}`, "GET");
+type MemberMycampaignFetch = (userId: string) => BaseFetchRes<MyCampaign[]>
+export const memberMyCampaign: MemberMycampaignFetch = (userId) => {
+    return baseFetch(`${ip}/member/my?id=${userId}`, "GET");
 }

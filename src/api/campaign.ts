@@ -18,7 +18,6 @@ export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) 
 }
 
 // 캠페인 디테일 페이지
-
 type CampaignParticiapte = (data: { uid: string, cid: string }) => BaseFetchRes<boolean>
 export const campaignParticiapte: CampaignParticiapte = (data) => {
     return baseFetch(`${ip}/campaign/particiapte/campaign`, "PUT", data)
