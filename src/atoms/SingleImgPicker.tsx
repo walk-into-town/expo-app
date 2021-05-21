@@ -8,13 +8,11 @@ import { colorCode } from './color';
 
 interface props {
     useImg: TuseState<string>,
-    useImg64: TuseState<string>,
     prevFunc?: () => void,
     afterFunc?: () => void
 }
 const SingleImgPicker = (props: props) => {
     const [img, setImg] = props.useImg;
-    const [img64, setImg64] = props.useImg64;
 
     const pickImage = async () => {
         if (props.prevFunc)
@@ -38,8 +36,6 @@ const SingleImgPicker = (props: props) => {
         if (result.cancelled) return;
 
         setImg(result.uri);
-        if (result.base64)
-            setImg64(`data:image/jpg;base64,${result.base64}`);
         
         if (props.afterFunc)
             props.afterFunc();
@@ -50,13 +46,13 @@ const SingleImgPicker = (props: props) => {
             {
                 img === "" ?
                     <View style={{ borderWidth: .5, borderColor: colorCode.primary }}>
-                        <ClearButton title="사진 추가" onPress={pickImage} style={{ justifyContent: 'center', width: 200, height: 200 }} />
+                        <ClearButton title="사진 추가" onPress={pickImage} style={{ justifyContent: 'center', width: 150, height: 150 }} />
                     </View>
                     :
                     <TouchableOpacity onPress={pickImage}>
                         <Image
                             source={{ uri: img }}
-                            style={{ width: 200, height: 200 }}
+                            style={{ width: 150, height: 150 }}
                         />
                     </TouchableOpacity>
             }

@@ -3,11 +3,12 @@ declare module "@types" {
     type Auth = {
         userToken: IUserToken | undefined;
     }
-    type AuthReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN'
+    type AuthReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN' | 'EDIT'
     type AuthReduce = (state: Auth, action: { type: AuthReduceAction, userToken?: IUserToken }) => Auth;
     type UseAuth = {
         signIn: (data: { id: string, pw: string }) => Promise<string>;
         signOut: (data: { id: string }) => Promise<void>;
+        onEdit: (data: { nickname: string, profileImg: string, selfIntroduction: string}) => void
     }
     interface IAuthContext {
         auth: Auth,

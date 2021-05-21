@@ -24,7 +24,11 @@ export const memberInfoRead: MemberInfoReadFetch = (data) => {
     return baseFetch(`${ip}/member?id=${data.id}`, "GET");
 }
 
-type MemberModifyFetch = (data: ModifyMember) => BaseFetchRes<string>
+type MemberModifyFetch = (data: ModifyMember) => BaseFetchRes<{
+    nickname: string,
+    profileImg: string,
+    selfIntroduction: string
+}>
 export const memberModify: MemberModifyFetch = (data) => {
     return baseFetch(`${ip}/member`, "PUT", data);
 }

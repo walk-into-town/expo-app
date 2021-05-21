@@ -21,13 +21,12 @@ const Profile = ({ memberInfo }: Props) => {
     return (
         <WhiteView style={{ paddingVertical: 20, marginTop: 10 }}>
             <ListItem>
-                <ListItem.Content>
+                <ListItem.Content style={{ marginRight: 8 }}>
                     <Avatar
                         size={'large'}
                         title={userToken?.nickname}
-                        source={{
-                            uri: "https://i.imgur.com/fINuUV1.jpg"
-                        }}
+                        source={{ uri: userToken?.profileImg }}
+                        rounded
                     />
                 </ListItem.Content>
 
@@ -55,7 +54,7 @@ const Profile = ({ memberInfo }: Props) => {
 
             <View style={{ marginLeft: 20 }}>
                 <SubTitle>{userToken?.nickname}</SubTitle>
-                <Text3>자기소개</Text3>
+                <Text3>{userToken?.selfIntroduction}</Text3>
             </View>
         </WhiteView>
     )
