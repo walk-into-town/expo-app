@@ -4,31 +4,38 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Divider } from 'react-native-elements';
 import { API } from '../../api';
-import { ImgPicker, TextArea, RatedStar, HeaderRightCheckIcon } from '../../atoms';
-import { perventGoBack, useSubmit } from '../../useHook';
+import { ImgPicker, TextArea, RatedStar, HeaderRightCheckIcon, DefaultAlert } from '../../atoms';
+import { perventGoBack, useAuthContext, useSubmit } from '../../useHook';
 
 interface Props {
 
 }
 
-const WriteCampaignCommentStack = (props: Props) => {
-    const { params: { cid, cname } } = useRoute<RouteProp<EditModalNavParamList, "WriteCampaignCommentStack">>();
+const WritePinPointCommentStack = (props: Props) => {
+    const { auth: { userToken } } = useAuthContext();
+    if (userToken === undefined) return <>userToken error</>
+
+    const { params: { pid, pname } } = useRoute<RouteProp<EditModalNavParamList, "WritePinPointCommentStack">>();
     const nav = useNavigation();
 
-    const [rated, setRated] = useState(3);
     const [text, setText] = useState("");
     const [imgs, setImgs] = useState<string[]>([]);
 
     useEffect(() => {
         nav.setOptions({
-            headerTitle: `${cname} 리뷰`,
+            headerTitle: `${pname} 댓글`,
             headerRight: () => <HeaderRightCheckIcon onPress={onSubmit} />,
         })
-    }, [cname])
+    }, [pname])
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
-            // const { result, data, error, errdesc } = await API.campaignCommentCreate({ cid, rated, text, imgs })
+            const body = { id: pid, comments: { userId: userToken.id, text } };
+            const { result, data, error, errdesc } = await API.pinpointCommentCreate(body);
+            if (result === "failed" || data === undefined) {
+                DefaultAlert({ title: error, subTitle: errdesc })
+                return;
+            }
             nav.goBack();
         }
     })
@@ -36,8 +43,6 @@ const WriteCampaignCommentStack = (props: Props) => {
 
     return (
         <View style={{ marginHorizontal: 10 }}>
-            <RatedStar useRated={[rated, setRated]} />
-            <Divider style={{ marginVertical: 20 }} />
             <TextArea
                 onChangeText={setText}
                 placeholder="작성한 평가는 모두 공개되며, 다른 사용자가 볼 수 있습니다."
@@ -47,4 +52,4 @@ const WriteCampaignCommentStack = (props: Props) => {
     )
 }
 
-export default WriteCampaignCommentStack
+export default WritePinPointCommentStack

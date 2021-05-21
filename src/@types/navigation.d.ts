@@ -77,7 +77,7 @@ declare module "@types" {
     // 편집 모달 화면
     type EditModalNavParamList = {
         MyProfileEditStack: undefined,
-        WriteCampaignCommentStack: undefined
-
+        WriteCampaignCommentStack: { cid: string, cname: string }
+        WritePinPointCommentStack: { pid: string, pname: string }
     }
 }

@@ -5,10 +5,12 @@ import { BadgeButton, Row, SubTitle } from '../../atoms'
 import Comment from './Comment'
 
 interface Props {
-    commentList: CampaignComment[]
+    commentList: CampaignComment[],
+    navToWriteComment: () => void
 }
 
-const CommentList = ({ commentList }: Props) => {
+const CommentList = ({ commentList, navToWriteComment }: Props) => {
+
     return (
         <View style={{ backgroundColor: "white", marginTop: 10, paddingHorizontal: 10, minHeight: 300 }}>
             <Row style={{ marginTop: 10 }}>
@@ -16,7 +18,7 @@ const CommentList = ({ commentList }: Props) => {
                     최근 리뷰 {commentList.length}개
                 </SubTitle>
                 <View style={{ marginLeft: 'auto', marginRight: 5 }}>
-                    <BadgeButton title="리뷰 쓰기" onPress={() => { }} />
+                    <BadgeButton title="리뷰 쓰기" onPress={navToWriteComment} />
                 </View>
             </Row>
 

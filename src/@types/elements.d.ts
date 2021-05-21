@@ -18,11 +18,12 @@ declare module "@types" {
         option?: ButtonProps;
         title: string;
         onPress: () => void;
-        color?: string
+        color?: string;
+        backgroundToggle?: boolean;
     }
 
     interface ITitleBadge {
         title: string,
-        backgroundColor: '#ff3b30' | 'black'
+        backgroundColor: string
     }
 }

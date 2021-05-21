@@ -7,12 +7,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colorCode } from './color';
 
 interface props {
-    useImgs: TuseState<string>,
+    useImg: TuseState<string>,
+    useImg64: TuseState<string>,
     prevFunc?: () => void,
     afterFunc?: () => void
 }
 const SingleImgPicker = (props: props) => {
-    const [img, setImg] = props.useImgs;
+    const [img, setImg] = props.useImg;
+    const [img64, setImg64] = props.useImg64;
 
     const pickImage = async () => {
         if (props.prevFunc)
@@ -30,11 +32,15 @@ const SingleImgPicker = (props: props) => {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             quality: 1,
+            base64: true
         });
 
-        if (!result.cancelled) {
-            setImg(result.uri);
-        }
+        if (result.cancelled) return;
+
+        setImg(result.uri);
+        if (result.base64)
+            setImg64(`data:image/jpg;base64,${result.base64}`);
+        
         if (props.afterFunc)
             props.afterFunc();
     };
