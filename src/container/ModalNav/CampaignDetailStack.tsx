@@ -57,9 +57,8 @@ const CampaignDetailStack = () => {
         getCoupons();
     }, [])
     useEffect(() => {
-        const init = async () => await getCampaign();
         if (isFocused)
-            init();
+            onRefresh();
     }, [isFocused])
 
     // navigation
@@ -80,6 +79,8 @@ const CampaignDetailStack = () => {
         const init = async () => {
             setRefreshing(true);
             await getCampaign();
+            await getPinPoints();
+            await getCoupons();
             setTimeout(() => setRefreshing(false), 500);
         }
         init();

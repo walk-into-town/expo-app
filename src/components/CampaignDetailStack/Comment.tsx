@@ -1,12 +1,11 @@
-import { useActionSheet } from '@expo/react-native-action-sheet'
 import { CampaignComment, WriteCampaignComment } from '@types'
 import React from 'react'
-import { Text, StyleProp, TextStyle, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Bold, colorCode, Gray, RateStarIcon, Row } from '../../atoms'
-import { useAuthContext } from '../../useHook'
+import { Bold, colorCode, Gray, RateStarIcon } from '../../atoms'
+import { useCommentActionSheet } from '../../useHook'
 import { getPassingText } from '../../util'
+import commingSoon from '../commingSoon'
 
 interface Props {
     comment: CampaignComment
@@ -16,58 +15,19 @@ interface Props {
 
 const Comment = (props: Props) => {
     const { comment } = props;
-    const { showActionSheetWithOptions } = useActionSheet()
-    const { auth: { userToken } } = useAuthContext()
-    if (userToken === undefined) return <>userToken error</>
 
     // useCase
-    const ownerAction = () => {
-        showActionSheetWithOptions(
-            {
-                options: ["삭제", "수정", "취소"],
-                cancelButtonIndex: 2,
-                destructiveButtonIndex: 0,
-            },
-            buttonIndex => {
-                switch (buttonIndex) {
-                    case 0:
-                        return props.onDeleteComment(comment.id)
-                    case 1:
-                        return props.navToWriteComment({
-                            coid: comment.id,
-                            text: comment.text,
-                            rated: comment.rated,
-                            imgs: comment.imgs,
-                        })
-                    default:
-                        break;
-                }
-            }
-        )
-    }
-    const userAction = () => {
-        showActionSheetWithOptions(
-            {
-                options: ["신고", "취소"],
-                cancelButtonIndex: 1,
-                destructiveButtonIndex: 0,
-            },
-            buttonIndex => {
-                switch (buttonIndex) {
-                    case 0:
-                        return props.onDeleteComment(comment.id)
-                    default:
-                        break;
-                }
-            }
-        )
-    }
-    const onChevron = () => {
-        if (userToken.id === comment.userId)
-            ownerAction();
-        else
-            userAction();
-    }
+    const { onAction } = useCommentActionSheet({
+        commentUserId: comment.userId,
+        onEdit: () => props.navToWriteComment({
+            coid: comment.id,
+            text: comment.text,
+            rated: comment.rated,
+            imgs: comment.imgs
+        }),
+        onDelete: () => props.onDeleteComment(comment.id),
+        onReport: commingSoon
+    });
 
     // render
     const renderUserId = (uid: string) => (
@@ -88,7 +48,7 @@ const Comment = (props: Props) => {
             </ListItem.Content>
             <ListItem.Chevron
                 color={colorCode.sub}
-                onPress={onChevron}
+                onPress={onAction}
             />
         </ListItem>
         <Text style={{ marginLeft: 10 }}>{comment.text}</Text>

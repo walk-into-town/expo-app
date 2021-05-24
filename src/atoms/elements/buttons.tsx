@@ -33,7 +33,7 @@ export const SubmitButton = (props: SubmitButtonProps) => (
 export const BadgeButton = (props: BadgeButtonProps) => {
     const color = props.color || colorCode.primary;
     const mainColor = props.backgroundToggle ? "white" : color;
-    const backgroundColor = props.backgroundToggle ? color : "white";
+    const backgroundColor = props.backgroundToggle ? color : "transparent";
 
     return <Button
         title={props.title}

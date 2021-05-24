@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -80,6 +80,6 @@ declare module "@types" {
     type EditModalNavParamList = {
         MyProfileEditStack: undefined,
         WriteCampaignCommentStack: { caid: string, cname: string, comment: WriteCampaignComment | null }
-        WritePinPointCommentStack: { pid: string, pname: string }
+        WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
     }
 }

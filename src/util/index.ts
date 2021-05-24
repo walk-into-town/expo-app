@@ -64,6 +64,17 @@ export const getPassingText = (time: string) => {
   return toCommonDate(time);
 }
 
+export const getPassingTime = (time: string) => {
+  const min = (new Date().getTime() - new Date(time).getTime()) / 1000 / 60;
+  if (min < 60) return Math.floor(min) + "분";
+  const hour = min / 60;
+  if (hour < 24) return Math.floor(hour) + "시간";
+  const day = hour / 24;
+  if (day < 7) return Math.floor(day) + "일";
+  if (day < 365) return Math.floor(day / 7) + "주";
+  return Math.floor(day / 365) + "년";
+}
+
 // campaign rate
 export const getRatedAvg = (campaign: SearchCampaign) => {
   if (campaign.comments.length === 0) return 0;
