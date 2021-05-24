@@ -29,7 +29,7 @@ const CouponBaseInputs = (props: Props) => {
                 placeholder="쿠폰의 상세설명을 입력해주세요."
                 type='textarea' />
 
-            <SingleImgPicker useImgs={[couponImg, setCouponImg]} />
+            <SingleImgPicker useImg={[couponImg, setCouponImg]} />
 
             <InputModal
                 useText={[limit, setLimit]}

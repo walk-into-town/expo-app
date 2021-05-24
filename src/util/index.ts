@@ -1,5 +1,4 @@
 import { Coupon, MakePinPoint, SearchCampaign } from "@types";
-import { acc } from "react-native-reanimated";
 
 // type check
 export const isJsonString = (str: string) => {
@@ -51,10 +50,24 @@ export const toCommonDateTime = (time: string) => {
   return `${toCommonDate(time)} ${time.slice(11, 19)}`;
 }
 
+export const getPassingText = (time: string) => {
+  const day = (new Date().getTime() - new Date(time).getTime()) / 1000 / 3600 / 24;
+  if (day < 1) return "오늘";
+  if (day < 2) return "어제";
+  if (day < 3) return "그제";
+  if (day < 7) return "이번 주";
+  if (day < 30) return "이번 달";
+
+  const month = day / 30;
+  if (month < 13) return "올 해";
+
+  return toCommonDate(time);
+}
+
 // campaign rate
 export const getRatedAvg = (campaign: SearchCampaign) => {
   if (campaign.comments.length === 0) return 0;
 
-  const totalReted = campaign.comments.reduce((ac, v) => ac + v.rated, 0);
+  const totalReted = campaign.comments.reduce((ac, v) => ac + Number(v.rated), 0);
   return totalReted / campaign.comments.length;
 }

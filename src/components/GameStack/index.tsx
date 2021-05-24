@@ -20,10 +20,6 @@ const GameTest = (props: Props) => {
     const { data, err, loading, refetch } = getRandomCat();
     const { useLoading: { startLoading, endLoading } } = useLoadingContext();
 
-
-    useEffect(() => {
-        playSound();
-    }, [])
     // 메모리 누수 방지, 다음 차례의 effect를 실행하기 전에 이전의 렌더링에서 파생된 effect 또한 정리
     useEffect(() => {
         return sound ? stopSound : undefined;

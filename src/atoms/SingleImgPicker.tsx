@@ -26,11 +26,12 @@ const SingleImgPicker = (props: props) => {
             }
         })();
 
+        // https://github.com/expo/expo/issues/11291
+        // m1애뮬레이터에서 사진을 고르지 못하는 버그
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 1,
-            base64: true
+            quality: 1
         });
 
         if (result.cancelled) return;

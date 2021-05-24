@@ -1,5 +1,5 @@
 import { MemberInfoRes } from '@types';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native';
 import { Avatar, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';

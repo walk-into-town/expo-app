@@ -51,7 +51,7 @@ const MakeCouponStack = () => {
     }
 
     const { isSubmit, onSubmit } = useSubmit({
-        submitFunc: () => {
+        submitFunc: async() => {
             if (isBlank([name, description, limit])) {
                 DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
                 return;

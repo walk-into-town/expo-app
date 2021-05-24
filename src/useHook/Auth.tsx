@@ -98,6 +98,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         onEdit: ({ nickname, profileImg, selfIntroduction }) => {
             if (auth.userToken === undefined)
                 return;
+                
             const id = auth.userToken.id;
             dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
         }

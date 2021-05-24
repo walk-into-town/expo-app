@@ -21,8 +21,12 @@ declare module "@types" {
   }
 
   // list: 캠패인의 id로 조회, single: 해당 객체 id로 조회
-  type ApiSearchParams = {
+  type PinPointReadParams = {
     type: "list" | "single",
-    id: string
+    value: string
+  }
+  type CouponReadParams = {
+    type: "campaign" | "pinpoint" | "single",
+    value: string
   }
 }

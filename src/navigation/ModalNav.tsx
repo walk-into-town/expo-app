@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import { colorCode, HeaderLeftBackIcon } from '../atoms';
+import ImageViewer from '../components/ImageViewer';
 import CampaignDetailStack from '../container/ModalNav/CampaignDetailStack';
 import CouponDetailStack from '../container/ModalNav/CouponDetailStack';
 import MyCouponStack from '../container/ModalNav/MyCouponStack';
@@ -20,12 +21,15 @@ const ModalNav = (props: Props) => {
             headerBackTitleVisible: false,
             headerLeft: HeaderLeftBackIcon
         }}>
+            <Stack.Screen 
+                name="ImageViewer"
+                component={ImageViewer}
+            />
             {/* 마이 페이지 */}
             <Stack.Screen
                 name="MyDetailStack"
                 component={MyDetailStack}
                 options={{ headerTitle: "나의 캠페인" }}
-
             />
             <Stack.Screen
                 name="MyCouponStack"

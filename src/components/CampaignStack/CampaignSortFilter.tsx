@@ -1,5 +1,5 @@
 import { Campaign, CampaignSearchCondition, CampaignSearchType, CampaignSearchTypeText, SearchCampaign, TuseState } from '@types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { BadgeButton, Row, WhiteTitle } from '../../atoms'
 import Modal from 'react-native-modal'
@@ -10,6 +10,7 @@ interface Props {
     useType: TuseState<CampaignSearchType>
     useCondition: TuseState<CampaignSearchCondition>
     useCampaignList: TuseState<SearchCampaign[]>
+    refreshing: boolean
     reset: () => void
 }
 
@@ -41,7 +42,6 @@ const CampaignSortFilter = (props: Props) => {
         '별점 높은 순',
         '리뷰 많은 순'
     ]
-
     const filtering = (key: string) => {
         switch (key) {
             case '초기화':
@@ -66,6 +66,12 @@ const CampaignSortFilter = (props: Props) => {
 
         setFilterIdx(idx);
     }
+    useEffect(() => {
+        // 리프레쉬하면 다시 필터잉
+        if (props.refreshing === false)
+            onFilter(filterIdx);
+
+    }, [props.refreshing])
 
     return (
         <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>

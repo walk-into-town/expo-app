@@ -12,7 +12,7 @@ interface Props {
 
 const CampaignList = ({ isFetchingData, campaignList }: Props) => {
     if (isFetchingData)
-        return (<SubTitle style={{textAlign: "center"}}> 로딩중 </SubTitle>)
+        return (<SubTitle style={{textAlign: "center", marginTop: "50%"}}> 로딩중 </SubTitle>)
     
     return (
         <>

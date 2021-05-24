@@ -23,11 +23,15 @@ const MyProfileEditStack = (props: Props) => {
 
     const onSubmit = () => {
         const init = async () => {
-            // await API.debugSendImg(getImgForm());
-            const profileImg = getImgForm();
+            // const { result, data, error, errdesc } = await API.debugSendImg(getImgForm());
+            // console.log(result, data, error, errdesc);
+
             startLoading();
-            const { result, data, error, errdesc } = await API.memberModify({ id: userToken.id, nickname, selfIntroduction, profileImg });
+            const profileImg = getImgForm();
+            const modiNickname = userToken.nickname === nickname ? "" : nickname;
+            const { result, data, error, errdesc } = await API.memberModify({ uid: userToken.id, nickname: modiNickname, selfIntroduction, img: profileImg });
             endLoading();
+
             if (result === "failed" || data === undefined) {
                 DefaultAlert({ title: error, subTitle: errdesc });
                 return;
@@ -35,6 +39,7 @@ const MyProfileEditStack = (props: Props) => {
             console.log("[프로필 수정]", data);
             const newUri = data.profileImg || imgUri;
             onEdit({ nickname, profileImg: newUri, selfIntroduction });
+            console.log(nickname, newUri, selfIntroduction)
             nav.goBack();
         }
         init();
@@ -44,7 +49,7 @@ const MyProfileEditStack = (props: Props) => {
         // https://stackoverflow.com/questions/42521679/how-can-i-upload-a-photo-with-expo
         // https://github.com/g6ling/React-Native-Tips/issues/1
         const formData = new FormData();
-        if (imgUri !== userToken.profileImg) {
+        if (imgUri === userToken.profileImg) {
             formData.append('img', "");
             return formData;
         }
@@ -56,6 +61,7 @@ const MyProfileEditStack = (props: Props) => {
             uri: imgUri,
             name: fileName,
             type: `image/${fileType}`
+            // type: `image/jpeg`
         }))
         formData.append('img', file);
         return formData;

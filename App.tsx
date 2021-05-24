@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { fontPath } from './src/atoms/paths';
 import { AuthContextProvider } from './src/useHook/Auth';
 import { LoadingContextProvider } from './src/useHook/Loading';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 
 const App = () => {
@@ -14,11 +15,13 @@ const App = () => {
 
   return !loaded ? null : (
     <SafeAreaProvider>
-      <LoadingContextProvider>
-        <AuthContextProvider>
-          <Navigator />
-        </AuthContextProvider>
-      </LoadingContextProvider>
+      <ActionSheetProvider>
+        <LoadingContextProvider>
+          <AuthContextProvider>
+            <Navigator />
+          </AuthContextProvider>
+        </LoadingContextProvider>
+      </ActionSheetProvider>
     </SafeAreaProvider>
   );
 }
