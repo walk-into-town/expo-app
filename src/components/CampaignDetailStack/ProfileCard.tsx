@@ -2,7 +2,8 @@ import { SearchCampaign } from '@types'
 import React from 'react'
 import { Text } from 'react-native'
 import { Card } from 'react-native-elements'
-import { ClearButton, EvilIcons, Row, Text3, Title } from '../../atoms'
+import { color } from 'react-native-elements/dist/helpers'
+import { ClearButton, colorCode, EvilIcons, Row, Text3, Title } from '../../atoms'
 import { toCommonDate } from '../../util'
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const ProfileCard = ({ campaign, onParticipate }: Props) => {
-
+    
 
     return (
         <Card containerStyle={{ marginBottom: 20, borderRadius: 5 }}>
@@ -30,7 +31,7 @@ const ProfileCard = ({ campaign, onParticipate }: Props) => {
             </Row>
             <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaign.description}</Text>
 
-            <ClearButton title="캠페인 참여하기" onPress={() => onParticipate()} />
+            <ClearButton title="탈퇴하기" onPress={() => onParticipate()} color={colorCode.light} />
         </Card>
     )
 }

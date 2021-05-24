@@ -54,6 +54,7 @@ const MyDetailStack = (props: Props) => {
     return (
         <View>
             <ButtonTabs
+                isFullHigh
                 selectedIndex={value}
                 onPress={setValue}
                 buttons={["제작한 캠페인", "참여중인 캠페인", "클리어한 캠페인"]}

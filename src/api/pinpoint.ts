@@ -3,50 +3,50 @@ import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 
 // 핀포인트 댓글
-type pCommentCreateFetch = (data: {
-    id: string,
+type pCommentCreateFetch = (body: {
+    pid: string,
     comments: {
         userId: string,
         text: string
     },
-    img?: string
+    imgs: string[]
 }) => BaseFetchRes<PinPointComment>
-export const pinpointCommentCreate: pCommentCreateFetch = (data) => {
-    return baseFetch(`${ip}/campaign/evaluate/pinpoint/comment`, "POST", data);
+export const pinpointCommentCreate: pCommentCreateFetch = (body) => {
+    return baseFetch(`${ip}/pinpoint/comment`, "POST", {
+        body,
+        isForm: body.imgs.length > 0
+    });
 }
 
-type pCommentReadFetch = (pid: string) => BaseFetchRes<PinPointComment[]>
-export const pinpointCommentRead: pCommentReadFetch = (pid) => {
-    return baseFetch(`${ip}/campaign/evaluate/pinpoint/comment?id=${pid}`, "GET");
+export const pinpointCommentRead = (pid: string): BaseFetchRes<PinPointComment[]> => {
+    return baseFetch(`${ip}/pinpoint/comment?pid=${pid}`, "GET");
 }
 
-type pCommentUpdateFetch = (data: {
-    cid: string,
+type pCommentUpdateFetch = (body: {
+    coid: string,
     uid: string,
     pid: string,
     text: string
 }) => BaseFetchRes<PinPointComment>
-export const pinpointCommentUpdate: pCommentUpdateFetch = (data) => {
-    return baseFetch(`${ip}/campaign/evaluate/pinpoint/comment`, "PUT", data);
+export const pinpointCommentUpdate: pCommentUpdateFetch = (body) => {
+    return baseFetch(`${ip}/pinpoint/comment`, "PUT", { body });
 }
 
-
-type pCommentDeleteFetch = (data: {
-    cid: string,
+type pCommentDeleteFetch = (body: {
+    coid: string,
     uid: string,
     pid: string
 }) => BaseFetchRes<PinPointComment>
-export const pinpointCommentDelete: pCommentDeleteFetch = (data) => {
-    return baseFetch(`${ip}/campaign/evaluate/pinpoint/comment`, "DELETE", data);
+export const pinpointCommentDelete: pCommentDeleteFetch = (body) => {
+    return baseFetch(`${ip}/pinpoint/comment`, "DELETE", { body });
 }
 
-
-type pCommentRateFetch = (data: {
-    cid: string,
+type pCommentRateFetch = (body: {
+    coid: string,
     uid: string,
     pid: string,
     like: boolean
 }) => BaseFetchRes<PinPointComment>
-export const pinpointCommentRate: pCommentRateFetch = (data) => {
-    return baseFetch(`${ip}/campaign/evaluate/pinpoint/comment/rate`, "PUT", data);
+export const pinpointCommentRate: pCommentRateFetch = (body) => {
+    return baseFetch(`${ip}/pinpoint/comment/rate`, "PUT", { body });
 }

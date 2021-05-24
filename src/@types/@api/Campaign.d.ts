@@ -22,13 +22,22 @@ declare module "@types" {
         text: string,
         rated: number,
         imgs: string[],
-        updateTime?: string
+        updateTime: string
     }
     type MakeCampaignComment = {
-        cid: string,
+        caid: string,
+        comments: {
+            userId: string,
+            text: string
+        }
+        imgs: string[],
         rated: number,
+    }
+    type WriteCampaignComment = {
+        coid: string,
         text: string,
         imgs: string[],
+        rated: number,
     }
 
     // 캠페인 검색

@@ -64,7 +64,7 @@ const MakePinPointStack = () => {
         }
     }
     const { isSubmit, onSubmit } = useSubmit({
-        submitFunc: () => {
+        submitFunc: async () => {
             if (latitude + longitude === 0) {
                 DefaultAlert({ title: "위치 설정 오류", subTitle: "해당 핀포인트로 모험을 떠날 수 있게 위치를 설정해주세요!" })
                 return;

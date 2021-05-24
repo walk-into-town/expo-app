@@ -30,8 +30,14 @@ const WritePinPointCommentStack = (props: Props) => {
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
-            const body = { id: pid, comments: { userId: userToken.id, text } };
-            const { result, data, error, errdesc } = await API.pinpointCommentCreate(body);
+            const { result, data, error, errdesc } = await API.pinpointCommentCreate({
+                pid,
+                comments: {
+                    userId: userToken.id,
+                    text
+                },
+                imgs
+            });
             if (result === "failed" || data === undefined) {
                 DefaultAlert({ title: error, subTitle: errdesc })
                 return;
@@ -44,6 +50,7 @@ const WritePinPointCommentStack = (props: Props) => {
     return (
         <View style={{ marginHorizontal: 10 }}>
             <TextArea
+                value={text}
                 onChangeText={setText}
                 placeholder="작성한 평가는 모두 공개되며, 다른 사용자가 볼 수 있습니다."
             />

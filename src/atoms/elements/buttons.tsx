@@ -13,10 +13,10 @@ export const OutLineButton = (props: ButtonProps) => (
         />
     </View>
 )
-export const ClearButton = (props: ButtonProps) => (
+export const ClearButton = (props: ButtonProps & { color?: string }) => (
     <Button
         type="clear"
-        titleStyle={{ fontFamily: "SCDream8" }}
+        titleStyle={{ fontFamily: "SCDream8", color: props.color || colorCode.primary }}
         {...props}
     />
 )
@@ -49,10 +49,11 @@ type ButtonTabProps = {
     selectedIndex: number;
     onPress: (v: number) => void;
     buttons: string[],
-    viewList: JSX.Element[]
+    viewList: JSX.Element[],
+    isFullHigh?: boolean
 }
 export const ButtonTabs = (props: ButtonTabProps) => (
-    <View style={{ backgroundColor: "white" }}>
+    <View style={{ backgroundColor: "white", height: props.isFullHigh ? "100%" : undefined }}>
         <ButtonGroup
             selectedIndex={props.selectedIndex}
             onPress={props.onPress}

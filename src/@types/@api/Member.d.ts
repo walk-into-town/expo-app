@@ -9,11 +9,11 @@ declare module "@types" {
     }
 
     type ModifyMember = {
-        id: string,
-        pw: string,
-        cpw: string,      /*new password*/
+        uid: string,
+        // pw: string,
+        // cpw: string,      /*new password*/
         nickname: string,
-        profileImg: string,
+        img: FormData,
         selfIntroduction: string
     }
 

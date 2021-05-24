@@ -29,6 +29,10 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 return {
                     userToken: undefined,
                 };
+            case "EDIT":
+                return {
+                    userToken: action.userToken
+                }
         }
     }
     const [auth, dispatch] = useReducer(reduce, {
@@ -90,6 +94,13 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             console.log("[로그아웃]", session);
 
             endLoading();
+        },
+        onEdit: ({ nickname, profileImg, selfIntroduction }) => {
+            if (auth.userToken === undefined)
+                return;
+                
+            const id = auth.userToken.id;
+            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
         }
     }), []);
 

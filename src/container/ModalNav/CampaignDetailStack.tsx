@@ -1,45 +1,66 @@
-import { RouteProp, useRoute } from '@react-navigation/core';
-import { CampaignComment, Coupon, ModalNavParamList, PinPoint } from '@types';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core';
+import { CampaignComment, Coupon, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, WriteCampaignComment } from '@types';
 import React, { useEffect, useState } from 'react'
-import { ScrollView } from 'react-native-gesture-handler';
 import { API } from '../../api';
-import { ButtonTabs, Container, DefaultAlert, SelectionAlert } from '../../atoms';
-import CommentList from '../../components/CampaignDetailStack/CommentList';
-import CouponListTab from '../../components/CampaignDetailStack/CouponListTab';
-import PinPointListTab from '../../components/CampaignDetailStack/PinPointListTab';
-import ProfileCard from '../../components/CampaignDetailStack/ProfileCard';
+import { RefreshControl } from 'react-native';
+import { useAuthContext, useLoadingContext, modalNavigation, mainNavigation } from '../../useHook';
+
+import { ScrollView } from 'react-native-gesture-handler';
+import { ButtonTabs, ConfirmAlert, Container, DefaultAlert, SelectionAlert } from '../../atoms';
+import { ProfileCard, CommentList, CouponListTab, PinPointListTab } from '../../components/CampaignDetailStack';
 import Footer from '../../components/Footer';
-import { useAuthContext, useLoadingContext, modalNavigation, mainNavigation, editModalNavigation } from '../../useHook';
 
 const CampaignDetailStack = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext()
     const { auth: { userToken } } = useAuthContext()
+    const isFocused = useIsFocused()
     if (userToken === undefined) return <></>;
-    const { params: { campaign } } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
+    const { params } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
 
     // state
+    const [campaign, setCampaign] = useState<SearchCampaign>(params.campaign);
     const [value, setValue] = useState(0);
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState<Coupon[]>([]);
+    const [refreshing, setRefreshing] = useState(false);
+
+    // api
+    const checkIsPlaying = async () => {
+        const { result, data, error, errdesc  } = await API.campaignIsPlaying({ caid: campaign.id, uid: userToken.id })
+        
+        return result === "success";
+    }
+    const getPinPoints = async () => {
+        const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', value: campaign.id });
+        if (result === "failed" || data === undefined)
+            return DefaultAlert({ title: "핀포인트 가져오기 실패", subTitle: `${error} ${errdesc}` })
+
+        setPinPointList(data)
+    }
+    const getCoupons = async () => {
+        const { result, data, error, errdesc } = await API.couponRead({ type: 'campaign', value: campaign.id });
+        if (result === "failed" || data === undefined)
+            return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
+
+        setCouponList(data)
+    }
+    const getCampaign = async () => {
+        const { result, data, error, errdesc } = await API.campaignSearch({ type: 'id', value: campaign.id, condition: "exact" })
+        if (result === "failed" || data === undefined) 
+            return DefaultAlert({ title: error, subTitle: errdesc });
+
+        setCampaign(data[0])
+    }
 
     useEffect(() => {
-        const getPinPoints = async () => {
-            const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', id: campaign.id });
-            if (result === "failed" || data === undefined)
-                return DefaultAlert({ title: "핀포인트 가져오기 실패", subTitle: `${error} ${errdesc}` })
-
-            setPinPointList(data)
-        }
         getPinPoints();
-        const getCoupons = async () => {
-            const { result, data, error, errdesc } = await API.couponRead({ type: 'list', id: campaign.id });
-            if (result === "failed" || data === undefined)
-                return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
-
-            setCouponList(data)
-        }
         getCoupons();
     }, [])
+    useEffect(() => {
+        const init = async () => await getCampaign();
+        if (isFocused)
+            init();
+    }, [isFocused])
 
     // navigation
     const modalNav = modalNavigation();
@@ -50,11 +71,20 @@ const CampaignDetailStack = () => {
     const navToCouponDetail = (coupon: Coupon) => {
         modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name })
     }
-    const navToWriteComment = () => {
-        mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { cid: campaign.id, cname: campaign.name } })
+    const navToWriteComment = (comment: WriteCampaignComment | null) => {
+        mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
     }
 
     // usecase
+    const onRefresh = () => {
+        const init = async () => {
+            setRefreshing(true);
+            await getCampaign();
+            setTimeout(() => setRefreshing(false), 500);
+        }
+        init();
+    }
+
     const onParticipate = async () => {
         startLoading();
         const { result, data, error, errdesc } = await API.campaignParticiapte({ cid: campaign.id, uid: userToken.id })
@@ -69,20 +99,23 @@ const CampaignDetailStack = () => {
         })
     }
 
-    const tmpComment: CampaignComment = {
-        id: "testtest",
-        imgs: [],
-        rated: 4,
-        text: "아주 test한 캠페인입니다 ㅎㅎ",
-        updateTime: new Date().toISOString(),
-        userId: "testtest",
-        nickname: "프로테스터",
-        profileImg: ""
+    const onDeleteComment = (coid: string) => {
+        const init = async () => {
+            console.log(coid)
+            // 리뷰를 찾을 수 없습니다 에러..
+            const { result, data, error, errdesc } = await API.campaignCommentDelete({ caid: campaign.id, coid, uid: userToken.id });
+            if (result === 'failed' || data === undefined) {
+                DefaultAlert({ title: error, subTitle: errdesc });
+                return;
+            }
+            onRefresh();
+        }
+        ConfirmAlert({ title: "정말 삭제하시겠습니까?", onConfirm: () => init() })
     }
 
     return (
         <Container>
-            <ScrollView>
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <ProfileCard
                     campaign={campaign}
                     onParticipate={onParticipate}
@@ -99,8 +132,9 @@ const CampaignDetailStack = () => {
                 />
 
                 <CommentList
-                    commentList={[...campaign.comments, tmpComment]}
+                    commentList={[...campaign.comments]}
                     navToWriteComment={navToWriteComment}
+                    onDeleteComment={onDeleteComment}
                 />
 
                 <Footer />

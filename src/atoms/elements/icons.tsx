@@ -8,9 +8,20 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colorCode } from '../color';
 export { FontAwesome, EvilIcons, Ionicons, Feather };
 
-export const HeaderLeftCloseIcon = ({ onPress }: StackHeaderLeftButtonProps) => (
-    <TouchableOpacity onPress={onPress} >
-        <EvilIcons name="close-o" size={25} color={colorCode.primary} style={{ marginLeft: 4 }} />
+type HeaderIconProps = {
+    onPress?: () => void,
+    toggle?: boolean, // true이면 아이콘 아웃라인이 없다
+    color?: string,
+    size?: number
+}
+export const HeaderLeftCloseIcon = (props: HeaderIconProps) => (
+    <TouchableOpacity onPress={props.onPress} >
+        <EvilIcons
+            name={props.toggle ? "close" : "close-o"}
+            size={props.size || 25}
+            color={props.color || colorCode.primary}
+            style={{ marginLeft: 4 }}
+        />
     </TouchableOpacity >
 )
 
