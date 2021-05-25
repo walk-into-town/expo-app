@@ -5,18 +5,18 @@ import { LightSearchBar } from '../../atoms'
 
 interface Props {
     useSearchText: TuseState<string>
+    getSearchCampaign: () => void
 }
 
 const CampaignSearchBar = (props: Props) => {
     const [text, setText] = props.useSearchText;
-    const [value, setValue] = useState(text);
 
     return (
         <View style={{ width: "100%" }}>
             <LightSearchBar
-                value={value}
-                onSubmitEditing={() => setText(value)}
-                onChangeText={(text: string) => setValue(text)}
+                value={text}
+                onSubmitEditing={() => props.getSearchCampaign()}
+                onChangeText={(text: string) => setText(text)}
                 showLoading={false}
             />
         </View>

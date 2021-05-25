@@ -7,20 +7,20 @@ import CampaignCard from './CampaignCard'
 
 interface Props {
     isFetchingData: boolean,
-    campaginList: SearchCampaign[]
+    campaignList: SearchCampaign[]
 }
 
-const CampaignList = ({ isFetchingData, campaginList }: Props) => {
+const CampaignList = ({ isFetchingData, campaignList }: Props) => {
     if (isFetchingData)
-        return (<SubTitle style={{textAlign: "center"}}> 로딩중 </SubTitle>)
+        return (<SubTitle style={{textAlign: "center", marginTop: "50%"}}> 로딩중 </SubTitle>)
     
     return (
         <>
             {
-                campaginList.map((campagin, idx) =>
+                campaignList.map((campaign, idx) =>
                     <CampaignCard
                         key={idx}
-                        campagin={campagin}
+                        campaign={campaign}
                     />
                 )
             }

@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -57,6 +57,8 @@ declare module "@types" {
 
     // 모달 화면
     type ModalNavParamList = {
+        ImageViewer: { images: string[] }
+
         MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
 
@@ -79,8 +81,8 @@ declare module "@types" {
     // 편집 모달 화면
     type EditModalNavParamList = {
         MyProfileEditStack: undefined,
-        WriteCampaignCommentStack: undefined
-
+        WriteCampaignCommentStack: { caid: string, cname: string, comment: WriteCampaignComment | null }
+        WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
     }
 
     // type GamePlayStackParamList = {

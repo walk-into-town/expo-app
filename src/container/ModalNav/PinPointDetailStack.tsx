@@ -1,77 +1,87 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
-import { ModalNavParamList } from '@types'
-import React, { useEffect } from 'react'
-import { View, Image } from 'react-native'
-import { Card, Divider, ListItem } from 'react-native-elements'
+import { ModalNavParamList, WritePinPointComment } from '@types'
+import React, { useEffect, useState } from 'react'
+
 import { ScrollView } from 'react-native-gesture-handler'
-import { BadgeButton, PaddingBox, Row, SubTitle, Text3, Title } from '../../atoms'
+import PinPointCommentBox from '../../components/PinPointDetailStack/PinPointCommentBox'
+import PinPointInfo from '../../components/PinPointDetailStack/PinPointInfo'
 import Footer from '../../components/Footer'
-import { toCommonDateTime } from '../../util'
+import { mainNavigation, useAuthContext } from '../../useHook'
+import { RefreshControl } from 'react-native'
+import { API } from '../../api'
+import { DefaultAlert } from '../../atoms'
 
-interface Props {
 
-}
 
-const PinPointDetailStack = (props: Props) => {
-    const { params: { pinpoint, campaignName } } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>();
+const PinPointDetailStack = () => {
+    const { auth: { userToken } } = useAuthContext();
+    if (userToken === undefined) return <>userToken error</>
+    const { params } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>();
+    const [pinpoint, setPinpoint] = useState(params.pinpoint)
+    const [comments, setComments] = useState(params.pinpoint.comments)
+    const [refreshing, setRefreshing] = useState(false)
 
-    const nav = useNavigation();
+    // nav
+    const mainNav = mainNavigation();
     useEffect(() => {
-        nav.setOptions({ headerTitle: `${campaignName}의 핀포인트` })
-    }, [campaignName])
+        mainNav.setOptions({ headerTitle: `${params.campaignName}의 핀포인트` })
+    }, [params.campaignName])
+    
+    const navToWriteComment = (comment: WritePinPointComment | null) => {
+        mainNav.navigate("EditModalNav", {
+            screen: "WritePinPointCommentStack",
+            params: { pid: pinpoint.id, pname: pinpoint.name, comment }
+        })
+    }
+
+    // api
+    const getComment = async () => {
+        const { result, data, error, errdesc } = await API.pinpointCommentRead(pinpoint.id)
+        if (result === 'failed' || data === undefined)
+            return DefaultAlert({ title: error, subTitle: errdesc })
+
+        setComments(data)
+    }
+    const deleteComment = (coid: string) => {
+        const init = async () => {
+            const { result, data, error, errdesc } = await API.pinpointCommentDelete({ pid: pinpoint.id, coid, uid: userToken.id })
+            if (result === 'failed' || data === undefined)
+                return DefaultAlert({ title: error, subTitle: errdesc })
+
+            onRefresh();
+        }
+        init();
+    }
+
+    // usecase
+    const onRefresh = () => {
+        const init = async () => {
+            setRefreshing(true)
+            await getComment()
+            setTimeout(() => setRefreshing(false), 500)
+        }
+        init();
+    }
+    const onRate = (coid: string, like: boolean) => {
+        const init = async () => {
+            const { result, data, error, errdesc } = await API.pinpointCommentRate({ coid, like, pid: pinpoint.id, uid: userToken.id })
+            if (result === 'failed' || data === undefined)
+                return DefaultAlert({ title: error, subTitle: errdesc })
+
+            onRefresh();
+        }
+        init();
+    }
 
     return (
-        <ScrollView>
-            <View style={{ height: 200 }}>
-                <Image style={{ position: "absolute", width: "100%", height: 250 }} source={{ uri: "https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg" }} />
-            </View>
-            <Card containerStyle={{ borderRadius: 4, marginBottom: 20 }}>
-                <Title>{pinpoint.name}</Title>
-                <Text3 style={{ textAlign: "center" }}>{pinpoint.description}</Text3>
-            </Card>
-
-            <PaddingBox>
-                <SubTitle>위치</SubTitle>
-                <Text3>{pinpoint.longitude} {pinpoint.latitude}</Text3>
-            </PaddingBox>
-            <Divider />
-
-            <PaddingBox>
-                <SubTitle>퀴즈 정보</SubTitle>
-                <Text3>{pinpoint.quiz.type}</Text3>
-                <Text3>{pinpoint.quiz.text}</Text3>
-            </PaddingBox>
-            <Divider />
-
-            <PaddingBox>
-                <SubTitle>지급 쿠폰</SubTitle>
-                <Text3>{pinpoint.coupons}</Text3>
-            </PaddingBox>
-            <Divider />
-
-            <PaddingBox>
-                <SubTitle>수정 시간</SubTitle>
-                <Text3>{toCommonDateTime(pinpoint.updateTime)}</Text3>
-            </PaddingBox>
-            <Divider />
-
-            <PaddingBox style={{minHeight: 200}}>
-                <Row>
-                    <SubTitle>댓글 {pinpoint.comments?.length}</SubTitle>
-                    <View style={{ marginLeft: 'auto' }}>
-                        <BadgeButton title="댓글 달기" onPress={() => { }} />
-                    </View>
-                </Row>
-                {
-                    pinpoint.comments?.map((v, idx) => {
-                        <ListItem key={idx}>
-                            <Text3>{v.userId}</Text3>
-                            <Text3>{v.text}</Text3>
-                        </ListItem>
-                    })
-                }
-            </PaddingBox>
-
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            <PinPointInfo pinpoint={pinpoint} />
+            <PinPointCommentBox
+                comments={comments}
+                navToWriteComment={navToWriteComment}
+                deleteComment={deleteComment}
+                onRate={onRate}
+            />
             <Footer />
         </ScrollView>
     )

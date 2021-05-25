@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 interface Props {
-    submitFunc: () => void
+    submitFunc: () => Promise<void>
 }
 type UseSubmit = (props: Props) => {
     isSubmit: boolean,
@@ -12,10 +12,13 @@ const useSubmit: UseSubmit = (props) => {
     // 더 좋은 방법이 있는지 고민 좀 해봐야겠다..
     const [isSubmit, setIsSubmit] = useState(false);
     useEffect(() => {
-        if (isSubmit) {
-            props.submitFunc();
-            setIsSubmit(false);
+        const init = async () => {
+            if (isSubmit) {
+                await props.submitFunc();
+                setIsSubmit(false);
+            }
         }
+        init();
     }, [isSubmit])
 
     const onSubmit = () => setIsSubmit(true);

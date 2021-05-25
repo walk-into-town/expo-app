@@ -1,54 +1,55 @@
 import { ITitleBadge, SearchCampaign } from '@types';
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements';
-import { Row, TitleBadge } from '../../atoms';
+import { colorCode, RateStarIcon, Row, TitleBadge } from '../../atoms';
 import { mainNavigation } from '../../useHook';
-import { getDateAfter } from '../../util';
+import { getDateAfter, getRatedAvg } from '../../util';
 
 interface Props {
-    campagin: SearchCampaign
+    campaign: SearchCampaign
 }
 
-const CampaignCard = ({ campagin }: Props) => {
+const CampaignCard = ({ campaign }: Props) => {
     const mainNav = mainNavigation();
-
-    const uri = campagin.imgs.length ? campagin.imgs[0] : "https://pgnqdrjultom1827145.cdn.ntruss.com/img/1d/07/1d0703352c93061e01f2df12715bc04b7fa152f6d509113c1d6b67794219c595_v1.jpg";
-
-    const badgeList: ITitleBadge[] = [];
-    if (new Date(campagin.updateTime) < getDateAfter(30))
-        badgeList.push({ title: "신규", backgroundColor: "#ff3b30" });
-
-    const getCommentsNum = (): string => {
-        const len = campagin.comments ? campagin.comments.length : 0
-        return len > 100 ? `(100+)` : `(${len})`
-    }
-
-    const getLineTrd = (): string => {
-        var res = `핀포인트 ${campagin.pinpoints.length}개`;
-        if (campagin.coupons.length)
-            res += `, 지급 쿠폰 ${campagin.coupons.length}개`;
-        return res;
-    }
 
     const navToCampaignDetail = () => {
         mainNav.navigate("ModalNav", {
             screen: 'CampaignDetailStack',
-            params: { campaign: campagin }
+            params: { campaign: campaign }
         })
+    }
+
+    // render
+    const uri = campaign.imgs.length ? campaign.imgs[0] : "https://ppid.blorakab.go.id/packages/tugumuda/portal/img/default-square.jpg";
+
+    const badgeList: ITitleBadge[] = [];
+    if (new Date(campaign.updateTime) < getDateAfter(30))
+        badgeList.push({ title: "신규", backgroundColor: colorCode.primary });
+
+    const getCommentsNum = (): string => {
+        const len = campaign.comments ? campaign.comments.length : 0
+        return len > 100 ? `(100+)` : `(${len})`
+    }
+
+    const getLineTrd = (): string => {
+        var res = `핀포인트 ${campaign.pinpoints.length}개`;
+        if (campaign.coupons.length)
+            res += `, 지급 쿠폰 ${campaign.coupons.length}개`;
+        return res;
     }
 
     return (
         <ListItem
             bottomDivider
             onPress={navToCampaignDetail}
-            onLongPress={() => console.log("캠페인 ID: ", campagin.id)}
+            onLongPress={() => console.log("캠페인 ID: ", campaign.id)}
         >
-            <Avatar source={{ uri }} size={'large'} title='이미지 로딩중' />
+            <Avatar source={{ uri }} size={'large'} title='이미지 로딩중' avatarStyle={{ borderRadius: 10 }} />
 
             <ListItem.Content>
                 <Row style={{ marginVertical: 2 }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{campagin.name}</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{campaign.name}</Text>
                     {badgeList.map((v, i) => <TitleBadge
                         key={i}
                         title={v.title}
@@ -56,9 +57,15 @@ const CampaignCard = ({ campagin }: Props) => {
                     />)}
                 </Row>
 
-                <ListItem.Subtitle style={{ fontSize: 13, marginVertical: 2 }}>
-                    ✨ <Text style={{ fontWeight: 'bold' }}>4.8</Text> {getCommentsNum()}
-                </ListItem.Subtitle>
+                <Row style={{ marginVertical: 2 }}>
+                    <RateStarIcon toggle />
+                    <Text style={{ fontSize: 13, fontWeight: 'bold', marginLeft: 4 }}>
+                        {getRatedAvg(campaign).toFixed(1)}
+                    </Text>
+                    <Text style={{ fontSize: 13 }}>
+                        {getCommentsNum()}
+                    </Text>
+                </Row>
 
                 <ListItem.Subtitle style={{ fontSize: 13, marginVertical: 2 }}>
                     {getLineTrd()}

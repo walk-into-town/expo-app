@@ -1,35 +1,51 @@
-import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, RegisterMember } from "@types"
+import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PlayingCampaign, RegisterMember } from "@types"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
 
 // 로그인
-type MemberLoginFetch = (data: { id: string, pw: string }) => BaseFetchRes<MemberLoginRes>
-export const memberLogin: MemberLoginFetch = async (data) => {
-    return baseFetch(`${ip}/member/login`, "POST", data);
+type MemberLoginFetch = (body: { id: string, pw: string }) => BaseFetchRes<MemberLoginRes>
+export const memberLogin: MemberLoginFetch = async (body) => {
+    return baseFetch(`${ip}/member/login`, "POST", { body });
 }
 
-type MemberLogoutFetch = (data: { id: string }) => BaseFetchRes<string>
-export const memberLogout: MemberLogoutFetch = (data) => {
-    return baseFetch(`${ip}/member/logout`, "DELETE", data);
+type MemberLogoutFetch = (body: { id: string }) => BaseFetchRes<string>
+export const memberLogout: MemberLogoutFetch = (body) => {
+    return baseFetch(`${ip}/member/logout`, "DELETE", { body });
 }
 
-type MemberRegisterFetch = (data: RegisterMember) => BaseFetchRes<string>
-export const memberRegister: MemberRegisterFetch = async (data) => {
-    return baseFetch(`${ip}/member`, "POST", data);
+type MemberRegisterFetch = (body: RegisterMember) => BaseFetchRes<string>
+export const memberRegister: MemberRegisterFetch = async (body) => {
+    return baseFetch(`${ip}/member`, "POST", { body });
 }
 
 // 마이페이지 
-type MemberInfoReadFetch = (data: { id: string }) => BaseFetchRes<MemberInfoRes>
-export const memberInfoRead: MemberInfoReadFetch = (data) => {
-    return baseFetch(`${ip}/member?id=${data.id}`, "GET");
+type MemberInfoReadFetch = (params: { id: string }) => BaseFetchRes<MemberInfoRes>
+export const memberInfoRead: MemberInfoReadFetch = (params) => {
+    return baseFetch(`${ip}/member?id=${params.id}`, "GET");
 }
 
-type MemberModifyFetch = (data: ModifyMember) => BaseFetchRes<string>
-export const memberModify: MemberModifyFetch = (data) => {
-    return baseFetch(`${ip}/member`, "PUT", data);
+type MemberModifyFetch = (body: ModifyMember) => BaseFetchRes<{
+    profileImg: string,
+}>
+export const memberModify: MemberModifyFetch = (body) => {
+    if(body.img)
+        console.log('isForm true')
+    console.log(body.img)
+    return baseFetch(`${ip}/member`, "PUT", { body, isForm: true });
 }
 
-type MemberWithdrawFetch = (data: { id: string }) => BaseFetchRes<string>
-export const memberWithdraw: MemberWithdrawFetch = (data) => {
-    return baseFetch(`${ip}/member`, "DELETE", data);
+type MemberWithdrawFetch = (body: { id: string }) => BaseFetchRes<string>
+export const memberWithdraw: MemberWithdrawFetch = (body) => {
+    return baseFetch(`${ip}/member`, "DELETE", { body });
+}
+
+// 나의 캠페인 정보
+type MemberPlayingcampaignFetch = (userId: string) => BaseFetchRes<PlayingCampaign[]>
+export const memberPlayingCampaign: MemberPlayingcampaignFetch = (userId) => {
+    return baseFetch(`${ip}/member/playing?id=${userId}`, "GET");
+}
+
+type MemberMycampaignFetch = (userId: string) => BaseFetchRes<MyCampaign[]>
+export const memberMyCampaign: MemberMycampaignFetch = (userId) => {
+    return baseFetch(`${ip}/member/mycampaign?id=${userId}`, "GET");
 }

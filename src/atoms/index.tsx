@@ -9,6 +9,8 @@ export * from "./elements/alerts"
 export * from "./paths"
 export * from "./color"
 
+export * from './Carousel'
+
 import ImgPicker from './ImgPicker';
 import InputModal from './InputModal';
 import DateInput from './DateInput';

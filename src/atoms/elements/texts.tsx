@@ -20,6 +20,17 @@ export const Text3 = styled.Text`
     font-family: "SCDream3";
     font-size: 12px;
 `
+export const Text1 = styled.Text`
+    font-family: "SCDream1";
+    font-size: 12px;
+`
+export const Bold = styled.Text`
+    font-weight: bold;
+`
+export const Gray = styled.Text`
+    color: gray;
+    font-size: 12px;
+`
 
 export const WhiteTitle = styled.Text`
     font-family: "SCDream9";

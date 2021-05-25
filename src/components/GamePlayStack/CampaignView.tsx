@@ -28,12 +28,8 @@ const dummy: PinPoint = {
     choices: [],
     answer: "ㅁㅁㅁㅁㅁㅁ"
   },
-  comments: [{
-    id: "",
-    userId: "",
-    text: "",
-    imgs: []
-  }]
+  comments: [],
+  coupons: []
 
 }
 

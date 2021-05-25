@@ -1,10 +1,9 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 import { ModalNavParamList } from '@types';
 import React, { useEffect } from 'react'
-import { View, Text, Image } from 'react-native'
 import { Card, Divider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import { PaddingBox, SubTitle, Text3, Title } from '../../atoms';
+import { PaddingBox, SubTitle, Text3, Title, AbsoluteCousel } from '../../atoms';
 import Footer from '../../components/Footer';
 import { toCommonDate } from '../../util';
 
@@ -22,11 +21,10 @@ const CouponDetailStack = (props: Props) => {
 
     return (
         <ScrollView>
-            <View style={{ height: 200 }}>
-                <Image style={{ position: "absolute", width: "100%", height: 250 }} source={{ uri: "https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg" }} />
-            </View>
+            <AbsoluteCousel images={ ["https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg", "https://i.ytimg.com/vi/IdMIqWnRpLg/maxresdefault.jpg"]} />
+          
             <Card containerStyle={{ borderRadius: 4 }}>
-                <SubTitle style={{ textAlign: "center" }}>{coupon.name}</SubTitle>
+                <Title style={{ textAlign: "center" }}>{coupon.name}</Title>
                 <Text3 style={{ textAlign: "center" }}>{coupon.description}</Text3>
             </Card>
 
@@ -42,14 +40,14 @@ const CouponDetailStack = (props: Props) => {
             </PaddingBox>
             <Divider />
 
-            <PaddingBox style={{alignItems: 'center'}}>
+            <PaddingBox style={{ alignItems: 'center' }}>
                 <SubTitle>{coupon.issued} / {coupon.limit}</SubTitle>
                 <Text3>지급된 쿠폰 / 총 지급 쿠폰</Text3>
             </PaddingBox>
             <Divider />
 
             <Footer />
-        </ScrollView>
+        </ScrollView >
     )
 }
 

@@ -21,10 +21,10 @@ export const BtsWrapper = styled.View`
     align-items: center;
     justify-content: center;
 `
+
 export const ScrollWrapper = styled.ScrollView`
     margin: 0 10px;
 `
-
 export const Box = styled.View`
     margin: 10px 0;
 `
