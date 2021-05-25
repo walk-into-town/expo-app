@@ -57,6 +57,7 @@ export const WhiteText = styled.Text`
     color: white;
 `
 
+
 export const TitleBadge = (props: ITitleBadge) => {
     return (
         <Text style={{

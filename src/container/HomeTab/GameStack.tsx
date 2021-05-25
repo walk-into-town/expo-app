@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import GameTest from '../../components/GameStack';
+import GameTest from '../../components/GamePlayStack';
 
 interface Props {
 
