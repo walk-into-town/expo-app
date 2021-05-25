@@ -1,4 +1,4 @@
-import { SearchCampaign } from '@types'
+import { CampaginProfile, SearchCampaign } from '@types'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { Card } from 'react-native-elements'
@@ -8,12 +8,12 @@ import { useAuthContext } from '../../useHook'
 import { toCommonDate } from '../../util'
 
 interface Props {
-    campaign: SearchCampaign
+    campaignProfile: CampaginProfile
     isParticipate: boolean
     onParticipate: () => Promise<void>
 }
 
-const ProfileCard = ({ campaign, isParticipate, onParticipate }: Props) => {
+const ProfileCard = ({ campaignProfile, isParticipate, onParticipate }: Props) => {
     const { auth: { userToken } } = useAuthContext()
     if (userToken === undefined) return <>userToken error</>
 
@@ -30,26 +30,26 @@ const ProfileCard = ({ campaign, isParticipate, onParticipate }: Props) => {
     return (
         <View>
             <AbsoluteCousel
-                images={campaign.imgs}
+                images={campaignProfile.imgs}
             />
             <Card containerStyle={{ marginBottom: 20, borderRadius: 5 }}>
-                <Title>{campaign.name}</Title>
+                <Title>{campaignProfile.name}</Title>
                 <Row>
                     <EvilIcons name="clock" size={20} />
-                    <Text3> {toCommonDate(campaign.updateTime)}</Text3>
+                    <Text3> {toCommonDate(campaignProfile.updateTime)}</Text3>
                 </Row>
                 <Row>
                     <EvilIcons name="user" size={20} />
-                    <Text3>{campaign.ownner}</Text3>
+                    <Text3>{campaignProfile.ownner}</Text3>
                 </Row>
                 <Row>
                     <EvilIcons name="tag" size={20} />
-                    <Text3>{campaign.region}</Text3>
+                    <Text3>{campaignProfile.region}</Text3>
                 </Row>
-                <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaign.description}</Text>
+                <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaignProfile.description}</Text>
 
                 {
-                    campaign.ownner === userToken.id ?
+                    campaignProfile.ownner === userToken.id ?
                         <EditButton />
                         : isParticipate ?
                             <QuitButton />
@@ -59,10 +59,6 @@ const ProfileCard = ({ campaign, isParticipate, onParticipate }: Props) => {
             </Card>
         </View>
     )
-}
-
-const ActionButton = () => {
-
 }
 
 export default ProfileCard

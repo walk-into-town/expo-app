@@ -1,14 +1,19 @@
 import { PinPoint } from '@types'
 import React from 'react'
 import { View } from 'react-native'
-import { DefaultListItem } from '../../atoms'
+import { DefaultListItem, SubTitle } from '../../atoms'
 
 interface Props {
     pinPointList: PinPoint[],
     navtoPinPointDetail: (pinpoint: PinPoint) => void
+    refreshing: boolean
 }
 
-const PinPointListTab = ({ pinPointList, navtoPinPointDetail }: Props) => {
+const PinPointListTab = ({ pinPointList, navtoPinPointDetail, refreshing }: Props) => {
+    if (refreshing)
+        return <View style={{ height: 45, alignItems: "center", justifyContent: "center" }}>
+            <SubTitle>로딩중</SubTitle>
+        </View>
 
     return (
         <View>

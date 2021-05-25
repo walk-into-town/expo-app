@@ -54,6 +54,16 @@ declare module "@types" {
         coupons: string[],
         comments: CampaignComment[]
     }
+    type CampaginProfile = {
+        id: string,
+        ownner: string,
+        name: string,
+        imgs: string[],
+        description: string,
+        updateTime: string,
+        region: string
+
+    }
     type CampaignSearchType = 'name' | 'region' | 'id' | 'owner';
     type CampaignSearchTypeText = {
         [key: string]: string

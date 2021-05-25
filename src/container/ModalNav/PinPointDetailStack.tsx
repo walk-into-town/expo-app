@@ -26,6 +26,7 @@ const PinPointDetailStack = () => {
             onRefresh()
     }, [isFocused])
 
+
     // nav
     const mainNav = mainNavigation();
     useEffect(() => {

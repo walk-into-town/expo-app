@@ -1,10 +1,11 @@
-import { Campaign, CampaignSearchCondition, CampaignSearchType, CampaignSearchTypeText, SearchCampaign, TuseState } from '@types'
+import { BadgeButtonGroupButtonsProps, Campaign, CampaignSearchCondition, CampaignSearchType, CampaignSearchTypeText, SearchCampaign, TuseState } from '@types'
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { BadgeButton, Row, WhiteTitle } from '../../atoms'
 import Modal from 'react-native-modal'
 import { ScrollView } from 'react-native-gesture-handler'
 import { getRatedAvg } from '../../util'
+import BadgeButtonGroup from '../../atoms/BadgeButtonGroup'
 
 interface Props {
     useType: TuseState<CampaignSearchType>
@@ -35,57 +36,36 @@ const CampaignSortFilter = (props: Props) => {
 
     // 정렬 조건 설정
     const [filterIdx, setFilterIdx] = useState(0);
-    const sortFilter = [
-        '초기화',
-        '핀포인트 많은 순',
-        '쿠폰 많은 순',
-        '별점 높은 순',
-        '리뷰 많은 순'
+    const filterButton: BadgeButtonGroupButtonsProps[] = [
+        { name: "초기화", func: props.reset },
+        { name: "핀포인트 많은 순", func: () => onFilter((a, b) => b.pinpoints.length - a.pinpoints.length) },
+        { name: "쿠폰 많은 순", func: () => onFilter((a, b) => b.coupons.length - a.coupons.length) },
+        { name: "별점 높은 순", func: () => onFilter((a, b) => getRatedAvg(b) - getRatedAvg(a)) },
+        { name: "리뷰 많은 순", func: () => onFilter((a, b) => b.comments.length - a.comments.length) },
     ]
-    const filtering = (key: string) => {
-        switch (key) {
-            case '초기화':
-                props.reset();
-                return;
-            case '핀포인트 많은 순':
-                return campaignList.sort((a, b) => b.pinpoints.length - a.pinpoints.length);
-            case '쿠폰 많은 순':
-                return campaignList.sort((a, b) => b.coupons.length - a.coupons.length);
-            case '별점 높은 순':
-                return campaignList.sort((a, b) => getRatedAvg(b) - getRatedAvg(a))
-            case '리뷰 많은 순':
-                return campaignList.sort((a, b) => b.comments.length - a.comments.length)
-            default:
-                return;
-        }
+    const onFilter = (func: (a: SearchCampaign, b: SearchCampaign) => number) => {
+        const newArr = campaignList.sort(func);
+        setCampaignList([...newArr]);
     }
-    const onFilter = (idx: number) => {
-        const newArr = filtering(sortFilter[idx]);
-        if (newArr)
-            setCampaignList([...newArr]);
 
-        setFilterIdx(idx);
-    }
     useEffect(() => {
         // 리프레쉬하면 다시 필터잉
-        if (props.refreshing === false)
-            onFilter(filterIdx);
+        if (props.refreshing === false && filterIdx > 0)
+            filterButton[filterIdx].func();
 
     }, [props.refreshing])
 
     return (
         <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <BadgeButton title={`검색조건 - ${typeText[type]}`} onPress={toggleTypeModal} backgroundToggle />
-                <Row style={{ marginLeft: 10 }}>
-                    {
-                        sortFilter.map((v, idx) => (
-                            <View key={idx} style={{ marginHorizontal: 2 }}>
-                                <BadgeButton title={v} onPress={() => onFilter(idx)} backgroundToggle={idx !== 0 && filterIdx === idx} />
-                            </View>
-                        ))
-                    }
-                </Row>
+                <View style={{ marginRight: 15 }}>
+                    <BadgeButton title={`검색조건 - ${typeText[type]}`} onPress={toggleTypeModal} backgroundToggle />
+                </View>
+                <BadgeButtonGroup
+                    buttons={filterButton}
+                    useFilterIdx={[filterIdx, setFilterIdx]}
+                    disableToggleFristBt
+                />
             </ScrollView>
             <Modal isVisible={typeModalVisible} avoidKeyboard animationIn={'pulse'} animationOut={'fadeOut'}>
                 {Object.keys(typeText).map((v, idx) => {

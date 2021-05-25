@@ -1,5 +1,5 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core';
-import { CampaignComment, Coupon, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, UpdateCampaignComment } from '@types';
+import { CampaginProfile, CampaignComment, Coupon, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, UpdateCampaignComment } from '@types';
 import React, { useEffect, useState } from 'react'
 import { API } from '../../api';
 import { RefreshControl } from 'react-native';
@@ -15,14 +15,15 @@ const CampaignDetailStack = () => {
     const { auth: { userToken } } = useAuthContext()
     const isFocused = useIsFocused()
     if (userToken === undefined) return <></>;
-    const { params } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
+    const { params: { campaign } } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
 
     // state
-    const [campaign, setCampaign] = useState<SearchCampaign>(params.campaign);
+    const [campaignProfile, setCampaignProfile] = useState<CampaginProfile>(campaign);
     const [isParticipate, setIsParticipate] = useState(false);
     const [tabIdx, setTabIdx] = useState(0);
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState<Coupon[]>([]);
+    const [commentList, setCommentList] = useState<CampaignComment[]>(campaign.comments);
     const [refreshing, setRefreshing] = useState(false);
 
     // api
@@ -52,7 +53,8 @@ const CampaignDetailStack = () => {
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: error, subTitle: errdesc });
 
-        setCampaign(data[0])
+        setCampaignProfile(data[0])
+        setCommentList(data[0].comments)
     }
 
     useEffect(() => {
@@ -128,7 +130,7 @@ const CampaignDetailStack = () => {
         <Container>
             <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <ProfileCard
-                    campaign={campaign}
+                    campaignProfile={campaignProfile}
                     isParticipate={isParticipate}
                     onParticipate={onParticipate}
                 />
@@ -138,15 +140,16 @@ const CampaignDetailStack = () => {
                     onPress={setTabIdx}
                     buttons={["핀포인트 리스트", "쿠폰 리스트"]}
                     viewList={[
-                        <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail} />,
+                        <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail} refreshing={refreshing} />,
                         <CouponListTab couponList={couponList} navToCouponDetail={navToCouponDetail} />
                     ]}
                 />
 
                 <CommentList
-                    commentList={[...campaign.comments]}
+                    commentList={commentList}
                     navToWriteComment={navToWriteComment}
                     onDeleteComment={onDeleteComment}
+                    refreshing={refreshing}
                 />
 
                 <Footer />
