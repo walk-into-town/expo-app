@@ -1,9 +1,9 @@
 
 import { MakePinPoint, PinPoint, TuseState } from '@types'
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
-import { Box, Row, SubTitle, EvilIcons, OutLineButton, SimpleSwapListItem, colorCode, ClearButton  } from '../../atoms'
+import { Box, Row, SubTitle, EvilIcons, OutLineButton, SimpleSwapListItem, colorCode, ClearButton } from '../../atoms'
 
 interface Props {
     useRegion: TuseState<string>,
@@ -15,9 +15,7 @@ interface Props {
 
 const PinPointListBox = ({ useRegion, pinPointList, setCampaignRegion, navToPinPointModal, deletePinPoint }: Props) => {
 
-    // const [campaignRegion, setCampaignRegion] = useRegion
-
-
+    const [region, setRegion] = useRegion
 
     return (
         <Box>
@@ -25,9 +23,12 @@ const PinPointListBox = ({ useRegion, pinPointList, setCampaignRegion, navToPinP
             <Row>
                 <ClearButton
                     title="지역 설정"
-                    onPress={setCampaignRegion}
+                    onPress={() => setCampaignRegion()}
                 />
-                <Text>{useRegion}</Text>
+
+
+                <Text> {region} </Text>
+
             </Row>
             <Row>
                 <SubTitle>핀포인트 리스트</SubTitle>
