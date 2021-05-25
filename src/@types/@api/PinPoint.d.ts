@@ -29,6 +29,11 @@ declare module "@types" {
         imgs: string[],
         updateTime: string
     }
+    type WritePinPointComment = {
+        coid: string,
+        text: string,
+        imgs: string[]
+    }
 
     type MakePinPoint = {
         id?: string,

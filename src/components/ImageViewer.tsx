@@ -1,8 +1,9 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 import { ModalNavParamList } from '@types'
 import React, { useEffect, useState } from 'react'
-import { View, Image } from 'react-native'
-import { HeaderLeftCloseIcon } from '../atoms'
+import { Image } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+
 
 const ImageViewer = () => {
     const { params: { images } } = useRoute<RouteProp<ModalNavParamList, "ImageViewer">>();
@@ -11,24 +12,27 @@ const ImageViewer = () => {
         nav.goBack();
         return <></>
     }
-    const [idx, setIdx] = useState(0);
+
     useEffect(() => {
         nav.setOptions({
-            headerTitle: `${idx + 1} / ${images.length}`,
-            headerTitleStyle: { color: "white" },
-            headerLeft: <HeaderLeftCloseIcon
-                toggle
-                color={"white"}
-                onPress={() => nav.goBack()}
-            />
+            headerTitle: `${images.length}개의 이미지`
         })
     }, [])
 
+
+
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Image source={{ uri: images[0] }} style={{ width: "100%", height: "100%" }} />
-            
-        </View>
+        <ScrollView style={{paddingTop: 60}}>
+            {
+                images.map((uri, idx) => (
+                    <Image
+                        key={idx}
+                        source={{ uri }}
+                        style={{ width: "100%", aspectRatio: 1, resizeMode: "contain"}}
+                    />
+                ))
+            }
+        </ScrollView>
     )
 }
 

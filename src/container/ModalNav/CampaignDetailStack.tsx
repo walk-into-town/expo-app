@@ -19,16 +19,19 @@ const CampaignDetailStack = () => {
 
     // state
     const [campaign, setCampaign] = useState<SearchCampaign>(params.campaign);
-    const [value, setValue] = useState(0);
+    const [isParticipate, setIsParticipate] = useState(false);
+    const [tabIdx, setTabIdx] = useState(0);
     const [pinPointList, setPinPointList] = useState<PinPoint[]>([]);
     const [couponList, setCouponList] = useState<Coupon[]>([]);
     const [refreshing, setRefreshing] = useState(false);
 
     // api
     const checkIsPlaying = async () => {
-        const { result, data, error, errdesc  } = await API.campaignIsPlaying({ caid: campaign.id, uid: userToken.id })
-        
-        return result === "success";
+        const { result, data, error, errdesc } = await API.campaignCheckPlaying({ caid: campaign.id, uid: userToken.id })
+        if (result === "failed" || data === undefined)
+            return DefaultAlert({ title: "참여 여부 조회 실패", subTitle: `${error} ${errdesc}` })
+
+        setIsParticipate(data === "이미 참여중인 캠페인 입니다.");
     }
     const getPinPoints = async () => {
         const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', value: campaign.id });
@@ -46,20 +49,15 @@ const CampaignDetailStack = () => {
     }
     const getCampaign = async () => {
         const { result, data, error, errdesc } = await API.campaignSearch({ type: 'id', value: campaign.id, condition: "exact" })
-        if (result === "failed" || data === undefined) 
+        if (result === "failed" || data === undefined)
             return DefaultAlert({ title: error, subTitle: errdesc });
 
         setCampaign(data[0])
     }
 
     useEffect(() => {
-        getPinPoints();
-        getCoupons();
-    }, [])
-    useEffect(() => {
-        const init = async () => await getCampaign();
         if (isFocused)
-            init();
+            onRefresh();
     }, [isFocused])
 
     // navigation
@@ -80,6 +78,9 @@ const CampaignDetailStack = () => {
         const init = async () => {
             setRefreshing(true);
             await getCampaign();
+            await checkIsPlaying();
+            await getPinPoints();
+            await getCoupons();
             setTimeout(() => setRefreshing(false), 500);
         }
         init();
@@ -87,15 +88,20 @@ const CampaignDetailStack = () => {
 
     const onParticipate = async () => {
         startLoading();
-        const { result, data, error, errdesc } = await API.campaignParticiapte({ cid: campaign.id, uid: userToken.id })
-        endLoading();
+        const { result, data, error, errdesc } = await API.campaignParticiapte({ caid: campaign.id, uid: userToken.id })
+
         if (result === "failed" || data === undefined)
-            return DefaultAlert({ title: "캠페인 참여 실패", subTitle: `${error} ${errdesc}` })
+            return DefaultAlert({ title: "캠페인 참여 실패", subTitle: `${errdesc}`, onPress: endLoading })
 
         SelectionAlert({
-            title: "캠페인에 참여하게 되었습니다!", buttons: [
+            title: "캠페인에 참여하게 되었습니다!",
+            buttons: [
                 { text: "나의 캠페인 정보를 확인하기" }
-            ]
+            ],
+            onConfirm: () => {
+                endLoading();
+                onRefresh();
+            }
         })
     }
 
@@ -118,12 +124,13 @@ const CampaignDetailStack = () => {
             <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <ProfileCard
                     campaign={campaign}
+                    isParticipate={isParticipate}
                     onParticipate={onParticipate}
                 />
 
                 <ButtonTabs
-                    selectedIndex={value}
-                    onPress={setValue}
+                    selectedIndex={tabIdx}
+                    onPress={setTabIdx}
                     buttons={["핀포인트 리스트", "쿠폰 리스트"]}
                     viewList={[
                         <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail} />,

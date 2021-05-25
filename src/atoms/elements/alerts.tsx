@@ -40,6 +40,7 @@ interface SelectionAlertProps {
     title: string,
     subTitle?: string,
     buttons: AlertButton[]
+    onConfirm?: () => void
 }
 export const SelectionAlert = (props: SelectionAlertProps) => {
     Alert.alert(
@@ -47,7 +48,7 @@ export const SelectionAlert = (props: SelectionAlertProps) => {
         props.subTitle,
         [
             ...props.buttons,
-            { text: "확인" }
+            { text: "확인", onPress: props.onConfirm }
         ]
     );
 }
