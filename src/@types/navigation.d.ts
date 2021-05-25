@@ -79,7 +79,7 @@ declare module "@types" {
     // 편집 모달 화면
     type EditModalNavParamList = {
         MyProfileEditStack: undefined,
-        WriteCampaignCommentStack: { caid: string, cname: string, comment: WriteCampaignComment | null }
+        WriteCampaignCommentStack: { caid: string, cname: string, comment: UpdateCampaignComment | null }
         WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
     }
 }

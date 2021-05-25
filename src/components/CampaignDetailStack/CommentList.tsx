@@ -1,4 +1,4 @@
-import { WriteCampaignComment } from '@types'
+import { UpdateCampaignComment } from '@types'
 import { CampaignComment } from '@types'
 import React from 'react'
 import { View, Text } from 'react-native'
@@ -7,7 +7,7 @@ import Comment from './Comment'
 
 interface Props {
     commentList: CampaignComment[]
-    navToWriteComment: (comment: WriteCampaignComment | null) => void
+    navToWriteComment: (comment: UpdateCampaignComment | null) => void
     onDeleteComment: (coid: string) => void
 }
 

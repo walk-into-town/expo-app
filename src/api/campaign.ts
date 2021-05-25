@@ -1,6 +1,7 @@
 import { ip } from "./ip"
 import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams } from "@types"
 import { baseFetch } from "./baseFetch"
+import { formAppendImgs } from "../util";
 
 
 type CampaignCreateFetch = (body: MakeCampaign) => BaseFetchRes<string>;
@@ -39,13 +40,27 @@ export const couponRead: CouponReadFetch = (params) => {
 // 캠페인 리뷰
 type CCCFetch = (body: MakeCampaignComment) => BaseFetchRes<string>
 export const campaignCommentCreate: CCCFetch = (body) => {
-    return baseFetch(`${ip}/campaign/review`, "POST", { body })
+    const formdata = new FormData();
+    formdata.append("caid", body.caid);
+    formdata.append("comments[userId]", body.comments.userId);
+    formdata.append("comments[text]", body.comments.text);
+    formAppendImgs(formdata, body.imgs)
+    formdata.append("rated", body.rated.toString())
+
+    return baseFetch(`${ip}/campaign/review`, "POST", { body: formdata, isForm: true })
 }
 export const campaignCommentRead = (caid: string): BaseFetchRes<CampaignComment[]> => {
     return baseFetch(`${ip}/campaign/review?caid=${caid}`, "GET")
 }
-export const campaignCommentUpdate = (body: { coid: string, uid: string, caid: string, text: string, rated: number, imgs: string[] }) => {
-    return baseFetch(`${ip}/campaign/review`, "PUT", { body })
+export const campaignCommentUpdate = (body: { rid: string, uid: string, caid: string, text: string, rated: number, imgs: string[] }) => {
+    const formdata = new FormData();
+    formdata.append("rid", body.rid);
+    formdata.append("caid", body.caid);
+    formdata.append("uid", body.uid);
+    formdata.append("rated", body.rated.toString());
+    formdata.append("text", body.text);
+    formAppendImgs(formdata, body.imgs)
+    return baseFetch(`${ip}/campaign/review`, "PUT", { body: formdata, isForm: true })
 }
 export const campaignCommentDelete = (body: { coid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })

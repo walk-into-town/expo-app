@@ -1,4 +1,5 @@
 import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PlayingCampaign, RegisterMember } from "@types"
+import { formAppendImgs } from "../util"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
 
@@ -24,14 +25,15 @@ export const memberInfoRead: MemberInfoReadFetch = (params) => {
     return baseFetch(`${ip}/member?id=${params.id}`, "GET");
 }
 
-type MemberModifyFetch = (body: ModifyMember) => BaseFetchRes<{
-    profileImg: string,
-}>
+type MemberModifyFetch = (body: ModifyMember) => BaseFetchRes<{ profileImg: string }>
 export const memberModify: MemberModifyFetch = (body) => {
-    if(body.img)
-        console.log('isForm true')
-    console.log(body.img)
-    return baseFetch(`${ip}/member`, "PUT", { body, isForm: true });
+    const formdata = new FormData();
+    formdata.append('uid', body.uid);
+    formdata.append('uid', body.nickname);
+    formdata.append('uid', body.selfIntroduction);
+    formAppendImgs(formdata, [body.img]);
+
+    return baseFetch(`${ip}/member`, "PUT", { body: formdata, isForm: true });
 }
 
 type MemberWithdrawFetch = (body: { id: string }) => BaseFetchRes<string>
@@ -42,10 +44,10 @@ export const memberWithdraw: MemberWithdrawFetch = (body) => {
 // 나의 캠페인 정보
 type MemberPlayingcampaignFetch = (userId: string) => BaseFetchRes<PlayingCampaign[]>
 export const memberPlayingCampaign: MemberPlayingcampaignFetch = (userId) => {
-    return baseFetch(`${ip}/member/playing?id=${userId}`, "GET");
+    return baseFetch(`${ip}/member/playing?uid=${userId}`, "GET");
 }
 
 type MemberMycampaignFetch = (userId: string) => BaseFetchRes<MyCampaign[]>
 export const memberMyCampaign: MemberMycampaignFetch = (userId) => {
-    return baseFetch(`${ip}/member/mycampaign?id=${userId}`, "GET");
+    return baseFetch(`${ip}/member/mycampaign?uid=${userId}`, "GET");
 }

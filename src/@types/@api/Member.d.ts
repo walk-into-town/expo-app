@@ -13,7 +13,7 @@ declare module "@types" {
         // pw: string,
         // cpw: string,      /*new password*/
         nickname: string,
-        img: FormData,
+        img: string,
         selfIntroduction: string
     }
 

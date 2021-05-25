@@ -43,7 +43,7 @@ const WritePinPointCommentStack = () => {
                 });
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: error, subTitle: errdesc });
-
+            
             nav.goBack();
         }
     })

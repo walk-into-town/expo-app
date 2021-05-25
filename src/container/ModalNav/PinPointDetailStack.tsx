@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
+import { RouteProp, useIsFocused, useNavigation, useRoute } from '@react-navigation/core'
 import { ModalNavParamList, WritePinPointComment } from '@types'
 import React, { useEffect, useState } from 'react'
 
@@ -16,17 +16,22 @@ import { DefaultAlert } from '../../atoms'
 const PinPointDetailStack = () => {
     const { auth: { userToken } } = useAuthContext();
     if (userToken === undefined) return <>userToken error</>
-    const { params } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>();
+    const isFocused = useIsFocused()
+    const { params } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>()
     const [pinpoint, setPinpoint] = useState(params.pinpoint)
     const [comments, setComments] = useState(params.pinpoint.comments)
     const [refreshing, setRefreshing] = useState(false)
+    useEffect(() => {
+        if (isFocused)
+            onRefresh()
+    }, [isFocused])
 
     // nav
     const mainNav = mainNavigation();
     useEffect(() => {
         mainNav.setOptions({ headerTitle: `${params.campaignName}의 핀포인트` })
     }, [params.campaignName])
-    
+
     const navToWriteComment = (comment: WritePinPointComment | null) => {
         mainNav.navigate("EditModalNav", {
             screen: "WritePinPointCommentStack",

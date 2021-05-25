@@ -30,7 +30,7 @@ const ProfileCard = ({ campaign, isParticipate, onParticipate }: Props) => {
     return (
         <View>
             <AbsoluteCousel
-                images={["https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg"]}
+                images={campaign.imgs}
             />
             <Card containerStyle={{ marginBottom: 20, borderRadius: 5 }}>
                 <Title>{campaign.name}</Title>

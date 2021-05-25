@@ -1,15 +1,15 @@
-import { CampaignComment, WriteCampaignComment } from '@types'
+import { CampaignComment, UpdateCampaignComment } from '@types'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
-import { Bold, colorCode, Gray, RateStarIcon } from '../../atoms'
+import { Bold, Carousel, colorCode, Gray, RateStarIcon } from '../../atoms'
 import { useCommentActionSheet } from '../../useHook'
 import { getPassingText } from '../../util'
 import commingSoon from '../commingSoon'
 
 interface Props {
     comment: CampaignComment
-    navToWriteComment: (comment: WriteCampaignComment | null) => void
+    navToWriteComment: (comment: UpdateCampaignComment | null) => void
     onDeleteComment: (coid: string) => void
 }
 
@@ -20,7 +20,7 @@ const Comment = (props: Props) => {
     const { onAction } = useCommentActionSheet({
         commentUserId: comment.userId,
         onEdit: () => props.navToWriteComment({
-            coid: comment.id,
+            rid: comment.id,
             text: comment.text,
             rated: comment.rated,
             imgs: comment.imgs
@@ -51,7 +51,8 @@ const Comment = (props: Props) => {
                 onPress={onAction}
             />
         </ListItem>
-        <Text style={{ marginLeft: 10 }}>{comment.text}</Text>
+        <Text style={{ marginLeft: 10, marginBottom: 20 }}>{comment.text}</Text>
+        <Carousel images={comment.imgs} />
     </View>
 }
 

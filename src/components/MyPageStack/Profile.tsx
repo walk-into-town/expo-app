@@ -24,7 +24,6 @@ const Profile = ({ memberInfo }: Props) => {
                 <ListItem.Content style={{ marginRight: 8 }}>
                     <Avatar
                         size={'large'}
-                        title={userToken?.nickname}
                         source={{ uri: userToken?.profileImg }}
                         rounded
                     />

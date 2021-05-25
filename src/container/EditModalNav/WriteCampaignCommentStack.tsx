@@ -46,7 +46,7 @@ const WriteCampaignCommentStack = () => {
                 // 리뷰 수정
                 await API.campaignCommentUpdate({
                     caid,
-                    coid: comment.coid,
+                    rid: comment.rid,
                     text,
                     imgs,
                     rated,

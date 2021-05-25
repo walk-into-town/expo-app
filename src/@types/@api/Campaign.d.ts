@@ -33,8 +33,8 @@ declare module "@types" {
         imgs: string[],
         rated: number,
     }
-    type WriteCampaignComment = {
-        coid: string,
+    type UpdateCampaignComment = {
+        rid: string,
         text: string,
         imgs: string[],
         rated: number,

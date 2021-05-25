@@ -1,5 +1,5 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core';
-import { CampaignComment, Coupon, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, WriteCampaignComment } from '@types';
+import { CampaignComment, Coupon, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, UpdateCampaignComment } from '@types';
 import React, { useEffect, useState } from 'react'
 import { API } from '../../api';
 import { RefreshControl } from 'react-native';
@@ -69,7 +69,7 @@ const CampaignDetailStack = () => {
     const navToCouponDetail = (coupon: Coupon) => {
         modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name })
     }
-    const navToWriteComment = (comment: WriteCampaignComment | null) => {
+    const navToWriteComment = (comment: UpdateCampaignComment | null) => {
         mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
     }
 
@@ -96,7 +96,12 @@ const CampaignDetailStack = () => {
         SelectionAlert({
             title: "캠페인에 참여하게 되었습니다!",
             buttons: [
-                { text: "나의 캠페인 정보를 확인하기" }
+                {
+                    text: "나의 캠페인 정보를 확인하기", onPress: () => {
+                        mainNav.navigate("ModalNav", { screen: 'MyDetailStack', params: { selectedIndex: 1 } });
+                        endLoading();
+                    }
+                }
             ],
             onConfirm: () => {
                 endLoading();

@@ -28,24 +28,19 @@ const MyDetailStack = (props: Props) => {
     const [myCampaignList, setMyCampaignList] = useState<MyCampaign[]>([]);
     const [playingCampaignList, setPlayingCampaignList] = useState<PlayingCampaign[]>([]);
     useEffect(() => {
-        console.log(userToken.id)
         const initMyCampaign = async () => {
             const { result, data, errdesc, error } = await API.memberMyCampaign(userToken.id);
-            if (result === "failed" || data === undefined) {
-                DefaultAlert({ title: error, subTitle: errdesc })
-                return;
-            }
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: error, subTitle: errdesc })
 
             setMyCampaignList(data)
         }
         const initPlayingCmapaign = async () => {
             const { result, data, error, errdesc } = await API.memberPlayingCampaign(userToken.id);
-            if (result === "failed" || data === undefined) {
-                DefaultAlert({ title: error, subTitle: errdesc })
-                return;
-            }
-            if (result === "success" && data)
-                setPlayingCampaignList(data)
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: error, subTitle: errdesc })
+
+            setPlayingCampaignList(data)
         }
         initMyCampaign();
         initPlayingCmapaign();

@@ -75,7 +75,7 @@ const CampaignSortFilter = (props: Props) => {
 
     return (
         <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
-            <ScrollView horizontal>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <BadgeButton title={`검색조건 - ${typeText[type]}`} onPress={toggleTypeModal} backgroundToggle />
                 <Row style={{ marginLeft: 10 }}>
                     {
