@@ -15,12 +15,13 @@ interface Props {
 
 const FindOnGooglePlace = (props: Props) => {
     return (
-    <Container>
+
+        
+
+        <Googleplace>
         <Box>
             <SubTitle>위치 검색</SubTitle>
         </Box>
-
-        <Googleplace>
             <GooglePlaceSearchBar
                 placeholder='장소 검색'
                 query={{
@@ -32,7 +33,6 @@ const FindOnGooglePlace = (props: Props) => {
                 fetchDetails={true}
             />
         </Googleplace>
-    </Container>
     )
 
 

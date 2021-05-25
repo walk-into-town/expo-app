@@ -14,6 +14,7 @@ declare module "@types" {
             screen?: keyof GameNavParamList
         },
         ModalNav: {
+
             screen: keyof ModalNavParamList
             params?: ModalNavParamList[keyof ModalNavParamList]
         },
@@ -51,6 +52,7 @@ declare module "@types" {
     // 게임
     type GameNavParamList = {
         GamePlayStack: undefined,
+        QuizStack: undefined,
     }
 
     // 모달 화면
@@ -82,4 +84,13 @@ declare module "@types" {
         WriteCampaignCommentStack: { caid: string, cname: string, comment: WriteCampaignComment | null }
         WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
     }
+
+    // type GamePlayStackParamList = {
+    //     CampaignViewStack: undefined
+
+    // }
+
+    // type GamePlayParams = {
+    //     pinpoint?: Pinpoint,
+    // }
 }

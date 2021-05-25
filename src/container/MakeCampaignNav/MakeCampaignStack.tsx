@@ -9,6 +9,7 @@ import PinPointListBox from '../../components/MakeCampaignStack/PinPointListBox'
 import CouponListBox from '../../components/MakeCampaignStack/CouponListBox';
 import { isBlank } from '../../util';
 import { API } from '../../api';
+import axios from 'axios';
 
 const MakeCampaignStack = () => {
     const { auth: { userToken } } = useAuthContext();
@@ -22,6 +23,7 @@ const MakeCampaignStack = () => {
     const [description, setDescription] = useState("");
     const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
     const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
+    const [region, setRegion] = useState<string>("");
 
     useEffect(() => {
         if (pinpoint) {
@@ -52,7 +54,30 @@ const MakeCampaignStack = () => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
 
+    const setCampaignRegion = async ()=>{
+        if(pinPointList.length!==0){
+            const lat = pinPointList[0].latitude
+            const long = pinPointList[0].longitude
+            const { data : {results} } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`);
+
+            let fullAddress = results[0].formatted_address
+            let splitAddress = fullAddress.split(" ");
+
+            if(splitAddress[1].charAt(splitAddress.length-1)==="시"){
+                setRegion(splitAddress[1])
+              }
+              else {
+                setRegion(splitAddress[2])
+              }
+        }
+
+        else DefaultAlert({ title: "핀포인트를 먼저 설정 하세요", subTitle: "아직 핀포인트가  설정되어있지 않습니다." })
+            
+    }
+
+
     const getCampaign = (): MakeCampaign => {
+
         if (userToken === undefined) throw new Error("userToken undefined error");
 
         return {
@@ -62,9 +87,10 @@ const MakeCampaignStack = () => {
             imgs: campaignImgs,
             pinpoints: pinPointList,
             coupons: couponList,
-            region: "임시지역"
+            region: region
         }
     }
+    
     /* 캠페인 제작 송신 */
     const onCreateCampaign = async () => {
         if (isBlank([title, description])) {
@@ -117,7 +143,9 @@ const MakeCampaignStack = () => {
             />
 
             <PinPointListBox
+                useRegion={[region, setRegion]}
                 pinPointList={pinPointList}
+                setCampaignRegion={setCampaignRegion}
                 deletePinPoint={deletePinPoint}
                 navToPinPointModal={navToPinPointModal}
             />

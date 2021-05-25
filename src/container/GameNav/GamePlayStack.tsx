@@ -1,16 +1,25 @@
-import React from 'react'
-import { ScrollWrapper } from '../../atoms'
-import Game from '../../components/GameStack/Game'
+import React, { useEffect } from 'react'
+import { Container, ScrollWrapper } from '../../atoms'
+import CampaignView from '../../components/GamePlayStack/CampaignView'
+import Game from '../../components/QuizStack/Game'
 
 interface Props {
 
 }
 
 const GamePlayStack = (props: Props) => {
+
+    useEffect(()=>{
+
+        
+    },[])
     return (
-        <ScrollWrapper>
-            <Game />
-        </ScrollWrapper>
+        // <ScrollWrapper>
+        //     <Game />
+        // </ScrollWrapper>
+        <Container>
+            <CampaignView />
+        </Container>
     )
 }
 
