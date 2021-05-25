@@ -40,3 +40,14 @@ export const Googleplace = styled.View`
 export const WhiteView = styled.View`
     background-color: white;
 `
+
+export const Bubble = styled.View`
+    flex-direction: column;
+    align-self: flex-start;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border-color: #cccccc;
+    border-width: 0.5px;
+    padding: 10px;
+    width: 200px;
+`

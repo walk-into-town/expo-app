@@ -52,6 +52,7 @@ declare module "@types" {
     // 게임
     type GameNavParamList = {
         GamePlayStack: undefined,
+        QuizStack: undefined,
     }
 
     // 모달 화면

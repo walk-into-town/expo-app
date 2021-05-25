@@ -23,7 +23,7 @@ const MakeCampaignStack = () => {
     const [description, setDescription] = useState("");
     const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
     const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
-    const [region, setRegion] = useState("");
+    const [region, setRegion] = useState<string>("default");
 
     useEffect(() => {
         if (pinpoint) {
