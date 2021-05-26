@@ -5,6 +5,8 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import { getRandomCat } from '../../api'
 import { ClearButton, DefaultAlert } from '../../atoms'
 import { useLoadingContext, mainNavigation, useSound } from '../../useHook'
+import LottieView from "lottie-react-native";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
 
@@ -13,7 +15,17 @@ interface Props {
 
 const GameTest = (props: Props) => {
     const mainNav = mainNavigation();
-    const ref = useRef<ConfettiCannon>(null);
+    const Confetti = useRef<ConfettiCannon>(null);
+    const Heart = useRef<LottieView>(null);
+
+    const [isLiked, setIsLiked] = useState(false);
+    useEffect(() => {
+        if (!isLiked)
+            Heart.current?.play(30, 194);
+        else
+            Heart.current?.play(130, 30);
+    }, [isLiked]);
+
 
     const { playSound, stopSound } = useSound();
     const { data, err, loading, refetch } = getRandomCat();
@@ -59,7 +71,7 @@ const GameTest = (props: Props) => {
             <ClearButton
                 title="CLEAR"
                 onPress={() => {
-                    ref.current?.start()
+                    Confetti.current?.start()
                     DefaultAlert({ title: "퀴즈를 푸셨습니다!" })
                 }}
             />
@@ -68,9 +80,18 @@ const GameTest = (props: Props) => {
                 origin={{ x: 100, y: 0 }}
                 autoStart={false}
                 fadeOut
-                ref={ref}
+                ref={Confetti}
             />
 
+            <TouchableOpacity onPress={() => setIsLiked(!isLiked)}>
+                <LottieView
+                    ref={Heart}
+                    style={{ width: 100, height: 100 }}
+                    source={require("../../../assets/heart.json")}
+                    autoPlay={false}
+                    loop={false}
+                />
+            </TouchableOpacity>
         </Container>
     )
 }
