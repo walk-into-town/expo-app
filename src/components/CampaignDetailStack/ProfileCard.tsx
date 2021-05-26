@@ -11,9 +11,10 @@ interface Props {
     campaignProfile: CampaginProfile
     isParticipate: boolean
     onParticipate: () => Promise<void>
+    refreshing: boolean
 }
 
-const ProfileCard = ({ campaignProfile, isParticipate, onParticipate }: Props) => {
+const ProfileCard = ({ campaignProfile, isParticipate, onParticipate, refreshing }: Props) => {
     const { auth: { userToken } } = useAuthContext()
     if (userToken === undefined) return <>userToken error</>
 
@@ -49,6 +50,7 @@ const ProfileCard = ({ campaignProfile, isParticipate, onParticipate }: Props) =
                 <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaignProfile.description}</Text>
 
                 {
+                    refreshing ? <ClearButton title="로딩중" /> :
                     campaignProfile.ownner === userToken.id ?
                         <EditButton />
                         : isParticipate ?

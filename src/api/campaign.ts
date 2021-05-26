@@ -62,6 +62,6 @@ export const campaignCommentUpdate = (body: { rid: string, uid: string, caid: st
     formAppendImgs(formdata, body.imgs)
     return baseFetch(`${ip}/campaign/review`, "PUT", { body: formdata, isForm: true })
 }
-export const campaignCommentDelete = (body: { coid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
+export const campaignCommentDelete = (body: { rid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })
 }

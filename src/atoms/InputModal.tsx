@@ -50,7 +50,7 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
             case "textarea":
                 return {
                     wrapper: {},
-                    text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7 },
+                    text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7, textAlign: "center" },
                     input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
                 }
         }

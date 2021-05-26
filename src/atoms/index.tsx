@@ -6,7 +6,6 @@ export * from "./elements/icons"
 export * from "./elements/listItems"
 export * from "./elements/alerts"
 
-export * from "./paths"
 export * from "./color"
 
 export * from './Carousel'

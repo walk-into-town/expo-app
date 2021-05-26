@@ -112,11 +112,10 @@ const CampaignDetailStack = () => {
         })
     }
 
-    const onDeleteComment = (coid: string) => {
+    const onDeleteComment = (rid: string) => {
         const init = async () => {
-            console.log(coid)
             // 리뷰를 찾을 수 없습니다 에러..
-            const { result, data, error, errdesc } = await API.campaignCommentDelete({ caid: campaign.id, coid, uid: userToken.id });
+            const { result, data, error, errdesc } = await API.campaignCommentDelete({ caid: campaign.id, rid, uid: userToken.id });
             if (result === 'failed' || data === undefined) {
                 DefaultAlert({ title: error, subTitle: errdesc });
                 return;
@@ -133,6 +132,7 @@ const CampaignDetailStack = () => {
                     campaignProfile={campaignProfile}
                     isParticipate={isParticipate}
                     onParticipate={onParticipate}
+                    refreshing={refreshing}
                 />
 
                 <ButtonTabs

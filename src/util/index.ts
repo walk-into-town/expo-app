@@ -11,3 +11,4 @@ export const getRatedAvg = (campaign: SearchCampaign) => {
 export * from "./check"
 export * from "./time"
 export * from "./objmaker"
+export * from "./paths"

@@ -2,7 +2,7 @@ import { BadgeButtonGroupButtonsProps, UpdateCampaignComment } from '@types'
 import { CampaignComment } from '@types'
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
-import { BadgeButton, Row, SubTitle } from '../../atoms'
+import { BadgeButton, ClearButton, Row, SubTitle } from '../../atoms'
 import BadgeButtonGroup from '../../atoms/BadgeButtonGroup'
 import Comment from './Comment'
 
@@ -60,8 +60,8 @@ const CommentList = (props: Props) => {
                 <SubTitle>
                     조회된 리뷰 {commentList.length}개
                 </SubTitle>
-                <View style={{ marginLeft: 'auto', marginRight: 5 }}>
-                    <BadgeButton title="리뷰 쓰기" onPress={() => props.navToWriteComment(null)} />
+                <View style={{ marginLeft: 'auto', marginRight: 5, marginBottom: 5 }}>
+                    <ClearButton title="리뷰 쓰기" onPress={() => props.navToWriteComment(null)} size={15} />
                 </View>
             </Row>
 

@@ -10,6 +10,8 @@ interface PlaygroundProps {
     navToProfileEdit: () => void,
 }
 const Playground = (props: PlaygroundProps) => {
+
+    
     return (
         <View style={{ backgroundColor: "white" }}>
             <View style={styled.Wrapper}>
