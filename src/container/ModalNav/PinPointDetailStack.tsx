@@ -15,7 +15,7 @@ import { DefaultAlert } from '../../atoms'
 
 const PinPointDetailStack = () => {
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
     const isFocused = useIsFocused()
     const { params } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>()
     const [pinpoint, setPinpoint] = useState(params.pinpoint)

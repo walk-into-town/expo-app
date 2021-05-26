@@ -48,7 +48,6 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 dispatch({ type: 'RESTORE_TOKEN' })
             else
                 useAuth.signIn(loginData);
-            endLoading();
         };
 
         bootAsync();
@@ -84,15 +83,13 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 startLoading();
 
                 const { result, error, session } = await API.memberLogout({ id });
-                if (result === 'failed') {
+                if (result === 'failed')
                     console.log("[로그아웃 에러]", error)
-                    endLoading();
-                    return;
+                else {
+                    dispatch({ type: 'SIGN_OUT' });
+                    await rmStorage("userToken");
+                    console.log("[로그아웃]", session);
                 }
-
-                await rmStorage("userToken");
-                dispatch({ type: 'SIGN_OUT' });
-                console.log("[로그아웃]", session);
 
                 endLoading();
             }

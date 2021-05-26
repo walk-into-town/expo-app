@@ -10,11 +10,12 @@ import Playground from '../../components/MyPageStack/Playground';
 import { API } from '../../api';
 import { MemberInfoRes } from '@types';
 import { useIsFocused } from '@react-navigation/core';
+import { Text } from 'react-native-elements';
 
 export default () => {
 
     const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const isFocuse = useIsFocused()
     const [memberInfo, setMemberInfo] = useState<MemberInfoRes>({ clearCampaign: 0, myCampaign: 0, playingCampaign: 0 })

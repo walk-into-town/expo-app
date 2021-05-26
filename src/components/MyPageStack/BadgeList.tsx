@@ -9,13 +9,13 @@ interface Props {
 
 const BadgeList = (props: Props) => {
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken Error</>
+    if (userToken === undefined) return <></>
 
     return (
         <WhiteView style={{ marginVertical: 10 }}>
             <ListItem>
                 <ListItem.Content style={{ alignItems: "center" }}>
-                    <SubTitle><Text style={{color: colorCode.primary}}>{userToken.id}</Text> 님의 컬렉션</SubTitle>
+                    <SubTitle><Text style={{ color: colorCode.primary }}>{userToken.id}</Text> 님의 컬렉션</SubTitle>
                 </ListItem.Content>
             </ListItem>
 

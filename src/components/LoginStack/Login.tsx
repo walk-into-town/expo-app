@@ -28,12 +28,14 @@ const Login = (props: Props) => {
             </BackGround>
             <View style={{ marginTop: '30%' }}>
                 <Input
+                    value={id}
                     onChangeText={(text: string) => setId(text)}
                     inputStyle={{ textAlign: "center", fontSize: 25, fontFamily: "SCDream8" }}
                     autoCapitalize="none"
                 />
 
                 <Input
+                    value={pw}
                     onChangeText={(text: string) => setPw(text)}
                     errorMessage={props.error}
                     errorStyle={{ color: tmpColor, textAlign: "center", fontSize: 15 }}

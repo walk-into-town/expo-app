@@ -16,7 +16,7 @@ interface Props {
 
 const ProfileCard = ({ campaignProfile, isParticipate, onParticipate, refreshing }: Props) => {
     const { auth: { userToken } } = useAuthContext()
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const ParticipateButton = () => (
         <ClearButton title="참여하기" onPress={onParticipate} color={colorCode.primary} />

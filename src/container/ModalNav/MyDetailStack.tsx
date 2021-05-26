@@ -15,7 +15,7 @@ interface Props {
 
 const MyDetailStack = (props: Props) => {
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const { params: { selectedIndex } } = useRoute<RouteProp<ModalNavParamList, 'MyDetailStack'>>();
 

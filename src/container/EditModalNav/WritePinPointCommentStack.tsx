@@ -9,7 +9,7 @@ import { perventGoBack, useAuthContext, useSubmit } from '../../useHook';
 
 const WritePinPointCommentStack = () => {
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const { params: { pid, pname, comment } } = useRoute<RouteProp<EditModalNavParamList, "WritePinPointCommentStack">>();
     const nav = useNavigation();

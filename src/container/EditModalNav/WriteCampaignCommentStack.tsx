@@ -13,7 +13,7 @@ const WriteCampaignCommentStack = () => {
     const { params: { caid, cname, comment } } = useRoute<RouteProp<EditModalNavParamList, "WriteCampaignCommentStack">>();
     const { auth: { userToken } } = useAuthContext();
     const { useLoading: { startLoading, endLoading } } = useLoadingContext();
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const mainNav = mainNavigation();
 

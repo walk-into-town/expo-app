@@ -13,8 +13,8 @@ import Footer from '../../components/Footer';
 const CampaignDetailStack = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext()
     const { auth: { userToken } } = useAuthContext()
-    const isFocused = useIsFocused()
     if (userToken === undefined) return <></>;
+    const isFocused = useIsFocused()
     const { params: { campaign } } = useRoute<RouteProp<ModalNavParamList, 'CampaignDetailStack'>>();
 
     // state
