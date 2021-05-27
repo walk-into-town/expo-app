@@ -1,7 +1,7 @@
 import { PinPoint } from '@types'
 import React from 'react'
 import { View } from 'react-native'
-import { DefaultListItem, SubTitle } from '../../atoms'
+import { DefaultListItem, LoadingCircle, SubTitle } from '../../atoms'
 
 interface Props {
     pinPointList: PinPoint[],
@@ -11,9 +11,7 @@ interface Props {
 
 const PinPointListTab = ({ pinPointList, navtoPinPointDetail, refreshing }: Props) => {
     if (refreshing)
-        return <View style={{ height: 45, alignItems: "center", justifyContent: "center" }}>
-            <SubTitle>로딩중</SubTitle>
-        </View>
+        return <LoadingCircle size={50}/>
 
     return (
         <View>

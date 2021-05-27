@@ -1,6 +1,6 @@
 import { SearchCampaign } from '@types'
 import React from 'react'
-import { SubTitle } from '../../atoms'
+import { LoadingCircle, } from '../../atoms'
 
 import CampaignCard from './CampaignCard'
 //  https://github.com/kohver/react-native-touchable-scale
@@ -11,20 +11,16 @@ interface Props {
 }
 
 const CampaignList = ({ isFetchingData, campaignList }: Props) => {
-    if (isFetchingData)
-        return (<SubTitle style={{textAlign: "center", marginTop: "50%"}}> 로딩중 </SubTitle>)
-    
     return (
-        <>
-            {
-                campaignList.map((campaign, idx) =>
-                    <CampaignCard
-                        key={idx}
-                        campaign={campaign}
-                    />
-                )
-            }
-        </>
+        isFetchingData ?
+            <LoadingCircle />
+            :
+            campaignList.map((campaign, idx) =>
+                <CampaignCard
+                    key={idx}
+                    campaign={campaign}
+                />
+            )
     )
 }
 export default CampaignList;

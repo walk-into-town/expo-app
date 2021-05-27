@@ -2,8 +2,7 @@ import { BadgeButtonGroupButtonsProps, UpdateCampaignComment } from '@types'
 import { CampaignComment } from '@types'
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
-import { BadgeButton, ClearButton, Row, SubTitle } from '../../atoms'
-import BadgeButtonGroup from '../../atoms/BadgeButtonGroup'
+import { BadgeButton, ClearButton, LoadingCircle, Row, SubTitle, BadgeButtonGroup } from '../../atoms'
 import Comment from './Comment'
 
 interface Props {
@@ -77,9 +76,7 @@ const CommentList = (props: Props) => {
 
             {
                 refreshing ?
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <SubTitle>로딩중</SubTitle>
-                    </View>
+                    <LoadingCircle />
                     :
                     commentList.map((comment, idx) => (
                         <Comment

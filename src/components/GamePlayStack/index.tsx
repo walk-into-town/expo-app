@@ -7,6 +7,7 @@ import { ClearButton, DefaultAlert } from '../../atoms'
 import { useLoadingContext, mainNavigation, useSound } from '../../useHook'
 import LottieView from "lottie-react-native";
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { animationPath } from '../../util';
 
 interface Props {
 
@@ -19,12 +20,13 @@ const GameTest = (props: Props) => {
     const Heart = useRef<LottieView>(null);
 
     const [isLiked, setIsLiked] = useState(false);
-    useEffect(() => {
-        if (!isLiked)
-            Heart.current?.play(30, 194);
-        else
+    const toggleLinked = () => {
+        if (isLiked)
             Heart.current?.play(130, 30);
-    }, [isLiked]);
+        else
+            Heart.current?.play(30, 130);
+        setIsLiked(!isLiked)
+    }
 
 
     const { playSound, stopSound } = useSound();
@@ -83,11 +85,11 @@ const GameTest = (props: Props) => {
                 ref={Confetti}
             />
 
-            <TouchableOpacity onPress={() => setIsLiked(!isLiked)}>
+            <TouchableOpacity onPress={toggleLinked}>
                 <LottieView
                     ref={Heart}
                     style={{ width: 100, height: 100 }}
-                    source={require("../../../assets/heart.json")}
+                    source={animationPath.heart}
                     autoPlay={false}
                     loop={false}
                 />

@@ -50,7 +50,7 @@ const ProfileCard = ({ campaignProfile, isParticipate, onParticipate, refreshing
                 <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaignProfile.description}</Text>
 
                 {
-                    refreshing ? <ClearButton title="로딩중" /> :
+                    refreshing ? <ClearButton title="로딩중" color={colorCode.light} /> :
                     campaignProfile.ownner === userToken.id ?
                         <EditButton />
                         : isParticipate ?

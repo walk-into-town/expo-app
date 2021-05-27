@@ -10,7 +10,8 @@ export * from "./color"
 
 export * from './Carousel'
 
-import ImgPicker from './ImgPicker';
-import InputModal from './InputModal';
-import DateInput from './DateInput';
-export { ImgPicker, InputModal, DateInput };
+export { default as BadgeButtonGroup } from "./BadgeButtonGroup"
+export { default as ImgPicker } from './ImgPicker';
+export { default as InputModal } from './InputModal';
+export { default as DateInput } from './DateInput';
+export { default as LoadingCircle } from "./LoadingCircle"
