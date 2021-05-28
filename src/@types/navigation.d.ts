@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -46,7 +46,8 @@ declare module "@types" {
     type MakeCampaignParams = {
         pinpoint?: MakePinPoint,
         coupon?: MakeCoupon,
-        editIndex?: number
+        editIndex?: number,
+        campaign?: MakeCampaign
     }
 
     // 게임

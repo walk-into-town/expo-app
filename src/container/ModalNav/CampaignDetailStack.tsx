@@ -1,5 +1,5 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core';
-import { CampaginProfile, CampaignComment, Coupon, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, UpdateCampaignComment } from '@types';
+import { CampaginProfile, CampaignComment, Coupon, MakeCampaign, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, UpdateCampaignComment } from '@types';
 import React, { useEffect, useState } from 'react'
 import { API } from '../../api';
 import { RefreshControl } from 'react-native';
@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ButtonTabs, ConfirmAlert, Container, DefaultAlert, SelectionAlert } from '../../atoms';
 import { ProfileCard, CommentList, CouponListTab, PinPointListTab } from '../../components/CampaignDetailStack';
 import Footer from '../../components/Footer';
+import { searchCampaignToMakeCampaign } from '../../util';
 
 const CampaignDetailStack = () => {
     const { useLoading: { startLoading, endLoading } } = useLoadingContext()
@@ -75,6 +76,9 @@ const CampaignDetailStack = () => {
     const navToWriteComment = (comment: UpdateCampaignComment | null) => {
         mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
     }
+    const navToEditCamaign = () => {
+        mainNav.navigate('MakeCampaignNav', { screen: "MakeCampaignStack", params: {} })
+    }
 
     // usecase
     const onRefresh = () => {
@@ -100,8 +104,16 @@ const CampaignDetailStack = () => {
             title: "캠페인에 참여하게 되었습니다!",
             buttons: [
                 {
-                    text: "나의 캠페인 정보를 확인하기", onPress: () => {
+                    text: "나의 캠페인 정보를 확인하기",
+                    onPress: () => {
                         mainNav.navigate("ModalNav", { screen: 'MyDetailStack', params: { selectedIndex: 1 } });
+                        endLoading();
+                    }
+                },
+                {
+                    text: "모험을 시작하기",
+                    onPress: () => {
+                        mainNav.navigate("HomeTab", { screen: "GameStack" })
                         endLoading();
                     }
                 }
@@ -111,6 +123,40 @@ const CampaignDetailStack = () => {
                 onRefresh();
             }
         })
+    }
+    const onWithDarw = () => {
+        const init = async () => {
+            startLoading();
+
+            const { result, data, error, errdesc } = await API.campaignWithdraw({ caid: campaign.id, uid: userToken.id })
+            if (result === "failed")
+                return DefaultAlert({ title: error, subTitle: errdesc, onPress: endLoading });
+
+            DefaultAlert({ title: "성공적으로 탈퇴했습니다." })
+            onRefresh();
+            endLoading();
+        }
+        ConfirmAlert({ title: "정말 캠페인을 탈퇴하시겠습니까?", subTitle: "참여한 데이터를 모두 잃게 됩니다.", onConfirm: init });
+    }
+    const onEdit = () => {
+        const makeCampaign: MakeCampaign = searchCampaignToMakeCampaign(campaign, pinPointList, couponList);
+        mainNav.navigate("MakeCampaignNav", { screen: "MakeCampaignStack", params: { campaign: makeCampaign } })
+    }
+
+    const onDeleteCampaign = () => {
+        const init = async () => {
+            startLoading();
+
+            const { result, data, error, errdesc } = await API.campaignDelete({ caid: campaign.id, uid: userToken.id })
+            if (result === "failed")
+                return DefaultAlert({ title: error, subTitle: errdesc, onPress: endLoading });
+
+            DefaultAlert({ title: "성공적으로 삭제되었습니다." })
+            mainNav.navigate("HomeTab", { screen: "CampaignStack" })
+            endLoading();
+        }
+        ConfirmAlert({ title: "정말 캠페인을 삭제 하시겠습니까?", subTitle: "해당 캠페인 관련된 모든 데이터를 잃게 됩니다.", onConfirm: init });
+
     }
 
     const onDeleteComment = (rid: string) => {
@@ -133,6 +179,9 @@ const CampaignDetailStack = () => {
                     campaignProfile={campaignProfile}
                     isParticipate={isParticipate}
                     onParticipate={onParticipate}
+                    onWithDarw={onWithDarw}
+                    onEdit={onEdit}
+                    onDeleteCampaign={onDeleteCampaign}
                     refreshing={refreshing}
                 />
 

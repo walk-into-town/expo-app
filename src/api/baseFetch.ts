@@ -31,7 +31,6 @@ export const baseFetch: fetch = async (route, method, options = {}) => {
             headers: options.isForm ? formHeader : baseHeader,
             signal: controller.signal,
         });
-
         if (res.ok === false && res.status > 400) {
             console.log(await res.text())
             throw new Error(`응답 코드 [${res.status}] 에러`)

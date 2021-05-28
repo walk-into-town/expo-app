@@ -1,5 +1,5 @@
 import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PlayingCampaign, RegisterMember } from "@types"
-import { formAppendImgs } from "../util"
+import { formAppendImg, formAppendImgs } from "../util"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
 
@@ -29,10 +29,9 @@ type MemberModifyFetch = (body: ModifyMember) => BaseFetchRes<{ profileImg: stri
 export const memberModify: MemberModifyFetch = (body) => {
     const formdata = new FormData();
     formdata.append('uid', body.uid);
-    formdata.append('uid', body.nickname);
-    formdata.append('uid', body.selfIntroduction);
-    formAppendImgs(formdata, [body.img]);
-
+    formdata.append('nickname', body.nickname);
+    formdata.append('selfIntroduction', body.selfIntroduction);
+    formAppendImg(formdata, body.img);
     return baseFetch(`${ip}/member`, "PUT", { body: formdata, isForm: true });
 }
 

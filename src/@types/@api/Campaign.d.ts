@@ -3,7 +3,7 @@ import { Coupon, MakeCoupon, MakePinPoint, PinPoint } from "@types";
 declare module "@types" {
     type Campaign = {
         id?: string,
-        ownner?: string,
+        ownner: string,
         name: string,
         imgs: string[],
         description: string,

@@ -1,4 +1,4 @@
-import { Coupon, MakePinPoint, } from "@types";
+import { Campaign, Coupon, MakeCampaign, MakeCoupon, MakePinPoint, PinPoint, SearchCampaign, } from "@types";
 
 // type check
 export const isJsonString = (str: string) => {
@@ -34,4 +34,44 @@ export const isEditPinPoint = (a: MakePinPoint, b: MakePinPoint) => {
 export const isEditCoupon = (a: Coupon, b: Coupon) => {
     return a.name !== b.name || a.description !== b.description
         || a.endDate !== b.endDate || a.limit !== b.limit || a.img !== b.img
+}
+
+// convert
+
+export const searchCampaignToMakeCampaign = (campaign: SearchCampaign, pinpoints: PinPoint[], coupons: Coupon[]): MakeCampaign => {
+    return {
+        id: campaign.id,
+        name: campaign.name,
+        description: campaign.description,
+        ownner: campaign.ownner,
+        imgs: campaign.imgs,
+        region: campaign.region,
+        pinpoints: pinpoints.map(p => pinpointToMakePinpoint(p)),
+        coupons: coupons.map(c => couponToMakeCoupon(c)),
+    }
+}
+
+export const pinpointToMakePinpoint = (pinpoint: PinPoint): MakePinPoint => {
+    return {
+        id: pinpoint.id,
+        name: pinpoint.name,
+        latitude: pinpoint.latitude,
+        longitude: pinpoint.longitude,
+        description: pinpoint.description,
+        imgs: pinpoint.imgs,
+        quiz: pinpoint.quiz
+    }
+}
+
+export const couponToMakeCoupon = (coupon: Coupon): MakeCoupon => {
+    return {
+        id: coupon.id,
+        name: coupon.name,
+        description: coupon.description,
+        endDate: coupon.endDate,
+        limit: coupon.limit,
+        goods: coupon.goods,
+        img: coupon.img,
+        paymentCondition: 0
+    }
 }

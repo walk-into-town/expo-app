@@ -26,13 +26,19 @@ const MyProfileEditStack = (props: Props) => {
         const init = async () => {
             // const { result, data, error, errdesc } = await API.debugSendImg(getImgForm());
             // console.log(result, data, error, errdesc);
+            const isNicknameEdit = userToken.nickname === nickname;
+            const isSelfIntroductionEdit = userToken.selfIntroduction === selfIntroduction;
+            const isProfileImgEdit = userToken.profileImg === imgUri;
+
+            if (isNicknameEdit && isSelfIntroductionEdit && isProfileImgEdit)
+                return nav.goBack();
 
             startLoading();
             const { result, data, error, errdesc } = await API.memberModify({
                 uid: userToken.id,
-                selfIntroduction: userToken.selfIntroduction === selfIntroduction ? "" : selfIntroduction,
-                nickname: userToken.nickname === nickname ? "" : nickname,
-                img: userToken.profileImg === imgUri ? "" : imgUri
+                selfIntroduction: isSelfIntroductionEdit ? "" : selfIntroduction,
+                nickname: isNicknameEdit ? "" : nickname,
+                img: isProfileImgEdit ? "" : imgUri
             });
             endLoading();
 

@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
-import { View, Dimensions } from 'react-native'
+import { View, Dimensions, Image } from 'react-native'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import LottieView from "lottie-react-native";
-import { ClearButton, SubTitle, Title } from '../../atoms';
+import { ClearButton, Container, SubTitle, Title } from '../../atoms';
 import { animationPath } from '../../util';
 import { Card } from 'react-native-elements';
 import { mainNavigation } from '../../useHook';
@@ -24,7 +24,7 @@ const ClearCampaignStack = (props: Props) => {
     }
 
     return (
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <Container style={{ alignItems: "center" }}>
 
             <View>
                 <LottieView
@@ -55,7 +55,7 @@ const ClearCampaignStack = (props: Props) => {
                 fadeOut
                 ref={Confetti}
             />
-        </View>
+        </Container>
     )
 }
 

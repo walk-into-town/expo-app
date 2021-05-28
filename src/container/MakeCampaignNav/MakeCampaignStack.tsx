@@ -14,16 +14,16 @@ import axios from 'axios';
 const MakeCampaignStack = () => {
     const { auth: { userToken } } = useAuthContext();
     const { useLoading: { endLoading, startLoading } } = useLoadingContext();
-    const { params: { pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakeCampaignStack'>>();
+    const { params: { campaign, pinpoint, coupon, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakeCampaignStack'>>();
     const mainNav = mainNavigation();
     const makeCampaignNav = makeCampaignNavigation();
 
-    const [title, setTitle] = useState("");
-    const [campaignImgs, setCampaignImgs] = useState<string[]>([]);
-    const [description, setDescription] = useState("");
-    const [pinPointList, setPinPointList] = useState<MakePinPoint[]>([]);
-    const [couponList, setCouponList] = useState<MakeCoupon[]>([]);
-    const [region, setRegion] = useState<string>("");
+    const [title, setTitle] = useState(campaign?.name || "");
+    const [campaignImgs, setCampaignImgs] = useState<string[]>(campaign?.imgs || []);
+    const [description, setDescription] = useState(campaign?.description || "");
+    const [pinPointList, setPinPointList] = useState<MakePinPoint[]>(campaign?.pinpoints || []);
+    const [couponList, setCouponList] = useState<MakeCoupon[]>(campaign?.coupons || []);
+    const [region, setRegion] = useState<string>(campaign?.region || "");
 
     useEffect(() => {
         if (pinpoint) {
@@ -54,25 +54,24 @@ const MakeCampaignStack = () => {
         setCouponList([...couponList.slice(0, idx), ...couponList.slice(idx + 1)])
     }
 
-    const setCampaignRegion = async ()=>{
-        if(pinPointList.length!==0){
+    const setCampaignRegion = async () => {
+        if (pinPointList.length !== 0) {
             const lat = pinPointList[0].latitude
             const long = pinPointList[0].longitude
-            const { data : {results} } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`);
+            const { data: { results } } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`);
 
             let fullAddress = results[0].formatted_address
             let splitAddress = fullAddress.split(" ");
 
-            if(splitAddress[1].charAt(splitAddress.length-1)==="시"){
+            if (splitAddress[1].charAt(splitAddress.length - 1) === "시") {
                 setRegion(splitAddress[1])
-              }
-              else {
+            }
+            else {
                 setRegion(splitAddress[2])
-              }
+            }
         }
+        else DefaultAlert({ title: "핀포인트를 먼저 설정 하세요", subTitle: "아직 핀포인트가 설정되어있지 않습니다." })
 
-        else DefaultAlert({ title: "핀포인트를 먼저 설정 하세요", subTitle: "아직 핀포인트가  설정되어있지 않습니다." })
-            
     }
 
 
@@ -90,7 +89,7 @@ const MakeCampaignStack = () => {
             region: region
         }
     }
-    
+
     /* 캠페인 제작 송신 */
     const onCreateCampaign = async () => {
         if (isBlank([title, description])) {
@@ -107,7 +106,7 @@ const MakeCampaignStack = () => {
         if (result === "success") {
             DefaultAlert({
                 title: "캠페인 생성 완료",
-                subTitle: data ? data : "",
+                subTitle: data,
                 btColor: "default",
                 onPress: () => {
                     endLoading();

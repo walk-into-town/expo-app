@@ -23,10 +23,16 @@ type CampaignParticiapte = (body: { uid: string, caid: string }) => BaseFetchRes
 export const campaignParticiapte: CampaignParticiapte = (body) => {
     return baseFetch(`${ip}/member/playing`, "POST", { body })
 }
+export const campaignWithdraw = (body: { uid: string, caid: string }): BaseFetchRes<boolean> => {
+    return baseFetch(`${ip}/member/playing`, "DELETE", { body })
+}
 export const campaignCheckPlaying = (params: { uid: string, caid: string }): BaseFetchRes<string> => {
     return baseFetch(`${ip}/member/checkplaying?uid=${params.uid}&caid=${params.caid}`, "GET");
 }
-
+type CampaignDelete = (body: { uid: string, caid: string }) => BaseFetchRes<boolean>
+export const campaignDelete: CampaignDelete = (body) => {
+    return baseFetch(`${ip}/member/mycampaign`, "DELETE", { body })
+}
 type PinPointReadFetch = (params: PinPointReadParams) => BaseFetchRes<PinPoint[]>
 export const pinPointRead: PinPointReadFetch = (params) => {
     return baseFetch(`${ip}/pinpoint?type=${params.type}&value=${params.value}`, "GET");
