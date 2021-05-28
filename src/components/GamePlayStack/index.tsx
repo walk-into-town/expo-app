@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Image, Text } from 'react-native'
 import styled from 'styled-components/native'
-import ConfettiCannon from 'react-native-confetti-cannon';
 import { getRandomCat } from '../../api'
 import { ClearButton, DefaultAlert } from '../../atoms'
 import { useLoadingContext, mainNavigation, useSound } from '../../useHook'
@@ -16,7 +15,6 @@ interface Props {
 
 const GameTest = (props: Props) => {
     const mainNav = mainNavigation();
-    const Confetti = useRef<ConfettiCannon>(null);
     const Heart = useRef<LottieView>(null);
 
     const [isLiked, setIsLiked] = useState(false);
@@ -73,16 +71,8 @@ const GameTest = (props: Props) => {
             <ClearButton
                 title="CLEAR"
                 onPress={() => {
-                    Confetti.current?.start()
-                    DefaultAlert({ title: "퀴즈를 푸셨습니다!" })
+                    mainNav.navigate("ModalNav", { screen: "ClearCampaignStack" })
                 }}
-            />
-            <ConfettiCannon
-                count={200}
-                origin={{ x: 100, y: 0 }}
-                autoStart={false}
-                fadeOut
-                ref={Confetti}
             />
 
             <TouchableOpacity onPress={toggleLinked}>

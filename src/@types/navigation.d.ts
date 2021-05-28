@@ -64,7 +64,9 @@ declare module "@types" {
 
         CampaignDetailStack: CampaignDetailParams,
         PinPointDetailStack: PinPointDetailParams,
-        CouponDetailStack: CouponDetailParams
+        CouponDetailStack: CouponDetailParams,
+
+        ClearCampaignStack: undefined
     }
     type CampaignDetailParams = {
         campaign: SearchCampaign
