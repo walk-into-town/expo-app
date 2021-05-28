@@ -53,8 +53,9 @@ const CampaignDetailStack = () => {
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: error, subTitle: errdesc });
 
-        setCampaignProfile(data[0])
-        setCommentList(data[0].comments)
+        const cam = data[0];
+        setCampaignProfile(cam)
+        setCommentList(cam.comments)
     }
 
     useEffect(() => {

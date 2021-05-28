@@ -18,6 +18,10 @@ const CommentList = (props: Props) => {
     const [commentList, setCommentList] = useState(props.commentList)
     const [filterIdx, setFilterIdx] = useState(0)
 
+    useEffect(() => {
+        setCommentList(props.commentList);
+    }, [props.commentList])
+
     const onOnlyImgToggle = () => {
         if (isOnlyImg) {
             setCommentList([...props.commentList]);
