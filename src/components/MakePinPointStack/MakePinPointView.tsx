@@ -16,7 +16,6 @@ const MakePinPointView = (props: Props) => {
     const [name, setName] = props.useName;
     const [latitude, setLatitude] = props.useLatitude;
     const [longitude, setLongitude] = props.useLongitude;
-    const [pinPointImgs, setPinPointImgs] = props.usePinPointImgs;
     const [description, setDescription] = props.useDescription;
 
     return (
@@ -33,7 +32,7 @@ const MakePinPointView = (props: Props) => {
                 />
                 <Text>위도 {latitude} 경도 {longitude}</Text>
             </Row>
-            <ImgPicker useImgs={[pinPointImgs, setPinPointImgs]} />
+            <ImgPicker useImgs={props.usePinPointImgs} />
 
             <InputModal
                 useText={[description, setDescription]}

@@ -1,6 +1,5 @@
 import { TuseState } from '@types'
 import React from 'react'
-import { Input } from 'react-native-elements'
 import { Box, ImgPicker, InputModal } from '../../atoms'
 
 interface Props {

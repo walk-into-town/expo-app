@@ -1,7 +1,7 @@
 import { ip } from "./ip"
 import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams } from "@types"
 import { baseFetch } from "./baseFetch"
-import { formAppendImgs } from "../util";
+import { formAppendImg, formAppendImgs } from "../util";
 
 
 type CampaignCreateFetch = (body: MakeCampaign) => BaseFetchRes<string>;

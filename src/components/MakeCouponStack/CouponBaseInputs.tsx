@@ -1,6 +1,6 @@
 import { TuseState } from '@types';
 import React from 'react'
-import { ImgPicker, InputModal } from '../../atoms'
+import { InputModal } from '../../atoms'
 import SingleImgPicker from '../../atoms/SingleImgPicker';
 
 interface Props {

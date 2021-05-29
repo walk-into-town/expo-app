@@ -87,7 +87,7 @@ declare module "@types" {
         name: string,
         imgs: string[],
         description: string,
-        region?: string,
+        region: string,
 
         pinpoints: MakePinPoint[],
         coupons: MakeCoupon[],

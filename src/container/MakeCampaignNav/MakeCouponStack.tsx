@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { MakeCampaignNavParamList, MakeCoupon } from '@types';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { perventGoBack, useSubmit, makeCampaignNavigation } from '../../useHook';
-import { isBlank, isEditCoupon } from '../../util';
+import { isBlank, isEditCoupon, isLocalFile } from '../../util';
 
 import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
 import CouponBaseInputs from '../../components/MakeCouponStack/CouponBaseInputs';
@@ -51,11 +51,13 @@ const MakeCouponStack = () => {
     }
 
     const { isSubmit, onSubmit } = useSubmit({
-        submitFunc: async() => {
-            if (isBlank([name, description, limit])) {
-                DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
-                return;
-            }
+        submitFunc: async () => {
+            if (isBlank([name, description, limit]))
+                return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+
+            if (isLocalFile([couponImg]))
+                return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+
             campaginNav.navigate("MakeCampaignStack", { coupon: getCoupon(), editIndex })
         }
     });

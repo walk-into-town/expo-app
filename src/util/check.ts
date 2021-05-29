@@ -25,13 +25,17 @@ const isEqualStringArray = (a: string[], b: string[]) => {
 }
 
 // check 
+export const isLocalFile = (imgs: string[]) => {
+    return imgs.some(v => v.substring(0, 4) === "file");
+}
+
 export const isEditPinPoint = (a: MakePinPoint, b: MakePinPoint) => {
     const aq = a.quiz, bq = b.quiz;
     return a.name !== b.name || a.description !== b.description || a.latitude !== b.latitude || a.longitude !== b.longitude
         || aq.answer !== bq.answer || aq.text !== bq.text || aq.type !== bq.type
         || !isEqualStringArray(aq.choices, bq.choices) || !isEqualStringArray(a.imgs, b.imgs);
 }
-export const isEditCoupon = (a: Coupon, b: Coupon) => {
+export const isEditCoupon = (a: MakeCoupon, b: MakeCoupon) => {
     return a.name !== b.name || a.description !== b.description
         || a.endDate !== b.endDate || a.limit !== b.limit || a.img !== b.img
 }

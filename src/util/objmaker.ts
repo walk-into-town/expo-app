@@ -10,10 +10,12 @@ export const jsonstringToFormdata = (obj: OBJ) => {
     });
     return formData;
 }
-export const formAppendImgs = (formData: FormData, imgs: string[]) => {
+export const formAppendImgs = (formData: FormData, imgs: string[], option?: { formName: string }) => {
     // https://stackoverflow.com/questions/42521679/how-can-i-upload-a-photo-with-expo
     // https://github.com/g6ling/React-Native-Tips/issues/1
     imgs.forEach(img => {
+        if (img === "") return;
+
         const fileName = img.split('/').pop();
         const fileType = img.split('.').pop();
 
@@ -22,10 +24,12 @@ export const formAppendImgs = (formData: FormData, imgs: string[]) => {
             name: fileName,
             type: `image/${fileType}`
         }))
-        formData.append('imgs', file);
+        formData.append(option?.formName || "imgs", file);
     })
 }
-export const formAppendImg = (formData: FormData, img: string) => {
+export const formAppendImg = (formData: FormData, img: string, option?: { formName: string }) => {
+    if (img === "") return;
+
     const fileName = img.split('/').pop();
     const fileType = img.split('.').pop();
 
@@ -34,7 +38,7 @@ export const formAppendImg = (formData: FormData, img: string) => {
         name: fileName,
         type: `image/${fileType}`
     }))
-    formData.append('img', file);
+    formData.append(option?.formName || "img", file);
 }
 
 
