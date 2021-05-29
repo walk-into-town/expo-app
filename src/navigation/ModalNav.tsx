@@ -3,7 +3,6 @@ import React from 'react'
 import { colorCode, HeaderLeftBackIcon } from '../atoms';
 import ImageViewer from '../components/ImageViewer';
 import CampaignDetailStack from '../container/ModalNav/CampaignDetailStack';
-import ClearCampaignStack from '../container/ModalNav/ClearCampaignStack';
 import CouponDetailStack from '../container/ModalNav/CouponDetailStack';
 import MyCouponStack from '../container/ModalNav/MyCouponStack';
 import MyDetailStack from '../container/ModalNav/MyDetailStack';
@@ -51,15 +50,6 @@ const ModalNav = (props: Props) => {
             <Stack.Screen
                 name="CouponDetailStack"
                 component={CouponDetailStack}
-            />
-            {/* 게임 관련  */}
-            <Stack.Screen
-                name="ClearCampaignStack"
-                component={ClearCampaignStack}
-                options={{
-                    headerTitle: "",
-                    headerStyle: { backgroundColor: "transparent", }
-                }}
             />
         </Stack.Navigator>
     )

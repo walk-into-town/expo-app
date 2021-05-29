@@ -3,11 +3,11 @@ import { RouteProp, useRoute } from '@react-navigation/core';
 import { MakeCampaignNavParamList, MakePinPoint, MakeCoupon, MakeCampaign } from '@types';
 import { perventGoBack, useAuthContext, useLoadingContext, useSubmit, mainNavigation, makeCampaignNavigation } from '../../useHook';
 
-import { ScrollWrapper, SubmitButton, DefaultAlert } from '../../atoms';
+import { ScrollWrapper, SubmitButton, DefaultAlert, SelectionAlert } from '../../atoms';
 import CampaignBox from '../../components/MakeCampaignStack/CampaignBox';
 import PinPointListBox from '../../components/MakeCampaignStack/PinPointListBox';
 import CouponListBox from '../../components/MakeCampaignStack/CouponListBox';
-import { isBlank } from '../../util';
+import { isBlank, isLocalFile } from '../../util';
 import { API } from '../../api';
 import axios from 'axios';
 
@@ -76,7 +76,6 @@ const MakeCampaignStack = () => {
 
 
     const getCampaign = (): MakeCampaign => {
-
         if (userToken === undefined) throw new Error("userToken undefined error");
 
         return {
@@ -92,38 +91,45 @@ const MakeCampaignStack = () => {
 
     /* 캠페인 제작 송신 */
     const onCreateCampaign = async () => {
-        if (isBlank([title, description])) {
-            DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
-            return;
-        }
-        if (pinPointList.length === 0) {
-            DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
-            return;
-        }
+        if (isBlank([title, description]))
+            return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+
+        if (pinPointList.length === 0)
+            return DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
+
+        if (region === "")
+            return DefaultAlert({ title: "지역을 설정해주세요" })
+
+        if (isLocalFile(campaignImgs))
+            return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
 
         startLoading();
         const { result, data, error, errdesc } = await API.campaignCreate(getCampaign());
-        if (result === "success") {
-            DefaultAlert({
-                title: "캠페인 생성 완료",
-                subTitle: data,
-                btColor: "default",
-                onPress: () => {
-                    endLoading();
-                    onSubmit();
-                }
-            })
-        }
-        else {
-            DefaultAlert({
+        if (result !== "success" || data === undefined)
+            return DefaultAlert({
                 title: error,
                 subTitle: errdesc,
                 onPress: () => {
                     endLoading();
                 }
             })
-        }
+
+        console.log("[생성된 캠페인 아이디] " + data)
+        SelectionAlert({
+            title: "캠페인 생성 완료",
+            buttons: [{
+                text: "내 캠페인 확인하러 가기", onPress: () => {
+                    mainNav.navigate("ModalNav", { screen: "MyDetailStack", params: { selectedIndex: 0 } });
+                    endLoading();
+                }
+            }],
+            onConfirm: () => {
+                endLoading();
+                onSubmit();
+            }
+        })
     }
+
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
             mainNav.navigate("HomeTab", { screen: "CampaignStack" })

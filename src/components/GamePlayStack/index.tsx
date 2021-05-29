@@ -35,12 +35,6 @@ const GameTest = (props: Props) => {
         loading ? startLoading() : endLoading();
     }, [loading]);
 
-    useEffect(() => {
-        playSound();
-        return () => stopSound();
-    }, [])
-
-
     const onPressRandom = () => {
         stopSound();
         refetch();

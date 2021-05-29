@@ -39,6 +39,13 @@ const PinPointDetailStack = () => {
             params: { pid: pinpoint.id, pname: pinpoint.name, comment }
         })
     }
+    const navToGame = () => {
+        mainNav.navigate("GameNav", {
+            screen: "QuizStack",
+            params: { caid: params.cid, pid: pinpoint.id, quiz: pinpoint.quiz }
+        })
+    }
+
 
     // api
     const getComment = async () => {
@@ -81,7 +88,10 @@ const PinPointDetailStack = () => {
 
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-            <PinPointInfo pinpoint={pinpoint} />
+            <PinPointInfo
+                pinpoint={pinpoint}
+                navToGame={navToGame}
+            />
             <PinPointCommentBox
                 comments={comments}
                 navToWriteComment={navToWriteComment}

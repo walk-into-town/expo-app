@@ -68,16 +68,13 @@ const CampaignDetailStack = () => {
     const modalNav = modalNavigation();
     const mainNav = mainNavigation();
     const navtoPinPointDetail = (pinpoint: PinPoint) => {
-        modalNav.navigate('PinPointDetailStack', { pinpoint, campaignName: campaign.name })
+        modalNav.navigate('PinPointDetailStack', { pinpoint, cid: campaign.id, campaignName: campaign.name })
     }
     const navToCouponDetail = (coupon: Coupon) => {
         modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name })
     }
     const navToWriteComment = (comment: UpdateCampaignComment | null) => {
         mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
-    }
-    const navToEditCamaign = () => {
-        mainNav.navigate('MakeCampaignNav', { screen: "MakeCampaignStack", params: {} })
     }
 
     // usecase

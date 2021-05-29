@@ -11,7 +11,7 @@ interface Props {
 
 }
 
-const ClearCampaignStack = (props: Props) => {
+const GameClear = (props: Props) => {
     const mainNav = mainNavigation();
     const Confetti = useRef<ConfettiCannon>(null);
 
@@ -67,4 +67,4 @@ const ClearCampaignStack = (props: Props) => {
     )
 }
 
-export default ClearCampaignStack
+export default GameClear
