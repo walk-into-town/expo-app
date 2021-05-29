@@ -61,5 +61,7 @@ export const loadingPath = {
 export const animationPath = {
     heart: require('../../assets/animation/heart.json'),
     loading: require('../../assets/animation/loading.json'),
-    celebrationGiraffe: require('../../assets/animation/celebration-giraffe.json')
+    confetti: require('../../assets/animation/confetti.json'),
+    found: require('../../assets/animation/found.json'),
+    chilling: require('../../assets/animation/chilling.json'),
 }

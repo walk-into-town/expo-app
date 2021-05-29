@@ -16,6 +16,7 @@ const ClearCampaignStack = (props: Props) => {
     const Confetti = useRef<ConfettiCannon>(null);
 
     const pageWidth = Math.round(Dimensions.get('window').width);
+    const pageHight = Math.round(Dimensions.get('window').height);
     const onConfetti = () => Confetti.current?.start();
 
     const navToMyCouponStack = () => {
@@ -25,17 +26,24 @@ const ClearCampaignStack = (props: Props) => {
 
     return (
         <Container style={{ alignItems: "center" }}>
-
-            <View>
+            {/* Confetti */}
+            <View style={{ position: "absolute" }}>
                 <LottieView
-                    source={animationPath.celebrationGiraffe}
+                    source={animationPath.confetti}
                     autoPlay
                     loop
-                    style={{ height: 220 }}
+                    style={{ height: pageHight }}
                 />
             </View>
 
-            <Title>축하드립니다!</Title>
+            {/* Main */}
+            <LottieView
+                source={animationPath.chilling}
+                autoPlay
+                loop
+                style={{ width: 270 }}
+            />
+            <Title style={{ marginTop: 0 }}>축하드립니다!</Title>
             <Title>퀴즈의 정답을 맞췄습니다</Title>
             <Card wrapperStyle={{ alignItems: "center" }}>
                 <SubTitle>지급되는 쿠폰 정보</SubTitle>

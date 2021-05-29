@@ -56,7 +56,10 @@ const ModalNav = (props: Props) => {
             <Stack.Screen
                 name="ClearCampaignStack"
                 component={ClearCampaignStack}
-                options={{ headerTitle: "" }}
+                options={{
+                    headerTitle: "",
+                    headerStyle: { backgroundColor: "transparent", }
+                }}
             />
         </Stack.Navigator>
     )

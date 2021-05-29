@@ -1,9 +1,11 @@
 import { BadgeButtonGroupButtonsProps, UpdateCampaignComment } from '@types'
 import { CampaignComment } from '@types'
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { BadgeButton, ClearButton, LoadingCircle, Row, SubTitle, BadgeButtonGroup } from '../../atoms'
 import Comment from './Comment'
+import LottieView from "lottie-react-native";
+import { animationPath } from '../../util'
 
 interface Props {
     commentList: CampaignComment[]
