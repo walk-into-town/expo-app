@@ -26,6 +26,12 @@ declare module "@types" {
         }
     }
 
+    /* BGM */
+    interface IBGMContext {
+        playSound: () => void;
+        stopSound: () => void;
+    }
+
     interface IUserToken {
         id: string;
         nickname: string;

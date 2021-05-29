@@ -15,7 +15,7 @@ export const useSound = (soundFile?: any) => {
         const init = async () => {
             try {
                 const soundList = [...Object.values(soundPath)]
-                const path = soundList[Math.floor(Math.random() * soundList.length)]
+                const path = soundFile ? soundFile : soundList[Math.floor(Math.random() * soundList.length)]
                 const { sound } = await Audio.Sound.createAsync(path, { isLooping: true });
                 setSound(sound);
                 await sound.playAsync();
