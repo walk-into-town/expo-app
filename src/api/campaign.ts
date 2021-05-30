@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams } from "@types"
+import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember } from "@types"
 import { baseFetch } from "./baseFetch"
 import { formAppendImg, formAppendImgs } from "../util";
 
@@ -28,6 +28,9 @@ export const campaignWithdraw = (body: { uid: string, caid: string }): BaseFetch
 }
 export const campaignCheckPlaying = (params: { uid: string, caid: string }): BaseFetchRes<string> => {
     return baseFetch(`${ip}/member/checkplaying?uid=${params.uid}&caid=${params.caid}`, "GET");
+}
+export const campaignParticiaptedUsers = (caid: string): BaseFetchRes<PartedMember[]> => {
+    return baseFetch(`${ip}/campaign/playing?caid=${caid}`, "GET")
 }
 type CampaignDelete = (body: { uid: string, caid: string }) => BaseFetchRes<boolean>
 export const campaignDelete: CampaignDelete = (body) => {

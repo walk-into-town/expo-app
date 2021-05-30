@@ -28,4 +28,9 @@ declare module "@types" {
         myCampaign: number,
         clearCampaign: number
     }
+
+    type PartedMember = {
+        nickname: string, 
+        profileImg: string
+    }
 }
