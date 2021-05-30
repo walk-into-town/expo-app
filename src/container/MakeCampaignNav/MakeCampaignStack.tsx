@@ -7,7 +7,7 @@ import { ScrollWrapper, SubmitButton, DefaultAlert, SelectionAlert } from '../..
 import CampaignBox from '../../components/MakeCampaignStack/CampaignBox';
 import PinPointListBox from '../../components/MakeCampaignStack/PinPointListBox';
 import CouponListBox from '../../components/MakeCampaignStack/CouponListBox';
-import { isBlank, isLocalFile } from '../../util';
+import { getDummySearchCampaign, isBlank, isLocalFile } from '../../util';
 import { API } from '../../api';
 import axios from 'axios';
 
@@ -79,6 +79,7 @@ const MakeCampaignStack = () => {
         if (userToken === undefined) throw new Error("userToken undefined error");
 
         return {
+            id: campaign?.id,
             ownner: userToken.id,
             name: title,
             description,
@@ -90,20 +91,29 @@ const MakeCampaignStack = () => {
     }
 
     /* 캠페인 제작 송신 */
+    const onCheck = (): boolean => {
+        if (isBlank([title, description])) {
+            DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+            return false;
+        }
+        if (pinPointList.length === 0) {
+            DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
+            return false;
+        }
+        if (region === "") {
+            DefaultAlert({ title: "지역을 설정해주세요" })
+            return false;
+        }
+        if (isLocalFile(campaignImgs)) {
+            DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+            return false;
+        }
+        return true
+    }
     const onCreateCampaign = async () => {
-        if (isBlank([title, description]))
-            return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
-
-        if (pinPointList.length === 0)
-            return DefaultAlert({ title: "아직은 부족해 🥺", subTitle: "적어도 하나이상의 핀포인트를 만들어 주세요." })
-
-        if (region === "")
-            return DefaultAlert({ title: "지역을 설정해주세요" })
-
-        if (isLocalFile(campaignImgs))
-            return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
-
+        if (!onCheck()) return;
         startLoading();
+        const cam = getCampaign();
         const { result, data, error, errdesc } = await API.campaignCreate(getCampaign());
         if (result !== "success" || data === undefined)
             return DefaultAlert({
@@ -114,25 +124,52 @@ const MakeCampaignStack = () => {
                 }
             })
 
-        console.log("[생성된 캠페인 아이디] " + data)
         SelectionAlert({
             title: "캠페인 생성 완료",
-            buttons: [{
-                text: "내 캠페인 확인하러 가기", onPress: () => {
-                    mainNav.navigate("ModalNav", { screen: "MyDetailStack", params: { selectedIndex: 0 } });
-                    endLoading();
+            buttons: [
+                {
+                    text: "캠페인 디테일 화면 확인", onPress: () => {
+                        mainNav.navigate("ModalNav", { screen: "CampaignDetailStack", params: { campaign: getDummySearchCampaign(data) } });
+                        endLoading();
+                    }
+                },
+                {
+                    text: "내 캠페인 리스트 확인", onPress: () => {
+                        mainNav.navigate("ModalNav", { screen: "MyDetailStack", params: { selectedIndex: 0 } });
+                        endLoading();
+                    }
                 }
-            }],
+            ],
             onConfirm: () => {
-                endLoading();
-                onSubmit();
+                endLoading()
+                mainNav.navigate("HomeTab", { screen: "CampaignStack" })
             }
         })
+    }
+    const onUpdateCamapign = async () => {
+        if (!onCheck()) return;
+        startLoading();
+        const { result, data, error, errdesc } = await API.campaignUpdate(getCampaign());
+        if (result !== "success" || data === undefined)
+            return DefaultAlert({
+                title: error,
+                subTitle: errdesc,
+                onPress: () => {
+                    endLoading();
+                }
+            })
+
+        const cid = campaign?.id || "error"
+        mainNav.navigate("ModalNav", { screen: "CampaignDetailStack", params: { campaign: getDummySearchCampaign(cid) } });
+        endLoading();
     }
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
-            mainNav.navigate("HomeTab", { screen: "CampaignStack" })
+            if (campaign?.id !== undefined)
+                await onUpdateCamapign();
+            else
+                await onCreateCampaign();
         }
     });
     const hasUnsavedChanges = Boolean(title || description || campaignImgs.length || pinPointList.length || couponList.length)
@@ -161,7 +198,7 @@ const MakeCampaignStack = () => {
                 navToCouponModal={navToCouponModal}
             />
 
-            <SubmitButton title={"캠페인 만들기"} onPress={onCreateCampaign} />
+            <SubmitButton title={"캠페인 만들기"} onPress={onSubmit} />
         </ScrollWrapper>
     )
 }

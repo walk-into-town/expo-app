@@ -9,6 +9,10 @@ export const campaignCreate: CampaignCreateFetch = (body) => {
     return baseFetch(`${ip}/campaign`, "POST", { body });
 }
 
+export const campaignUpdate = (body: MakeCampaign): BaseFetchRes<string> => {
+    return baseFetch(`${ip}/campaign`, "PUT", { body });
+}
+
 export const campaignReadAll: () => BaseFetchRes<SearchCampaign[]> = () => {
     return baseFetch(`${ip}/campaign/scan`, "GET");
 }
