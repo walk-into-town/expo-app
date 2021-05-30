@@ -44,6 +44,7 @@ const CampaignDetailStack = () => {
     }
     const getCoupons = async () => {
         const { result, data, error, errdesc } = await API.couponRead({ type: 'campaign', value: campaign.id });
+        console.log(data)
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
@@ -71,7 +72,7 @@ const CampaignDetailStack = () => {
         modalNav.navigate('PinPointDetailStack', { pinpoint, cid: campaign.id, campaignName: campaign.name })
     }
     const navToCouponDetail = (coupon: Coupon) => {
-        modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name })
+        modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name, pinpointList: pinPointList.map(v => v.name) })
     }
     const navToWriteComment = (comment: UpdateCampaignComment | null) => {
         mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })

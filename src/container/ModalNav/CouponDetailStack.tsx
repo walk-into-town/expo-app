@@ -7,24 +7,25 @@ import { PaddingBox, SubTitle, Text3, Title, AbsoluteCousel } from '../../atoms'
 import Footer from '../../components/Footer';
 import { toCommonDate } from '../../util';
 
-interface Props {
-
-}
-
-const CouponDetailStack = (props: Props) => {
-    const { params: { coupon, campaignName } } = useRoute<RouteProp<ModalNavParamList, "CouponDetailStack">>();
+const CouponDetailStack = () => {
+    const { params: { coupon, campaignName, pinpointList } } = useRoute<RouteProp<ModalNavParamList, "CouponDetailStack">>();
 
     const nav = useNavigation();
     useEffect(() => {
         nav.setOptions({ headerTitle: `${campaignName}의 쿠폰` })
     }, [campaignName])
 
+    const renderCondition = (): string => {
+        if (coupon.paymentCondition === -1) return `[${campaignName}]캠페인 클리어시`
+        return `[${pinpointList[coupon.paymentCondition]}] 핀포인트 클리어시`
+    }
+
     return (
         <ScrollView>
-            <AbsoluteCousel images={ ["https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg", "https://i.ytimg.com/vi/IdMIqWnRpLg/maxresdefault.jpg"]} />
-          
+            <AbsoluteCousel images={["https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg", "https://i.ytimg.com/vi/IdMIqWnRpLg/maxresdefault.jpg"]} />
+
             <Card containerStyle={{ borderRadius: 4 }}>
-                <Title style={{ textAlign: "center" }}>{coupon.name}</Title>
+                <Title>{coupon.name}</Title>
                 <Text3 style={{ textAlign: "center" }}>{coupon.description}</Text3>
             </Card>
 
@@ -39,6 +40,11 @@ const CouponDetailStack = (props: Props) => {
                 <Text3>~ {toCommonDate(coupon.endDate)}</Text3>
             </PaddingBox>
             <Divider />
+
+            <PaddingBox>
+                <SubTitle>지급 조건</SubTitle>
+                <Text3>{renderCondition()}</Text3>
+            </PaddingBox>
 
             <PaddingBox style={{ alignItems: 'center' }}>
                 <SubTitle>{coupon.issued} / {coupon.limit}</SubTitle>

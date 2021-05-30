@@ -78,7 +78,8 @@ declare module "@types" {
     }
     type CouponDetailParams = {
         campaignName: string,
-        coupon: Coupon
+        coupon: Coupon,
+        pinpointList: string[]
     }
 
     // 편집 모달 화면

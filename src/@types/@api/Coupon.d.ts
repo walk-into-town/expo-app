@@ -8,6 +8,7 @@ declare module "@types" {
         issued: number,
         limit: number,
         img: string,
+        paymentCondition: number
     }
 
     type MakeCoupon = {
