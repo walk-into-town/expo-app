@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Text } from 'react-native-elements';
 import { TuseState } from '@types';
 import { OutLineButton } from './elements/buttons';
-import { Row } from './elements/layouts';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { API } from '../api';
 import { DefaultAlert } from './elements/alerts';
@@ -12,15 +10,8 @@ import { Gray } from './elements/texts';
 import { isLocalFile } from '../util';
 
 
-const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
+export const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
     const [imgList, setImgList] = props.useImgs;
-    // 서버로 이미지를 보내라는 경보
-    const [warn, setWarn] = useState(false)
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        setWarn(isLocalFile(imgList))
-    }, [imgList])
 
     const pickImage = async () => {
         (async () => {
@@ -46,6 +37,38 @@ const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
         setImgList(imgList.filter((_, i) => i != idx));
     }
 
+    return (
+        <View style={{ width: "100%" }}>
+            <OutLineButton title="사진 추가" onPress={pickImage} />
+            {
+                imgList.length > 0 && <Gray style={{ marginVertical: 4 }}>
+                    * 사진을 클릭하면 삭제 됩니다.
+                </Gray>
+            }
+            <ScrollView horizontal>
+                {imgList.map((uri, idx) =>
+                    <TouchableOpacity key={idx} onPress={() => onImgPress(idx)}>
+                        <Image
+                            source={{ uri: uri }}
+                            style={{ width: 100, height: 100, marginRight: 4 }}
+                        />
+                    </TouchableOpacity>
+                )}
+            </ScrollView>
+        </View>
+    );
+}
+
+export const ImgPickerToServer = (props: { useImgs: TuseState<string[]> }) => {
+    const [imgList, setImgList] = props.useImgs;
+    // 서버로 이미지를 보내라는 경보
+    const [warn, setWarn] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setWarn(isLocalFile(imgList))
+    }, [imgList])
+
     const sendOnSever = () => {
         const init = async () => {
             if (!warn) return;
@@ -66,26 +89,9 @@ const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
 
     return (
         <View style={{ marginBottom: 20, width: "100%" }}>
-            <OutLineButton title="사진 추가" onPress={pickImage} />
-            {
-                imgList.length > 0 && <Gray style={{ marginVertical: 4 }}>
-                    * 사진을 클릭하면 삭제 됩니다.
-                </Gray>
-            }
-            <ScrollView horizontal>
-                {imgList.map((uri, idx) =>
-                    <TouchableOpacity key={idx} onPress={() => onImgPress(idx)}>
-                        <Image
-                            source={{ uri: uri }}
-                            style={{ width: 100, height: 100, marginRight: 4 }}
-                        />
-                    </TouchableOpacity>
-                )}
-            </ScrollView>
+            <ImgPicker useImgs={[imgList, setImgList]} />
             <Gray style={{ marginVertical: 4 }}>{warn ? "* 서버로 이미지를 전송해야합니다." : ""}</Gray>
             <OutLineButton title={loading ? "..." : "서버에 사진 전송"} onPress={sendOnSever} disabled={!warn || loading} />
         </View>
     );
 }
-
-export default ImgPicker;

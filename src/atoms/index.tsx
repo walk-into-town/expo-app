@@ -9,9 +9,10 @@ export * from "./elements/alerts"
 export * from "./color"
 
 export * from './Carousel'
+export * from './ImgPicker'
+export * from './SingleImgPicker'
 
 export { default as BadgeButtonGroup } from "./BadgeButtonGroup"
-export { default as ImgPicker } from './ImgPicker';
-export { default as InputModal } from './InputModal';
-export { default as DateInput } from './DateInput';
+export { default as InputModal } from './InputModal'
+export { default as DateInput } from './DateInput'
 export { default as LoadingCircle } from "./LoadingCircle"

@@ -27,7 +27,7 @@ const CampaignList = ({ isFetchingData, campaignList }: Props) => {
                             loop
                             style={{width: 300}}
                         />
-                        <SubTitle>조회된 캠페인이 없군요.</SubTitle>
+                        <SubTitle>조회된 캠페인이 없군요</SubTitle>
                     </View>
                     : campaignList.map((campaign, idx) => (
                         <CampaignCard

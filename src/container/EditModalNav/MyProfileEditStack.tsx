@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 
-import { Container, DefaultAlert, InputModal, SubmitButton } from '../../atoms'
+import { Container, DefaultAlert, InputModal, SingleImgPicker, SubmitButton } from '../../atoms'
 import { useAuthContext, useLoadingContext } from '../../useHook';
-import SingleImgPicker from '../../atoms/SingleImgPicker';
 import { API } from '../../api';
 import { useNavigation } from '@react-navigation/core';
 import { formAppendImgs } from '../../util';
