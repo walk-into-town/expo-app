@@ -22,7 +22,7 @@ declare module "@types" {
         profileImg: string,
         selfIntroduction: string
     }
-    
+
     type MemberInfoRes = {
         playingCampaign: number,
         myCampaign: number,
@@ -30,7 +30,15 @@ declare module "@types" {
     }
 
     type PartedMember = {
-        nickname: string, 
+        nickname: string,
+        profileImg: string
+    }
+
+    type RankMember = {
+        rank?: number,
+        cleared: number,
+        userId: string,
+        nickname: string,
         profileImg: string
     }
 }
