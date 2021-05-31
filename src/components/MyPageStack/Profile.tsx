@@ -44,7 +44,7 @@ const Profile = ({ memberInfo }: Props) => {
                 </ListItem.Content >
 
                 <ListItem.Content>
-                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToMyDetail(2)}>
+                    <TouchableOpacity style={{ alignItems: "center" }} onPress={() => navToMyDetail(1)}>
                         <SubTitle>{memberInfo.clearCampaign}</SubTitle>
                         <Text3>클리어</Text3>
                     </TouchableOpacity>

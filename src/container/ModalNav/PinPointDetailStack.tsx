@@ -50,7 +50,6 @@ const PinPointDetailStack = () => {
     // api
     const getComment = async () => {
         const { result, data, error, errdesc } = await API.pinpointCommentRead(pinpoint.id)
-        console.log(data)
         if (result === 'failed' || data === undefined)
             return DefaultAlert({ title: error, subTitle: errdesc })
 

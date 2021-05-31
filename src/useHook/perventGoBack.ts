@@ -4,19 +4,21 @@ import { useNavigation } from '@react-navigation/core';
 
 interface Props {
     hasUnsavedChanges: boolean
+    title?: string
+    subTitle?: string
 }
 
-const perventGoBack = ({ hasUnsavedChanges }: Props) => {
+const perventGoBack = (props: Props) => {
     const navigation = useNavigation();
 
-    React.useEffect(() =>
+    React.useEffect(() => {
         navigation.addListener('beforeRemove', (e) => {
-            if (!hasUnsavedChanges) return;
+            if (!props.hasUnsavedChanges) return;
 
             e.preventDefault();
             Alert.alert(
-                '정말 취소하시겠어요?',
-                '현재 입력된 내용이 전부 사라집니다.',
+                props.title || '정말 취소하시겠어요?',
+                props.subTitle || '현재 입력된 내용이 전부 사라집니다.',
                 [
                     { text: "아니오", style: 'cancel', onPress: () => { } },
                     {
@@ -26,8 +28,9 @@ const perventGoBack = ({ hasUnsavedChanges }: Props) => {
                     },
                 ]
             );
-        }),
-        [hasUnsavedChanges, navigation]
+        })
+        return () => navigation.removeListener('beforeRemove', () => { })
+    }, [props.hasUnsavedChanges, navigation]
     );
 }
 

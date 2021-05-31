@@ -69,15 +69,16 @@ const MyDetailStack = (props: Props) => {
                 isFullHigh
                 selectedIndex={value}
                 onPress={setValue}
-                buttons={[`제작한 캠페인 ${myCampaignList.length}`, `참여중인 캠페인 ${partedUserList.length}`, "클리어한 캠페인"]}
+                buttons={[`제작한 캠페인 ${myCampaignList.length}`, `참여중인 캠페인 ${playingCampaignList.length}`]}
                 viewList={[
                     <MakedCampaignList
                         myCampaignList={myCampaignList}
                         usePartedUserList={[partedUserList, setPartedUserList]}
                         getPartedUsers={getPartedUsers}
                     />,
-                    <ParticiaptedCampaginList playingCampaignList={playingCampaignList} />,
-                    <ClearedCampaignList />
+                    <ParticiaptedCampaginList 
+                        playingCampaignList={playingCampaignList}     
+                    />
                 ]}
             />
 

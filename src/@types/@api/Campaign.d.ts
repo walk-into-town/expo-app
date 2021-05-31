@@ -102,6 +102,7 @@ declare module "@types" {
         cleared: boolean,
         imgs: string[],
         pinpoints: string[],
+        region: string
     }
 
     // 내가 만든 캠페인

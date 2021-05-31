@@ -4,7 +4,7 @@ import Clipboard from 'expo-clipboard';
 import { View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
-import { SelectionAlert, SubTitle, Text1, Text3 } from '../../atoms'
+import { BadgeButton, SelectionAlert, SubTitle, Text1, Text3 } from '../../atoms'
 import { mainNavigation } from '../../useHook'
 import ParticiaptedUserModal from './ParticiaptedUserModal';
 
@@ -29,6 +29,7 @@ const MakedCampaignList = (props: Props) => {
                     updateTime: "",
                     comments: [],
                     coupons: [],
+                    pcoupons: [],
                     pinpoints: []
                 }
             }
@@ -36,6 +37,7 @@ const MakedCampaignList = (props: Props) => {
     }
 
     const onLongPress = (v: MyCampaign) => {
+        console.log("[캠페인 ID] " + v.id)
         SelectionAlert({
             title: v.name + " ID",
             subTitle: v.id,
@@ -55,7 +57,7 @@ const MakedCampaignList = (props: Props) => {
     return (
         <>
             <View style={{ marginTop: 10, marginBottom: 20, marginLeft: 10 }}>
-                <Text1>리스트를 꾹 누르면 참여중인 유저 정보를 볼 수 있어요!</Text1>
+                <Text1>리스트를 꾹 누르면 [ 참여중인 유저 정보 ]를 볼 수 있어요!</Text1>
             </View>
             <ScrollView>
                 {
@@ -65,11 +67,12 @@ const MakedCampaignList = (props: Props) => {
                                 onPress={() => navToCampaignDetail(v)}
                                 onLongPress={() => onLongPress(v)}
                             >
-                                {v.imgs.length > 0 && <Avatar source={{ uri: v.imgs[0] }} avatarStyle={{ borderRadius: 10 }} />}
+                                {v.imgs !== undefined && v.imgs.length > 0 && <Avatar source={{ uri: v.imgs[0] }} avatarStyle={{ borderRadius: 10 }} />}
                                 <ListItem.Content>
                                     <SubTitle>{v.name}</SubTitle>
                                     <Text3>{v.description}</Text3>
                                 </ListItem.Content>
+                                <ListItem.Chevron />
                             </ListItem>
                         </View>
                     ))

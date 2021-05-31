@@ -2,6 +2,11 @@ import { BaseFetchRes, PinPointComment } from "@types";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 
+export const pinpointPlayingRead = () => {
+    return baseFetch(`${ip}/member/playing/pinpoint`, "GET")
+}
+
+
 // 핀포인트 댓글
 type pCommentCreateFetch = (body: {
     pid: string,
