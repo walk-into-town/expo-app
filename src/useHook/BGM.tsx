@@ -14,17 +14,21 @@ const useBGMContext = () => {
 
 const BGMContextProvider = ({ children }: { children: JSX.Element }) => {
     const BGM = useBackGroundSound()
+
     const playSound = () => {
         const init = async () => {
-            await setStorage("playBGM", { play: true })
-            BGM.playSound();
+            const { play } = await getStorage("playBGM");
+            if (play) BGM.playSound();
         }
         init();
     }
-    const stopSound = () => {
+
+    const stopSound = () => BGM.stopSound();
+
+    const onSetting = (isPlaying: boolean) => {
         const init = async () => {
-            setStorage("playBGM", { play: false })
-            BGM.stopSound();
+            await setStorage("playBGM", { play: isPlaying });
+            isPlaying ? playSound() : stopSound();
         }
         init();
     }
@@ -39,7 +43,7 @@ const BGMContextProvider = ({ children }: { children: JSX.Element }) => {
     }, [])
 
     return (
-        <BGMContext.Provider value={{ playSound, stopSound }}>
+        <BGMContext.Provider value={{ playSound, stopSound, onSetting }}>
             {children}
         </BGMContext.Provider>
     )

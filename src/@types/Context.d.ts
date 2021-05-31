@@ -30,6 +30,7 @@ declare module "@types" {
     interface IBGMContext {
         playSound: () => void;
         stopSound: () => void;
+        onSetting: (isPlaying: boolean) => void;
     }
 
     interface IUserToken {
