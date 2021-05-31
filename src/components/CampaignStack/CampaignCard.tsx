@@ -25,7 +25,7 @@ const CampaignCard = ({ campaign }: Props) => {
     const uri = campaign.imgs.length ? campaign.imgs[0] : DEFUALT_IMG;
 
     const badgeList: ITitleBadge[] = [];
-    if (new Date(campaign.updateTime) < getDateAfter(30))
+    if (getDateAfter(campaign.updateTime, 5).getTime() > new Date().getTime())
         badgeList.push({ title: "신규", backgroundColor: colorCode.primary });
 
     const getCommentsNum = (): string => {
@@ -35,8 +35,9 @@ const CampaignCard = ({ campaign }: Props) => {
 
     const getLineTrd = (): string => {
         var res = `핀포인트 ${campaign.pinpoints.length}개`;
-        if (campaign.coupons.length)
-            res += `, 지급 쿠폰 ${campaign.coupons.length}개`;
+        const couponsLength = campaign.coupons.length + campaign.pcoupons.length;
+        if (couponsLength)
+            res += `, 지급 쿠폰 ${couponsLength}개`;
         return res;
     }
 

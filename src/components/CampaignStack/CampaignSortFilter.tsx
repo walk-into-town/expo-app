@@ -39,9 +39,10 @@ const CampaignSortFilter = (props: Props) => {
     const filterButton: BadgeButtonGroupButtonsProps[] = [
         { name: "초기화", func: props.reset },
         { name: "핀포인트 많은 순", func: () => onFilter((a, b) => b.pinpoints.length - a.pinpoints.length) },
-        { name: "쿠폰 많은 순", func: () => onFilter((a, b) => b.coupons.length - a.coupons.length) },
+        { name: "쿠폰 많은 순", func: () => onFilter((a, b) => b.coupons.length + b.pcoupons.length - a.coupons.length - a.pcoupons.length) },
         { name: "별점 높은 순", func: () => onFilter((a, b) => getRatedAvg(b) - getRatedAvg(a)) },
         { name: "리뷰 많은 순", func: () => onFilter((a, b) => b.comments.length - a.comments.length) },
+        { name: "최신 순", func: () => onFilter((a, b) => new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime()) },
     ]
     const onFilter = (func: (a: SearchCampaign, b: SearchCampaign) => number) => {
         const newArr = campaignList.sort(func);

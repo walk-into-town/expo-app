@@ -44,7 +44,6 @@ const CampaignDetailStack = () => {
     }
     const getCoupons = async () => {
         const { result, data, error, errdesc } = await API.couponRead({ type: 'campaign', value: campaign.id });
-        console.log(data)
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
 

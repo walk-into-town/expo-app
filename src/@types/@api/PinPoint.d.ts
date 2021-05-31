@@ -21,6 +21,7 @@ declare module "@types" {
         profileImg: string,
         text: string,
         rated: number,
+        rateList: { id: string, like: boolean }[],
         imgs: string[],
         updateTime: string
     }

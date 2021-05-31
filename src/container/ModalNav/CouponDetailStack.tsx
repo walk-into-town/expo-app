@@ -16,8 +16,8 @@ const CouponDetailStack = () => {
     }, [campaignName])
 
     const renderCondition = (): string => {
-        if (coupon.paymentCondition === -1) return `[${campaignName}]캠페인 클리어시`
-        return `[${pinpointList[coupon.paymentCondition]}] 핀포인트 클리어시`
+        if (coupon.paymentCondition === -1) return `전체 핀포인트 클리어`
+        return `[${pinpointList[coupon.paymentCondition]}] 핀포인트 클리어`
     }
 
     return (

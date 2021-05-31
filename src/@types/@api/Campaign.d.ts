@@ -52,6 +52,7 @@ declare module "@types" {
 
         pinpoints: string[],
         coupons: string[],
+        pcoupons: string[],
         comments: CampaignComment[]
     }
     type CampaginProfile = {
