@@ -1,8 +1,8 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { ClearButton, SubTitle } from '../../atoms'
-import LottieView from "lottie-react-native"
-import { animationPath } from '../../util'
+import React, { useState } from 'react'
+import { View, Image, Pressable } from 'react-native'
+import { ClearButton, colorCode, Ionicons, Row, TextAnimator } from '../../atoms'
+import { imgPath } from '../../util'
+import DialogBox from './DialogBox'
 
 interface Props {
     monsterImg: string
@@ -10,18 +10,43 @@ interface Props {
 }
 
 const Phase1 = (props: Props) => {
+    const TEXT = [
+        "나의 이름은 오박사! 정체 불명의 몬스터를 만나기 전에 안내사항을 말해주지.",
+        "정답을 입력하고 공격 버튼을 마구 마구 누르면 된다네!",
+        "3분 내로 퀴즈를 맞춰야 할게다. 참을성이 부족한 녀석들이거든..",
+        "정답이 틀려도 그리 걱정말게 몬스터가 기다려 줄 때까지 계속 도전할 수 있을게다!",
+        "그럼 건투를 빈다.."
+    ]
+    const [textIdx, setTextIdx] = useState(0)
+    const nextText = () => {
+        if (textIdx + 1 < TEXT.length)
+            setTextIdx(textIdx + 1)
+        else
+            props.nextPhase();
+    }
+
     return (
-        <View style={{ alignItems: "center" }}>
+        <View style={{ flex: 1, alignItems: "center" }}>
             <View style={{ marginVertical: 20 }}>
-                <LottieView
-                    source={animationPath.ninja}
-                    autoPlay
-                    loop
-                    style={{ width: 150, height: 150 }}
-                />
+                <Image source={imgPath.pr_ork} style={{ width: 200, height: 200 }} />
             </View>
-            <SubTitle></SubTitle>
-            <ClearButton title="NEXT" onPress={props.nextPhase} />
+
+            <Pressable onPress={nextText}>
+                <DialogBox text={TEXT[textIdx]} />
+            </Pressable>
+
+            <Row style={{ position: "absolute", bottom: 15, right: 15 }}>
+                <ClearButton
+                    title="AGAIN"
+                    color="black"
+                    onPress={() => setTextIdx(0)}
+                />
+                <ClearButton
+                    title="SKIP"
+                    color="black"
+                    onPress={props.nextPhase}
+                />
+            </Row>
         </View>
     )
 }

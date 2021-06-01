@@ -66,3 +66,7 @@ export const animationPath = {
     chilling: require('../../assets/animation/chilling.json'),
     ninja: require('../../assets/animation/ninja.json'),
 }
+
+export const imgPath = {
+    pr_ork: require('../../assets/img/pr_oak.png')
+}
