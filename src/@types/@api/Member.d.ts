@@ -13,7 +13,7 @@ declare module "@types" {
         // pw: string,
         // cpw: string,      /*new password*/
         nickname: string,
-        img: FormData,
+        img: string,
         selfIntroduction: string
     }
 
@@ -22,10 +22,23 @@ declare module "@types" {
         profileImg: string,
         selfIntroduction: string
     }
-    
+
     type MemberInfoRes = {
         playingCampaign: number,
         myCampaign: number,
         clearCampaign: number
+    }
+
+    type PartedMember = {
+        nickname: string,
+        profileImg: string
+    }
+
+    type RankMember = {
+        rank?: number,
+        cleared: number,
+        userId: string,
+        nickname: string,
+        profileImg: string
     }
 }

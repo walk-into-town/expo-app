@@ -11,10 +11,11 @@
     "typeRoots": ["./node_modules/@types", "./@types"]
   },
   "target": "esnext",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["src/*"],
-      "tests": ["tests/*"],
-      "@components/*": ["src/components/*"],
-    },
+  "baseUrl": ".",
+  "paths": {
+    "*": ["src/*"],
+    "tests": ["tests/*"],
+    "@components/*": ["src/components/*"],
+  },
+  "esModuleInterop": true,
 }

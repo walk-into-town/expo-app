@@ -3,14 +3,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Navigator from "./src/navigation";
 import { useFonts } from 'expo-font';
-import { fontPath } from './src/atoms/paths';
-import { AuthContextProvider } from './src/useHook/Auth';
-import { LoadingContextProvider } from './src/useHook/Loading';
+import { fontPath } from './src/util';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+import { AuthContextProvider, LoadingContextProvider, useBackGroundSound } from './src/useHook';
+import { BGMContextProvider } from './src/useHook/BGM';
 
 
 const App = () => {
-
   const [loaded] = useFonts(fontPath);
 
   return !loaded ? null : (
@@ -18,7 +17,9 @@ const App = () => {
       <ActionSheetProvider>
         <LoadingContextProvider>
           <AuthContextProvider>
-            <Navigator />
+            <BGMContextProvider>
+              <Navigator />
+            </BGMContextProvider>
           </AuthContextProvider>
         </LoadingContextProvider>
       </ActionSheetProvider>

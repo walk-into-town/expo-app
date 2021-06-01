@@ -6,12 +6,13 @@ export * from "./elements/icons"
 export * from "./elements/listItems"
 export * from "./elements/alerts"
 
-export * from "./paths"
 export * from "./color"
 
 export * from './Carousel'
+export * from './ImgPicker'
+export * from './SingleImgPicker'
 
-import ImgPicker from './ImgPicker';
-import InputModal from './InputModal';
-import DateInput from './DateInput';
-export { ImgPicker, InputModal, DateInput };
+export { default as BadgeButtonGroup } from "./BadgeButtonGroup"
+export { default as InputModal } from './InputModal'
+export { default as DateInput } from './DateInput'
+export { default as LoadingCircle } from "./LoadingCircle"

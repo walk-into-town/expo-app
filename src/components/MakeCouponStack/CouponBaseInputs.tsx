@@ -1,7 +1,6 @@
 import { TuseState } from '@types';
 import React from 'react'
-import { ImgPicker, InputModal } from '../../atoms'
-import SingleImgPicker from '../../atoms/SingleImgPicker';
+import { InputModal, SingleImgPickerToServer } from '../../atoms'
 
 interface Props {
     useName: TuseState<string>,
@@ -22,14 +21,16 @@ const CouponBaseInputs = (props: Props) => {
         <>
             <InputModal
                 useText={[name, setName]}
-                placeholder="쿠폰명을 입력해주세요" />
+                placeholder="쿠폰명을 입력해주세요"
+            />
 
             <InputModal
                 useText={[description, setDescription]}
                 placeholder="쿠폰의 상세설명을 입력해주세요."
-                type='textarea' />
+                type='textarea'
+            />
 
-            <SingleImgPicker useImg={[couponImg, setCouponImg]} />
+            <SingleImgPickerToServer useImg={[couponImg, setCouponImg]} />
 
             <InputModal
                 useText={[limit, setLimit]}

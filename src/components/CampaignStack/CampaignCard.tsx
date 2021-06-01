@@ -11,6 +11,7 @@ interface Props {
 }
 
 const CampaignCard = ({ campaign }: Props) => {
+    const DEFUALT_IMG = `https://ppid.blorakab.go.id/packages/tugumuda/portal/img/default-square.jpg`
     const mainNav = mainNavigation();
 
     const navToCampaignDetail = () => {
@@ -21,10 +22,10 @@ const CampaignCard = ({ campaign }: Props) => {
     }
 
     // render
-    const uri = campaign.imgs.length ? campaign.imgs[0] : "https://ppid.blorakab.go.id/packages/tugumuda/portal/img/default-square.jpg";
+    const uri = campaign.imgs.length ? campaign.imgs[0] : DEFUALT_IMG;
 
     const badgeList: ITitleBadge[] = [];
-    if (new Date(campaign.updateTime) < getDateAfter(30))
+    if (getDateAfter(campaign.updateTime, 5).getTime() > new Date().getTime())
         badgeList.push({ title: "신규", backgroundColor: colorCode.primary });
 
     const getCommentsNum = (): string => {
@@ -34,8 +35,9 @@ const CampaignCard = ({ campaign }: Props) => {
 
     const getLineTrd = (): string => {
         var res = `핀포인트 ${campaign.pinpoints.length}개`;
-        if (campaign.coupons.length)
-            res += `, 지급 쿠폰 ${campaign.coupons.length}개`;
+        const couponsLength = campaign.coupons.length + campaign.pcoupons.length;
+        if (couponsLength)
+            res += `, 지급 쿠폰 ${couponsLength}개`;
         return res;
     }
 
@@ -45,7 +47,7 @@ const CampaignCard = ({ campaign }: Props) => {
             onPress={navToCampaignDetail}
             onLongPress={() => console.log("캠페인 ID: ", campaign.id)}
         >
-            <Avatar source={{ uri }} size={'large'} title='이미지 로딩중' avatarStyle={{ borderRadius: 10 }} />
+            <Avatar source={{ uri }} size={'large'} avatarStyle={{ borderRadius: 10 }} />
 
             <ListItem.Content>
                 <Row style={{ marginVertical: 2 }}>

@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { Card } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Modal from 'react-native-modal';
+import { BadgeButtonGroup, ClearButton, Row, SubTitle, Title } from '../../atoms';
+import { useBackGroundSound } from '../../useHook';
+import { useBGMContext } from '../../useHook/BGM';
 
 import commingSoon from '../commingSoon'
 
@@ -10,10 +15,34 @@ interface PlaygroundProps {
     navToProfileEdit: () => void,
 }
 const Playground = (props: PlaygroundProps) => {
+    const { playSound, stopSound } = useBGMContext()
+    const [settingVisible, setSettingVisible] = useState(false)
+    const toggleSetting = () => setSettingVisible(!settingVisible)
+    // 0: 재생, 1: 정지
+    const [onBgm, setOnBgm] = useState(0)
+
     return (
         <View style={{ backgroundColor: "white" }}>
             <View style={styled.Wrapper}>
-                <ButtonBox title="설정" onPress={commingSoon} />
+                <ButtonBox title="설정" onPress={toggleSetting} />
+                <Modal isVisible={settingVisible}>
+                    <Card>
+                        <Title>설정</Title>
+                        <View style={{ marginVertical: 10, alignItems: "center" }}>
+                            <BadgeButtonGroup
+                                useFilterIdx={[onBgm, setOnBgm]}
+                                buttons={[
+                                    { name: "BGM 재생", func: playSound },
+                                    { name: "정지", func: stopSound }
+                                ]}
+                            />
+                        </View>
+                        <ClearButton
+                            title="닫기"
+                            onPress={toggleSetting}
+                        />
+                    </Card>
+                </Modal>
                 <ButtonBox title="프로필 편집" onPress={props.navToProfileEdit} />
                 <ButtonBox title="쿠폰함" onPress={props.navToCoupon} />
             </View>

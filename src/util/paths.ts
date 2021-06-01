@@ -57,3 +57,12 @@ export const loadingPath = {
     tacnayn: require('../../assets/loading/tacnayn.gif'),
     xma: require('../../assets/loading/xmas.gif')
 }
+
+export const animationPath = {
+    heart: require('../../assets/animation/heart.json'),
+    loading: require('../../assets/animation/loading.json'),
+    confetti: require('../../assets/animation/confetti.json'),
+    found: require('../../assets/animation/found.json'),
+    chilling: require('../../assets/animation/chilling.json'),
+    ninja: require('../../assets/animation/ninja.json'),
+}

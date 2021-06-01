@@ -24,15 +24,13 @@ type fetch = (route: string, method: "POST" | "GET" | "PUT" | "DELETE", options?
 export const baseFetch: fetch = async (route, method, options = {}) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), options.waitTime || 4000);
-
     try {
         const res = await fetch(route, {
             method: method,
-            body: JSON.stringify(options.body),
+            body: options.isForm ? options.body : JSON.stringify(options.body),
             headers: options.isForm ? formHeader : baseHeader,
             signal: controller.signal,
         });
-
         if (res.ok === false && res.status > 400) {
             console.log(await res.text())
             throw new Error(`응답 코드 [${res.status}] 에러`)

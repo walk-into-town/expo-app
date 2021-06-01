@@ -13,7 +13,6 @@ interface Props {
 
 const PinPointCommentBox = ({ comments, navToWriteComment, deleteComment, onRate }: Props) => {
 
-
     return (
         <View style={{ minHeight: 200 }}>
             <Row style={{ marginHorizontal: 20, marginTop: 10 }}>

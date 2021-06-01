@@ -1,68 +1,72 @@
-import { SearchCampaign } from '@types'
+import { CampaginProfile, SearchCampaign } from '@types'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { Card } from 'react-native-elements'
-import { color } from 'react-native-elements/dist/helpers'
 import { AbsoluteCousel, ClearButton, colorCode, EvilIcons, Row, Text3, Title } from '../../atoms'
 import { useAuthContext } from '../../useHook'
 import { toCommonDate } from '../../util'
 
 interface Props {
-    campaign: SearchCampaign
+    campaignProfile: CampaginProfile
     isParticipate: boolean
     onParticipate: () => Promise<void>
+    onWithDarw: () => void
+    onEdit: () => void
+    onDeleteCampaign: () => void
+    refreshing: boolean
 }
 
-const ProfileCard = ({ campaign, isParticipate, onParticipate }: Props) => {
+const ProfileCard = (props: Props) => {
+    const { campaignProfile, isParticipate, refreshing } = props;
     const { auth: { userToken } } = useAuthContext()
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const ParticipateButton = () => (
-        <ClearButton title="참여하기" onPress={onParticipate} color={colorCode.primary} />
+        <ClearButton title="참여하기" onPress={props.onParticipate} color={colorCode.primary} />
     )
     const EditButton = () => (
-        <ClearButton title="수정하기" onPress={() => { }} color={colorCode.sub} />
+        <Row style={{ alignSelf: "center" }}>
+            <ClearButton title="수정하기" onPress={props.onEdit} color={colorCode.sub} />
+            <ClearButton title="삭제하기" onPress={props.onDeleteCampaign} color={colorCode.light} />
+        </Row>
     )
     const QuitButton = () => (
-        <ClearButton title="탈퇴하기" onPress={() => { }} color={colorCode.light} />
+        <ClearButton title="탈퇴하기" onPress={props.onWithDarw} color={colorCode.light} />
     )
 
     return (
         <View>
             <AbsoluteCousel
-                images={["https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg"]}
+                images={campaignProfile.imgs}
             />
             <Card containerStyle={{ marginBottom: 20, borderRadius: 5 }}>
-                <Title>{campaign.name}</Title>
+                <Title>{campaignProfile.name}</Title>
                 <Row>
                     <EvilIcons name="clock" size={20} />
-                    <Text3> {toCommonDate(campaign.updateTime)}</Text3>
+                    <Text3> {toCommonDate(campaignProfile.updateTime)}</Text3>
                 </Row>
                 <Row>
                     <EvilIcons name="user" size={20} />
-                    <Text3>{campaign.ownner}</Text3>
+                    <Text3>{campaignProfile.ownner}</Text3>
                 </Row>
                 <Row>
                     <EvilIcons name="tag" size={20} />
-                    <Text3>{campaign.region}</Text3>
+                    <Text3>{campaignProfile.region}</Text3>
                 </Row>
-                <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaign.description}</Text>
+                <Text style={{ marginTop: 3, marginBottom: 20 }}>{campaignProfile.description}</Text>
 
                 {
-                    campaign.ownner === userToken.id ?
-                        <EditButton />
-                        : isParticipate ?
-                            <QuitButton />
-                            :
-                            <ParticipateButton />
+                    refreshing ? <ClearButton title="로딩중" color={colorCode.light} /> :
+                        campaignProfile.ownner === userToken.id ?
+                            <EditButton />
+                            : isParticipate ?
+                                <QuitButton />
+                                :
+                                <ParticipateButton />
                 }
             </Card>
         </View>
     )
-}
-
-const ActionButton = () => {
-
 }
 
 export default ProfileCard

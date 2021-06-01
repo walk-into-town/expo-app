@@ -1,25 +1,26 @@
 import { PinPoint } from '@types'
 import React from 'react'
-import { View, Image, TouchableOpacity, Pressable } from 'react-native'
+import { View } from 'react-native'
 import { Card, Divider } from 'react-native-elements'
-import { AbsoluteCousel, Carousel, colorCode, EvilIcons, FontAwesome, Ionicons, PaddingBox, SubTitle, Text3, Title } from '../../atoms'
+import { AbsoluteCousel, Carousel, ClearButton, colorCode, EvilIcons, FontAwesome, Ionicons, PaddingBox, SubTitle, Text3, Title } from '../../atoms'
 import { mainNavigation } from '../../useHook'
 import { toCommonDateTime } from '../../util'
 
 interface Props {
     pinpoint: PinPoint
+    navToGame: () => void
 }
 
-const PinPointInfo = ({ pinpoint }: Props) => {
-
+const PinPointInfo = ({ pinpoint, navToGame }: Props) => {
     return (
         <View>
             {/* 핀포인트 프로필 */}
-            <AbsoluteCousel images={["https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MTVfMTYg%2FMDAxNjIxMDEyMjA3NDA2.ItqcEYQylMRkiJ7t4-BfieTBnJ4XS9O8z2B0Zc04CVMg.VXRVIxHyZD4zTIqoIZRdEAuNnGvebv2LL0SbcuD_aAEg.JPEG.eunju_8783%2FIMG_5967.jpg&type=sc960_832", "https://i.ytimg.com/vi/IdMIqWnRpLg/maxresdefault.jpg"]}/>
+            <AbsoluteCousel images={pinpoint.imgs} />
 
             <Card containerStyle={{ borderRadius: 4, marginBottom: 20 }}>
                 <Title>{pinpoint.name}</Title>
                 <Text3 style={{ textAlign: "center" }}>{pinpoint.description}</Text3>
+                <ClearButton title="퀴즈 테스트" onPress={navToGame} size={15} />
             </Card>
 
             {/* 상세 정보 */}

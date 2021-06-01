@@ -10,12 +10,7 @@ declare module "@types" {
         updateTime: string,
         description: string
 
-        quiz: {
-            text: string,
-            type: quizType,
-            choices: string[],
-            answer: string,
-        },
+        quiz: Quiz,
         comments: PinPointComment[],
         coupons: string[]
     }
@@ -26,6 +21,7 @@ declare module "@types" {
         profileImg: string,
         text: string,
         rated: number,
+        rateList: { id: string, like: boolean }[],
         imgs: string[],
         updateTime: string
     }
@@ -43,11 +39,12 @@ declare module "@types" {
         longitude: number,
         description: string
 
-        quiz: {
-            text: string,
-            type: quizType,
-            choices: string[],
-            answer: string,
-        },
+        quiz: Quiz
+    }
+    type Quiz = {
+        text: string,
+        type: quizType,
+        choices: string[],
+        answer: string,
     }
 }

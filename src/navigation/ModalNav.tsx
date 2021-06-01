@@ -21,7 +21,7 @@ const ModalNav = (props: Props) => {
             headerBackTitleVisible: false,
             headerLeft: HeaderLeftBackIcon
         }}>
-            <Stack.Screen 
+            <Stack.Screen
                 name="ImageViewer"
                 component={ImageViewer}
             />

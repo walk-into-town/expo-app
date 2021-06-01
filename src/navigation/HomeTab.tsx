@@ -29,7 +29,7 @@ const HomeTab = () => {
             }}>
             <Tab.Screen name="GameStack" component={GameStack} />
             <Tab.Screen name="CampaignStack" component={CampaignStack} />
-            <Tab.Screen name="RankingStack" component={RankingStack} options={{ tabBarBadge: 3 }} />
+            <Tab.Screen name="RankingStack" component={RankingStack} />
             <Tab.Screen name="MyPageStack" component={MyPageStack} />
         </Tab.Navigator>
     );
