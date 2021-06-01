@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { colorCode, HeaderLeftBackIcon } from '../atoms';
 import GamePlayStack from '../container/GameNav/GamePlayStack';
 import QuizStack from '../container/GameNav/QuizStack';
+import GamePinPointDetailStack from '../container/GameNav/GamePinPointDetailStack';
+
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,11 @@ const GameNav = () => {
                 name="QuizStack"
                 component={QuizStack}
                 options={{ headerTitle: "퀴즈 플레이" }}
+            />
+
+            <Stack.Screen
+                name="GamePinPointDetailStack"
+                component={GamePinPointDetailStack}
             />
 
 

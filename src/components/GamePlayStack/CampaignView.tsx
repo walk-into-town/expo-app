@@ -7,10 +7,12 @@ import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import { Bubble, ClearButton, Container, Ionicons, SubTitle, Title } from '../../atoms';
 import { mainNavigation } from '../../useHook/useNavigation';
 import PlayingCampaignModal from './PlayingCampaignModal';
-
+import { SwipeablePanel } from 'rn-swipeable-panel'
+import PinPointPanel from './PinpointPanel';
 
 interface Props {
-
+  openPanel: (pinpoint:PinPoint) => void,
+  pinPointList: PinPoint[],
 }
 
 const dummy: PinPoint = {
@@ -36,11 +38,10 @@ const dummy: PinPoint = {
 const CampaignView = (props: Props) => {
   const mainNav = mainNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
-  const [pinPointList, setPinPointList] = useState<PinPoint[]>([dummy]);
+  // const [pinPointList, setPinPointList] = useState<PinPoint[]>(props.pinPointList);
 
-  const showCampaignList = () => {
-      setModalVisible(true);
-  }
+
+
 
 
   return (
@@ -54,46 +55,26 @@ const CampaignView = (props: Props) => {
       >
 
         {
-          pinPointList.map((item, idx) =>
+          props.pinPointList.map((pinPoint, idx) =>
             <Marker
               key={idx}
-              coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+              coordinate={{ latitude: pinPoint.latitude, longitude: pinPoint.longitude }}
               image={require('../../../assets/bluepinpoint.png')}
+              onPress={()=>props.openPanel(pinPoint)}
 
-            >
-              <Callout tooltip onPress={e => mainNav.navigate('GameNav', { screen: "QuizStack" })}>
-                <View>
-                  <Bubble>
-                    <Title>{item.name}</Title>
-                    <SubTitle numberOfLines={2}>{item.description}</SubTitle>
-                    <Image
-                      style={styles.image}
-                      source={{ uri: 'https://lh3.googleusercontent.com/i_k933T8nwXJifez6VISbZlZcY6ZSQ9EpK-c3fC7QFxzmrsODERxwylG2AQmChU0RH9NQZu18fTjj5W3iV2O77-qQik' }}
-                    />
-                    {/* <ClearButton title="퀴즈 풀기" onPress={() => mainNav.navigate('GameNav', { screen: "QuizStack" })} /> */}
-                  </Bubble>
-                  <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} />
-                </View>
-              </Callout>
+            />
 
-
-            </Marker>
           )
         }
-        
       </MapView>
 
 
 
-      <View style={styles.icon}>
-      <PlayingCampaignModal
-      />  
-      </View>
+
 
 
     </Container>
-    
+
   )
 }
 

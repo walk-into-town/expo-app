@@ -54,7 +54,7 @@ declare module "@types" {
         coupons: string[],
         comments: CampaignComment[]
     }
-    type CampaignSearchType = 'name' | 'region' | 'id' | 'owner';
+    type CampaignSearchType = 'name' | 'region' | 'id' | 'owner' | 'pinpoint';
     type CampaignSearchTypeText = {
         [key: string]: string
         name: string
@@ -91,6 +91,7 @@ declare module "@types" {
         cleared: boolean,
         imgs: string[],
         pinpoints: string[],
+        region: string
     }
 
     // 내가 만든 캠페인

@@ -28,4 +28,5 @@ declare module "@types" {
         myCampaign: number,
         clearCampaign: number
     }
+
 }

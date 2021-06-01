@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams } from "@types"
+import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PlayingCampaign, Campaign } from "@types"
 import { baseFetch } from "./baseFetch"
 
 
@@ -14,6 +14,11 @@ export const campaignReadAll: () => BaseFetchRes<SearchCampaign[]> = () => {
 
 type campaignSearchFetch = (params: CampaignSearchParams) => BaseFetchRes<SearchCampaign[]>
 export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) => {
+    return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
+}
+
+type campaignSearchOneFetch = (params: CampaignSearchParams) => BaseFetchRes<SearchCampaign>
+export const campaignSearchOne: campaignSearchOneFetch = ({ condition, type, value }) => {
     return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
 }
 
@@ -50,3 +55,4 @@ export const campaignCommentUpdate = (body: { coid: string, uid: string, caid: s
 export const campaignCommentDelete = (body: { coid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })
 }
+

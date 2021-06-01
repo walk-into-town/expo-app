@@ -5,39 +5,18 @@ import { BtsWrapper, Container } from '../../atoms/elements/layouts';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Ionicons, Title } from '../../atoms';
 import { ListItem } from 'react-native-elements';
+import { PlayingCampaign } from '@types';
 
 
 interface Props {
-
+    playingCampaignList: PlayingCampaign[],
+    SelectPlayingCampaign: (cid: string) => Promise<void>
 }
 
-const dummy = [
-    {
-        name: '하하하하',
-        region: '구미시'
-    },
-    {
-        name: '금오공대 탐방',
-        region: '구미시'
-    },
-    {
-        name: '멋진 캠페인',
-        region: '제주시'
-    },
-    {
-        name: '맛집 탐방',
-        region: '서울특별시'
-    },
-    {
-        name: '맛집 탐방',
-        region: '서울특별시'
-    },
-    
-]
 
 const PlayingCampaignModal = (props: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
-    const [playingCampaignList, setPlayingCampaignList] = useState(dummy);
+
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -65,23 +44,33 @@ const PlayingCampaignModal = (props: Props) => {
 
                 <View style={styles.modalContainer}>
                     <Title style={{ marginTop: 10 }}>참여중인 캠페인 목록</Title>
+                    {
+                        props.playingCampaignList.length === 0 ?
+                            <View style={{ flex:1, justifyContent: "center", alignItems: "center" }}>
+                                <Title>텅</Title>
+                            </View> :
 
 
-                    <ScrollView style={{ marginTop: 10 }}>
-                        {
-                            playingCampaignList.map((campaign, idx)=>
-                                <ListItem key={idx}>
-                                    <ListItem.Content>
-                                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}</Text>
-                                        <Text>{campaign.region}</Text>
-                                    </ListItem.Content>
-                                </ListItem>
-                            )
-                        }
+                            <ScrollView style={{ marginTop: 10 }}>
+                                {
 
-                    </ScrollView>
+                                    props.playingCampaignList.map((campaign, idx) =>
+                                        <ListItem key={idx}>
 
+                                            <TouchableOpacity activeOpacity={0.7} onPress={() => props.SelectPlayingCampaign(campaign.id)}>
+                                                <ListItem.Content>
+                                                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}</Text>
+                                                    <Text>{campaign.region}</Text>
+                                                </ListItem.Content>
+                                            </TouchableOpacity>
 
+                                        </ListItem>
+                                    )
+                                }
+
+                            </ScrollView>
+
+                    }
                 </View>
 
 

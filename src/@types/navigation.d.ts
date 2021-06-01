@@ -53,6 +53,12 @@ declare module "@types" {
     type GameNavParamList = {
         GamePlayStack: undefined,
         QuizStack: undefined,
+        GamePinPointDetailStack: GamePinPointDetailParams,
+    }
+
+    type GamePinPointDetailParams = {
+        campaignName?: string,
+        pinpoint: PinPoint
     }
 
     // 모달 화면

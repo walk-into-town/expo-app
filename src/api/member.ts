@@ -1,4 +1,4 @@
-import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PlayingCampaign, RegisterMember } from "@types"
+import { BaseFetchRes, Campaign, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PinPoint, PlayingCampaign, RegisterMember, SessionRes } from "@types"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
 
@@ -42,10 +42,15 @@ export const memberWithdraw: MemberWithdrawFetch = (body) => {
 // 나의 캠페인 정보
 type MemberPlayingcampaignFetch = (userId: string) => BaseFetchRes<PlayingCampaign[]>
 export const memberPlayingCampaign: MemberPlayingcampaignFetch = (userId) => {
-    return baseFetch(`${ip}/member/playing?id=${userId}`, "GET");
+    return baseFetch(`${ip}/member/playing?uid=${userId}`, "GET");
 }
+
 
 type MemberMycampaignFetch = (userId: string) => BaseFetchRes<MyCampaign[]>
 export const memberMyCampaign: MemberMycampaignFetch = (userId) => {
     return baseFetch(`${ip}/member/mycampaign?id=${userId}`, "GET");
+}
+
+export const memberPlayingCampaignPinpoint = (): BaseFetchRes<PinPoint[]> => {
+    return baseFetch(`${ip}/member/playing/pinpoint`, "GET");
 }

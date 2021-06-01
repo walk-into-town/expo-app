@@ -27,8 +27,14 @@ declare module "@types" {
         text: string,
         rated: number,
         imgs: string[],
-        updateTime: string
+        updateTime: string,
+        rateList: RateList[]
     }
+    type RateList ={
+        like: boolean,
+        id: string
+    }
+    
     type WritePinPointComment = {
         coid: string,
         text: string,
