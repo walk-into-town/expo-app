@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Image, ImageSourcePropType } from 'react-native';
 import Modal from 'react-native-modal';
-import { loadingPath } from '../atoms/paths';
+import { loadingPath } from '../util';
 
 const loadingGif: ImageSourcePropType[] = [...Object.values(loadingPath)]
 

@@ -1,15 +1,16 @@
 import React, { useCallback, useState } from 'react'
 import { FlatList, Dimensions, Image, NativeSyntheticEvent, NativeScrollEvent, View, Pressable } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { mainNavigation } from '../useHook';
-import { colorCode } from './color';
 
 interface CarouselProps {
     images: string[]
-    navToImgViewer?: () => void
 }
 
 export const Carousel = (props: CarouselProps) => {
+    const nav = mainNavigation();
+    const navToImgViewer = () => {
+        nav.navigate("ModalNav", { screen: 'ImageViewer', params: { images: props.images } })
+    }
     const [idx, setIdx] = useState(0);
     const pageWidth = Math.round(Dimensions.get('window').width);
 
@@ -21,12 +22,12 @@ export const Carousel = (props: CarouselProps) => {
     };
 
     const renderItem = useCallback(({ item }: { item: string }) => (
-        <Pressable onPress={props.navToImgViewer}>
+        <Pressable onPress={navToImgViewer}>
             <Image
                 source={{ uri: item }}
                 style={{
                     width: pageWidth,
-                    height: "100%",
+                    aspectRatio: 1
                 }}
             />
         </Pressable>
@@ -61,16 +62,13 @@ interface AbsoluteCouselProps {
     absoluteHeight?: number
 }
 export const AbsoluteCousel = (props: AbsoluteCouselProps) => {
-    const nav = mainNavigation();
-    const navToImgViewer = () => {
-        nav.navigate("ModalNav", { screen: 'ImageViewer', params: { images: props.images } })
-    }
-
+    if(props.images.length < 1)
+        return <></>
+        
     return <View style={{ height: props.height || 200 }}>
         <View style={{ position: "absolute", height: props.absoluteHeight || 250 }}>
             <Carousel
                 images={props.images}
-                navToImgViewer={navToImgViewer}
             />
         </View>
     </View>

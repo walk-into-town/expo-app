@@ -79,7 +79,6 @@ const FindPinPointLocationStack = () => {
 
 
     return (
-
         <Container>
             <FindOnGooglePlace
                 getPlaceDetails={getPlaceDetails}
@@ -90,7 +89,6 @@ const FindPinPointLocationStack = () => {
             />
             <SubmitButton title="핀포인트 위치 추가하기" onPress={onSubmit} />
         </Container>
-
     )
 }
 

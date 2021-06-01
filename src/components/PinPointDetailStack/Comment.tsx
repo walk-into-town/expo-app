@@ -1,9 +1,9 @@
 import { PinPointComment, WritePinPointComment } from '@types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, ListItem } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Bold, colorCode, Gray, LikeIcon, Row, Text3 } from '../../atoms'
-import { useCommentActionSheet } from '../../useHook'
+import { useAuthContext, useCommentActionSheet } from '../../useHook'
 import { getPassingTime } from '../../util'
 import commingSoon from '../commingSoon'
 
@@ -15,7 +15,15 @@ interface Props {
 }
 
 const Comment = (props: Props) => {
+    const { auth: { userToken } } = useAuthContext()
+    if (userToken === undefined) return <></>
+
     const { comment } = props;
+    const [liked, setLiked] = useState(false)
+
+    useEffect(() => {
+        setLiked(comment.rateList.some(v => v.id === userToken.id && v.like))
+    }, [comment])
 
     const { onAction } = useCommentActionSheet({
         commentUserId: comment.userId,
@@ -29,7 +37,7 @@ const Comment = (props: Props) => {
     })
 
     const onLiked = () => {
-        props.onRate(comment.id, true)
+        props.onRate(comment.id, !liked)
     }
 
     return (
@@ -44,7 +52,7 @@ const Comment = (props: Props) => {
                 </Row>
             </ListItem.Content>
             <TouchableOpacity style={{ marginRight: 10 }} onPress={onLiked}>
-                <LikeIcon toggle={false} size={15} />
+                <LikeIcon toggle={liked} size={15} />
             </TouchableOpacity>
             <ListItem.Chevron onPress={onAction} color={colorCode.sub} style={{ paddingRight: 5 }} />
         </ListItem>

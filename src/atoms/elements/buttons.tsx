@@ -13,10 +13,10 @@ export const OutLineButton = (props: ButtonProps) => (
         />
     </View>
 )
-export const ClearButton = (props: ButtonProps & { color?: string }) => (
+export const ClearButton = (props: ButtonProps & { color?: string, size?: number }) => (
     <Button
         type="clear"
-        titleStyle={{ fontFamily: "SCDream8", color: props.color || colorCode.primary }}
+        titleStyle={{ fontFamily: "SCDream8", color: props.color || colorCode.primary, fontSize: props.size || 18 }}
         {...props}
     />
 )

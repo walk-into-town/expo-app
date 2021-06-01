@@ -1,46 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Image, Text } from 'react-native'
 import styled from 'styled-components/native'
 import { getRandomCat } from '../../api'
-import { ClearButton, soundPath } from '../../atoms'
-import LoadingModal from '../LoadingModal'
-import { Audio } from "expo-av"
-import { useLoadingContext, mainNavigation } from '../../useHook'
+import { ClearButton, DefaultAlert } from '../../atoms'
+import { useLoadingContext, mainNavigation, useSound } from '../../useHook'
+import LottieView from "lottie-react-native";
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { animationPath } from '../../util';
 
 interface Props {
 
 }
 
-const soundList = [...Object.values(soundPath)]
 
 const GameTest = (props: Props) => {
     const mainNav = mainNavigation();
-    const [sound, setSound] = useState<Audio.Sound>();
+    const Heart = useRef<LottieView>(null);
 
+    const [isLiked, setIsLiked] = useState(false);
+    const toggleLinked = () => {
+        if (isLiked)
+            Heart.current?.play(130, 30);
+        else
+            Heart.current?.play(30, 130);
+        setIsLiked(!isLiked)
+    }
+
+
+    const { playSound, stopSound } = useSound();
     const { data, err, loading, refetch } = getRandomCat();
     const { useLoading: { startLoading, endLoading } } = useLoadingContext();
 
-    // 메모리 누수 방지, 다음 차례의 effect를 실행하기 전에 이전의 렌더링에서 파생된 effect 또한 정리
-    useEffect(() => {
-        return sound ? stopSound : undefined;
-    }, [sound])
     useEffect(() => {
         loading ? startLoading() : endLoading();
     }, [loading]);
 
-    const playSound = async () => {
-        try {
-            const path = soundList[Math.floor(Math.random() * soundList.length)]
-            const { sound } = await Audio.Sound.createAsync(path, { isLooping: true });
-            setSound(sound);
-            await sound.playAsync();
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    const stopSound = () => {
-        sound?.unloadAsync();
-    }
     const onPressRandom = () => {
         stopSound();
         refetch();
@@ -49,24 +43,41 @@ const GameTest = (props: Props) => {
 
     return (
         <Container>
+
             <ClearButton
                 title="play"
                 onPress={() => mainNav.navigate('GameNav', { screen: "GamePlayStack" })} />
 
             <ClearButton
                 title="RANDOM"
-                onPress={onPressRandom} />
+                onPress={onPressRandom}
+            />
             <Image source={{ uri: data ? data.file : null }}
                 style={{ width: 200, height: 200 }} />
-            <Text>{loading ? "loading" : " "}</Text>
             <Text> {err} </Text>
-
-            <LoadingModal loading={loading} />
 
             <ClearButton
                 title="STOP SOUND"
-                onPress={stopSound} />
+                onPress={stopSound}
+            />
 
+
+            <ClearButton
+                title="CLEAR"
+                onPress={() => {
+                    mainNav.navigate("GameNav", { screen: "GameClear" })
+                }}
+            />
+
+            <TouchableOpacity onPress={toggleLinked}>
+                <LottieView
+                    ref={Heart}
+                    style={{ width: 100, height: 100 }}
+                    source={animationPath.heart}
+                    autoPlay={false}
+                    loop={false}
+                />
+            </TouchableOpacity>
         </Container>
     )
 }

@@ -9,7 +9,7 @@ import { perventGoBack, useAuthContext, useSubmit } from '../../useHook';
 
 const WritePinPointCommentStack = () => {
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken error</>
+    if (userToken === undefined) return <></>
 
     const { params: { pid, pname, comment } } = useRoute<RouteProp<EditModalNavParamList, "WritePinPointCommentStack">>();
     const nav = useNavigation();
@@ -43,7 +43,7 @@ const WritePinPointCommentStack = () => {
                 });
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: error, subTitle: errdesc });
-
+            
             nav.goBack();
         }
     })

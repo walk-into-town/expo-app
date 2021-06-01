@@ -1,4 +1,14 @@
+import { BaseFetchRes } from "@types";
 import useFetch from "../useHook/useFetch";
+import { baseFetch } from "./baseFetch";
+import { ip } from "./ip";
+import { formAppendImgs } from "../util";
+
+import * as member from "./member";
+import * as campaign from "./campaign";
+import * as pinpoint from "./pinpoint";
+import * as game from "./game";
+import * as coupons from "./coupons";
 
 export const getRandomCat = () => {
     return useFetch("http://aws.random.cat/meow");
@@ -13,18 +23,23 @@ const debugSendImg = async (data: FormData) => {
             'Content-Type': 'multipart/form-data',
         }
     })
-    if(res.ok === false)
+    if (res.ok === false)
         return await res.text();
     return await res.json();
 }
 
-import * as member from "./member";
-import * as campaign from "./campaign";
-import * as pinpoint from "./pinpoint";
+const sendFile = (body: string[]): BaseFetchRes<string[]> => {
+    const formData = new FormData();
+    formAppendImgs(formData, body)
+    return baseFetch(`${ip}/file`, "POST", { body: formData, isForm: true });
+}
 
 export const API = {
     debugSendImg,
+    sendFile,
     ...member,
     ...campaign,
-    ...pinpoint
+    ...pinpoint,
+    ...game,
+    ...coupons
 }

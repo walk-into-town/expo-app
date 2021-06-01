@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType, ResCoupon } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -12,9 +12,9 @@ declare module "@types" {
         },
         GameNav: {
             screen?: keyof GameNavParamList
+            params?: GameNavParamList[keyof GameNavParamList]
         },
         ModalNav: {
-
             screen: keyof ModalNavParamList
             params?: ModalNavParamList[keyof ModalNavParamList]
         },
@@ -46,7 +46,8 @@ declare module "@types" {
     type MakeCampaignParams = {
         pinpoint?: MakePinPoint,
         coupon?: MakeCoupon,
-        editIndex?: number
+        editIndex?: number,
+        campaign?: MakeCampaign
     }
 
     // 게임
@@ -59,6 +60,8 @@ declare module "@types" {
     type GamePinPointDetailParams = {
         campaignName?: string,
         pinpoint: PinPoint
+        QuizStack: { caid: string, pid: string, quiz: Quiz },
+        GameClear: { resCoupon: ResCoupon }
     }
 
     // 모달 화면
@@ -70,24 +73,26 @@ declare module "@types" {
 
         CampaignDetailStack: CampaignDetailParams,
         PinPointDetailStack: PinPointDetailParams,
-        CouponDetailStack: CouponDetailParams
+        CouponDetailStack: CouponDetailParams,
     }
     type CampaignDetailParams = {
         campaign: SearchCampaign
     }
     type PinPointDetailParams = {
+        cid: string,
         campaignName: string,
         pinpoint: PinPoint
     }
     type CouponDetailParams = {
         campaignName: string,
-        coupon: Coupon
+        coupon: Coupon,
+        pinpointList: string[]
     }
 
     // 편집 모달 화면
     type EditModalNavParamList = {
         MyProfileEditStack: undefined,
-        WriteCampaignCommentStack: { caid: string, cname: string, comment: WriteCampaignComment | null }
+        WriteCampaignCommentStack: { caid: string, cname: string, comment: UpdateCampaignComment | null }
         WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
     }
 

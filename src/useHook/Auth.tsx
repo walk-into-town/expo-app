@@ -48,7 +48,6 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 dispatch({ type: 'RESTORE_TOKEN' })
             else
                 useAuth.signIn(loginData);
-            endLoading();
         };
 
         bootAsync();
@@ -79,26 +78,27 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             // endLoading();
             // return "";
         },
-        signOut: async ({ id }) => {
-            startLoading();
+        signOut: ({ id }) => {
+            const init = async () => {
+                startLoading();
 
-            const { result, error, session } = await API.memberLogout({ id });
-            if (result === 'failed') {
-                console.log("[로그아웃 에러]", error)
+                const { result, error, session } = await API.memberLogout({ id });
+                if (result === 'failed')
+                    console.log("[로그아웃 에러]", error)
+                else {
+                    dispatch({ type: 'SIGN_OUT' });
+                    await rmStorage("userToken");
+                    console.log("[로그아웃]", session);
+                }
+
                 endLoading();
-                return;
             }
-
-            await rmStorage("userToken");
-            dispatch({ type: 'SIGN_OUT' });
-            console.log("[로그아웃]", session);
-
-            endLoading();
+            init();
         },
         onEdit: ({ nickname, profileImg, selfIntroduction }) => {
             if (auth.userToken === undefined)
                 return;
-                
+
             const id = auth.userToken.id;
             dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
         }

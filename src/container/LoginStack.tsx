@@ -31,7 +31,7 @@ const LoginStack = () => {
             onClick={onClick}
             onPressLogin={onPressLogin}
         />
-    )
+    ) 
 }
 
 export default LoginStack;

@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
+import { RouteProp, useIsFocused, useNavigation, useRoute } from '@react-navigation/core'
 import { ModalNavParamList, WritePinPointComment } from '@types'
 import React, { useEffect, useState } from 'react'
 
@@ -15,24 +15,37 @@ import { DefaultAlert } from '../../atoms'
 
 const PinPointDetailStack = () => {
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <>userToken error</>
-    const { params } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>();
+    if (userToken === undefined) return <></>
+    const isFocused = useIsFocused()
+    const { params } = useRoute<RouteProp<ModalNavParamList, "PinPointDetailStack">>()
     const [pinpoint, setPinpoint] = useState(params.pinpoint)
     const [comments, setComments] = useState(params.pinpoint.comments)
     const [refreshing, setRefreshing] = useState(false)
+    useEffect(() => {
+        if (isFocused)
+            onRefresh()
+    }, [isFocused])
+
 
     // nav
     const mainNav = mainNavigation();
     useEffect(() => {
         mainNav.setOptions({ headerTitle: `${params.campaignName}의 핀포인트` })
     }, [params.campaignName])
-    
+
     const navToWriteComment = (comment: WritePinPointComment | null) => {
         mainNav.navigate("EditModalNav", {
             screen: "WritePinPointCommentStack",
             params: { pid: pinpoint.id, pname: pinpoint.name, comment }
         })
     }
+    const navToGame = () => {
+        mainNav.navigate("GameNav", {
+            screen: "QuizStack",
+            params: { caid: params.cid, pid: pinpoint.id, quiz: pinpoint.quiz }
+        })
+    }
+
 
     // api
     const getComment = async () => {
@@ -75,7 +88,10 @@ const PinPointDetailStack = () => {
 
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-            <PinPointInfo pinpoint={pinpoint} />
+            <PinPointInfo
+                pinpoint={pinpoint}
+                navToGame={navToGame}
+            />
             <PinPointCommentBox
                 comments={comments}
                 navToWriteComment={navToWriteComment}

@@ -5,11 +5,12 @@ declare module "@types" {
         description: string,
         goods: string,
         endDate: string,
-        issued?: number,
+        issued: number,
         limit: number,
         img: string,
+        paymentCondition: number
     }
-    
+
     type MakeCoupon = {
         id?: string,
         name: string,
@@ -19,5 +20,11 @@ declare module "@types" {
         limit: number,
         img: string,
         paymentCondition: number
+    }
+
+    type ResCoupon = {
+        name: string,
+        goods: string,
+        imgs: string
     }
 }

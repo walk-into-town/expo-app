@@ -4,7 +4,7 @@ import { colorCode, HeaderLeftBackIcon } from '../atoms';
 import GamePlayStack from '../container/GameNav/GamePlayStack';
 import QuizStack from '../container/GameNav/QuizStack';
 import GamePinPointDetailStack from '../container/GameNav/GamePinPointDetailStack';
-
+import GameClear from '../container/GameNav/GameClear';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,8 @@ const GameNav = () => {
             screenOptions={{
                 headerTitleStyle: { fontSize: 15, color: colorCode.primary },
                 headerBackTitleVisible: false,
-                headerLeft: HeaderLeftBackIcon
+                headerLeft: HeaderLeftBackIcon,
+                headerStyle: { backgroundColor: "transparent" },
             }}
         >
             <Stack.Screen
@@ -34,7 +35,12 @@ const GameNav = () => {
                 name="GamePinPointDetailStack"
                 component={GamePinPointDetailStack}
             />
-
+            
+            <Stack.Screen
+                name="GameClear"
+                component={GameClear}
+                options={{ headerShown: false }}
+            />
 
         </Stack.Navigator>
     )

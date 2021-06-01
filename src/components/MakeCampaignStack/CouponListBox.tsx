@@ -1,7 +1,6 @@
-import { Coupon, MakeCoupon } from '@types'
+import { MakeCoupon } from '@types'
 import React from 'react'
-import { Text } from 'react-native'
-import { Box, Row, SubTitle, EvilIcons, OutLineButton, SimpleSwapListItem } from '../../atoms'
+import { Box, SubTitle, OutLineButton, SimpleSwapListItem } from '../../atoms'
 
 interface Props {
     couponList: MakeCoupon[],

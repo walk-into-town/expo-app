@@ -1,4 +1,6 @@
-import { BaseFetchRes, Campaign, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PinPoint, PlayingCampaign, RegisterMember, SessionRes } from "@types"
+
+import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PinPoint, PlayingCampaign, RegisterMember } from "@types"
+import { formAppendImg, formAppendImgs } from "../util"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
 
@@ -24,14 +26,14 @@ export const memberInfoRead: MemberInfoReadFetch = (params) => {
     return baseFetch(`${ip}/member?id=${params.id}`, "GET");
 }
 
-type MemberModifyFetch = (body: ModifyMember) => BaseFetchRes<{
-    profileImg: string,
-}>
+type MemberModifyFetch = (body: ModifyMember) => BaseFetchRes<{ profileImg: string }>
 export const memberModify: MemberModifyFetch = (body) => {
-    if(body.img)
-        console.log('isForm true')
-    console.log(body.img)
-    return baseFetch(`${ip}/member`, "PUT", { body, isForm: true });
+    const formdata = new FormData();
+    formdata.append('uid', body.uid);
+    formdata.append('nickname', body.nickname);
+    formdata.append('selfIntroduction', body.selfIntroduction);
+    formAppendImg(formdata, body.img);
+    return baseFetch(`${ip}/member`, "PUT", { body: formdata, isForm: true });
 }
 
 type MemberWithdrawFetch = (body: { id: string }) => BaseFetchRes<string>
@@ -48,7 +50,7 @@ export const memberPlayingCampaign: MemberPlayingcampaignFetch = (userId) => {
 
 type MemberMycampaignFetch = (userId: string) => BaseFetchRes<MyCampaign[]>
 export const memberMyCampaign: MemberMycampaignFetch = (userId) => {
-    return baseFetch(`${ip}/member/mycampaign?id=${userId}`, "GET");
+    return baseFetch(`${ip}/member/mycampaign?uid=${userId}`, "GET");
 }
 
 export const memberPlayingCampaignPinpoint = (): BaseFetchRes<PinPoint[]> => {

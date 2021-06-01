@@ -21,6 +21,10 @@ declare module "@types" {
         color?: string;
         backgroundToggle?: boolean;
     }
+    interface BadgeButtonGroupButtonsProps {
+        name: string,
+        func: () => void
+    }
 
     interface ITitleBadge {
         title: string,
