@@ -1,4 +1,4 @@
-import { BaseFetchRes } from "@types";
+import { BaseFetchRes, RankMember, ResCoupon } from "@types";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 
@@ -16,7 +16,15 @@ interface quizCheck {
     caid: string,
     answer: string
 }
-export const quizCheck = (body: quizCheck): BaseFetchRes<string> => {
+export const quizCheck = (body: quizCheck): BaseFetchRes<ResCoupon> => {
     return baseFetch(`${ip}/pinpoint/quiz/check`, "POST", { body });
 }
 
+
+// 랭킹
+export const rankRead = (type: 'list' | 'single'): BaseFetchRes<RankMember[]> => {
+    return baseFetch(`${ip}/game/ranking?type=${type}`, "GET");
+}
+export const rankReadMy = (): BaseFetchRes<RankMember> => {
+    return baseFetch(`${ip}/game/myranking`, "GET");
+}

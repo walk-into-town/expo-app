@@ -2,10 +2,12 @@ import React, { useRef } from 'react'
 import { View, Dimensions, Image } from 'react-native'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import LottieView from "lottie-react-native";
-import { ClearButton, Container, SubTitle, Title } from '../../atoms';
+import { ClearButton, colorCode, Container, SubTitle, Title } from '../../atoms';
 import { animationPath } from '../../util';
-import { Card } from 'react-native-elements';
+import { Avatar, Card, ListItem } from 'react-native-elements';
 import { mainNavigation } from '../../useHook';
+import { RouteProp, useRoute } from '@react-navigation/core';
+import { GameNavParamList } from '@types';
 
 interface Props {
 
@@ -13,6 +15,7 @@ interface Props {
 
 const GameClear = (props: Props) => {
     const mainNav = mainNavigation();
+    const { params: { resCoupon } } = useRoute<RouteProp<GameNavParamList, "GameClear">>();
     const Confetti = useRef<ConfettiCannon>(null);
 
     const pageWidth = Math.round(Dimensions.get('window').width);
@@ -47,6 +50,14 @@ const GameClear = (props: Props) => {
             <Title>퀴즈의 정답을 맞췄습니다</Title>
             <Card wrapperStyle={{ alignItems: "center" }}>
                 <SubTitle>지급되는 쿠폰 정보</SubTitle>
+                <ListItem>
+                    {/* <Avatar source={{ uri: resCoupon.imgs }} /> */}
+                    <ListItem.Content>
+                        <SubTitle>{resCoupon.name}</SubTitle>
+                        <SubTitle>{resCoupon.goods}</SubTitle>
+                    </ListItem.Content>
+                </ListItem>
+
                 <ClearButton
                     title="내 쿠폰함 확인하러 가기 "
                     onPress={navToMyCouponStack}
@@ -56,6 +67,8 @@ const GameClear = (props: Props) => {
             <ClearButton
                 title="다시 축하 받기"
                 onPress={onConfetti}
+                size={15}
+                color={colorCode.sub}
             />
             <ConfettiCannon
                 count={200}

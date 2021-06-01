@@ -21,4 +21,10 @@ declare module "@types" {
         img: string,
         paymentCondition: number
     }
+
+    type ResCoupon = {
+        name: string,
+        goods: string,
+        imgs: string
+    }
 }

@@ -65,7 +65,7 @@ const GameTest = (props: Props) => {
             <ClearButton
                 title="CLEAR"
                 onPress={() => {
-                    mainNav.navigate("ModalNav", { screen: "ClearCampaignStack" })
+                    mainNav.navigate("GameNav", { screen: "GameClear" })
                 }}
             />
 

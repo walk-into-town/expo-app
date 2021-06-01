@@ -64,4 +64,5 @@ export const animationPath = {
     confetti: require('../../assets/animation/confetti.json'),
     found: require('../../assets/animation/found.json'),
     chilling: require('../../assets/animation/chilling.json'),
+    ninja: require('../../assets/animation/ninja.json'),
 }

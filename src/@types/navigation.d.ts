@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType, ResCoupon } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -54,7 +54,7 @@ declare module "@types" {
     type GameNavParamList = {
         GamePlayStack: undefined,
         QuizStack: { caid: string, pid: string, quiz: Quiz },
-        GameClear: undefined
+        GameClear: { resCoupon: ResCoupon }
     }
 
     // 모달 화면
