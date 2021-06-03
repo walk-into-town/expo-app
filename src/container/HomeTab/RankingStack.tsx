@@ -29,7 +29,6 @@ const RankingStack = () => {
         const { result, data, error, errdesc } = await API.rankReadMy();
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: error, subTitle: errdesc })
-
         setMyRank(data)
     }
     const getRankList = async () => {
