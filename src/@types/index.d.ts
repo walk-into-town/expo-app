@@ -10,7 +10,6 @@ declare module "@types" {
     data?: T,
     error?: string,
     errdesc?: string,
-    session: any
   }>
 
   type UseFetchRes<T> = {

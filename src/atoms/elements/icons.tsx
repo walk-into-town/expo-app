@@ -47,5 +47,9 @@ export const LikeIcon = ({ toggle, size }: { toggle?: boolean, size?: number }) 
 )
 
 export const SwordIcon = () => (
-    <MaterialCommunityIcons name="sword" size={50} color={colorCode.primary} style={{ padding: 4, borderWidth: 3, borderColor: colorCode.primary, borderRadius: 20 }} />
+    <MaterialCommunityIcons 
+        name="sword" 
+        size={50} 
+        color={colorCode.primary}
+    />
 )

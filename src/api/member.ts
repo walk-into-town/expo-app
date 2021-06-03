@@ -1,4 +1,4 @@
-import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PlayingCampaign, RegisterMember } from "@types"
+import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PinPoint, PlayingCampaign, RegisterMember } from "@types"
 import { formAppendImg, formAppendImgs } from "../util"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
@@ -49,4 +49,11 @@ export const memberPlayingCampaign: MemberPlayingcampaignFetch = (userId) => {
 type MemberMycampaignFetch = (userId: string) => BaseFetchRes<MyCampaign[]>
 export const memberMyCampaign: MemberMycampaignFetch = (userId) => {
     return baseFetch(`${ip}/member/mycampaign?uid=${userId}`, "GET");
+}
+
+export const pinpointPlayingRead = (): BaseFetchRes<{
+    clearedPinpoins: string[],
+    pinpoints: PinPoint[]
+}> => {
+    return baseFetch(`${ip}/member/playing/pinpoint`, "GET")
 }
