@@ -33,7 +33,7 @@ const GameNav = () => {
             <Stack.Screen
                 name="GameClear"
                 component={GameClear}
-                options={{ headerShown: false }}
+                options={{ headerShown: false, gestureEnabled: false }}
             />
 
         </Stack.Navigator>
