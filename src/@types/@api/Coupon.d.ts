@@ -10,6 +10,16 @@ declare module "@types" {
         img: string,
         paymentCondition: number
     }
+    type MyCoupon = {
+        id?: string,
+        name: string,
+        description: string,
+        goods: string,
+        endDate: string,
+        img: string,
+        paymentCondition: number,
+        used: boolean
+    }
 
     type MakeCoupon = {
         id?: string,

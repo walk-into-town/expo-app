@@ -48,6 +48,7 @@ const MakePinPointStack = () => {
 
     // 핀포인트 업로드
     const getPinpoint: () => MakePinPoint = () => {
+        const selectAns = selectedAnswer === "" ? choices[0] : selectedAnswer;
         return {
             name,
             imgs: pinPointImgs,
@@ -59,7 +60,7 @@ const MakePinPointStack = () => {
                 text: quizText,
                 type: type,
                 choices,
-                answer: type === '주관식' ? answer : selectedAnswer,
+                answer: type === '주관식' ? answer : selectAns,
             }
         }
     }

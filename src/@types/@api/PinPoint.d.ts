@@ -1,3 +1,5 @@
+import { ResCoupon } from "@types";
+
 declare module "@types" {
     type quizType = "객관식" | "주관식";
 
@@ -46,5 +48,10 @@ declare module "@types" {
         type: quizType,
         choices: string[],
         answer: string,
+    }
+
+    type QuizClear = {
+        isClear: boolean,
+        coupons: ResCoupon[]
     }
 }

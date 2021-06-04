@@ -1,4 +1,3 @@
-
 export const colorCode = {
     primary: "#4487D6",
     alert: "#0B54AB",
@@ -9,4 +8,12 @@ export const colorCode = {
     gray: "gray",
     appleRed: "#ff3b30",
     appleBlue: "#0067A3",
+}
+
+export const renderColor = (percentage: number) => {
+    if (percentage > 80) return colorCode.light
+    if (percentage > 60) return colorCode.sub
+    if (percentage > 40) return colorCode.primary
+    if (percentage > 20) return colorCode.alert
+    return colorCode.appleRed
 }

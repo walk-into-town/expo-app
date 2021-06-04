@@ -13,21 +13,21 @@ const perventGoBack = (props: Props) => {
 
     React.useEffect(() => {
         navigation.addListener('beforeRemove', (e) => {
-            if (!props.hasUnsavedChanges) return;
-
             e.preventDefault();
-            Alert.alert(
-                props.title || '정말 취소하시겠어요?',
-                props.subTitle || '현재 입력된 내용이 전부 사라집니다.',
-                [
-                    { text: "아니오", style: 'cancel', onPress: () => { } },
-                    {
-                        text: '취소합니다',
-                        style: 'destructive',
-                        onPress: () => navigation.dispatch(e.data.action),
-                    },
-                ]
-            );
+            if (props.hasUnsavedChanges) {
+                Alert.alert(
+                    props.title || '정말 취소하시겠어요?',
+                    props.subTitle || '현재 입력된 내용이 전부 사라집니다.',
+                    [
+                        { text: "아니오", style: 'cancel', onPress: () => { } },
+                        {
+                            text: '취소합니다',
+                            style: 'destructive',
+                            onPress: () => navigation.dispatch(e.data.action),
+                        },
+                    ]
+                );
+            }
         })
         return () => navigation.removeListener('beforeRemove', () => { })
     }, [props.hasUnsavedChanges, navigation]

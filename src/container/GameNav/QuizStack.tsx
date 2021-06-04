@@ -1,10 +1,9 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core'
-import { GameNavParamList } from '@types'
+import { GameNavParamList, QuizClear } from '@types'
 import React, { useEffect, useState } from 'react'
-import { Animated, Image } from 'react-native'
 import { API } from '../../api'
-import { Container, DefaultAlert, Title } from '../../atoms'
-import { Phase1, Phase2 } from '../../components/QuizStack'
+import { DefaultAlert } from '../../atoms'
+import { Failed, Phase1, Phase2, Phase3 } from '../../components/QuizStack'
 import { mainNavigation, useBGMContext, useSound } from '../../useHook'
 
 
@@ -18,6 +17,7 @@ const QuizStack = () => {
 
     const [phase, setPhase] = useState(1)
     const [monsterImg, setMonsterImg] = useState<string>(DUMMY_MOSTER)
+    const [QuizClear, setQuizClear] = useState<QuizClear>()
 
     // 몬스터 이미지
     useEffect(() => {
@@ -43,19 +43,24 @@ const QuizStack = () => {
     }, [isFocused])
 
     // usecase
-    const onAnswer = (answer: string) => {
-        const init = async () => {
-            const { result, data, error, errdesc } = await API.quizCheck({ caid, pid, answer })
-            if (result === "failed" || data === undefined)
-                return DefaultAlert({ title: errdesc, onPress: onFailed })
-
-            mainNav.navigate("GameNav", { screen: "GameClear", params: { resCoupon: data } })
+    const onAnswer = async (answer: string) => {
+        const { result, data, error, errdesc } = await API.quizSolve({ caid, pid, answer })
+        if (result === "failed" || data === undefined) {
+            console.log(`[퀴즈 실패] ${error} ${errdesc}`)
+            return false;
         }
-        init();
+        setQuizClear(data);
+        nextPhase();
+        return true;
     }
 
     const nextPhase = () => setPhase(phase + 1)
     const onFailed = () => setPhase(-1)
+    const navToGameClear = () => {
+        if (QuizClear)
+            mainNav.navigate("GameNav", { screen: "GameClear", params: { QuizClear } })
+    }
+
 
     // render
     switch (phase) {
@@ -70,17 +75,15 @@ const QuizStack = () => {
                 monsterImg={monsterImg}
                 onAnswer={onAnswer}
                 onFailed={onFailed}
+                nextPhase={nextPhase}
+            />
+        case 3:
+            return <Phase3
+                monsterImg={monsterImg}
+                navToGameClear={navToGameClear}
             />
         default:
-            return <Container style={{ flex: 1, alignItems: 'center' }}>
-                <Animated.View>
-                    <Image
-                        source={{ uri: monsterImg }}
-                        style={{ width: 150, height: 150, marginVertical: 20 }}
-                    />
-                </Animated.View>
-                <Title>퀴즈에 실패하셨군요</Title>
-            </Container>
+            return <Failed monsterImg={monsterImg} />
     }
 }
 

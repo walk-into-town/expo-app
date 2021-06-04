@@ -55,6 +55,7 @@ const MyDetailStack = (props: Props) => {
     const getPartedUsers = (caid: string) => {
         const init = async () => {
             const { result, data, errdesc, error } = await API.campaignParticiaptedUsers(caid);
+            console.log(data)
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: error, subTitle: errdesc })
 
@@ -77,7 +78,8 @@ const MyDetailStack = (props: Props) => {
                         getPartedUsers={getPartedUsers}
                     />,
                     <ParticiaptedCampaginList 
-                        playingCampaignList={playingCampaignList}     
+                        playingCampaignList={playingCampaignList} 
+                            
                     />
                 ]}
             />

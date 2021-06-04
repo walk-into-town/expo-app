@@ -102,6 +102,7 @@ declare module "@types" {
         cleared: boolean,
         imgs: string[],
         pinpoints: string[],
+        clearedPinpoints: string[],
         region: string
     }
 

@@ -1,23 +1,21 @@
 import React, { useRef } from 'react'
-import { View, Dimensions, Image } from 'react-native'
+import { View, Dimensions } from 'react-native'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import LottieView from "lottie-react-native";
-import { ClearButton, colorCode, Container, SubTitle, Title } from '../../atoms';
+import { ClearButton, colorCode, Container, Row, SubTitle, Text3, Title } from '../../atoms';
 import { animationPath } from '../../util';
-import { Avatar, Card, ListItem } from 'react-native-elements';
+import { Card, ListItem } from 'react-native-elements';
 import { mainNavigation } from '../../useHook';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { GameNavParamList } from '@types';
 
-interface Props {
 
-}
-
-const GameClear = (props: Props) => {
+const GameClear = () => {
     const mainNav = mainNavigation();
-    const { params: { resCoupon } } = useRoute<RouteProp<GameNavParamList, "GameClear">>();
-    const Confetti = useRef<ConfettiCannon>(null);
+    const { params: { QuizClear } } = useRoute<RouteProp<GameNavParamList, "GameClear">>();
+    console.log(QuizClear)
 
+    const Confetti = useRef<ConfettiCannon>(null);
     const pageWidth = Math.round(Dimensions.get('window').width);
     const pageHight = Math.round(Dimensions.get('window').height);
     const onConfetti = () => Confetti.current?.start();
@@ -47,29 +45,52 @@ const GameClear = (props: Props) => {
                 style={{ width: 270 }}
             />
             <Title style={{ marginTop: 0 }}>축하드립니다!</Title>
-            <Title>퀴즈의 정답을 맞췄습니다</Title>
-            <Card wrapperStyle={{ alignItems: "center" }}>
-                <SubTitle>지급되는 쿠폰 정보</SubTitle>
-                <ListItem>
-                    {/* <Avatar source={{ uri: resCoupon.imgs }} /> */}
-                    <ListItem.Content>
-                        <SubTitle>{resCoupon.name}</SubTitle>
-                        <SubTitle>{resCoupon.goods}</SubTitle>
-                    </ListItem.Content>
-                </ListItem>
+            <Title>{QuizClear.isClear ? "캠페인을 클리어 했습니다" : "퀴즈의 정답을 맞췄습니다"}</Title>
+            <Card wrapperStyle={{ alignItems: "center" }} containerStyle={{ width: "80%" }}>
+                {
+                    QuizClear.coupons.length === 0 ?
+                        <SubTitle>지급되는 쿠폰은 없습니다</SubTitle>
+                        : <>
+                            <SubTitle>지급되는 쿠폰 정보</SubTitle>
+                            {
+                                QuizClear.coupons.map((v, idx) => (
+                                    <View key={idx} style={{
+                                        borderWidth: 1,
+                                        borderRadius: 4,
+                                        borderColor: colorCode.light,
+                                        width: "100%",
+                                        padding: 10,
+                                        marginVertical: 4
+                                    }}>
+                                        <SubTitle>{v.name}</SubTitle>
+                                        <Text3>{v.goods}</Text3>
+                                    </View>
+                                ))
+                            }
+                            <ClearButton
+                                title="내 쿠폰함 확인하기 "
+                                onPress={navToMyCouponStack}
+                            />
+                        </>
 
-                <ClearButton
-                    title="내 쿠폰함 확인하러 가기 "
-                    onPress={navToMyCouponStack}
-                />
+                }
             </Card>
 
-            <ClearButton
-                title="다시 축하 받기"
-                onPress={onConfetti}
-                size={15}
-                color={colorCode.sub}
-            />
+            <Row style={{ position: "absolute", bottom: 30, right: 30 }}>
+                <ClearButton
+                    title="다시 축하 받기"
+                    onPress={onConfetti}
+                    size={15}
+                    color="black"
+
+                />
+                <ClearButton
+                    title="지도로 돌아가기"
+                    onPress={() => mainNav.navigate("HomeTab", { screen: "GameStack" })}
+                    size={15}
+                    color="black"
+                />
+            </Row>
             <ConfettiCannon
                 count={200}
                 origin={{ x: pageWidth / 2, y: 0 }}
