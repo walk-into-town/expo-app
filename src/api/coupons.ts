@@ -10,3 +10,7 @@ export const couponRead: CouponReadFetch = (params) => {
 export const couponUse = (body: { cid: string }): BaseFetchRes<any> => {
     return baseFetch(`${ip}/coupon?use`, "POST", { body });
 }
+
+export const couponMy = (): BaseFetchRes<Coupon[]> => {
+    return baseFetch(`${ip}/member/coupon`, "GET");
+}
