@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Animated, Image, Pressable } from 'react-native'
 import { ClearButton, Container, Row } from '../../atoms'
 import { mainNavigation } from '../../useHook'
+import { fadeAnimation } from '../../util'
 import DialogBox from './DialogBox'
 
 interface Props {
@@ -29,13 +30,7 @@ const Failed = (props: Props) => {
     }
 
     const opacity = useRef(new Animated.Value(1)).current;
-    const opacityAnimation = (toValue = 0) => {
-        Animated.timing(opacity, {
-            toValue,
-            duration: 300,
-            useNativeDriver: true
-        }).start();
-    }
+    const opacityAnimation = (toValue = 0) => fadeAnimation(opacity, toValue);
 
     return (
         <Container style={{ flex: 1, alignItems: 'center' }}>

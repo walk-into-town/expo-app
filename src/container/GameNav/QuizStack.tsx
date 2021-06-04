@@ -1,5 +1,5 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core'
-import { GameNavParamList } from '@types'
+import { GameNavParamList, QuizClear } from '@types'
 import React, { useEffect, useState } from 'react'
 import { API } from '../../api'
 import { DefaultAlert } from '../../atoms'
@@ -17,6 +17,7 @@ const QuizStack = () => {
 
     const [phase, setPhase] = useState(1)
     const [monsterImg, setMonsterImg] = useState<string>(DUMMY_MOSTER)
+    const [QuizClear, setQuizClear] = useState<QuizClear>()
 
     // 몬스터 이미지
     useEffect(() => {
@@ -48,13 +49,18 @@ const QuizStack = () => {
             console.log(`[퀴즈 실패] ${error} ${errdesc}`)
             return false;
         }
-
-        mainNav.navigate("GameNav", { screen: "GameClear", params: { QuizClear: data } })
+        setQuizClear(data);
+        nextPhase();
         return true;
     }
 
     const nextPhase = () => setPhase(phase + 1)
     const onFailed = () => setPhase(-1)
+    const navToGameClear = () => {
+        if (QuizClear)
+            mainNav.navigate("GameNav", { screen: "GameClear", params: { QuizClear } })
+    }
+
 
     // render
     switch (phase) {
@@ -69,11 +75,12 @@ const QuizStack = () => {
                 monsterImg={monsterImg}
                 onAnswer={onAnswer}
                 onFailed={onFailed}
+                nextPhase={nextPhase}
             />
         case 3:
             return <Phase3
                 monsterImg={monsterImg}
-
+                navToGameClear={navToGameClear}
             />
         default:
             return <Failed monsterImg={monsterImg} />

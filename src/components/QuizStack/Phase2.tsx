@@ -11,6 +11,7 @@ interface Props {
     quiz: Quiz
     onAnswer: (answer: string) => Promise<boolean>
     onFailed: () => void
+    nextPhase: () => void
 }
 
 const Phase2 = (props: Props) => {
@@ -25,7 +26,6 @@ const Phase2 = (props: Props) => {
     const [message, setMessage] = useState("도전을 환영한다!! 크하하하")
     const [w, setW] = useState(DEFAULT_W)
     const [h, setH] = useState(DEFAULT_H)
-    const [shakeDuration, setShakeDuration] = useState(1000)
 
     const getPercentage = () => timer / LIMIT_TIME * 100;
 
@@ -79,7 +79,7 @@ const Phase2 = (props: Props) => {
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
             setOnTimer(false)
-            console.log("[정답 시도]: " + input)
+            console.log(`[정답 시도]: ${input}`)
             const isAnswer = await props.onAnswer(input)
             if (!isAnswer) {
                 setOnTimer(true)
@@ -101,7 +101,6 @@ const Phase2 = (props: Props) => {
                     transform: [
                         { translateX: shakeX },
                         { translateY: shakeY },
-                        { rotateY: '60deg' },
                         { perspective: 1000 },
                     ]
                 }}>
@@ -137,6 +136,7 @@ const Phase2 = (props: Props) => {
                             key={idx}
                             title={v}
                             onPress={() => setInput(v)}
+                            color={v === input ? colorCode.alert : colorCode.sub}
                         />
                     ))
                 }
