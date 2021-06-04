@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { View, Dimensions } from 'react-native'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import LottieView from "lottie-react-native";
-import { ClearButton, Container, Row, SubTitle, Text3, Title } from '../../atoms';
+import { ClearButton, colorCode, Container, Row, SubTitle, Text3, Title } from '../../atoms';
 import { animationPath } from '../../util';
 import { Card, ListItem } from 'react-native-elements';
 import { mainNavigation } from '../../useHook';
@@ -54,18 +54,21 @@ const GameClear = () => {
                             <SubTitle>지급되는 쿠폰 정보</SubTitle>
                             {
                                 QuizClear.coupons.map((v, idx) => (
-                                    <ListItem key={idx}>
-                                        {/* <Avatar source={{ uri: resCoupon.imgs }} /> */}
-                                        <ListItem.Content>
-                                            <SubTitle>{v.name}</SubTitle>
-                                            <SubTitle>{v.goods}</SubTitle>
-                                        </ListItem.Content>
-                                    </ListItem>
+                                    <View key={idx} style={{
+                                        borderWidth: 1,
+                                        borderRadius: 4,
+                                        borderColor: colorCode.light,
+                                        width: "100%",
+                                        padding: 10,
+                                        marginVertical: 4
+                                    }}>
+                                        <SubTitle>{v.name}</SubTitle>
+                                        <Text3>{v.goods}</Text3>
+                                    </View>
                                 ))
-
                             }
                             <ClearButton
-                                title="내 쿠폰함 확인하러 가기 "
+                                title="내 쿠폰함 확인하기 "
                                 onPress={navToMyCouponStack}
                             />
                         </>

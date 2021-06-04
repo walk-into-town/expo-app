@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Image, Pressable } from 'react-native'
-import { ClearButton, colorCode, Ionicons, Row, TextAnimator } from '../../atoms'
+import { ClearButton, Row } from '../../atoms'
+import { perventGoBack, useSubmit } from '../../useHook'
 import { imgPath } from '../../util'
 import DialogBox from './DialogBox'
 
@@ -23,8 +24,16 @@ const Phase1 = (props: Props) => {
         if (textIdx + 1 < TEXT.length)
             setTextIdx(textIdx + 1)
         else
-            props.nextPhase();
+            onSubmit();
     }
+
+    const { isSubmit, onSubmit } = useSubmit({
+        submitFunc: async () => {
+            props.nextPhase();
+        }
+    })
+    perventGoBack({ hasUnsavedChanges: !isSubmit, title: "정말 도전을 취소하시겠습니까?", subTitle: "3분간 다시 도전할 수 없습니다." })
+
 
     return (
         <View style={{ flex: 1, alignItems: "center" }}>

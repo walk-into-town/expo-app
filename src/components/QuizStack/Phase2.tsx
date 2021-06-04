@@ -49,16 +49,17 @@ const Phase2 = (props: Props) => {
 
     // 타이머
     useEffect(() => {
-        let timeout = 0;
         if (getPercentage() < 20)
             setMessage("이제 나에게 참을성이 부족하구나!!")
 
         if (onTimer) {
             progressAnimation()
-            if (timer > 0) timeout = setTimeout(() => setTimer(timer - 1), 1000)
+            if (timer > 0) {
+                const timeout = setTimeout(() => setTimer(timer - 1), 1000)
+                return () => clearTimeout(timeout)
+            }
             else props.onFailed()
         }
-        return () => clearTimeout(timeout)
     }, [timer])
 
 
