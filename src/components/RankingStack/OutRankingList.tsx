@@ -12,19 +12,21 @@ const OutRankingList = (props: Props) => {
         <WhiteView style={{ marginTop: 10, paddingVertical: 10 }}>
             <SubTitle style={{ color: colorCode.primary, alignSelf: "center" }}>순위밖 랭크</SubTitle>
             {
-                props.outRankList.map((v, idx) => (
-                    <ListItem key={idx} style={{ marginLeft: "25%" }}>
-                        <Avatar
-                            source={{ uri: v.profileImg }}
-                            rounded
-                            containerStyle={{ marginVertical: 10 }}
-                        />
-                        <ListItem.Content>
-                            <Text3>{v.nickname} <Text1 style={{ color: colorCode.alert }}>{v.userId}</Text1></Text3>
-                            <Text3>클리어한 캠페인 {v.cleared}개</Text3>
-                        </ListItem.Content>
-                    </ListItem>
-                ))
+                props.outRankList.length === 0 ?
+                    <Text3 style={{ alignSelf: "center", marginVertical: 10 }}>데이터가 없습니다.</Text3>
+                    : props.outRankList.map((v, idx) => (
+                        <ListItem key={idx} style={{ marginLeft: "25%" }}>
+                            <Avatar
+                                source={{ uri: v.profileImg }}
+                                rounded
+                                containerStyle={{ marginVertical: 10 }}
+                            />
+                            <ListItem.Content>
+                                <Text3>{v.nickname} <Text1 style={{ color: colorCode.alert }}>{v.userId}</Text1></Text3>
+                                <Text3>클리어한 캠페인 {v.cleared}개</Text3>
+                            </ListItem.Content>
+                        </ListItem>
+                    ))
             }
         </WhiteView>
     )

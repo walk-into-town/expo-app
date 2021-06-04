@@ -1,9 +1,10 @@
-import { PlayingCampaign } from '@types'
+import { Campaign, PlayingCampaign } from '@types'
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
-import { BadgeButton, colorCode, Row, SelectionAlert, SubTitle, Text1, Text3, TitleBadge } from '../../atoms'
+import { API } from '../../api'
+import { BadgeButton, colorCode, DefaultAlert, Row, SelectionAlert, SubTitle, Text1, Text3, TitleBadge } from '../../atoms'
 import { mainNavigation } from '../../useHook'
 import { getDummySearchCampaign } from '../../util'
 import ClearedPinPointModal from './ClearedPinPointModal'
@@ -20,6 +21,7 @@ const ParticiaptedCampaginList = (props: Props) => {
     const [playingCampaignList, setPlayingCampaignList] = useState<PlayingCampaign[]>([])
     const [filterToggle, setFilterToggle] = useState(0)
     const [isVisible, setIsVisible] = useState(false)
+    const [selectedCampaign, setSelectedCampaign] = useState<PlayingCampaign>()
 
     useEffect(() => {
         setPlayingCampaignList(props.playingCampaignList)
@@ -33,6 +35,15 @@ const ParticiaptedCampaginList = (props: Props) => {
     const nextToggle = () => {
         setFilterToggle(filterToggle === 2 ? 0 : filterToggle + 1)
     }
+
+    const getPinpoints = async (caid: string) => {
+        const { result, data, error, errdesc } = await API.pinPointRead({ type: "list", value: caid })
+        if (result === "failed" || data === undefined)
+            DefaultAlert({ title: error, subTitle: errdesc })
+
+        return data;
+    }
+
 
     const onFilter = () => {
         switch (filterToggle) {
@@ -48,12 +59,13 @@ const ParticiaptedCampaginList = (props: Props) => {
 
     const onLongPress = (v: PlayingCampaign) => {
         console.log("[캠페인 ID] " + v.id)
+        setSelectedCampaign(v);
         SelectionAlert({
             title: v.name + " ID",
             subTitle: v.id,
             buttons: [
                 { text: "ID 복사하기", onPress: () => { } },
-                { text: "클리어한 핀포인트 보기", onPress: () => setIsVisible(true) },
+                { text: "핀포인트 진행상태 보기", onPress: () => setIsVisible(true) },
             ],
         })
     }
@@ -87,25 +99,28 @@ const ParticiaptedCampaginList = (props: Props) => {
                             { v.imgs && v.imgs.length > 0 && <Avatar source={{ uri: v.imgs[0] }} avatarStyle={{ borderRadius: 10 }} size={50} />}
                             <ListItem.Content>
                                 <Row>
-                                    <SubTitle>
-                                        {v.name}
-                                    </SubTitle>
+                                    <SubTitle>{v.name}</SubTitle>
                                     <View style={{ marginBottom: 5 }}>
-                                        {v.cleared && <TitleBadge title="클리어" backgroundColor={colorCode.primary} />}
+                                        {v.cleared ?
+                                            <TitleBadge title="클리어" backgroundColor={colorCode.primary} />
+                                            :
+                                            <Text3 style={{ marginLeft: 8 }}>{v.clearedPinpoints.length}/{v.pinpoints.length}</Text3>
+                                        }
                                     </View>
                                 </Row>
                                 <Text3>{v.description}</Text3>
                                 <Text3>{v.region}</Text3>
                             </ListItem.Content>
                             <ListItem.Chevron />
-                            <ClearedPinPointModal
-                                useIsVisble={[isVisible, setIsVisible]}
-                                pinpointList={v.pinpoints}
-                            />
                         </ListItem>
                     ))
                 }
             </ScrollView >
+            <ClearedPinPointModal
+                useIsVisble={[isVisible, setIsVisible]}
+                campaign={selectedCampaign}
+                getPinpoints={getPinpoints}
+            />
         </>
     )
 }
