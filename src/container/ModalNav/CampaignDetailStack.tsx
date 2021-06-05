@@ -1,5 +1,5 @@
 import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core';
-import { CampaginProfile, CampaignComment, Coupon, MakeCampaign, MakeCampaignComment, ModalNavParamList, PinPoint, SearchCampaign, UpdateCampaignComment } from '@types';
+import { CampaginProfile, CampaignComment, Coupon, MakeCampaign, ModalNavParamList, PinPoint, UpdateCampaignComment } from '@types';
 import React, { useEffect, useState } from 'react'
 import { API } from '../../api';
 import { RefreshControl } from 'react-native';
@@ -76,6 +76,9 @@ const CampaignDetailStack = () => {
     const navToWriteComment = (comment: UpdateCampaignComment | null) => {
         mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
     }
+    const navToReportComment = (comment: CampaignComment) => {
+        mainNav.navigate('EditModalNav', { screen: 'ReportCommentStack', params: { type: "campaign", comment, id: campaign.id } })
+    }
 
     // usecase
     const onRefresh = () => {
@@ -85,7 +88,7 @@ const CampaignDetailStack = () => {
             await checkIsPlaying();
             await getPinPoints();
             await getCoupons();
-            setTimeout(() => setRefreshing(false), 500);
+            setRefreshing(false);
         }
         init();
     }
@@ -195,6 +198,7 @@ const CampaignDetailStack = () => {
                 <CommentList
                     commentList={commentList}
                     navToWriteComment={navToWriteComment}
+                    navToReportComment={navToReportComment}
                     onDeleteComment={onDeleteComment}
                     refreshing={refreshing}
                 />

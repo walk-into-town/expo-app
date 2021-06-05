@@ -57,7 +57,7 @@ const GameClear = () => {
                                     <View key={idx} style={{
                                         borderWidth: 1,
                                         borderRadius: 4,
-                                        borderColor: colorCode.light,
+                                        borderColor: colorCode.disable,
                                         width: "100%",
                                         padding: 10,
                                         marginVertical: 4

@@ -4,6 +4,7 @@ import { colorCode, HeaderLeftCloseIcon, HeaderRightCheckIcon } from '../atoms';
 import MyProfileEditStack from '../container/EditModalNav/MyProfileEditStack';
 import WriteCampaignCommentStack from '../container/EditModalNav/WriteCampaignCommentStack';
 import WritePinPointCommentStack from '../container/EditModalNav/WritePinPointCommentStack';
+import ReportCommentStack from '../container/EditModalNav/ReportCommentStack';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,10 @@ const EditModalNav = () => {
             <Stack.Screen
                 name="WritePinPointCommentStack"
                 component={WritePinPointCommentStack}
+            />
+            <Stack.Screen
+                name="ReportCommentStack"
+                component={ReportCommentStack}
             />
         </Stack.Navigator>
     )
