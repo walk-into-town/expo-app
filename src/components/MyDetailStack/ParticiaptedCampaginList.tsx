@@ -1,6 +1,6 @@
-import { Campaign, PlayingCampaign } from '@types'
+import { PlayingCampaign } from '@types'
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
 import { API } from '../../api'
@@ -96,7 +96,7 @@ const ParticiaptedCampaginList = (props: Props) => {
                 {
                     playingCampaignList.map((v, idx) => (
                         <ListItem key={idx} onPress={() => navToCampaignDetail(v.id)} onLongPress={() => onLongPress(v)}>
-                            { v.imgs && v.imgs.length > 0 && <Avatar source={{ uri: v.imgs[0] }} avatarStyle={{ borderRadius: 10 }} size={50} />}
+                            <Avatar source={{ uri: v.imgs[0] || "gray" }} avatarStyle={{ borderRadius: 10 }} size={50} />
                             <ListItem.Content>
                                 <Row>
                                     <SubTitle>{v.name}</SubTitle>
