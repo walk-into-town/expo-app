@@ -57,3 +57,15 @@ export const pinpointPlayingRead = (): BaseFetchRes<{
 }> => {
     return baseFetch(`${ip}/member/playing/pinpoint`, "GET")
 }
+
+// 댓글 신고
+type Report = {
+    type: "Campaign" | "Pinpoint"
+    typeId: string,
+    targetId: string,
+    description: string,
+    targetUser: string
+}
+export const managerReport = (body: Report): BaseFetchRes<string> => {
+    return baseFetch(`${ip}/manager/report`, "POST", { body })
+}

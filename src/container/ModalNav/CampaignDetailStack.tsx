@@ -77,7 +77,7 @@ const CampaignDetailStack = () => {
         mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
     }
     const navToReportComment = (comment: CampaignComment) => {
-        mainNav.navigate('EditModalNav', { screen: 'ReportCommentStack', params: { type: "campaign", comment, id: campaign.id } })
+        mainNav.navigate('EditModalNav', { screen: 'ReportCommentStack', params: { type: "Campaign", comment, id: campaign.id } })
     }
 
     // usecase

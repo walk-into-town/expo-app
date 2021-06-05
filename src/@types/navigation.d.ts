@@ -87,7 +87,7 @@ declare module "@types" {
         MyProfileEditStack: undefined,
         WriteCampaignCommentStack: { caid: string, cname: string, comment: UpdateCampaignComment | null }
         WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
-        ReportCommentStack: { type: "campaign" | "pinpoint", comment: PinPointComment | CampaignComment, id: string }
+        ReportCommentStack: { type: "Campaign" | "Pinpoint", comment: PinPointComment | CampaignComment, id: string }
     }
 
     // type GamePlayStackParamList = {
