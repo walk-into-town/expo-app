@@ -103,8 +103,7 @@ declare module "@types" {
         imgs: string[],
         pinpoints: string[],
         clearedPinpoints: string[],
-        region: string,
-        
+        region: string
     }
 
     // 내가 만든 캠페인

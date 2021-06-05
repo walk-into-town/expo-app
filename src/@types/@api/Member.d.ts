@@ -32,7 +32,10 @@ declare module "@types" {
 
     type PartedMember = {
         nickname: string,
-        profileImg: string
+        profileImg: string,
+        cleared: boolean,
+        pinpoints: string[],
+        clearedPinpoints: string[]
     }
 
     type RankMember = {

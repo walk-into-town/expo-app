@@ -54,7 +54,7 @@ declare module "@types" {
     type GameNavParamList = {
         GamePlayStack: undefined,
         QuizStack: { caid: string, pid: string, quiz: Quiz },
-        GameClear: { resCoupon: ResCoupon },
+        GameClear: {  QuizClear: QuizClear },
         GamePinPointDetailStack: GamePinPointDetailParams,
     }
 

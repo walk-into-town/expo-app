@@ -1,4 +1,4 @@
-import { BaseFetchRes, Coupon, CouponReadParams } from "@types";
+import { BaseFetchRes, Coupon, CouponReadParams, MyCoupon } from "@types";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 
@@ -8,5 +8,9 @@ export const couponRead: CouponReadFetch = (params) => {
 }
 
 export const couponUse = (body: { cid: string }): BaseFetchRes<any> => {
-    return baseFetch(`${ip}/coupon?use`, "POST", { body });
+    return baseFetch(`${ip}/coupon/use`, "POST", { body });
+}
+
+export const couponMy = (): BaseFetchRes<MyCoupon[]> => {
+    return baseFetch(`${ip}/member/coupon`, "GET");
 }

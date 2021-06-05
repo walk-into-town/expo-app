@@ -113,7 +113,6 @@ const MakeCampaignStack = () => {
     const onCreateCampaign = async () => {
         if (!onCheck()) return;
         startLoading();
-        const cam = getCampaign();
         const { result, data, error, errdesc } = await API.campaignCreate(getCampaign());
         if (result !== "success" || data === undefined)
             return DefaultAlert({
@@ -129,20 +128,22 @@ const MakeCampaignStack = () => {
             buttons: [
                 {
                     text: "캠페인 디테일 화면 확인", onPress: () => {
+                        mainNav.goBack();
                         mainNav.navigate("ModalNav", { screen: "CampaignDetailStack", params: { campaign: getDummySearchCampaign(data) } });
                         endLoading();
                     }
                 },
                 {
                     text: "내 캠페인 리스트 확인", onPress: () => {
+                        mainNav.goBack();
                         mainNav.navigate("ModalNav", { screen: "MyDetailStack", params: { selectedIndex: 0 } });
                         endLoading();
                     }
                 }
             ],
             onConfirm: () => {
+                mainNav.goBack();
                 endLoading()
-                mainNav.navigate("HomeTab", { screen: "CampaignStack" })
             }
         })
     }
@@ -172,9 +173,9 @@ const MakeCampaignStack = () => {
                 await onCreateCampaign();
         }
     });
-    const hasUnsavedChanges = Boolean(title || description || campaignImgs.length || pinPointList.length || couponList.length)
-        && !isSubmit;
-    perventGoBack({ hasUnsavedChanges });
+    // const hasUnsavedChanges = Boolean(title || description || campaignImgs.length || pinPointList.length || couponList.length)
+    //     && !isSubmit;
+    // perventGoBack({ hasUnsavedChanges });
 
     return (
         <ScrollWrapper>

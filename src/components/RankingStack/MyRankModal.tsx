@@ -14,11 +14,11 @@ const MyRankModal = (props: Props) => {
     const [isVisible, setIsVisible] = props.useVisible
     return (
         <Modal isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-            <Card>
-                <Title>내 랭크</Title>
+            <Card wrapperStyle={{ alignItems: "center" }}>
+                <SubTitle>내 랭크</SubTitle>
                 {
                     props.myRank?.rank ?
-                        <SubTitle>{props.myRank.rank} 등</SubTitle>
+                        <Title style={{ fontSize: 40 }}>{props.myRank.rank}</Title>
                         :
                         <SubTitle>등수가 보이지 않습니다...</SubTitle>
 

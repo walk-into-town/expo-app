@@ -15,7 +15,7 @@ const RankingList = (props: Props) => {
                 props.rankList.map((v, idx) => (
                     <View key={idx} style={{ alignItems: "center", marginVertical: 10, paddingVertical: 5, width: "70%", borderWidth: 2, borderColor: colorCode.primary, borderRadius: 4 }}>
                         <SubTitle style={{ color: "white", position: "absolute", left: 0, backgroundColor: colorCode.primary, width: 20, height: 20, paddingLeft: 4 }}>
-                            {idx + 1}
+                            {v.rank}
                         </SubTitle>
                         <Avatar
                             source={{ uri: v.profileImg }}
@@ -28,7 +28,7 @@ const RankingList = (props: Props) => {
                             <Text3 style={{ color: colorCode.alert, marginBottom: 5 }}> {v.userId} </Text3>
                         </Row>
                         <Row>
-                            <Text3>클리어한 캠페인</Text3>
+                            <Text3>클리어한 핀포인트</Text3>
                             <Text3 style={{ fontWeight: "bold" }}> {v.cleared}개</Text3>
                         </Row>
                     </View>

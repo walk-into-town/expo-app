@@ -1,5 +1,6 @@
 import { ITitleBadge } from '@types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { Animated, View } from 'react-native';
 import { Text } from "react-native-elements";
 import styled from "styled-components/native";
 
@@ -73,5 +74,43 @@ export const TitleBadge = (props: ITitleBadge) => {
         }}>
             {props.title}
         </Text>
+    )
+}
+
+export const TextAnimator = ({ text }: { text: string }) => {
+    const textArr = text.trim().split(" ")
+    // 최대 단어 100개..
+    const animatedValues = useRef([...Array(100)].map(_ => new Animated.Value(0))).current;
+
+    const animateTypeText = (toValue = 1) => {
+        const animations = textArr.map((_, i) => (
+            Animated.timing(animatedValues[i], {
+                toValue,
+                duration: 300,
+                useNativeDriver: true
+            })
+        ))
+        Animated.stagger(100, animations).start()
+    }
+
+    useEffect(() => {
+        animatedValues.forEach((_, idx) => animatedValues[idx].setValue(0))
+        animateTypeText()
+    }, [text])
+
+
+    return (
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            {
+                textArr.map((word, idx) => (
+                    <Animated.Text key={idx} style={[{}, { opacity: animatedValues[idx] }]} >
+                        <SubTitle>
+                            {word}
+                            {`${idx < textArr.length ? " " : ""}`}
+                        </SubTitle>
+                    </Animated.Text>
+                ))
+            }
+        </View >
     )
 }

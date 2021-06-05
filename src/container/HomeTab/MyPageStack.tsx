@@ -10,7 +10,6 @@ import Playground from '../../components/MyPageStack/Playground';
 import { API } from '../../api';
 import { MemberInfoRes } from '@types';
 import { useIsFocused } from '@react-navigation/core';
-import { Text } from 'react-native-elements';
 
 export default () => {
 
@@ -37,7 +36,7 @@ export default () => {
             DefaultAlert({ title: error, subTitle: errdesc })
             return;
         }
-        // onLogout();
+        onLogout();
     }
 
     useEffect(() => {
