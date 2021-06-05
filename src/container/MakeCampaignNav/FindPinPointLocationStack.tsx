@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MakeCampaignNavParamList } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
-import { makeCampaignNavigation } from '../../useHook';
+import { makeCampaignNavigation, useAuthContext } from '../../useHook';
 
 import FindOnMap from '../../components/FindPinPointLocationStack/FindOnMap';
 import { SubmitButton, Container } from '../../atoms';
@@ -15,46 +15,55 @@ import FindOnGooglePlace from '../../components/FindPinPointLocationStack/FindOn
 const FindPinPointLocationStack = () => {
     const makeCampaignNav = makeCampaignNavigation();
     const nav = useNavigation();
+    const { auth: { userToken } } = useAuthContext();
+    if (userToken === undefined) return <></>
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'FindPinPointLocationStack'>>();
-
-    const [latitude, setLatitude] = useState<number>(0);
-    const [longitude, setLongitude] = useState<number>(0);
+    if (pinpoint === undefined) return;
+    
+    const [latitude, setLatitude] = useState<number>(userToken.coords.latitude);
+    const [longitude, setLongitude] = useState<number>(userToken.coords.longitude);
 
     useEffect(() => {
         if (pinpoint === undefined) return;
 
         if (editIndex !== undefined) nav.setOptions({ headerTitle: "핀포인트 위치 수정하기" })
 
-        setLatitude(pinpoint.latitude);
-        setLongitude(pinpoint.longitude);
-    }, [pinpoint])
+        if(pinpoint.latitude===0 && pinpoint.longitude===0){
 
 
-    useEffect(() => {
-        //clean up을 위한 변수
-        let isEnd = false;
-        const getLocation = async () => {
-            try {
-                await Location.requestPermissionsAsync();
-                const { coords } = await Location.getCurrentPositionAsync();
-                if (!isEnd) {
-                    setLatitude(coords.latitude)
-                    setLongitude(coords.longitude)
-                }
-
-            } catch (error) {
-                if (!isEnd) {
-                    Alert.alert("Can't find you");
-                }
-
-            }
+        }else{
+            setLatitude(pinpoint.latitude);
+            setLongitude(pinpoint.longitude);
         }
-        if (!latitude && !longitude)
-            getLocation();
+            
+    }, [])
 
-        return () => { isEnd = true }
-    }, []);
+
+    // useEffect(() => {
+    //     //clean up을 위한 변수
+    //     let isEnd = false;
+    //     const getLocation = async () => {
+    //         try {
+    //             await Location.requestPermissionsAsync();
+    //             const { coords } = await Location.getCurrentPositionAsync();
+    //             if (!isEnd) {
+    //                 setLatitude(coords.latitude)
+    //                 setLongitude(coords.longitude)
+    //             }
+
+    //         } catch (error) {
+    //             if (!isEnd) {
+    //                 Alert.alert("Can't find you");
+    //             }
+
+    //         }
+    //     }
+    //     if (!latitude && !longitude)
+    //         getLocation();
+
+    //     return () => { isEnd = true }
+    // }, []);
 
 
     const getPlaceDetails = (data: GooglePlaceData, detail: GooglePlaceDetail | null) => {
@@ -76,6 +85,11 @@ const FindPinPointLocationStack = () => {
         makeCampaignNav.navigate('MakePinPointStack', { pinpoint, editIndex });
     }
 
+    const onPressMap = (e: { nativeEvent: { coordinate: any; } }) => {
+        const { coordinate } = e.nativeEvent
+        setLatitude(coordinate.latitude);
+        setLongitude(coordinate.longitude);
+    }
 
 
     return (
@@ -84,8 +98,11 @@ const FindPinPointLocationStack = () => {
                 getPlaceDetails={getPlaceDetails}
             />
             <FindOnMap
-                useLatitude={[latitude, setLatitude]}
-                useLongitude={[longitude, setLongitude]}
+                // useLatitude={[latitude, setLatitude]}
+                // useLongitude={[longitude, setLongitude]}
+                latitude={latitude}
+                longitude={longitude}
+                onPressMap={onPressMap}
             />
             <SubmitButton title="핀포인트 위치 추가하기" onPress={onSubmit} />
         </Container>

@@ -29,6 +29,7 @@ declare module "@types" {
         clearCampaign: number
     }
 
+
     type PartedMember = {
         nickname: string,
         profileImg: string,
@@ -44,4 +45,11 @@ declare module "@types" {
         nickname: string,
         profileImg: string
     }
+
+    type MemberCoordinate = {
+            latitude:number,
+            longitude:number
+
+    }
+
 }

@@ -29,7 +29,7 @@ const GameNav = () => {
                 component={QuizStack}
                 options={{ headerTitle: "퀴즈 플레이" }}
             />
-
+            
             <Stack.Screen
                 name="GameClear"
                 component={GameClear}

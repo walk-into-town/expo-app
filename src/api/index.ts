@@ -3,6 +3,7 @@ import useFetch from "../useHook/useFetch";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 import { formAppendImgs } from "../util";
+import * as Location from 'expo-location';
 
 import * as member from "./member";
 import * as campaign from "./campaign";
@@ -34,9 +35,15 @@ const sendFile = (body: string[]): BaseFetchRes<string[]> => {
     return baseFetch(`${ip}/file`, "POST", { body: formData, isForm: true });
 }
 
+const getCoordinate = async() =>{
+    await Location.requestPermissionsAsync();
+    return await Location.getCurrentPositionAsync();
+}
+
 export const API = {
     debugSendImg,
     sendFile,
+    getCoordinate,
     ...member,
     ...campaign,
     ...pinpoint,

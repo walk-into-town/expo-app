@@ -55,6 +55,7 @@ declare module "@types" {
         pcoupons: string[],
         comments: CampaignComment[]
     }
+    type CampaignSearchType = 'name' | 'region' | 'id' | 'owner' | 'pinpoint';
     type CampaginProfile = {
         id: string,
         ownner: string,
@@ -65,7 +66,6 @@ declare module "@types" {
         region: string
 
     }
-    type CampaignSearchType = 'name' | 'region' | 'id' | 'owner';
     type CampaignSearchTypeText = {
         [key: string]: string
         name: string
