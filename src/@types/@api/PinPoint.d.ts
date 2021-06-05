@@ -25,8 +25,14 @@ declare module "@types" {
         rated: number,
         rateList: { id: string, like: boolean }[],
         imgs: string[],
-        updateTime: string
+        updateTime: string,
+        rateList: RateList[]
     }
+    type RateList ={
+        like: boolean,
+        id: string
+    }
+    
     type WritePinPointComment = {
         coid: string,
         text: string,
@@ -48,6 +54,11 @@ declare module "@types" {
         type: quizType,
         choices: string[],
         answer: string,
+    }
+
+    type PlayingPinPoint = {
+        clearedPinpoints: string[],
+        pinpoints: PinPoint[]
     }
 
     type QuizClear = {

@@ -3,7 +3,7 @@ import { EditModalNavParamList } from '@types';
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { API } from '../../api';
-import { ClearButton, ConfirmAlert, DefaultAlert, HeaderRightCheckIcon, InputModal, Text1, TextArea } from '../../atoms'
+import { ClearButton, DefaultAlert, HeaderRightCheckIcon, Text1, TextArea } from '../../atoms'
 import { mainNavigation, useAuthContext, useLoadingContext } from '../../useHook';
 import { isBlank } from '../../util';
 

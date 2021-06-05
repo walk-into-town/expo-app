@@ -1,43 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, ScrollView, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import { BtsWrapper, Container } from '../../atoms/elements/layouts';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Ionicons, Title } from '../../atoms';
 import { ListItem } from 'react-native-elements';
+import { PlayingCampaign } from '@types';
 
 
 interface Props {
-
+    playingCampaignList: PlayingCampaign[],
+    SelectPlayingCampaign: (cid: string) => Promise<void>
+    getAllPlayingPinPoints: () => Promise<void>
 }
 
-const dummy = [
-    {
-        name: '하하하하',
-        region: '구미시'
-    },
-    {
-        name: '금오공대 탐방',
-        region: '구미시'
-    },
-    {
-        name: '멋진 캠페인',
-        region: '제주시'
-    },
-    {
-        name: '맛집 탐방',
-        region: '서울특별시'
-    },
-    {
-        name: '맛집 탐방',
-        region: '서울특별시'
-    },
-    
-]
 
-const PlayingCampaignModal = (props: Props) => {
+const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getAllPlayingPinPoints }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
-    const [playingCampaignList, setPlayingCampaignList] = useState(dummy);
+
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -65,23 +45,53 @@ const PlayingCampaignModal = (props: Props) => {
 
                 <View style={styles.modalContainer}>
                     <Title style={{ marginTop: 10 }}>참여중인 캠페인 목록</Title>
+                    {
+                        playingCampaignList.length === 0 ?
+                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                <Title>텅</Title>
+                            </View> :
 
 
-                    <ScrollView style={{ marginTop: 10 }}>
-                        {
-                            playingCampaignList.map((campaign, idx)=>
-                                <ListItem key={idx}>
-                                    <ListItem.Content>
-                                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}</Text>
-                                        <Text>{campaign.region}</Text>
-                                    </ListItem.Content>
+                            <ScrollView style={{ marginTop: 10 }}>
+                                {
+
+
+                                    playingCampaignList.map((campaign, idx) =>
+
+                                        <ListItem key={idx}>
+                                            {
+                                                campaign.cleared ?
+                                                    <ListItem.Content>
+                                                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}✅</Text>
+                                                        <Text>{campaign.region}</Text>
+                                                    </ListItem.Content>
+                                                    :
+                                                    <TouchableOpacity activeOpacity={0.8} onPress={() => SelectPlayingCampaign(campaign.id)}>
+                                                        <ListItem.Content>
+                                                            <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}</Text>
+                                                            <Text>{campaign.region}</Text>
+                                                        </ListItem.Content>
+                                                    </TouchableOpacity>
+                                            }
+
+
+
+                                        </ListItem>
+                                    )
+                                }
+                                <ListItem>
+                                    <TouchableOpacity activeOpacity={0.8} onPress={() => getAllPlayingPinPoints()}>
+                                        <ListItem.Content>
+                                            <Text style={{ fontWeight: "bold", fontSize: 16 }}>참여중인 캠페인</Text>
+                                            <Text>모든 지역</Text>
+                                        </ListItem.Content>
+                                    </TouchableOpacity>
                                 </ListItem>
-                            )
-                        }
-
-                    </ScrollView>
 
 
+                            </ScrollView>
+
+                    }
                 </View>
 
 

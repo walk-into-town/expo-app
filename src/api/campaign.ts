@@ -27,6 +27,11 @@ export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) 
     return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
 }
 
+type campaignSearchOneFetch = (params: CampaignSearchParams) => BaseFetchRes<SearchCampaign>
+export const campaignSearchOne: campaignSearchOneFetch = ({ condition, type, value }) => {
+    return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
+}
+
 // 캠페인 디테일 페이지
 type CampaignParticiapte = (body: { uid: string, caid: string }) => BaseFetchRes<boolean>
 export const campaignParticiapte: CampaignParticiapte = (body) => {
@@ -79,3 +84,4 @@ export const campaignCommentUpdate = (body: { rid: string, uid: string, caid: st
 export const campaignCommentDelete = (body: { rid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })
 }
+

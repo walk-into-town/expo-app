@@ -33,11 +33,23 @@ declare module "@types" {
         onSetting: (isPlaying: boolean) => void;
     }
 
+    /* Location */
+    interface ILocationContext {
+        playSound: () => void;
+        stopSound: () => void;
+        onSetting: (isPlaying: boolean) => void;
+    }
+
     interface IUserToken {
         id: string;
         nickname: string;
         profileImg: string;
         selfIntroduction: string;
+        coords:{
+            latitude: number,
+            longitude: number
+
+        }
     }
 
 }
