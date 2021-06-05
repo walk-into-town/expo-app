@@ -53,15 +53,14 @@ declare module "@types" {
     // 게임
     type GameNavParamList = {
         GamePlayStack: undefined,
-        QuizStack: undefined,
+        QuizStack: { caid: string, pid: string, quiz: Quiz },
+        GameClear: { resCoupon: ResCoupon },
         GamePinPointDetailStack: GamePinPointDetailParams,
     }
 
     type GamePinPointDetailParams = {
         campaignName?: string,
         pinpoint: PinPoint
-        QuizStack: { caid: string, pid: string, quiz: Quiz },
-        GameClear: { resCoupon: ResCoupon }
     }
 
     // 모달 화면

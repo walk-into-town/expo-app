@@ -7,21 +7,20 @@ import { SubTitle } from '../../atoms/elements/texts';
 import { Text } from 'react-native-elements';
 
 interface Props {
-    useLatitude: TuseState<number>,
-    useLongitude: TuseState<number>
+    // useLatitude: TuseState<number>,
+    // useLongitude: TuseState<number>
+    latitude: number,
+    longitude: number,
+    onPressMap:(e: { nativeEvent: { coordinate: any; } }) => void
 
 }
 
-const FindOnMap = (props: Props) => {
-    const [latitude, setLatitude] = props.useLatitude;
-    const [longitude, setLongitude] = props.useLongitude;
+const FindOnMap = ({latitude, longitude, onPressMap}: Props) => {
+    // const [latitude, setLatitude] = props.useLatitude;
+    // const [longitude, setLongitude] = props.useLongitude;
 
 
-    const onPressMap = (e: { nativeEvent: { coordinate: any; } }) => {
-        const { coordinate } = e.nativeEvent
-        setLatitude(coordinate.latitude);
-        setLongitude(coordinate.longitude);
-    }
+
 
 
 
@@ -31,7 +30,7 @@ const FindOnMap = (props: Props) => {
                 <SubTitle>지도에서 보기</SubTitle>
             </Box>
 
-            {!longitude && !latitude && <Text>유저 위치 찾는 중..</Text>}
+            {/* {!longitude && !latitude && <Text>유저 위치 찾는 중..</Text>} */}
             <MapView
                 style={{ flex: 1 }}
                 provider={PROVIDER_GOOGLE}
@@ -40,7 +39,10 @@ const FindOnMap = (props: Props) => {
                 showsMyLocationButton={true}
                 onPress={onPressMap}
             >
-                <Marker coordinate={{ latitude: latitude, longitude: longitude }} />
+                <Marker 
+                coordinate={{ latitude: latitude, longitude: longitude }}
+                image={require('../../../assets/redpinpoint.png')}
+                 />
             </MapView>
         </Container>
     )

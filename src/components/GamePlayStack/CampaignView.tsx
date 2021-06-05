@@ -1,4 +1,4 @@
-import { PinPoint } from '@types';
+import { MemberCoordinate, PinPoint, PlayingPinPoint } from '@types';
 import React, { useState } from 'react'
 import { StyleSheet, View, Text, ImageEditor, Image } from 'react-native';
 import { Button } from 'react-native-elements/dist/buttons/Button';
@@ -11,60 +11,59 @@ import { SwipeablePanel } from 'rn-swipeable-panel'
 import PinPointPanel from './PinpointPanel';
 
 interface Props {
-  openPanel: (pinpoint:PinPoint) => void,
+  coordinate: MemberCoordinate,
   pinPointList: PinPoint[],
+  playingPinPointList: PinPoint[],
+  clearedPinPointList: string[],
+  isPlaying: boolean,
+  openPanel: (pinpoint: PinPoint) => void,
 }
 
-const dummy: PinPoint = {
-  id: "aaaa",
-  name: "금오공대 분수대",
-  imgs: ["a"],
-  latitude: 36.146486,
-  longitude: 128.393817,
-  updateTime: new Date().toISOString(),
-  description: "원자모양을 한 분수대",
 
-  quiz: {
-    text: "바보바보바보바보",
-    type: "주관식",
-    choices: [],
-    answer: "ㅁㅁㅁㅁㅁㅁ"
-  },
-  comments: [],
-  coupons: []
-
-}
-
-const CampaignView = (props: Props) => {
-  const mainNav = mainNavigation();
+const CampaignView = ({ coordinate, pinPointList, playingPinPointList, clearedPinPointList, isPlaying, openPanel }: Props) => {
   const [isModalVisible, setModalVisible] = useState(false);
-  // const [pinPointList, setPinPointList] = useState<PinPoint[]>(props.pinPointList);
-
-
-
 
 
   return (
-    <Container>
+
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        region={{ latitude: 36.1450104, longitude: 128.3926695, latitudeDelta: 0.004, longitudeDelta: 0.004 }}
+        initialRegion={{ latitude: coordinate.latitude, longitude: coordinate.longitude, latitudeDelta: 0.004, longitudeDelta: 0.004}}
         showsUserLocation={true}
         showsMyLocationButton={true}
       >
 
         {
-          props.pinPointList.map((pinPoint, idx) =>
-            <Marker
-              key={idx}
-              coordinate={{ latitude: pinPoint.latitude, longitude: pinPoint.longitude }}
-              image={require('../../../assets/bluepinpoint.png')}
-              onPress={()=>props.openPanel(pinPoint)}
+          isPlaying ?
+            pinPointList.map((pinPoint, idx) =>
+              <Marker
+                key={idx}
+                coordinate={{ latitude: pinPoint.latitude, longitude: pinPoint.longitude }}
+                image={require('../../../assets/bluepinpoint.png')}
+                onPress={() => openPanel(pinPoint)}
 
-            />
+              />
 
-          )
+            ) : playingPinPointList.map((playingPinPoint, idx) =>
+
+                clearedPinPointList.includes(playingPinPoint.id) ? 
+
+                    <Marker
+                      key={idx}
+                      coordinate={{ latitude: playingPinPoint.latitude, longitude: playingPinPoint.longitude }}
+                      image={require('../../../assets/checkpinpoint.png')}
+                      onPress={() => openPanel(playingPinPoint)}
+                    /> :
+                    <Marker
+                      key={idx}
+                      coordinate={{ latitude: playingPinPoint.latitude, longitude: playingPinPoint.longitude }}
+                      image={require('../../../assets/bluepinpoint.png')}
+                      onPress={() => openPanel(playingPinPoint)}
+                    />
+
+
+            )
         }
       </MapView>
 
@@ -73,7 +72,7 @@ const CampaignView = (props: Props) => {
 
 
 
-    </Container>
+
 
   )
 }
@@ -83,39 +82,7 @@ export default CampaignView;
 const styles = StyleSheet.create({
   map: {
     height: '100%'
-  },
-  // Arrow below the bubble
-  arrow: {
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    borderTopColor: '#fff',
-    borderWidth: 16,
-    alignSelf: 'center',
-    marginTop: -32,
-  },
-  arrowBorder: {
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    borderTopColor: '#007a87',
-    borderWidth: 16,
-    alignSelf: 'center',
-    marginTop: -0.5,
-    // marginBottom: -15
-  },
-  // Character name
-  name: {
-    fontSize: 16,
-    marginBottom: 5,
-    fontWeight: 'bold',
-  },
-  // Character image
-  image: {
-    width: '100%',
-    height: 100,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-    margin: 8
-  },
+  }, 
   //icon
   icon: {
     position: 'absolute',

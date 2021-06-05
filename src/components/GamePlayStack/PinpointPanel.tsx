@@ -9,16 +9,18 @@ interface Props {
     usePanelActivie: TuseState<boolean>,
     pinPoint: PinPoint | undefined,
     navtoPinPointDetail: (pinpoint: PinPoint) => void
+    navtoGame: (pinpoint: PinPoint) => void
 }
 
-const PinPointPanel = ({ usePanelActivie, pinPoint, navtoPinPointDetail }: Props) => {
+const PinPointPanel = ({ usePanelActivie, pinPoint, navtoPinPointDetail, navtoGame }: Props) => {
     // const [pinPoint, setPinPoint] = pinPoint
     const [panelProps, setPanelProps] = useState({
         fullWidth: true,
         showCloseButton: true,
         onClose: () => closePanel(),
         onPressCloseButton: () => closePanel(),
-        onlySmall: true
+        onlySmall: true,
+        closeOnTouchOutside: true
     });
     const [isPanelActive, setIsPanelActive] = usePanelActivie
 
@@ -35,9 +37,8 @@ const PinPointPanel = ({ usePanelActivie, pinPoint, navtoPinPointDetail }: Props
 
                     <View style={{flex:1, marginTop: 25 }}>
 
-                        {/* <AbsoluteCousel images={["https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MTVfMTYg%2FMDAxNjIxMDEyMjA3NDA2.ItqcEYQylMRkiJ7t4-BfieTBnJ4XS9O8z2B0Zc04CVMg.VXRVIxHyZD4zTIqoIZRdEAuNnGvebv2LL0SbcuD_aAEg.JPEG.eunju_8783%2FIMG_5967.jpg&type=sc960_832", "https://i.ytimg.com/vi/IdMIqWnRpLg/maxresdefault.jpg"]}/> */}
                         <Image
-                            source={{ uri: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MTVfMTYg%2FMDAxNjIxMDEyMjA3NDA2.ItqcEYQylMRkiJ7t4-BfieTBnJ4XS9O8z2B0Zc04CVMg.VXRVIxHyZD4zTIqoIZRdEAuNnGvebv2LL0SbcuD_aAEg.JPEG.eunju_8783%2FIMG_5967.jpg&type=sc960_832"  }}
+                            source={{ uri: pinPoint.imgs[0]  }}
                             style={{
                                 width: pageWidth,
                                 height: "150%",
@@ -45,11 +46,11 @@ const PinPointPanel = ({ usePanelActivie, pinPoint, navtoPinPointDetail }: Props
                                 resizeMode: 'stretch'
                             }} />
 
-                        <Title style={{ alignSelf: 'flex-start', color: 'white',  marginTop: 20, fontSize: 30}}>{pinPoint.name}</Title>
-                        <SubTitle style={{ alignSelf: 'flex-start', color: 'white', marginTop: 5, fontSize: 15 }} numberOfLines={1}>역사와 전통을 가진 금오공고!</SubTitle>
+                        <Title style={{ alignSelf: 'flex-start', color: pinPoint.imgs[0]? 'white' : 'black',  marginTop: 20, fontSize: 30}}>{pinPoint.name}</Title>
+                        <SubTitle style={{ alignSelf: 'flex-start', color: pinPoint.imgs[0]? 'white' : 'black', marginTop: 5, fontSize: 15 }} numberOfLines={1}>{pinPoint.description}</SubTitle>
                         <Row style={{ alignSelf: 'center', marginTop: 50}}>
-                        <ClearButton color='white' title="핀포인트 상세" onPress={()=>navtoPinPointDetail(pinPoint)}/>
-                        <ClearButton color='white' title="퀴즈 GOGO"/>
+                        <ClearButton color='#00c3ff' title="핀포인트 상세" onPress={()=>navtoPinPointDetail(pinPoint)}/>
+                        <ClearButton color='#00c3ff' title="퀴즈 GOGO" onPress={()=>navtoGame(pinPoint)}/>
                         </Row>
                         
                         

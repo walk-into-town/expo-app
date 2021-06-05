@@ -53,4 +53,10 @@ declare module "@types" {
         choices: string[],
         answer: string,
     }
+
+    type PlayingPinPoint = {
+        clearedPinpoints: string[],
+        pinpoints: PinPoint[]
+    }
+
 }

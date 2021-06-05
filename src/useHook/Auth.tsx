@@ -66,9 +66,10 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 console.log("[로그인 실패]", error, errdesc)
             }
             else {
+                const { coords } = await API.getCoordinate()
                 const { nickname, profileImg, selfIntroduction } = data;
                 await setStorage("userToken", { id, pw });
-                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, selfIntroduction } });
+                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, selfIntroduction, coords } });
                 console.log("[로그인 성공]", session)
             }
             endLoading();
@@ -100,7 +101,8 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 return;
 
             const id = auth.userToken.id;
-            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
+            const coords = auth.userToken.coords
+            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction, coords } })
         }
     }), []);
 
