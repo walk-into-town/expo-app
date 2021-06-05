@@ -52,7 +52,6 @@ declare module "@types" {
 
     // 게임
     type GameNavParamList = {
-        GamePlayStack: undefined,
         QuizStack: { caid: string, pid: string, quiz: Quiz },
         GameClear: {  QuizClear: QuizClear },
         GamePinPointDetailStack: GamePinPointDetailParams,

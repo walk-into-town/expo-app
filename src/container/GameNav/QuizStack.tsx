@@ -26,7 +26,6 @@ const QuizStack = () => {
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: error, subTitle: errdesc })
 
-            console.log(data)
             setMonsterImg(data);
         }
         init();

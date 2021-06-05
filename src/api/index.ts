@@ -35,7 +35,7 @@ const sendFile = (body: string[]): BaseFetchRes<string[]> => {
     return baseFetch(`${ip}/file`, "POST", { body: formData, isForm: true });
 }
 
-const getCoordinate = async() =>{
+const getCoordinate = async () => {
     await Location.requestPermissionsAsync();
     return await Location.getCurrentPositionAsync();
 }
