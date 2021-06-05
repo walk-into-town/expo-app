@@ -6,6 +6,7 @@ import { Animation, CustomAnimation } from 'react-native-animatable';
 import { Input, Text } from 'react-native-elements';
 import { BtsWrapper } from './elements/layouts';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { colorCode } from './color';
 
 interface Props {
     useText: [string, React.Dispatch<React.SetStateAction<string>>],
@@ -49,8 +50,8 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
                 }
             case "textarea":
                 return {
-                    wrapper: {},
-                    text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 7, textAlign: "center" },
+                    wrapper: { borderWidth: .5, borderColor: colorCode.disable, borderRadius: 4, paddingTop: 10 },
+                    text: { height: 100, fontSize: 13, fontFamily: "SCDream5", marginHorizontal: 4, textAlign: "center" },
                     input: { color: "#FFF", height: 200, fontSize: 20, fontFamily: "SCDream5" }
                 }
         }
@@ -71,7 +72,7 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
                     {text || placeholder || "제목명을 입력해주세요"}
                 </Text>
             </TouchableOpacity>
-            <Text style={{ alignSelf: "center", marginTop: 1 }}> {subTitle} </Text>
+            <Text style={{ alignSelf: "center", marginTop: 1 }}>{subTitle}</Text>
 
             <Modal
                 isVisible={isModalVisible}
@@ -87,9 +88,6 @@ const InputModal = ({ useText, placeholder, subTitle, type = "input", textFontSi
                     multiline={type === "textarea"}
                     keyboardType={type === "number" ? "numeric" : "default"}
                     autoCapitalize="none"
-                // onEndEditing={() => {
-                //     if (type === 'input') onSubmit();
-                // }}
                 />
 
                 <BtsWrapper>

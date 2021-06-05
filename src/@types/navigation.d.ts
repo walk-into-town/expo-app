@@ -1,4 +1,4 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType, ResCoupon } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType, ResCoupon, PinPointComment, CampaignComment } from "@types";
 
 declare module "@types" {
     /* navigation */
@@ -52,7 +52,6 @@ declare module "@types" {
 
     // 게임
     type GameNavParamList = {
-        GamePlayStack: undefined,
         QuizStack: { caid: string, pid: string, quiz: Quiz },
         GameClear: {  QuizClear: QuizClear },
         GamePinPointDetailStack: GamePinPointDetailParams,
@@ -93,6 +92,7 @@ declare module "@types" {
         MyProfileEditStack: undefined,
         WriteCampaignCommentStack: { caid: string, cname: string, comment: UpdateCampaignComment | null }
         WritePinPointCommentStack: { pid: string, pname: string, comment: WritePinPointComment | null }
+        ReportCommentStack: { type: "Campaign" | "Pinpoint", comment: PinPointComment | CampaignComment, id: string }
     }
 
     // type GamePlayStackParamList = {

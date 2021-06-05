@@ -3,13 +3,13 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { Bold, Carousel, colorCode, Gray, RateStarIcon } from '../../atoms'
-import { useCommentActionSheet } from '../../useHook'
+import { mainNavigation, useCommentActionSheet } from '../../useHook'
 import { getPassingText } from '../../util'
-import commingSoon from '../commingSoon'
 
 interface Props {
     comment: CampaignComment
     navToWriteComment: (comment: UpdateCampaignComment | null) => void
+    navToReportComment: (comment: CampaignComment) => void
     onDeleteComment: (coid: string) => void
 }
 
@@ -26,7 +26,7 @@ const Comment = (props: Props) => {
             imgs: comment.imgs
         }),
         onDelete: () => props.onDeleteComment(comment.id),
-        onReport: commingSoon
+        onReport: () => props.navToReportComment(comment)
     });
 
     // render

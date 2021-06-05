@@ -19,8 +19,8 @@ interface quizCheck {
 export const quizSolve = (body: quizCheck): BaseFetchRes<any> => {
     return baseFetch(`${ip}/pinpoint/quiz/solve`, "POST", { body });
 }
-export const quizCheck = (pid: string): BaseFetchRes<any> => {
-    return baseFetch(`${ip}/pinpoint/quiz/check?pid=${pid}`, "GET");
+export const quizCheck = ({ pid, caid }: { pid: string, caid: string }): BaseFetchRes<any> => {
+    return baseFetch(`${ip}/pinpoint/quiz/check?pid=${pid}&caid=${caid}`, "GET");
 }
 
 

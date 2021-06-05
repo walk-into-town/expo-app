@@ -47,7 +47,7 @@ export const SingleImgPicker = (props: { useImg: TuseState<string> }) => {
                         <TouchableOpacity onPress={pickImage}>
                             <Image
                                 source={{ uri: img }}
-                                style={{ width: 150, height: 150 }}
+                                style={{ width: 150, height: 150, borderRadius: 10 }}
                             />
                         </TouchableOpacity>
                     </>

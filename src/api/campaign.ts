@@ -26,10 +26,9 @@ type campaignSearchFetch = (params: CampaignSearchParams) => BaseFetchRes<Search
 export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) => {
     return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
 }
-
-type campaignSearchOneFetch = (params: CampaignSearchParams) => BaseFetchRes<SearchCampaign>
-export const campaignSearchOne: campaignSearchOneFetch = ({ condition, type, value }) => {
-    return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
+// 해당 핀포인트 ID를 가진 캠페인 찾기
+export const campaignSearchPinPoint = (pid: string): BaseFetchRes<SearchCampaign> => {
+    return baseFetch(`${ip}/campaign?type=pinpoint&condition=exact&value=${pid}`, "GET");
 }
 
 // 캠페인 디테일 페이지

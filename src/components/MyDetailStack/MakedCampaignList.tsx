@@ -67,7 +67,7 @@ const MakedCampaignList = (props: Props) => {
                                 onPress={() => navToCampaignDetail(v)}
                                 onLongPress={() => onLongPress(v)}
                             >
-                                {v.imgs !== undefined && v.imgs.length > 0 && <Avatar source={{ uri: v.imgs[0] }} avatarStyle={{ borderRadius: 10 }} />}
+                                <Avatar source={{ uri: v.imgs[0] || "gray" }} avatarStyle={{ borderRadius: 10 }} />
                                 <ListItem.Content>
                                     <SubTitle>{v.name}</SubTitle>
                                     <Text3>{v.description}</Text3>

@@ -5,6 +5,7 @@ export const colorCode = {
     light: "#95BDEE",
 
     background: "#F2F1F2",
+    disable: "#9BA1A7",
     gray: "gray",
     appleRed: "#ff3b30",
     appleBlue: "#0067A3",

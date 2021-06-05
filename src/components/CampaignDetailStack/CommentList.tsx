@@ -10,6 +10,7 @@ import { animationPath } from '../../util'
 interface Props {
     commentList: CampaignComment[]
     navToWriteComment: (comment: UpdateCampaignComment | null) => void
+    navToReportComment: (comment: CampaignComment) => void
     onDeleteComment: (coid: string) => void
     refreshing: boolean
 }
@@ -88,6 +89,7 @@ const CommentList = (props: Props) => {
                         <Comment
                             comment={comment}
                             navToWriteComment={props.navToWriteComment}
+                            navToReportComment={props.navToReportComment}
                             onDeleteComment={props.onDeleteComment}
                             key={idx}
                         />
