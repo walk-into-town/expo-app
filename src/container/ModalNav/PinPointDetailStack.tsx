@@ -41,10 +41,10 @@ const PinPointDetailStack = () => {
     }
     const navToGame = () => {
         const init = async () => {
-            const { result, data, error, errdesc } = await API.quizCheck(pinpoint.id)
+            const { result, data, error, errdesc } = await API.quizCheck({ pid: pinpoint.id, caid: params.cid })
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: "도전이 불가합니다", subTitle: errdesc })
-                
+
             mainNav.navigate("GameNav", {
                 screen: "QuizStack",
                 params: { caid: params.cid, pid: pinpoint.id, quiz: pinpoint.quiz }
