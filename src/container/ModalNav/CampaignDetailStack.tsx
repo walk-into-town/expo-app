@@ -33,7 +33,8 @@ const CampaignDetailStack = () => {
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "참여 여부 조회 실패", subTitle: `${error} ${errdesc}` })
 
-        setIsParticipate(data === "이미 참여중인 캠페인 입니다.");
+        // data: true === 참여 가능하다.
+        setIsParticipate(!data);
     }
     const getPinPoints = async () => {
         const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', value: campaign.id });
@@ -212,6 +213,7 @@ const CampaignDetailStack = () => {
                     navToReportComment={navToReportComment}
                     onDeleteComment={onDeleteComment}
                     refreshing={refreshing}
+                    isParticipate={isParticipate}
                 />
 
                 <Footer />

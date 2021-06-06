@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember } from "@types"
+import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember, Campaign } from "@types"
 import { baseFetch } from "./baseFetch"
 import { formAppendImgs } from "../util";
 
@@ -39,7 +39,7 @@ export const campaignParticiapte: CampaignParticiapte = (body) => {
 export const campaignWithdraw = (body: { uid: string, caid: string }): BaseFetchRes<boolean> => {
     return baseFetch(`${ip}/member/playing`, "DELETE", { body })
 }
-export const campaignCheckPlaying = (params: { uid: string, caid: string }): BaseFetchRes<string> => {
+export const campaignCheckPlaying = (params: { uid: string, caid: string }): BaseFetchRes<boolean> => {
     return baseFetch(`${ip}/member/checkplaying?uid=${params.uid}&caid=${params.caid}`, "GET");
 }
 export const campaignParticiaptedUsers = (caid: string): BaseFetchRes<PartedMember[]> => {
@@ -77,4 +77,10 @@ export const campaignCommentUpdate = (body: { rid: string, uid: string, caid: st
 }
 export const campaignCommentDelete = (body: { rid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })
+}
+
+// 추천캠페인 
+type campaignRecommendFetch = (region: string) => BaseFetchRes<SearchCampaign[]>
+export const campaignRecommend: campaignRecommendFetch = (region) => {
+    return baseFetch(`${ip}/campaign/recommend?region=${region}`, "GET");
 }

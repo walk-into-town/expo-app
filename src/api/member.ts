@@ -67,5 +67,5 @@ export const managerReport = (body: MakeReport): BaseFetchRes<string> => {
     return baseFetch(`${ip}/manager/report`, "POST", { body })
 }
 export const getReport = (uid: string): BaseFetchRes<Report[]> => {
-    return baseFetch(`${ip}/manager/report?type=list&uid=${uid}`, "GET")
+    return baseFetch(`${ip}/manager/report?type=userId&value=${uid}`, "GET")
 }
