@@ -53,8 +53,9 @@ declare module "@types" {
     // 게임
     type GameNavParamList = {
         QuizStack: { caid: string, pid: string, quiz: Quiz },
-        GameClear: {  QuizClear: QuizClear },
+        GameClear: { QuizClear: QuizClear },
         GamePinPointDetailStack: GamePinPointDetailParams,
+        NyanCat: undefined
     }
 
     type GamePinPointDetailParams = {
@@ -68,6 +69,7 @@ declare module "@types" {
 
         MyDetailStack: { selectedIndex: number },
         MyCouponStack: undefined,
+        MyReportStack: undefined,
 
         CampaignDetailStack: CampaignDetailParams,
         PinPointDetailStack: PinPointDetailParams,

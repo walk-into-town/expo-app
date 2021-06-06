@@ -1,9 +1,9 @@
 import { ip } from "./ip"
 import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember } from "@types"
 import { baseFetch } from "./baseFetch"
-import { formAppendImg, formAppendImgs } from "../util";
+import { formAppendImgs } from "../util";
 
-
+//// 캠페인 CRUD
 type CampaignCreateFetch = (body: MakeCampaign) => BaseFetchRes<string>;
 export const campaignCreate: CampaignCreateFetch = (body) => {
     return baseFetch(`${ip}/campaign`, "POST", { body });
@@ -31,7 +31,7 @@ export const campaignSearchPinPoint = (pid: string): BaseFetchRes<SearchCampaign
     return baseFetch(`${ip}/campaign?type=pinpoint&condition=exact&value=${pid}`, "GET");
 }
 
-// 캠페인 디테일 페이지
+//// 캠페인 디테일
 type CampaignParticiapte = (body: { uid: string, caid: string }) => BaseFetchRes<boolean>
 export const campaignParticiapte: CampaignParticiapte = (body) => {
     return baseFetch(`${ip}/member/playing`, "POST", { body })
@@ -45,17 +45,12 @@ export const campaignCheckPlaying = (params: { uid: string, caid: string }): Bas
 export const campaignParticiaptedUsers = (caid: string): BaseFetchRes<PartedMember[]> => {
     return baseFetch(`${ip}/campaign/playing?caid=${caid}`, "GET")
 }
-type PinPointReadFetch = (params: PinPointReadParams) => BaseFetchRes<PinPoint[]>
-export const pinPointRead: PinPointReadFetch = (params) => {
-    return baseFetch(`${ip}/pinpoint?type=${params.type}&value=${params.value}`, "GET");
+export const campaignIsCleared = (caid: string): BaseFetchRes<boolean> => {
+    return baseFetch(`${ip}/member/checkcampaign?caid=${caid}`, "GET")
 }
 
-type CouponReadFetch = (params: CouponReadParams) => BaseFetchRes<Coupon[]>
-export const couponRead: CouponReadFetch = (params) => {
-    return baseFetch(`${ip}/coupon?type=${params.type}&value=${params.value}`, "GET");
-}
 
-// 캠페인 리뷰
+//// 캠페인 리뷰
 type CCCFetch = (body: MakeCampaignComment) => BaseFetchRes<string>
 export const campaignCommentCreate: CCCFetch = (body) => {
     const formdata = new FormData();
@@ -83,4 +78,3 @@ export const campaignCommentUpdate = (body: { rid: string, uid: string, caid: st
 export const campaignCommentDelete = (body: { rid: string, uid: string, caid: string }): BaseFetchRes<[]> => {
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })
 }
-

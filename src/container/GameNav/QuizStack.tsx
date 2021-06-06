@@ -44,7 +44,7 @@ const QuizStack = () => {
 
     // usecase
     const onAnswer = async (answer: string) => {
-        const { result, data, error, errdesc } = await API.quizSolve({ caid, pid, answer })
+        const { result, data, error, errdesc } = await API.quizSolve({ caid, pid, answer, monsterImg })
         if (result === "failed" || data === undefined) {
             console.log(`[퀴즈 실패] ${error} ${errdesc}`)
             return false;

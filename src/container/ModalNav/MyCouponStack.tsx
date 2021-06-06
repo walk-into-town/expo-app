@@ -61,17 +61,18 @@ const MyCouponStack = () => {
             />
             <ScrollView style={{ flex: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 {
-
-                    couponFilterList.length === 0 ?
-                        <View style={{ marginTop: "40%", justifyContent: "center", alignItems: "center" }}>
-                            <Title style={{ fontSize: 50 }}>텅</Title>
-                            <Text3>쿠폰을 얻기 위해 모험을 떠나요!</Text3>
-                        </View>
-                        :
-                        <CouponList
-                            couponList={couponFilterList}
-                            openModal={openModal}
-                        />
+                    refreshing ?
+                        <></>
+                        : couponFilterList.length === 0 ?
+                            <View style={{ marginTop: "40%", justifyContent: "center", alignItems: "center" }}>
+                                <Title style={{ fontSize: 50 }}>텅</Title>
+                                <Text3>쿠폰을 얻기 위해 모험을 떠나요!</Text3>
+                            </View>
+                            :
+                            <CouponList
+                                couponList={couponFilterList}
+                                openModal={openModal}
+                            />
                 }
                 <Modal isVisible={modalVisble} onBackdropPress={() => setModalVisble(false)}>
                     <CouponModalCard

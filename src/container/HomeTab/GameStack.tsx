@@ -8,6 +8,7 @@ import PinPointPanel from '../../components/GamePlayStack/PinpointPanel';
 import PlayingCampaignModal from '../../components/GamePlayStack/PlayingCampaignModal';
 import { View, StyleSheet } from 'react-native';
 import { getDistance } from 'geolib';
+import { getDummySearchCampaign } from '../../util';
 
 
 const GameStack = () => {
@@ -70,11 +71,17 @@ const GameStack = () => {
 
     // naviagtion
     const navtoPinPointDetail = (pinpoint: PinPoint) => {
-        if (campaign !== undefined)
-            mainNav.navigate("ModalNav", {
-                screen: "PinPointDetailStack",
-                params: { cid: campaign.id, campaignName: campaign.name, pinpoint: pinpoint }
-            })
+        if (campaign === undefined) return
+
+        mainNav.navigate("ModalNav", {
+            screen: "PinPointDetailStack",
+            params: { cid: campaign.id, campaignName: campaign.name, pinpoint: pinpoint }
+        })
+    }
+    const navtoCampaignDetail = () => {
+        if (campaign === undefined) return
+
+        mainNav.navigate("ModalNav", { screen: "CampaignDetailStack", params: { campaign: getDummySearchCampaign(campaign.id) } })
     }
 
     const navtoQuiz = async (pinpoint: PinPoint) => {
@@ -133,6 +140,7 @@ const GameStack = () => {
                 clearedPinPointList={clearedPinPointList}
                 usePanelActivie={[isPanelActive, setIsPanelActive]}
                 navtoPinPointDetail={navtoPinPointDetail}
+                navtoCampaignDetail={navtoCampaignDetail}
                 navtoQuiz={navtoQuiz}
             />
         </View>

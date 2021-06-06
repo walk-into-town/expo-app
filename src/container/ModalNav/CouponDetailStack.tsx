@@ -22,11 +22,11 @@ const CouponDetailStack = () => {
 
     return (
         <ScrollView>
-            <AbsoluteCousel images={["https://cdn.news.unn.net/news/photo/202008/233379_118713_4050.jpg", "https://i.ytimg.com/vi/IdMIqWnRpLg/maxresdefault.jpg"]} />
+            {coupon.img && <AbsoluteCousel images={[coupon.img]} />}
 
-            <Card containerStyle={{ borderRadius: 4 }}>
+            <Card containerStyle={{ borderRadius: 4, marginBottom: 4 }}>
                 <Title>{coupon.name}</Title>
-                <Text3 style={{ textAlign: "center" }}>{coupon.description}</Text3>
+                <Text3 style={{ textAlign: "center", fontSize: 16 }}>{coupon.description}</Text3>
             </Card>
 
             <PaddingBox>
@@ -45,6 +45,7 @@ const CouponDetailStack = () => {
                 <SubTitle>지급 조건</SubTitle>
                 <Text3>{renderCondition()}</Text3>
             </PaddingBox>
+            <Divider />
 
             <PaddingBox style={{ alignItems: 'center' }}>
                 <SubTitle>{coupon.issued} / {coupon.limit}</SubTitle>

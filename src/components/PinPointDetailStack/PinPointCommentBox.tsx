@@ -14,6 +14,13 @@ interface Props {
 
 const PinPointCommentBox = ({ comments, navToWriteComment, navToReport, deleteComment, onRate }: Props) => {
 
+    const sortLogic = (a: PinPointComment, b: PinPointComment): number => {
+        if (a.rateList.length === b.rateList.length)
+            return new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime()
+
+        return b.rateList.length - a.rateList.length;
+    }
+
     return (
         <View style={{ minHeight: 200 }}>
             <Row style={{ marginHorizontal: 20, marginTop: 10 }}>
@@ -23,13 +30,17 @@ const PinPointCommentBox = ({ comments, navToWriteComment, navToReport, deleteCo
                 </View>
             </Row>
             {
-                comments.map((v, idx) => <Comment key={idx}
-                    comment={v}
-                    deleteComment={deleteComment}
-                    onRate={onRate}
-                    navToWriteComment={navToWriteComment}
-                    navToReport={navToReport}
-                />)
+                comments
+                    .sort(sortLogic)
+                    .map((v, idx) => (
+                        <Comment key={idx}
+                            comment={v}
+                            deleteComment={deleteComment}
+                            onRate={onRate}
+                            navToWriteComment={navToWriteComment}
+                            navToReport={navToReport}
+                        />
+                    ))
             }
         </View>
     )

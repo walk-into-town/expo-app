@@ -1,10 +1,11 @@
 import React from 'react'
+import { Image, ScrollView } from 'react-native'
 import { Card, Divider, ListItem, Text } from 'react-native-elements'
-import { colorCode, SubTitle, WhiteView } from '../../atoms'
+import { colorCode, SubTitle, Text3, WhiteView } from '../../atoms'
 import { useAuthContext } from '../../useHook'
 
 interface Props {
-
+    badgeList: string[]
 }
 
 const BadgeList = (props: Props) => {
@@ -21,9 +22,19 @@ const BadgeList = (props: Props) => {
 
             <Divider />
 
-            <ListItem>
-
-            </ListItem>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 100 }}>
+                {
+                    props.badgeList.length === 0 ?
+                        <Text3 style={{ marginTop: 8, marginLeft: 20 }}>빨리 모험을 떠나 컬렉션을 모아보세요!</Text3>
+                        : props.badgeList.map((v, idx) => (
+                            <Image
+                                key={idx}
+                                source={{ uri: v }}
+                                style={{ height: 80, marginVertical: 10, marginRight: 4 }}
+                            />
+                        ))
+                }
+            </ScrollView>
         </WhiteView>
     )
 }
