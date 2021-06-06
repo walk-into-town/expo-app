@@ -1,11 +1,12 @@
-import { Campaign, PinPoint, PlayingCampaign, TuseState } from '@types';
+import { Campaign, PinPoint, PlayingCampaign, SearchCampaign, TuseState } from '@types';
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, Text, ScrollView, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
-import { BadgeButton, colorCode, Ionicons, Title, TitleBadge, Container, Row, FontAwesome, Text3, Text1, ClearButton } from '../../atoms';
+import { BadgeButton, colorCode, Ionicons, Title, TitleBadge, Container, Row, FontAwesome, Text1, Text3 } from '../../atoms';
 import { ListItem } from 'react-native-elements';
 import { getDistance } from 'geolib';
 import { useAuthContext } from '../../useHook';
+import { getDummySearchCampaign } from '../../util';
 
 
 interface Props {
@@ -13,9 +14,11 @@ interface Props {
     playingPinPointList: PinPoint[],
     useDisplayPinPointList: TuseState<PinPoint[]>
     getAllPlayingPinPoints: () => Promise<void>
+    getAllPlayingCampaigns: () => Promise<void>
+    navtoCampaignDetail: (campaign: SearchCampaign) => void
 }
 
-const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDisplayPinPointList, getAllPlayingPinPoints }: Props) => {
+const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDisplayPinPointList, getAllPlayingPinPoints, getAllPlayingCampaigns, navtoCampaignDetail }: Props) => {
     const { auth: { userToken } } = useAuthContext();
     if (userToken === undefined) return <></>
 
@@ -26,11 +29,12 @@ const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDis
 
     useEffect(() => {
         onFilter(toggleUnClear, toggle100m);
-    }, [])
+    }, [playingCampaignList, playingPinPointList])
 
     const onReset = () => {
         const init = async () => {
             await getAllPlayingPinPoints()
+            await getAllPlayingCampaigns();
             onFilter(toggleUnClear, toggle100m);
         }
         init();
@@ -48,6 +52,7 @@ const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDis
         setToggle100m(!toggle100m);
     }
 
+    // 필터를 적용한 정렬
     const onFilter = (isUnclear: boolean, is100m: boolean) => {
         var arr = [...playingCampaignList]
         if (isUnclear)
@@ -89,7 +94,7 @@ const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDis
     const renderBorderWidth = (cam: PlayingCampaign) => isDisPlay(cam) ? 1 : 0.5
 
     return (
-        <Container>
+        <Container style={{ position: 'absolute', top: 10, right: 10 }}>
             <TouchableOpacity activeOpacity={0.7} onPress={toggleModal}>
                 <Ionicons name="ios-location" size={40} color={colorCode.primary} />
             </TouchableOpacity>
@@ -113,16 +118,25 @@ const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDis
                     <ScrollView showsVerticalScrollIndicator={false} style={{ height: "100%" }}>
                         {
                             playingCampaignList.length === 0 ?
-                                <View style={{ flex: 1, justifyContent: "center", marginTop: "40%" }}>
+                                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginTop: "40%" }}>
                                     <Title>텅</Title>
+                                    <Text3>[추천 캠페인]을 통해서</Text3>
+                                    <Text3>가까운 캠페인에 참여해보세요</Text3>
                                 </View>
                                 :
                                 playingCampaignList.map((cam, idx) => (
                                     <ListItem key={idx}
                                         onPress={() => onDisplayToggle(cam)}
+                                        onLongPress={() => { navtoCampaignDetail(getDummySearchCampaign(cam.id)); setModalVisible(false) }}
                                         style={{ borderRadius: 20, marginVertical: 4 }}
                                         containerStyle={{ borderWidth: renderBorderWidth(cam), borderColor: renderBorderColor(cam), borderRadius: 20 }}
                                     >
+                                        <View style={{
+                                            width: 8,
+                                            height: 8,
+                                            borderRadius: 10,
+                                            backgroundColor: renderBorderColor(cam)
+                                        }} />
                                         <ListItem.Content>
                                             <Row>
                                                 <Text style={{ fontWeight: "bold", fontSize: 16 }}>{cam.name}</Text>

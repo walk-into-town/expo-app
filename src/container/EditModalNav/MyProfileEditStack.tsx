@@ -4,7 +4,6 @@ import { Container, DefaultAlert, InputModal, SingleImgPicker, SubmitButton } fr
 import { useAuthContext, useLoadingContext } from '../../useHook';
 import { API } from '../../api';
 import { useNavigation } from '@react-navigation/core';
-import { formAppendImgs } from '../../util';
 
 interface Props {
     isModalVisible: boolean,

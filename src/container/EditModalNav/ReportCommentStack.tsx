@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { API } from '../../api';
 import { ClearButton, DefaultAlert, HeaderRightCheckIcon, Text1, TextArea } from '../../atoms'
+import Footer from '../../components/Footer';
 import { mainNavigation, useAuthContext, useLoadingContext } from '../../useHook';
 import { isBlank } from '../../util';
 
@@ -48,18 +49,23 @@ const ReportCommentStack = () => {
     }
 
     return (
-        <View style={{ paddingTop: 50, paddingHorizontal: 15 }}>
-            <Text1 style={{ marginLeft: 4 }}>* 정확한 사유를 기제하시면 더 빠르게 조치됩니다.</Text1>
+        <View style={{ flex: 1, paddingTop: 50, paddingHorizontal: 15 }}>
             <TextArea
                 value={text}
                 onChangeText={setText}
                 placeholder="신고 사유를 입력해 주세요."
             />
+            <Text1 style={{ marginLeft: 4 }}>* 정확한 사유를 기제하시면 더 빠르게 조치됩니다.</Text1>
+            <Text1 style={{ marginLeft: 4, marginTop: 16 }}>조치되는 방법</Text1>
+            <Text1 style={{ marginLeft: 4 }}>- 댓글의 사진이 삭제됩니다.</Text1>
+            <Text1 style={{ marginLeft: 4 }}>- 글이 '관리자에의해 삭제되었습니다'로 대체됩니다.</Text1>
+            <Text1 style={{ marginLeft: 4 }}>- 사용자는 일정 사긴동안 접속이 차단됩니다.</Text1>
             <ClearButton
                 title="신고"
                 style={{ marginLeft: "auto" }}
                 onPress={onSubmit}
             />
+            <Footer />
         </View>
     )
 }

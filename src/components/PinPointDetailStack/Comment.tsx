@@ -12,6 +12,7 @@ interface Props {
     deleteComment: (coid: string) => void
     onRate: (coid: string, like: boolean) => void
     navToWriteComment: (comment: WritePinPointComment | null) => void
+    navToReport: (comment: PinPointComment) => void
 }
 
 const Comment = (props: Props) => {
@@ -33,7 +34,7 @@ const Comment = (props: Props) => {
             text: comment.text
         }),
         onDelete: () => props.deleteComment(comment.id),
-        onReport: () => commingSoon
+        onReport: () => props.navToReport(comment)
     })
 
     const onLiked = () => {

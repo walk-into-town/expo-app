@@ -1,5 +1,5 @@
 import { RouteProp, useIsFocused, useNavigation, useRoute } from '@react-navigation/core'
-import { ModalNavParamList, WritePinPointComment } from '@types'
+import { ModalNavParamList, PinPointComment, WritePinPointComment } from '@types'
 import React, { useEffect, useState } from 'react'
 
 import { ScrollView } from 'react-native-gesture-handler'
@@ -39,20 +39,12 @@ const PinPointDetailStack = () => {
             params: { pid: pinpoint.id, pname: pinpoint.name, comment }
         })
     }
-    const navToGame = () => {
-        const init = async () => {
-            const { result, data, error, errdesc } = await API.quizCheck({ pid: pinpoint.id, caid: params.cid })
-            if (result === "failed" || data === undefined)
-                return DefaultAlert({ title: "도전이 불가합니다", subTitle: errdesc })
-
-            mainNav.navigate("GameNav", {
-                screen: "QuizStack",
-                params: { caid: params.cid, pid: pinpoint.id, quiz: pinpoint.quiz }
-            })
-        }
-        init()
+    const navToReport = (comment: PinPointComment,) => {
+        mainNav.navigate("EditModalNav", {
+            screen: "ReportCommentStack",
+            params: { type: "Pinpoint", comment, id: pinpoint.id }
+        })
     }
-
 
     // api
     const getComment = async () => {
@@ -97,11 +89,11 @@ const PinPointDetailStack = () => {
         <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <PinPointInfo
                 pinpoint={pinpoint}
-                navToGame={navToGame}
             />
             <PinPointCommentBox
                 comments={comments}
                 navToWriteComment={navToWriteComment}
+                navToReport={navToReport}
                 deleteComment={deleteComment}
                 onRate={onRate}
             />

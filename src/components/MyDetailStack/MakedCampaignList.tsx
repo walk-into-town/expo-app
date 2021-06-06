@@ -4,9 +4,10 @@ import Clipboard from 'expo-clipboard';
 import { View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
-import { BadgeButton, SelectionAlert, SubTitle, Text1, Text3 } from '../../atoms'
+import { SelectionAlert, SubTitle, Text1, Text3 } from '../../atoms'
 import { mainNavigation } from '../../useHook'
 import ParticiaptedUserModal from './ParticiaptedUserModal';
+import { getDummySearchCampaign } from '../../util';
 
 interface Props {
     myCampaignList: MyCampaign[]
@@ -18,21 +19,7 @@ const MakedCampaignList = (props: Props) => {
     const mainNav = mainNavigation();
     const navToCampaignDetail = (campaign: MyCampaign) => {
         mainNav.navigate("ModalNav", {
-            screen: "CampaignDetailStack", params: {
-                campaign: {
-                    id: campaign.id,
-                    name: campaign.name,
-                    description: campaign.description,
-                    imgs: campaign.imgs,
-                    ownner: "",
-                    region: "",
-                    updateTime: "",
-                    comments: [],
-                    coupons: [],
-                    pcoupons: [],
-                    pinpoints: []
-                }
-            }
+            screen: "CampaignDetailStack", params: { campaign: getDummySearchCampaign(campaign.id) }
         })
     }
 
@@ -53,7 +40,7 @@ const MakedCampaignList = (props: Props) => {
         props.getPartedUsers(caid);
         setIsVisible(true);
     }
-
+    
     return (
         <>
             <View style={{ marginTop: 10, marginBottom: 20, marginLeft: 10 }}>

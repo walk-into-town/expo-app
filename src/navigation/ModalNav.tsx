@@ -6,6 +6,7 @@ import CampaignDetailStack from '../container/ModalNav/CampaignDetailStack';
 import CouponDetailStack from '../container/ModalNav/CouponDetailStack';
 import MyCouponStack from '../container/ModalNav/MyCouponStack';
 import MyDetailStack from '../container/ModalNav/MyDetailStack';
+import MyReportStack from '../container/ModalNav/MyReportStack';
 import PinPointDetailStack from '../container/ModalNav/PinPointDetailStack';
 
 interface Props {
@@ -35,6 +36,11 @@ const ModalNav = (props: Props) => {
                 name="MyCouponStack"
                 component={MyCouponStack}
                 options={{ headerTitle: "내 쿠폰" }}
+            />
+            <Stack.Screen
+                name="MyReportStack"
+                component={MyReportStack}
+                options={{ headerTitle: "내 신고 목록" }}
             />
 
             {/* 캠페인 상세 페이지 */}

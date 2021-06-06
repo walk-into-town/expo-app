@@ -35,7 +35,6 @@ const CampaignStack = () => {
     }, [])
 
     const reset = () => {
-        setSearchText("");
         setType("name");
         setCondition("part");
         getSearchCampaign();

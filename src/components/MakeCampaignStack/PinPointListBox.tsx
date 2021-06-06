@@ -31,10 +31,10 @@ const PinPointListBox = ({ useRegion, pinPointList, setCampaignRegion, navToPinP
 
             <Row>
                 <SubTitle>핀포인트 리스트</SubTitle>
-                <Button type="clear" titleStyle={{ fontSize: 13, color: "black" }}
+                {/* <Button type="clear" titleStyle={{ fontSize: 13, color: "black" }}
                     title="지도에서 보기"
                     onPress={() => console.log("지도에서 보기")}
-                />
+                /> */}
             </Row>
             {
                 pinPointList.map((item, idx) =>

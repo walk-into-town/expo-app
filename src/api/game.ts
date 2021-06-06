@@ -14,7 +14,8 @@ export const quizRead = (pid: string): BaseFetchRes<any> => {
 interface quizCheck {
     pid: string,
     caid: string,
-    answer: string
+    answer: string,
+    monsterImg: string
 }
 export const quizSolve = (body: quizCheck): BaseFetchRes<any> => {
     return baseFetch(`${ip}/pinpoint/quiz/solve`, "POST", { body });

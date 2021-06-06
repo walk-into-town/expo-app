@@ -20,13 +20,14 @@ declare module "@types" {
     type MemberLoginRes = {
         nickname: string,
         profileImg: string,
-        selfIntroduction: string
+        selfIntroduction: string,
     }
 
     type MemberInfoRes = {
         playingCampaign: number,
         myCampaign: number,
-        clearCampaign: number
+        clearCampaign: number,
+        badge: string[]
     }
 
 
@@ -47,9 +48,8 @@ declare module "@types" {
     }
 
     type MemberCoordinate = {
-            latitude:number,
-            longitude:number
-
+        latitude: number,
+        longitude: number
     }
 
 }

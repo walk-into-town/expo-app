@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { colorCode, HeaderLeftBackIcon } from '../atoms';
 import QuizStack from '../container/GameNav/QuizStack';
 import GameClear from '../container/GameNav/GameClear';
+import NyanCat from '../container/GameNav/NyanCat';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,11 @@ const GameNav = () => {
                 options={{ headerShown: false, gestureEnabled: false }}
             />
 
+            <Stack.Screen
+                name="NyanCat"
+                component={NyanCat}
+                options={{ headerTitle: "Nyan Cat" }}
+            />
         </Stack.Navigator>
     )
 }

@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { BadgeButton, ClearButton, LoadingCircle, Row, SubTitle, BadgeButtonGroup } from '../../atoms'
 import Comment from './Comment'
-import LottieView from "lottie-react-native";
-import { animationPath } from '../../util'
 
 interface Props {
     commentList: CampaignComment[]
@@ -13,6 +11,7 @@ interface Props {
     navToReportComment: (comment: CampaignComment) => void
     onDeleteComment: (coid: string) => void
     refreshing: boolean
+    isParticipate: boolean
 }
 
 const CommentList = (props: Props) => {
@@ -23,6 +22,7 @@ const CommentList = (props: Props) => {
 
     useEffect(() => {
         setCommentList(props.commentList);
+        filterButtons[filterIdx].func()
     }, [props.commentList])
 
     const onOnlyImgToggle = () => {
@@ -67,7 +67,12 @@ const CommentList = (props: Props) => {
                     조회된 리뷰 {commentList.length}개
                 </SubTitle>
                 <View style={{ marginLeft: 'auto', marginRight: 5, marginBottom: 5 }}>
-                    <ClearButton title="리뷰 쓰기" onPress={() => props.navToWriteComment(null)} size={15} />
+                    <ClearButton
+                        title="리뷰 쓰기"
+                        onPress={() => props.navToWriteComment(null)}
+                        size={15}
+                        disabled={props.isParticipate}
+                    />
                 </View>
             </Row>
 

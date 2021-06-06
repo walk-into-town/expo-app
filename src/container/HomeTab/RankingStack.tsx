@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { RefreshControl } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { API } from '../../api'
-import { Container, DefaultAlert, Gray, LoadingCircle } from '../../atoms'
+import { Container, DefaultAlert, LoadingCircle } from '../../atoms'
 import Footer from '../../components/Footer'
 import MyRankModal from '../../components/RankingStack/MyRankModal'
 import OutRankingList from '../../components/RankingStack/OutRankingList'
@@ -63,7 +63,6 @@ const RankingStack = () => {
             <MyRankModal useVisible={[modalVisible, setModalVisible]} myRank={myRank} />
 
             <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                <Gray>* 랭크는 00시 단위로 갱신됩니다.</Gray>
                 {
                     refreshing ? <LoadingCircle />
                         : <>

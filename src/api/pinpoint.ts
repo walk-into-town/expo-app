@@ -1,9 +1,15 @@
-import { BaseFetchRes, PinPointComment } from "@types";
+import { BaseFetchRes, PinPoint, PinPointComment, PinPointReadParams } from "@types";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 
 
-// 핀포인트 댓글
+type PinPointReadFetch = (params: PinPointReadParams) => BaseFetchRes<PinPoint[]>
+export const pinPointRead: PinPointReadFetch = (params) => {
+    return baseFetch(`${ip}/pinpoint?type=${params.type}&value=${params.value}`, "GET");
+}
+
+
+//// 핀포인트 댓글
 type pCommentCreateFetch = (body: {
     pid: string,
     comments: {

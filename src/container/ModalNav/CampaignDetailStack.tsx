@@ -33,7 +33,8 @@ const CampaignDetailStack = () => {
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "참여 여부 조회 실패", subTitle: `${error} ${errdesc}` })
 
-        setIsParticipate(data === "이미 참여중인 캠페인 입니다.");
+        // data: true === 참여 가능하다.
+        setIsParticipate(!data);
     }
     const getPinPoints = async () => {
         const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', value: campaign.id });
@@ -74,7 +75,17 @@ const CampaignDetailStack = () => {
         modalNav.navigate('CouponDetailStack', { coupon, campaignName: campaign.name, pinpointList: pinPointList.map(v => v.name) })
     }
     const navToWriteComment = (comment: UpdateCampaignComment | null) => {
-        mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
+        const init = async () => {
+            const { result, data, error, errdesc } = await API.campaignIsCleared(campaign.id);
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: error, subTitle: errdesc })
+
+            if (data === false)
+                return DefaultAlert({ title: "캠페인을 클리어 하셔야합니다." })
+
+            mainNav.navigate('EditModalNav', { screen: 'WriteCampaignCommentStack', params: { caid: campaign.id, cname: campaign.name, comment } })
+        }
+        init();
     }
     const navToReportComment = (comment: CampaignComment) => {
         mainNav.navigate('EditModalNav', { screen: 'ReportCommentStack', params: { type: "Campaign", comment, id: campaign.id } })
@@ -138,6 +149,7 @@ const CampaignDetailStack = () => {
         }
         ConfirmAlert({ title: "정말 캠페인을 탈퇴하시겠습니까?", subTitle: "참여한 데이터를 모두 잃게 됩니다.", onConfirm: init });
     }
+
     const onEdit = () => {
         const makeCampaign: MakeCampaign = searchCampaignToMakeCampaign(campaign, pinPointList, couponList);
         mainNav.navigate("MakeCampaignNav", { screen: "MakeCampaignStack", params: { campaign: makeCampaign } })
@@ -201,6 +213,7 @@ const CampaignDetailStack = () => {
                     navToReportComment={navToReportComment}
                     onDeleteComment={onDeleteComment}
                     refreshing={refreshing}
+                    isParticipate={isParticipate}
                 />
 
                 <Footer />
