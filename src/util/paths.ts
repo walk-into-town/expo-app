@@ -17,7 +17,7 @@ export const soundPath = {
     mummy: require('../../assets/sound/mummy.mp3'),
     pikanya: require('../../assets/sound/pikanyan.mp3'),
     retro: require('../../assets/sound/retro.mp3'),
-    wtf: require('../../assets/sound/wtf.mp3'),
+    gb: require('../../assets/sound/gb.mp3'),
 }
 
 export const loadingPath = {

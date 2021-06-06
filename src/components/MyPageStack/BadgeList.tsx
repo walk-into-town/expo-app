@@ -22,7 +22,7 @@ const BadgeList = (props: Props) => {
 
             <Divider />
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 100 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 90 }}>
                 {
                     props.badgeList.length === 0 ?
                         <Text3 style={{ marginTop: 8, marginLeft: 20 }}>빨리 모험을 떠나 컬렉션을 모아보세요!</Text3>
@@ -30,7 +30,7 @@ const BadgeList = (props: Props) => {
                             <Image
                                 key={idx}
                                 source={{ uri: v }}
-                                style={{ height: 80, marginVertical: 10, marginRight: 4 }}
+                                style={{ width: 80, height: 80, marginBottom: 10, marginRight: 4 }}
                             />
                         ))
                 }
