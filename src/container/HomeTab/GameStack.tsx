@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { DefaultAlert } from '../../atoms'
 import CampaignView from '../../components/GamePlayStack/CampaignView'
-import { MemberCoordinate, PinPoint, PlayingCampaign, SearchCampaign } from '@types';
+import { Campaign, MemberCoordinate, PinPoint, PlayingCampaign, SearchCampaign } from '@types';
 import { API } from '../../api';
 import { mainNavigation, useAuthContext, useLoadingContext } from '../../useHook';
 import PinPointPanel from '../../components/GamePlayStack/PinpointPanel';
 import PlayingCampaignModal from '../../components/GamePlayStack/PlayingCampaignModal';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { getDistance } from 'geolib';
-import { getDummySearchCampaign } from '../../util';
+import { useIsFocused } from '@react-navigation/core';
+import RecommendCampaignModal from '../../components/GamePlayStack/RecommendCampaignModal';
 
 
 const GameStack = () => {
-    const mainNav = mainNavigation();
-    const { useLoading: { startLoading, endLoading } } = useLoadingContext();
     const { auth: { userToken } } = useAuthContext();
     if (userToken === undefined) return <></>
+
+    const mainNav = mainNavigation();
+    const isFocused = useIsFocused()
+    const { useLoading: { startLoading, endLoading } } = useLoadingContext();
 
     const [coordinate, setCoordinate] = useState<MemberCoordinate>(userToken.coords);
 
@@ -24,13 +27,14 @@ const GameStack = () => {
     const [clearedPinPointList, setClearedPinPointList] = useState<string[]>([]); // 참여중 클리어된 핀포인트 리스트
     // PlayingCampaignModal에서 초기화 된다.
     const [displayPinPointList, setDisplayPinPointList] = useState<PinPoint[]>([]); // 사용자가 플레이할 캠페인의 핀포인트 리스트
+    const [recommendCampaignList, setRecommendCampaignList] = useState<SearchCampaign[]>([]);
 
     // PinPoint Panel의 데이터
     const [isPanelActive, setIsPanelActive] = useState(false);
     const [pinPoint, setPinPoint] = useState<PinPoint>();
     const [campaign, setCampaign] = useState<SearchCampaign>();
 
-    // api
+    //// api
     // 참여중인 캠페인의 모든 핀포인트를 가져옴 
     const getAllPlayingCampaigns = async () => {
         const { result, data, error, errdesc } = await API.memberPlayingCampaign(userToken.id);
@@ -50,10 +54,27 @@ const GameStack = () => {
         setPlayingPinPointList(data.pinpoints)
     }
 
+    const getRecommendCampaign = async () => {
+        const res = await API.getRegion(userToken.coords)
+        if (res === undefined)
+            return DefaultAlert({ title: "주소를 찾을 수 없습니다." })
+
+        const fullAddress = res.results[0].formatted_address
+        const splitAddress = fullAddress.split(" ");
+        const address = splitAddress[1].charAt(splitAddress.length - 1) === "시" ? splitAddress[1] : splitAddress[2]
+
+        const { result, data, error, errdesc } = await API.campaignRecommend(address);
+        if (result === "failed" || data === undefined)
+            return DefaultAlert({ title: "근처에 추천할만한 캠페인이 없습니다.", btColor: "cancel" })
+        console.log(data)
+        setRecommendCampaignList(data)
+    }
+
     useEffect(() => {
+        setIsPanelActive(false)
         getAllPlayingCampaigns();
         getAllPlayingPinPoints();
-    }, [])
+    }, [isFocused])
 
     const openPanel = (pinPoint: PinPoint) => {
         const init = async () => {
@@ -69,7 +90,7 @@ const GameStack = () => {
         init();
     };
 
-    // naviagtion
+    //// naviagtion
     const navtoPinPointDetail = (pinpoint: PinPoint) => {
         if (campaign === undefined) return
 
@@ -78,10 +99,12 @@ const GameStack = () => {
             params: { cid: campaign.id, campaignName: campaign.name, pinpoint: pinpoint }
         })
     }
-    const navtoCampaignDetail = () => {
-        if (campaign === undefined) return
 
-        mainNav.navigate("ModalNav", { screen: "CampaignDetailStack", params: { campaign: getDummySearchCampaign(campaign.id) } })
+    const navtoCampaignDetail = (campaign: SearchCampaign) => {
+        mainNav.navigate("ModalNav", {
+            screen: "CampaignDetailStack",
+            params: { campaign }
+        })
     }
 
     const navtoQuiz = async (pinpoint: PinPoint) => {
@@ -116,7 +139,6 @@ const GameStack = () => {
 
 
     return (
-
         <View>
             <CampaignView
                 coordinate={coordinate}
@@ -125,14 +147,20 @@ const GameStack = () => {
                 clearedPinPointList={clearedPinPointList}
             />
 
-            <View style={styles.icon}>
-                <PlayingCampaignModal
-                    playingCampaignList={playingCampaignList}
-                    playingPinPointList={playingPinPointList}
-                    useDisplayPinPointList={[displayPinPointList, setDisplayPinPointList]}
-                    getAllPlayingPinPoints={getAllPlayingPinPoints}
-                />
-            </View>
+            <PlayingCampaignModal
+                playingCampaignList={playingCampaignList}
+                playingPinPointList={playingPinPointList}
+                useDisplayPinPointList={[displayPinPointList, setDisplayPinPointList]}
+                getAllPlayingPinPoints={getAllPlayingPinPoints}
+                getAllPlayingCampaigns={getAllPlayingCampaigns}
+                navtoCampaignDetail={navtoCampaignDetail}
+            />
+
+            <RecommendCampaignModal
+                recommendCampaignList={recommendCampaignList}
+                getRecommendCampaign={getRecommendCampaign}
+                navtoCampaignDetail={navtoCampaignDetail}
+            />
 
             <PinPointPanel
                 campaign={campaign}
@@ -148,12 +176,3 @@ const GameStack = () => {
 }
 
 export default GameStack
-
-const styles = StyleSheet.create({
-    icon: {
-        position: 'absolute',
-        alignSelf: 'flex-end',
-        marginTop: 10,
-        paddingRight: 10
-    }
-});

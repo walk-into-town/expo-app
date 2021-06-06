@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Pressable, Image } from 'react-native';
 import { SwipeablePanel } from 'rn-swipeable-panel'
 import { PinPoint, SearchCampaign, TuseState } from '@types'
-import { AbsoluteCousel, colorCode, Ionicons, Row, SubTitle, SwordIcon, Text3, Title } from '../../atoms';
+import { colorCode, Ionicons, Row, SubTitle, SwordIcon, Text3, Title } from '../../atoms';
 import { useActionSheet } from '@expo/react-native-action-sheet';
+import { mainNavigation } from '../../useHook';
 
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
     clearedPinPointList: string[]
     usePanelActivie: TuseState<boolean>
     navtoPinPointDetail: (pinpoint: PinPoint) => void
-    navtoCampaignDetail: () => void
+    navtoCampaignDetail: (campaign: SearchCampaign) => void
     navtoQuiz: (pinpoint: PinPoint) => void
 }
 
@@ -40,7 +41,7 @@ const PinPointPanel = ({ pinPoint, campaign, clearedPinPointList, usePanelActivi
             buttonIndex => {
                 switch (buttonIndex) {
                     case 0:
-                        return navtoCampaignDetail();
+                        return navtoCampaignDetail(campaign);
                     case 1:
                         return navtoPinPointDetail(pinPoint);
                     default:
@@ -48,6 +49,12 @@ const PinPointPanel = ({ pinPoint, campaign, clearedPinPointList, usePanelActivi
                 }
             }
         )
+    }
+
+    const nav = mainNavigation();
+    const navToImgViewer = () => {
+        if (pinPoint.imgs.length)
+            nav.navigate("ModalNav", { screen: 'ImageViewer', params: { images: pinPoint.imgs } })
     }
 
     const color = colorCode.primary;
@@ -67,13 +74,11 @@ const PinPointPanel = ({ pinPoint, campaign, clearedPinPointList, usePanelActivi
                     </SubTitle>
                 </View>
 
-                <View style={{ minHeight: 200, marginHorizontal: 10 }}>
-                    <AbsoluteCousel
-                        images={pinPoint.imgs}
-                    />
-                </View>
+                <Pressable onPress={navToImgViewer}>
+                    <Image source={{ uri: pinPoint.imgs[0] || "gray" }} style={{ height: 200, borderRadius: 4 }} />
+                </Pressable>
 
-                <Row style={{ position: "absolute", bottom: 40, right: 10 }}>
+                <Row style={{ position: "absolute", bottom: 50, right: 0 }}>
                     <TouchableOpacity
                         onPress={onAction}
                         style={styles.ButtonCard}
@@ -107,6 +112,6 @@ const styles = StyleSheet.create({
         padding: 4,
         alignItems: "center",
         backgroundColor: "white",
-        marginRight: 4
+        marginRight: 10
     },
 })
