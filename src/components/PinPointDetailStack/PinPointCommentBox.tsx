@@ -7,11 +7,12 @@ import Comment from './Comment'
 interface Props {
     comments: PinPointComment[],
     navToWriteComment: (comment: WritePinPointComment | null) => void
+    navToReport: (comment: PinPointComment) => void
     deleteComment: (coid: string) => void
     onRate: (coid: string, like: boolean) => void
 }
 
-const PinPointCommentBox = ({ comments, navToWriteComment, deleteComment, onRate }: Props) => {
+const PinPointCommentBox = ({ comments, navToWriteComment, navToReport, deleteComment, onRate }: Props) => {
 
     return (
         <View style={{ minHeight: 200 }}>
@@ -27,6 +28,7 @@ const PinPointCommentBox = ({ comments, navToWriteComment, deleteComment, onRate
                     deleteComment={deleteComment}
                     onRate={onRate}
                     navToWriteComment={navToWriteComment}
+                    navToReport={navToReport}
                 />)
             }
         </View>
