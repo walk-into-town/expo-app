@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { mainNavigation, useAuthContext } from '../../useHook';
+import { mainNavigation, useAuthContext, useLoadingContext } from '../../useHook';
 
 import { Container, DefaultAlert } from '../../atoms';
 import { ScrollView } from 'react-native';
@@ -14,6 +14,7 @@ import { useIsFocused } from '@react-navigation/core';
 export default () => {
 
     const { useAuth: { signOut }, auth: { userToken } } = useAuthContext();
+    const { useLoading: { endLoading, startLoading } } = useLoadingContext()
     if (userToken === undefined) return <></>
 
     const isFocuse = useIsFocused()
@@ -21,7 +22,6 @@ export default () => {
 
     // api
     const getMemberInfo = async () => {
-
         const { result, data, error, errdesc } = await API.memberInfoRead({ id: userToken.id })
         if (result === "failed" || data === undefined) {
             DefaultAlert({ title: error, subTitle: errdesc })
@@ -31,12 +31,13 @@ export default () => {
     }
 
     const onWithdrawal = async () => {
-        const { result, data, error, errdesc } = await API.memberWithdraw({ id: userToken.id })
+        startLoading();
+        const { result, data, error, errdesc } = await API.memberWithdraw()
         if (result === "failed" || data === undefined) {
-            DefaultAlert({ title: error, subTitle: errdesc })
+            DefaultAlert({ title: error, subTitle: errdesc, onPress: endLoading })
             return;
         }
-        onLogout();
+        DefaultAlert({ title: "회원 탈퇴하셨습니다", onPress: onLogout })
     }
 
     useEffect(() => {
@@ -71,7 +72,9 @@ export default () => {
                     navToProfileEdit={navToProfileEdit}
                     navToReport={navToReport}
                 />
-                <Settings />
+                <Settings
+                    onWithdrawal={onWithdrawal}
+                />
             </ScrollView>
         </Container>
     )

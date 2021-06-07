@@ -35,9 +35,8 @@ export const memberModify: MemberModifyFetch = (body) => {
     return baseFetch(`${ip}/member`, "PUT", { body: formdata, isForm: true });
 }
 
-type MemberWithdrawFetch = (body: { id: string }) => BaseFetchRes<string>
-export const memberWithdraw: MemberWithdrawFetch = (body) => {
-    return baseFetch(`${ip}/member`, "DELETE", { body });
+export const memberWithdraw = (): BaseFetchRes<string> => {
+    return baseFetch(`${ip}/member`, "DELETE");
 }
 
 // 나의 캠페인 정보
