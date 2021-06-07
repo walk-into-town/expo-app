@@ -19,8 +19,8 @@ const FindPinPointLocationStack = () => {
     if (userToken === undefined) return <></>
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'FindPinPointLocationStack'>>();
-    if (pinpoint === undefined) return;
-    
+    if (pinpoint === undefined) return <></>;
+
     const [latitude, setLatitude] = useState<number>(userToken.coords.latitude);
     const [longitude, setLongitude] = useState<number>(userToken.coords.longitude);
 
@@ -29,14 +29,11 @@ const FindPinPointLocationStack = () => {
 
         if (editIndex !== undefined) nav.setOptions({ headerTitle: "핀포인트 위치 수정하기" })
 
-        if(pinpoint.latitude===0 && pinpoint.longitude===0){
-
-
-        }else{
+        if (pinpoint.latitude !== 0 && pinpoint.longitude !== 0) {
             setLatitude(pinpoint.latitude);
             setLongitude(pinpoint.longitude);
         }
-            
+
     }, [])
 
 

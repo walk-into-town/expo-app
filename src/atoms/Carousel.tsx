@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { FlatList, Dimensions, Image, NativeSyntheticEvent, NativeScrollEvent, View, Pressable } from 'react-native'
 import { mainNavigation } from '../useHook';
+import { imgPath } from '../util';
 
 interface CarouselProps {
     images: string[]
@@ -29,6 +30,7 @@ export const Carousel = (props: CarouselProps) => {
                     width: pageWidth,
                     aspectRatio: 1
                 }}
+                defaultSource={imgPath.loading}
             />
         </Pressable>
     ), [])

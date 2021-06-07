@@ -14,57 +14,61 @@ const MakeCouponStack = () => {
     const nav = useNavigation();
     const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakeCouponStack'>>();
 
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [couponImg, setCouponImg] = useState<string>("");
-    const [limit, setLimit] = useState("");
-    const [goods, setGoods] = useState<string>("");
+    const [name, setName] = useState(coupon?.name || "");
+    const [description, setDescription] = useState(coupon?.description || "");
+    const [couponImg, setCouponImg] = useState<string>(coupon?.imgs || "");
+    const [limit, setLimit] = useState(coupon?.limit.toString() || "");
+    const [goods, setGoods] = useState<string>(coupon?.goods || "");
     const now = new Date();
-    const [endDate, setEndDate] = useState(new Date(now.setFullYear(now.getFullYear() + 1)));
+    const [endDate, setEndDate] = useState(new Date(coupon?.endDate || now.setFullYear(now.getFullYear() + 1)));
     // -1 : 캠페인 클리어, 값: pinPointList index
-    const [paymentCondition, setPaymentCondition] = useState(-1);
+    const [paymentCondition, setPaymentCondition] = useState(coupon?.paymentCondition || -1);
 
     useEffect(() => {
-        if (coupon === undefined) return
-
-        if (editIndex !== undefined) nav.setOptions({ headerTitle: "쿠폰 수정하기" })
-
-        setName(coupon.name)
-        setDescription(coupon.description);
-        setCouponImg(coupon.img);
-        setEndDate(new Date(coupon.endDate));
-        setGoods(coupon.goods);
-        setLimit(coupon.limit.toString());
-        setPaymentCondition(coupon.paymentCondition);
+        if (editIndex !== undefined)
+            campaginNav.setOptions({ headerTitle: "쿠폰 수정하기" })
     }, [coupon])
 
     const getCoupon: () => MakeCoupon = () => {
         return {
+            id: coupon?.id,
             name,
             description,
             endDate: endDate.toISOString(),
             limit: Number(limit),
             goods,
-            img: couponImg,
+            imgs: couponImg,
             paymentCondition
         }
     }
 
-    const { isSubmit, onSubmit } = useSubmit({
-        submitFunc: async () => {
-            if (isBlank([name, description, limit]))
-                return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+    const onSubmit = () => {
+        if (isBlank([name, description, limit]))
+            return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
 
-            if (isLocalFile([couponImg]))
-                return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+        if (isLocalFile([couponImg]))
+            return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
 
-            campaginNav.navigate("MakeCampaignStack", { coupon: getCoupon(), editIndex })
-        }
-    });
-    const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())
-        : name || description || limit || couponImg.length
-    ) && !isSubmit;
-    perventGoBack({ hasUnsavedChanges });
+        console.log(getCoupon())
+        nav.goBack()
+        campaginNav.navigate("MakeCampaignStack", { coupon: getCoupon(), editIndex })
+    }
+    // const { isSubmit, onSubmit } = useSubmit({
+    //     submitFunc: async () => {
+    //         if (isBlank([name, description, limit]))
+    //             return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "캠페인 제목과 설명 입력은 필수입니다." })
+
+    //         if (isLocalFile([couponImg]))
+    //             return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+
+    //         nav.goBack()
+    //         campaginNav.navigate("MakeCampaignStack", { coupon: getCoupon(), editIndex })
+    //     }
+    // });
+    // const hasUnsavedChanges = Boolean(coupon ? isEditCoupon(coupon, getCoupon())
+    //     : name || description || limit || couponImg.length
+    // ) && !isSubmit;
+    // perventGoBack({ hasUnsavedChanges });
 
     return (
         <ScrollWrapper>

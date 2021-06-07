@@ -84,6 +84,7 @@ declare module "@types" {
     // 캠페인 만들기
     type MakeCampaign = {
         id?: string,
+        caid?: string,
         ownner: string,
         name: string,
         imgs: string[],

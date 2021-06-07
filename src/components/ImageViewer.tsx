@@ -20,8 +20,6 @@ const ImageViewer = () => {
         })
     }, [])
 
-
-
     return (
         <ScrollView style={{ paddingTop: 60 }}>
             {

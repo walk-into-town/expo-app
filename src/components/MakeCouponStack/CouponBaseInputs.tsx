@@ -1,5 +1,6 @@
 import { TuseState } from '@types';
 import React from 'react'
+import { View } from 'react-native';
 import { InputModal, SingleImgPickerToServer } from '../../atoms'
 
 interface Props {
@@ -19,16 +20,18 @@ const CouponBaseInputs = (props: Props) => {
 
     return (
         <>
-            <InputModal
-                useText={[name, setName]}
-                placeholder="쿠폰명을 입력해주세요"
-            />
+            <View style={{ marginBottom: 20 }}>
+                <InputModal
+                    useText={[name, setName]}
+                    placeholder="쿠폰명을 입력해주세요"
+                />
 
-            <InputModal
-                useText={[description, setDescription]}
-                placeholder="쿠폰의 상세설명을 입력해주세요."
-                type='textarea'
-            />
+                <InputModal
+                    useText={[description, setDescription]}
+                    placeholder="쿠폰의 상세설명을 입력해주세요."
+                    type='textarea'
+                />
+            </View>
 
             <SingleImgPickerToServer useImg={[couponImg, setCouponImg]} />
 

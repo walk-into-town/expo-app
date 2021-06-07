@@ -3,18 +3,19 @@ import { MakePinPoint, TuseState } from '@types'
 import React from 'react'
 import { Text } from 'react-native'
 import { Button } from 'react-native-elements/dist/buttons/Button'
-import { Box, Row, SubTitle, OutLineButton, SimpleSwapListItem, ClearButton, Gray } from '../../atoms'
+import { Box, Row, SubTitle, OutLineButton, SimpleSwapListItem, ClearButton, Gray, DefaultAlert } from '../../atoms'
 
 
 interface Props {
     useRegion: TuseState<string>,
     pinPointList: MakePinPoint[],
+    isEdit: boolean
     setCampaignRegion: () => void,
     navToPinPointModal: (item?: MakePinPoint, idx?: number) => void,
     deletePinPoint: (idx: number) => void
 }
 
-const PinPointListBox = ({ useRegion, pinPointList, setCampaignRegion, navToPinPointModal, deletePinPoint }: Props) => {
+const PinPointListBox = ({ useRegion, pinPointList, isEdit, setCampaignRegion, navToPinPointModal, deletePinPoint }: Props) => {
 
     const [region, setRegion] = useRegion
 
@@ -42,7 +43,7 @@ const PinPointListBox = ({ useRegion, pinPointList, setCampaignRegion, navToPinP
                         key={idx}
                         text={item.name}
                         onText={() => navToPinPointModal(item, idx)}
-                        onDelete={() => deletePinPoint(idx)}
+                        onDelete={() => isEdit ? DefaultAlert({ title: "첨삭이 불가합니다" }) : deletePinPoint(idx)}
                     />
                 )
             }
@@ -50,6 +51,7 @@ const PinPointListBox = ({ useRegion, pinPointList, setCampaignRegion, navToPinP
                 title="핀포인트 추가"
                 onPress={() => navToPinPointModal()}
                 style={{ marginTop: 10 }}
+                disabled={isEdit}
             />
 
             <Gray style={{ marginTop: 4 }}>* 리스트를 옆으로 슬라이드하면 삭제할 수 있습니다.</Gray>

@@ -58,7 +58,7 @@ const ClearedPinPointModal = (props: Props) => {
 
     return (
         <Modal isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-            <Card>
+            <Card containerStyle={{ borderRadius: 20 }}>
                 <Title>{campaign.name}</Title>
                 <ScrollView style={{ height: 400, paddingTop: 4 }} bounces={false}>
                     <SubTitle style={{ margin: 4 }}>클리어한 핀포인트 {clearedPinpointList.length}개</SubTitle>

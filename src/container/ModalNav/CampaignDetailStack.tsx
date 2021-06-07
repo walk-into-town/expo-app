@@ -48,6 +48,7 @@ const CampaignDetailStack = () => {
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
+        console.log(data)
         setCouponList(data)
     }
     const getCampaign = async () => {

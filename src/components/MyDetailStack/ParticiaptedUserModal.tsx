@@ -15,10 +15,10 @@ const ParticiaptedUserModal = (props: Props) => {
     const [partedUserList] = props.usePartedUserList
 
     return (
-        <Modal isVisible={isVisible}>
-            <Card>
+        <Modal isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+            <Card containerStyle={{ borderRadius: 20 }}>
                 <Title>참여중인 유저 {partedUserList.length}명</Title>
-                <Text1 style={{ alignSelf: "flex-end", marginRight: 70 }}>
+                <Text1 style={{ alignSelf: "center" }}>
                     클리어한 유저 {partedUserList.reduce((ac, v) => v.cleared ? ac + 1 : ac, 0)}명
                 </Text1>
                 <ScrollView style={{ height: 300 }} bounces={false}>
@@ -35,7 +35,6 @@ const ParticiaptedUserModal = (props: Props) => {
                         ))
                     }
                 </ScrollView>
-                <ClearButton title="닫기" onPress={() => setIsVisible(false)} />
             </Card>
         </Modal>
     )

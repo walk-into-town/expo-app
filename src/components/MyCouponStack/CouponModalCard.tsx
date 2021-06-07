@@ -27,7 +27,7 @@ const CouponModalCard = (props: Props) => {
 
     return (
         <WhiteView style={{ borderRadius: 4, height: "80%" }}>
-            <Image source={{ uri: coupon.img }} style={{ width: 200, height: 200 }} defaultSource={imgPath.default} />
+            <Image source={{ uri: coupon.imgs }} style={{ width: 200, height: 200 }} defaultSource={imgPath.default} />
             <View style={{ borderWidth: 1, borderColor: colorCode.primary }} />
 
             <ScrollView style={{ padding: 20 }}>

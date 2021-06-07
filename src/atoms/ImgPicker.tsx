@@ -7,7 +7,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { API } from '../api';
 import { DefaultAlert } from './elements/alerts';
 import { Gray } from './elements/texts';
-import { isLocalFile } from '../util';
+import { imgPath, isLocalFile } from '../util';
 
 
 export const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
@@ -51,6 +51,7 @@ export const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
                         <Image
                             source={{ uri: uri }}
                             style={{ width: 100, height: 100, marginRight: 4 }}
+                            defaultSource={imgPath.loading}
                         />
                     </TouchableOpacity>
                 )}
