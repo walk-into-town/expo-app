@@ -45,11 +45,6 @@ declare module "@types" {
         nickname: string;
         profileImg: string;
         selfIntroduction: string;
-        coords:{
-            latitude: number,
-            longitude: number
-
-        }
     }
 
 }

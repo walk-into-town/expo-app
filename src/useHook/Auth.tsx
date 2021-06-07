@@ -1,5 +1,6 @@
 import { IAuthContext, AuthReduce, UseAuth } from "@types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
+import { Alert } from "react-native";
 import { API } from "../api";
 import { getStorage, setStorage, rmStorage } from "../util/AsyncStorage";
 import { useLoadingContext } from "./Loading";
@@ -62,11 +63,9 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             if (result === "failed" || data === undefined)
                 await rmStorage("userToken");
             else {
-                const { coords } = await API.getCoordinate()
                 const { nickname, profileImg, selfIntroduction } = data;
                 await setStorage("userToken", { id, pw });
-                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, selfIntroduction, coords } });
-                console.log("[로그인 성공]")
+                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, selfIntroduction } });
             }
             endLoading();
             return errdesc ? errdesc : "";
@@ -75,15 +74,17 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             const init = async () => {
                 startLoading();
 
-                const { result, error } = await API.memberLogout({ id });
+                const { result, error, errdesc } = await API.memberLogout({ id });
                 if (result === 'failed')
-                    console.log("[로그아웃 에러]", error)
+                    Alert.alert(
+                        error || "error",
+                        errdesc || "",
+                        [{ text: "확인", onPress: endLoading }]
+                    );
                 else {
                     dispatch({ type: 'SIGN_OUT' });
                     await rmStorage("userToken");
-                    console.log("[로그아웃]");
                 }
-
                 endLoading();
             }
             init();
@@ -93,8 +94,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 return;
 
             const id = auth.userToken.id;
-            const coords = auth.userToken.coords
-            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction, coords } })
+            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
         }
     }), []);
 

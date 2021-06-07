@@ -47,7 +47,7 @@ declare module "@types" {
         profileImg: string
     }
 
-    type MemberCoordinate = {
+    type Coord = {
         latitude: number,
         longitude: number
     }

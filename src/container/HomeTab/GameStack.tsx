@@ -1,26 +1,28 @@
+import { Coord, HomeTabParamList, PinPoint, PlayingCampaign, SearchCampaign } from '@types';
 import React, { useEffect, useState } from 'react'
-import { DefaultAlert } from '../../atoms'
-import CampaignView from '../../components/GamePlayStack/CampaignView'
-import { Campaign, MemberCoordinate, PinPoint, PlayingCampaign, SearchCampaign } from '@types';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/core';
 import { API } from '../../api';
 import { mainNavigation, useAuthContext, useLoadingContext } from '../../useHook';
+import { getDistance } from 'geolib';
+
+import { View } from 'react-native';
+import { DefaultAlert } from '../../atoms'
+import CampaignView from '../../components/GamePlayStack/CampaignView'
 import PinPointPanel from '../../components/GamePlayStack/PinpointPanel';
 import PlayingCampaignModal from '../../components/GamePlayStack/PlayingCampaignModal';
-import { View } from 'react-native';
-import { getDistance } from 'geolib';
-import { useIsFocused } from '@react-navigation/core';
 import RecommendCampaignModal from '../../components/GamePlayStack/RecommendCampaignModal';
 
 
 const GameStack = () => {
     const { auth: { userToken } } = useAuthContext();
+    const { params } = useRoute<RouteProp<HomeTabParamList, "GameStack">>();
     if (userToken === undefined) return <></>
 
     const mainNav = mainNavigation();
     const isFocused = useIsFocused()
     const { useLoading: { startLoading, endLoading } } = useLoadingContext();
 
-    const [coordinate, setCoordinate] = useState<MemberCoordinate>(userToken.coords);
+    const [userCoord, setUserCoord] = useState<Coord>({ latitude: 0, longitude: 0 });
 
     const [playingCampaignList, setPlayingCampaignList] = useState<PlayingCampaign[]>([]); // 참여중인 모든 캠페인 리스트
     const [playingPinPointList, setPlayingPinPointList] = useState<PinPoint[]>([]); // 참여중인 모든 핀포인트 리스트
@@ -55,13 +57,9 @@ const GameStack = () => {
     }
 
     const getRecommendCampaign = async () => {
-        const res = await API.getRegion(userToken.coords)
-        if (res === undefined)
+        const address = await API.getRegion(userCoord)
+        if (address === "")
             return DefaultAlert({ title: "주소를 찾을 수 없습니다." })
-
-        const fullAddress = res.results[0].formatted_address
-        const splitAddress = fullAddress.split(" ");
-        const address = splitAddress[1].charAt(splitAddress.length - 1) === "시" ? splitAddress[1] : splitAddress[2]
 
         const { result, data, error, errdesc } = await API.campaignRecommend(address);
         if (result === "failed" || data === undefined)
@@ -78,7 +76,6 @@ const GameStack = () => {
     const openPanel = (pinPoint: PinPoint) => {
         const init = async () => {
             const { result, data, error, errdesc } = await API.campaignSearchPinPoint(pinPoint.id);
-
             if (result === "failed" || data === undefined)
                 return DefaultAlert({ title: "캠페인 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
@@ -108,39 +105,28 @@ const GameStack = () => {
 
     const navtoQuiz = async (pinpoint: PinPoint) => {
         if (campaign === undefined) return;
+        const caid = campaign.id, pid = pinpoint.id
 
-        const caid = campaign.id
+        if (getDistance(userCoord, pinpoint) > 30)
+            return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다 😥' })
+
         startLoading()
-        // 위치 정보 가져오기
-        // const { coords } = await API.getCoordinate()
-        // if (coords === undefined)
-        //     return DefaultAlert({ title: "사용자 위치를 찾을 수 없음", subTitle: "Can't find you😥", onPress: endLoading },)
-
-        // // 30m 거리 
-        // const distance = getDistance(
-        //     { latitude: coords.latitude, longitude: coords.longitude },
-        //     { latitude: pinpoint.latitude, longitude: pinpoint.longitude }
-        // )
-        // if (distance > 30)
-        //     return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다😥', onPress: endLoading })
-
-        // 퀴즈 참여가능 여부
-        const { result, data, error, errdesc } = await API.quizCheck({ pid: pinpoint.id, caid })
+        const { result, data, error, errdesc } = await API.quizCheck({ pid, caid })
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "도전이 불가합니다", subTitle: errdesc, onPress: endLoading })
 
         endLoading()
         mainNav.navigate("GameNav", {
             screen: "QuizStack",
-            params: { caid, pid: pinpoint.id, quiz: pinpoint.quiz }
+            params: { caid, pid, quiz: pinpoint.quiz }
         })
     }
-
 
     return (
         <View>
             <CampaignView
-                coordinate={coordinate}
+                location={params?.location}
+                useUserCoord={[userCoord, setUserCoord]}
                 openPanel={openPanel}
                 pinPointList={displayPinPointList}
                 clearedPinPointList={clearedPinPointList}

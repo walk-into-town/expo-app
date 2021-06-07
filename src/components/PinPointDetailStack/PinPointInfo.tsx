@@ -1,8 +1,9 @@
-import { PinPoint } from '@types'
+import { Coord, PinPoint } from '@types'
 import React from 'react'
-import { View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import { Card, Divider } from 'react-native-elements'
-import { AbsoluteCousel, PaddingBox, Row, SubTitle, Text3, Title } from '../../atoms'
+import { AbsoluteCousel, ClearButton, PaddingBox, Row, SubTitle, Text3, Title } from '../../atoms'
+import { mainNavigation } from '../../useHook'
 import { toCommonDateTime } from '../../util'
 
 interface Props {
@@ -10,6 +11,12 @@ interface Props {
 }
 
 const PinPointInfo = ({ pinpoint }: Props) => {
+    const mainNav = mainNavigation();
+
+    const navToMap = () => {
+        mainNav.navigate("HomeTab", { screen: 'GameStack', params: { location: pinpoint } })
+    }
+
     return (
         <View>
             {/* 핀포인트 프로필 */}
@@ -23,6 +30,9 @@ const PinPointInfo = ({ pinpoint }: Props) => {
             {/* 상세 정보 */}
             <PaddingBox>
                 <SubTitle>위치</SubTitle>
+                <Pressable onPress={navToMap}>
+                    <Text style={{ textDecorationLine: "underline", marginBottom: 2 }}>지도에서 위치 보기</Text>
+                </Pressable>
                 <Text3>{pinpoint.longitude} {pinpoint.latitude}</Text3>
             </PaddingBox>
             <Divider />
