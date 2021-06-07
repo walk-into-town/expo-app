@@ -3,6 +3,7 @@ import { ModalNavParamList } from '@types'
 import React, { useEffect, useState } from 'react'
 import { Image } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+import { imgPath } from '../util'
 
 
 const ImageViewer = () => {
@@ -22,13 +23,14 @@ const ImageViewer = () => {
 
 
     return (
-        <ScrollView style={{paddingTop: 60}}>
+        <ScrollView style={{ paddingTop: 60 }}>
             {
                 images.map((uri, idx) => (
                     <Image
                         key={idx}
                         source={{ uri }}
-                        style={{ width: "100%", aspectRatio: 1, resizeMode: "contain"}}
+                        style={{ width: "100%", aspectRatio: 1, resizeMode: "contain" }}
+                        defaultSource={imgPath.loading}
                     />
                 ))
             }

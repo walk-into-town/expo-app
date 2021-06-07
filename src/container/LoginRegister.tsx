@@ -2,15 +2,15 @@ import { RegisterMember } from '@types';
 import React, { useState } from 'react'
 import { View } from 'react-native';
 import { API } from '../api';
-import { ClearButton } from '../atoms';
+import { ClearButton, DefaultAlert } from '../atoms';
 import RegisterModal from '../components/LoginStack/RegisterModal';
 import { useAuthContext, useLoadingContext } from '../useHook';
 
 import { isBlank } from '../util';
 
 const LoginRegister = () => {
-    const { useLoading: { startLoading, endLoading } } = useLoadingContext();
     const { useAuth: { signIn } } = useAuthContext();
+    const { useLoading: { startLoading, endLoading } } = useLoadingContext()
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [id, setId] = useState("");
@@ -33,24 +33,29 @@ const LoginRegister = () => {
             setError("입력을 확인해주세요");
             return;
         }
-        startLoading();
         const user: RegisterMember = {
             id,
             pw,
             nickname,
             isManager: false
         }
-        const { result, data, error } = await API.memberRegister(user);
-        if (result === 'success') {
-            console.log("[회원가입 성공]", data)
-            signIn({ id, pw });
-            toggleModal();
-        }
+        setError("로딩중...")
+        const { result, data, error, errdesc } = await API.memberRegister(user);
+        if (result === "failed" || data === undefined)
+            setError(errdesc ? errdesc : " ")
         else {
-            console.log("[회원가입 에러]", error)
-            setError(error ? error : " ");
+            setError(" ")
+            console.log("[회원가입 성공]", data)
+            DefaultAlert({
+                title: `[${id}]님 환영합니다`,
+                subTitle: "회원가입에 성공하셨습니다.",
+                btColor: "cancel",
+                onPress: () => {
+                    toggleModal();
+                    setTimeout(() => signIn({ id, pw }), 500);
+                }
+            })
         }
-        endLoading();
     }
 
     return (

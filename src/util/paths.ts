@@ -66,5 +66,10 @@ export const animationPath = {
 }
 
 export const imgPath = {
-    pr_ork: require('../../assets/img/pr_oak.png')
+    pr_ork: require('../../assets/img/pr_oak.png'),
+    loading: require('../../assets/img/loading.png'),
+    default: require('../../assets/img/default.jpg'),
+    checkpinpoint: require('../../assets/img/checkpinpoint.png'),
+    bluepinpoint: require('../../assets/img/bluepinpoint.png'),
+    redpinpoint: require('../../assets/img/redpinpoint.png'),
 }
