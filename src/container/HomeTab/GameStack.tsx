@@ -66,7 +66,6 @@ const GameStack = () => {
         const { result, data, error, errdesc } = await API.campaignRecommend(address);
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "근처에 추천할만한 캠페인이 없습니다.", btColor: "cancel" })
-        console.log(data)
         setRecommendCampaignList(data)
     }
 

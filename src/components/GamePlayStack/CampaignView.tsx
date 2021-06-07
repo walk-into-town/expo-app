@@ -2,6 +2,7 @@ import { MemberCoordinate, PinPoint, PlayingPinPoint } from '@types';
 import React from 'react'
 import { StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { imgPath } from '../../util';
 
 interface Props {
   coordinate: MemberCoordinate,
@@ -28,7 +29,7 @@ const CampaignView = ({ coordinate, pinPointList, clearedPinPointList, openPanel
           <Marker
             key={idx}
             coordinate={{ latitude: p.latitude, longitude: p.longitude }}
-            image={isCleared(p.id) ? require('../../../assets/checkpinpoint.png') : require("../../../assets/bluepinpoint.png")}
+            image={isCleared(p.id) ? imgPath.checkpinpoint : imgPath.bluepinpoint}
             onPress={() => openPanel(p)}
           />
         ))

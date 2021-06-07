@@ -4,7 +4,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import { colorCode, FontAwesome, Ionicons, Text1, Title, WhiteView } from '../../atoms'
+import { colorCode, FontAwesome, Ionicons, LoadingCircle, Text1, Text3, Title, WhiteView } from '../../atoms'
 import { getDummySearchCampaign } from '../../util';
 
 interface Props {
@@ -15,9 +15,18 @@ interface Props {
 
 const RecommendCampaignModal = (props: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    const getRecommendCampaign = () => {
+        const init = async () => {
+            setLoading(true)
+            await props.getRecommendCampaign();
+            setLoading(false)
+        }
+        init();
+    }
     const openModal = () => {
-        props.getRecommendCampaign();
+        getRecommendCampaign();
         setModalVisible(!isModalVisible);
     }
     const closeModal = () => setModalVisible(false);
@@ -41,18 +50,26 @@ const RecommendCampaignModal = (props: Props) => {
                     <Text1 style={{ fontSize: 10, marginVertical: 4 }}>* 가깝고 평가가 좋은 핀포인트 10개를 추천해줍니다.</Text1>
                     <ScrollView showsVerticalScrollIndicator={false} style={{ height: "100%" }}>
                         {
-                            props.recommendCampaignList.map((v, idx) => (
-                                <ListItem key={idx}
-                                    onPress={() => { props.navtoCampaignDetail(getDummySearchCampaign(v.id)); closeModal(); }}
-                                    style={{ borderRadius: 20, marginVertical: 4 }}
-                                    containerStyle={{ borderWidth: 1, borderColor: colorCode.primary, borderRadius: 20 }}
-                                >
-                                    <ListItem.Content>
-                                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{v.name}</Text>
-                                        <Text>{v.region}</Text>
-                                    </ListItem.Content>
-                                </ListItem>
-                            ))
+                            loading ?
+                                <LoadingCircle />
+                                :
+                                props.recommendCampaignList.length === 0 ?
+                                    <View style={{ marginTop: "40%", justifyContent: "center", alignItems: "center" }}>
+                                        <Title style={{ fontSize: 50 }}>텅</Title>
+                                        <Text3>근처에 캠페인이 없네요.. 직접 만들어 보세요!</Text3>
+                                    </View>
+                                    : props.recommendCampaignList.map((v, idx) => (
+                                        <ListItem key={idx}
+                                            onPress={() => { props.navtoCampaignDetail(getDummySearchCampaign(v.id)); closeModal(); }}
+                                            style={{ borderRadius: 20, marginVertical: 4 }}
+                                            containerStyle={{ borderWidth: 1, borderColor: colorCode.primary, borderRadius: 20 }}
+                                        >
+                                            <ListItem.Content>
+                                                <Text style={{ fontWeight: "bold", fontSize: 16 }}>{v.name}</Text>
+                                                <Text>{v.region}</Text>
+                                            </ListItem.Content>
+                                        </ListItem>
+                                    ))
                         }
                     </ScrollView>
                 </WhiteView>

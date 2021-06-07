@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements';
 import { colorCode, RateStarIcon, Row, TitleBadge } from '../../atoms';
 import { mainNavigation } from '../../useHook';
-import { getDateAfter, getRatedAvg } from '../../util';
+import { getDateAfter, getRatedAvg, imgPath } from '../../util';
 
 interface Props {
     campaign: SearchCampaign
@@ -47,7 +47,11 @@ const CampaignCard = ({ campaign }: Props) => {
             onPress={navToCampaignDetail}
             onLongPress={() => console.log("캠페인 ID: ", campaign.id)}
         >
-            <Avatar source={{ uri }} size={'large'} avatarStyle={{ borderRadius: 10 }} />
+            <Avatar
+                source={campaign.imgs.length ? { uri: campaign.imgs[0] } : imgPath.default}
+                size={'large'}
+                avatarStyle={{ borderRadius: 10 }}
+            />
 
             <ListItem.Content>
                 <Row style={{ marginVertical: 2 }}>

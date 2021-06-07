@@ -5,6 +5,7 @@ import { PinPoint, SearchCampaign, TuseState } from '@types'
 import { colorCode, Ionicons, Row, SubTitle, SwordIcon, Text3, Title } from '../../atoms';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { mainNavigation } from '../../useHook';
+import { imgPath } from '../../util';
 
 
 interface Props {
@@ -75,7 +76,7 @@ const PinPointPanel = ({ pinPoint, campaign, clearedPinPointList, usePanelActivi
                 </View>
 
                 <Pressable onPress={navToImgViewer}>
-                    <Image source={{ uri: pinPoint.imgs[0] || "gray" }} style={{ height: 200, borderRadius: 4 }} />
+                    <Image source={{ uri: pinPoint.imgs[0] || "gray" }} style={{ height: 200, borderRadius: 4 }} defaultSource={imgPath.loading} />
                 </Pressable>
 
                 <Row style={{ position: "absolute", bottom: 50, right: 0 }}>

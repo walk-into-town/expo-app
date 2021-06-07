@@ -5,23 +5,20 @@ import MapView from 'react-native-maps';
 import { Container, Box } from '../../atoms/elements/layouts';
 import { SubTitle } from '../../atoms/elements/texts';
 import { Text } from 'react-native-elements';
+import { imgPath } from '../../util';
 
 interface Props {
     // useLatitude: TuseState<number>,
     // useLongitude: TuseState<number>
     latitude: number,
     longitude: number,
-    onPressMap:(e: { nativeEvent: { coordinate: any; } }) => void
+    onPressMap: (e: { nativeEvent: { coordinate: any; } }) => void
 
 }
 
-const FindOnMap = ({latitude, longitude, onPressMap}: Props) => {
+const FindOnMap = ({ latitude, longitude, onPressMap }: Props) => {
     // const [latitude, setLatitude] = props.useLatitude;
     // const [longitude, setLongitude] = props.useLongitude;
-
-
-
-
 
 
     return (
@@ -39,10 +36,10 @@ const FindOnMap = ({latitude, longitude, onPressMap}: Props) => {
                 showsMyLocationButton={true}
                 onPress={onPressMap}
             >
-                <Marker 
-                coordinate={{ latitude: latitude, longitude: longitude }}
-                image={require('../../../assets/redpinpoint.png')}
-                 />
+                <Marker
+                    coordinate={{ latitude: latitude, longitude: longitude }}
+                    image={imgPath.redpinpoint}
+                />
             </MapView>
         </Container>
     )
