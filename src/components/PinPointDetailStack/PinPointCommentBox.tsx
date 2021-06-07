@@ -7,11 +7,19 @@ import Comment from './Comment'
 interface Props {
     comments: PinPointComment[],
     navToWriteComment: (comment: WritePinPointComment | null) => void
+    navToReport: (comment: PinPointComment) => void
     deleteComment: (coid: string) => void
     onRate: (coid: string, like: boolean) => void
 }
 
-const PinPointCommentBox = ({ comments, navToWriteComment, deleteComment, onRate }: Props) => {
+const PinPointCommentBox = ({ comments, navToWriteComment, navToReport, deleteComment, onRate }: Props) => {
+
+    const sortLogic = (a: PinPointComment, b: PinPointComment): number => {
+        if (a.rateList.length === b.rateList.length)
+            return new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime()
+
+        return b.rateList.length - a.rateList.length;
+    }
 
     return (
         <View style={{ minHeight: 200 }}>
@@ -22,12 +30,17 @@ const PinPointCommentBox = ({ comments, navToWriteComment, deleteComment, onRate
                 </View>
             </Row>
             {
-                comments.map((v, idx) => <Comment key={idx}
-                    comment={v}
-                    deleteComment={deleteComment}
-                    onRate={onRate}
-                    navToWriteComment={navToWriteComment}
-                />)
+                comments
+                    .sort(sortLogic)
+                    .map((v, idx) => (
+                        <Comment key={idx}
+                            comment={v}
+                            deleteComment={deleteComment}
+                            onRate={onRate}
+                            navToWriteComment={navToWriteComment}
+                            navToReport={navToReport}
+                        />
+                    ))
             }
         </View>
     )

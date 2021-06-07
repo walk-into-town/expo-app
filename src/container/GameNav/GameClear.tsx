@@ -4,7 +4,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import LottieView from "lottie-react-native";
 import { ClearButton, colorCode, Container, Row, SubTitle, Text3, Title } from '../../atoms';
 import { animationPath } from '../../util';
-import { Card, ListItem } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import { mainNavigation } from '../../useHook';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { GameNavParamList } from '@types';
@@ -13,7 +13,6 @@ import { GameNavParamList } from '@types';
 const GameClear = () => {
     const mainNav = mainNavigation();
     const { params: { QuizClear } } = useRoute<RouteProp<GameNavParamList, "GameClear">>();
-    console.log(QuizClear)
 
     const Confetti = useRef<ConfettiCannon>(null);
     const pageWidth = Math.round(Dimensions.get('window').width);
@@ -57,7 +56,7 @@ const GameClear = () => {
                                     <View key={idx} style={{
                                         borderWidth: 1,
                                         borderRadius: 4,
-                                        borderColor: colorCode.light,
+                                        borderColor: colorCode.disable,
                                         width: "100%",
                                         padding: 10,
                                         marginVertical: 4

@@ -36,16 +36,16 @@ const sendFile = (body: string[]): BaseFetchRes<string[]> => {
     return baseFetch(`${ip}/file`, "POST", { body: formData, isForm: true });
 }
 
-const getCoordinate = async() =>{
+//// 주소
+const getCoordinate = async () => {
     await Location.requestPermissionsAsync();
     return await Location.getCurrentPositionAsync();
 }
 
-export const getRegion = async(params:{latitude: number, longitude: number}) =>{
+// 좌표 -> 주소반환 api
+export const getRegion = async (params: { latitude: number, longitude: number }) => {
     return baseFetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${params.latitude},${params.longitude}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`, "GET");
 }
-
-
 
 export const API = {
     debugSendImg,

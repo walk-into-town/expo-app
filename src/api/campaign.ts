@@ -1,9 +1,9 @@
 import { ip } from "./ip"
 import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember, Campaign } from "@types"
 import { baseFetch } from "./baseFetch"
-import { formAppendImg, formAppendImgs } from "../util";
+import { formAppendImgs } from "../util";
 
-
+//// 캠페인 CRUD
 type CampaignCreateFetch = (body: MakeCampaign) => BaseFetchRes<string>;
 export const campaignCreate: CampaignCreateFetch = (body) => {
     return baseFetch(`${ip}/campaign`, "POST", { body });
@@ -26,18 +26,12 @@ type campaignSearchFetch = (params: CampaignSearchParams) => BaseFetchRes<Search
 export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) => {
     return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
 }
-
-type campaignSearchOneFetch = (params: CampaignSearchParams) => BaseFetchRes<SearchCampaign>
-export const campaignSearchOne: campaignSearchOneFetch = ({ condition, type, value }) => {
-    return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
+// 해당 핀포인트 ID를 가진 캠페인 찾기
+export const campaignSearchPinPoint = (pid: string): BaseFetchRes<SearchCampaign> => {
+    return baseFetch(`${ip}/campaign?type=pinpoint&condition=exact&value=${pid}`, "GET");
 }
 
-type campaignRecommendFetch = (region: string) => BaseFetchRes<Campaign[]>
-export const campaignRecommend: campaignRecommendFetch = (region) => {
-    return baseFetch(`${ip}/campaign/recommend?region=${region}`, "GET");
-}
-
-// 캠페인 디테일 페이지
+//// 캠페인 디테일
 type CampaignParticiapte = (body: { uid: string, caid: string }) => BaseFetchRes<boolean>
 export const campaignParticiapte: CampaignParticiapte = (body) => {
     return baseFetch(`${ip}/member/playing`, "POST", { body })
@@ -45,23 +39,18 @@ export const campaignParticiapte: CampaignParticiapte = (body) => {
 export const campaignWithdraw = (body: { uid: string, caid: string }): BaseFetchRes<boolean> => {
     return baseFetch(`${ip}/member/playing`, "DELETE", { body })
 }
-export const campaignCheckPlaying = (params: { uid: string, caid: string }): BaseFetchRes<string> => {
+export const campaignCheckPlaying = (params: { uid: string, caid: string }): BaseFetchRes<boolean> => {
     return baseFetch(`${ip}/member/checkplaying?uid=${params.uid}&caid=${params.caid}`, "GET");
 }
 export const campaignParticiaptedUsers = (caid: string): BaseFetchRes<PartedMember[]> => {
     return baseFetch(`${ip}/campaign/playing?caid=${caid}`, "GET")
 }
-type PinPointReadFetch = (params: PinPointReadParams) => BaseFetchRes<PinPoint[]>
-export const pinPointRead: PinPointReadFetch = (params) => {
-    return baseFetch(`${ip}/pinpoint?type=${params.type}&value=${params.value}`, "GET");
+export const campaignIsCleared = (caid: string): BaseFetchRes<boolean> => {
+    return baseFetch(`${ip}/member/checkcampaign?caid=${caid}`, "GET")
 }
 
-type CouponReadFetch = (params: CouponReadParams) => BaseFetchRes<Coupon[]>
-export const couponRead: CouponReadFetch = (params) => {
-    return baseFetch(`${ip}/coupon?type=${params.type}&value=${params.value}`, "GET");
-}
 
-// 캠페인 리뷰
+//// 캠페인 리뷰
 type CCCFetch = (body: MakeCampaignComment) => BaseFetchRes<string>
 export const campaignCommentCreate: CCCFetch = (body) => {
     const formdata = new FormData();
@@ -90,3 +79,8 @@ export const campaignCommentDelete = (body: { rid: string, uid: string, caid: st
     return baseFetch(`${ip}/campaign/review`, "DELETE", { body })
 }
 
+// 추천캠페인 
+type campaignRecommendFetch = (region: string) => BaseFetchRes<SearchCampaign[]>
+export const campaignRecommend: campaignRecommendFetch = (region) => {
+    return baseFetch(`${ip}/campaign/recommend?region=${region}`, "GET");
+}

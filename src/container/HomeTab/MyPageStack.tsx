@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { mainNavigation, useAuthContext } from '../../useHook';
 
 import { Container, DefaultAlert } from '../../atoms';
-import { RefreshControl, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import Profile from '../../components/MyPageStack/Profile';
 import BadgeList from '../../components/MyPageStack/BadgeList';
 import Settings from '../../components/MyPageStack/Settings';
@@ -17,7 +17,7 @@ export default () => {
     if (userToken === undefined) return <></>
 
     const isFocuse = useIsFocused()
-    const [memberInfo, setMemberInfo] = useState<MemberInfoRes>({ clearCampaign: 0, myCampaign: 0, playingCampaign: 0 })
+    const [memberInfo, setMemberInfo] = useState<MemberInfoRes>({ clearCampaign: 0, myCampaign: 0, playingCampaign: 0, badge: [] })
 
     // api
     const getMemberInfo = async () => {
@@ -52,6 +52,10 @@ export default () => {
     const navToProfileEdit = () => {
         mainNav.navigate("EditModalNav", { screen: "MyProfileEditStack" })
     }
+    const navToReport = () => {
+        mainNav.navigate("ModalNav", { screen: "MyReportStack" })
+    }
+
     const onLogout = () => {
         signOut({ id: userToken.id });
     }
@@ -60,11 +64,12 @@ export default () => {
         <Container>
             <ScrollView>
                 <Profile memberInfo={memberInfo} />
-                <BadgeList />
+                <BadgeList badgeList={memberInfo.badge} />
                 <Playground
                     onLogout={onLogout}
                     navToCoupon={navToCoupon}
                     navToProfileEdit={navToProfileEdit}
+                    navToReport={navToReport}
                 />
                 <Settings />
             </ScrollView>

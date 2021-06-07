@@ -1,4 +1,4 @@
-import { BaseFetchRes, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PinPoint, PlayingCampaign, PlayingPinPoint, RegisterMember } from "@types"
+import { BaseFetchRes, MakeReport, MemberInfoRes, MemberLoginRes, ModifyMember, MyCampaign, PinPoint, PlayingCampaign, PlayingPinPoint, RegisterMember, Report } from "@types"
 import { formAppendImg, formAppendImgs } from "../util"
 import { baseFetch } from "./baseFetch"
 import { ip } from "./ip"
@@ -60,4 +60,12 @@ export const pinpointPlayingRead = (): BaseFetchRes<{
     pinpoints: PinPoint[]
 }> => {
     return baseFetch(`${ip}/member/playing/pinpoint`, "GET")
+}
+
+// 댓글 신고
+export const managerReport = (body: MakeReport): BaseFetchRes<string> => {
+    return baseFetch(`${ip}/manager/report`, "POST", { body })
+}
+export const getReport = (uid: string): BaseFetchRes<Report[]> => {
+    return baseFetch(`${ip}/manager/report?type=userId&value=${uid}`, "GET")
 }

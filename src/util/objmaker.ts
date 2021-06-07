@@ -54,6 +54,7 @@ export const getDummySearchCampaign = (id: string): SearchCampaign => {
         region: "",
         pinpoints: [],
         coupons: [],
+        pcoupons: [],
         comments: []
     }
 }

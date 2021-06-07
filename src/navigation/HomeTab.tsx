@@ -26,7 +26,8 @@ const HomeTab = () => {
                 activeTintColor: colorCode.primary,
                 inactiveTintColor: "gray",
                 showLabel: false
-            }}>
+            }}
+        >
             <Tab.Screen name="GameStack" component={GameStack} />
             <Tab.Screen name="CampaignStack" component={CampaignStack} />
             <Tab.Screen name="RankingStack" component={RankingStack} />

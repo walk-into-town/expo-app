@@ -13,6 +13,7 @@ const Phase3 = (props: Props) => {
     const TEXT = [
         "크윽.. 너 똑똑하구나..",
         "내 스스로 덫에 걸리는구나.. 허망하도다..",
+        "...",
         "무야호~~ 몬스터를 무찌질렀다!!",
         "전리품은 없으려나 🎶🎶"
     ]
@@ -38,9 +39,9 @@ const Phase3 = (props: Props) => {
             opacityAnimation(1);
             mosterAnimation();
         }
-        else if (textIdx === 1)
-            opacityAnimation();
         else if (textIdx === 2)
+            opacityAnimation();
+        else if (textIdx === 3)
             dialogAnimation();
     }, [textIdx])
 
