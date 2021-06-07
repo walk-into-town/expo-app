@@ -151,7 +151,7 @@ const CampaignDetailStack = () => {
     }
 
     const onEdit = () => {
-        const makeCampaign: MakeCampaign = searchCampaignToMakeCampaign(campaign, pinPointList, couponList);
+        const makeCampaign: MakeCampaign = searchCampaignToMakeCampaign(campaignProfile, pinPointList, couponList);
         mainNav.navigate("MakeCampaignNav", { screen: "MakeCampaignStack", params: { campaign: makeCampaign } })
     }
 

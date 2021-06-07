@@ -1,4 +1,4 @@
-import { Campaign, Coupon, MakeCampaign, MakeCoupon, MakePinPoint, PinPoint, SearchCampaign, } from "@types";
+import { CampaginProfile, Campaign, Coupon, MakeCampaign, MakeCoupon, MakePinPoint, PinPoint, SearchCampaign, } from "@types";
 
 // type check
 export const isJsonString = (str: string) => {
@@ -42,7 +42,7 @@ export const isEditCoupon = (a: MakeCoupon, b: MakeCoupon) => {
 
 // convert
 
-export const searchCampaignToMakeCampaign = (campaign: SearchCampaign, pinpoints: PinPoint[], coupons: Coupon[]): MakeCampaign => {
+export const searchCampaignToMakeCampaign = (campaign: SearchCampaign | CampaginProfile, pinpoints: PinPoint[], coupons: Coupon[]): MakeCampaign => {
     return {
         id: campaign.id,
         name: campaign.name,
