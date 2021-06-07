@@ -67,7 +67,7 @@ const WriteCampaignCommentStack = () => {
             mainNav.goBack();
         }
     })
-    perventGoBack({ hasUnsavedChanges: !isSubmit })
+    // perventGoBack({ hasUnsavedChanges: !isSubmit })
 
     return (
         <View style={{ marginHorizontal: 10 }}>

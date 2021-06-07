@@ -1,14 +1,15 @@
-import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType, ResCoupon, PinPointComment, CampaignComment } from "@types";
+import { Coupon, RegisterMember, PinPoint, MakeCoupon, MakePinPoint, SearchCampaign, PinPoint, Coupon, PinPointComment, WriteCampaignComment, WritePinPointComment, MakeCampaign, quizType, ResCoupon, PinPointComment, CampaignComment, Coord } from "@types";
 
 declare module "@types" {
     /* navigation */
     type MainStackParamList = {
         HomeTab: {
             screen?: keyof HomeTabParamList,
+            params?: HomeTabParamList[keyof HomeTabParamList]
         },
         MakeCampaignNav: {
             screen?: keyof MakeCampaignNavParamList,
-            params: MakeCampaignNavParamList[keyof MakeCampaignParams]
+            params?: MakeCampaignNavParamList[keyof MakeCampaignParams]
         },
         GameNav: {
             screen?: keyof GameNavParamList
@@ -26,10 +27,10 @@ declare module "@types" {
 
     // 홈 화면
     type HomeTabParamList = {
-        MyPageStack: undefined,
+        GameStack: { location?: Coord },
         CampaignStack: undefined,
-        GameStack: undefined,
         RankingStack: undefined,
+        MyPageStack: undefined,
     };
 
     // 캠페인 만들기

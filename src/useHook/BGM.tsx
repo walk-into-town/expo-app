@@ -17,8 +17,9 @@ const BGMContextProvider = ({ children }: { children: JSX.Element }) => {
 
     const playSound = () => {
         const init = async () => {
-            const { play } = await getStorage("playBGM");
-            if (play) BGM.playSound();
+            const data = await getStorage("playBGM");
+
+            if (data === null || data.play) BGM.playSound();
         }
         init();
     }

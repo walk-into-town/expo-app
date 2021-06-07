@@ -27,10 +27,10 @@ const CouponModalCard = (props: Props) => {
 
     return (
         <WhiteView style={{ borderRadius: 4, height: "80%" }}>
-            <Image source={{ uri: coupon.img }} style={{ width: 200, height: 200 }} defaultSource={imgPath.default} />
+            <Image source={coupon.imgs === "" ? imgPath.default : { uri: coupon.imgs }} style={{ width: "100%", height: 200, alignSelf: "center" }} defaultSource={imgPath.default} />
             <View style={{ borderWidth: 1, borderColor: colorCode.primary }} />
 
-            <ScrollView style={{ padding: 20 }}>
+            <ScrollView style={{ padding: 20 }} showsVerticalScrollIndicator={false}>
 
                 <View style={{ alignItems: "center" }}>
                     <SubTitle>{coupon.name}</SubTitle>

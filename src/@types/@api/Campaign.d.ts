@@ -55,7 +55,7 @@ declare module "@types" {
         pcoupons: string[],
         comments: CampaignComment[]
     }
-    type CampaignSearchType = 'name' | 'region' | 'id' | 'owner' | 'pinpoint';
+    type CampaignSearchType = 'name' | 'region' | 'id' | 'ownner' | 'pinpoint';
     type CampaginProfile = {
         id: string,
         ownner: string,
@@ -71,7 +71,7 @@ declare module "@types" {
         name: string
         region: string
         id: string
-        owner: string
+        ownner: string
     }
 
     type CampaignSearchCondition = 'part' | 'exact';
@@ -84,6 +84,7 @@ declare module "@types" {
     // 캠페인 만들기
     type MakeCampaign = {
         id?: string,
+        caid?: string,
         ownner: string,
         name: string,
         imgs: string[],

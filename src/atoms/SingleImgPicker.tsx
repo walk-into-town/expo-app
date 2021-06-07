@@ -8,7 +8,7 @@ import { colorCode } from './color';
 import { API } from '../api';
 import { DefaultAlert } from './elements/alerts';
 import { Gray } from './elements/texts';
-import { isLocalFile } from '../util';
+import { imgPath, isLocalFile } from '../util';
 
 export const SingleImgPicker = (props: { useImg: TuseState<string> }) => {
     const [img, setImg] = props.useImg;
@@ -48,6 +48,7 @@ export const SingleImgPicker = (props: { useImg: TuseState<string> }) => {
                             <Image
                                 source={{ uri: img }}
                                 style={{ width: 150, height: 150, borderRadius: 10 }}
+                                defaultSource={imgPath.loading}
                             />
                         </TouchableOpacity>
                     </>

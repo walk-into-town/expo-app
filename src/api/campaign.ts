@@ -10,6 +10,7 @@ export const campaignCreate: CampaignCreateFetch = (body) => {
 }
 
 export const campaignUpdate = (body: MakeCampaign): BaseFetchRes<string> => {
+    body.caid = body.id;
     return baseFetch(`${ip}/campaign`, "PUT", { body });
 }
 

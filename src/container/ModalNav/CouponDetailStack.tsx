@@ -21,12 +21,12 @@ const CouponDetailStack = () => {
     }
 
     return (
-        <ScrollView>
-            {coupon.img && <AbsoluteCousel images={[coupon.img]} />}
+        <ScrollView showsVerticalScrollIndicator={false}>
+            {coupon.imgs !== "" && <AbsoluteCousel images={[coupon.imgs]} />}
 
             <Card containerStyle={{ borderRadius: 4, marginBottom: 4 }}>
                 <Title>{coupon.name}</Title>
-                <Text3 style={{ textAlign: "center", fontSize: 16 }}>{coupon.description}</Text3>
+                <Text3 style={{ textAlign: "center", fontSize: 15 }}>{coupon.description}</Text3>
             </Card>
 
             <PaddingBox>

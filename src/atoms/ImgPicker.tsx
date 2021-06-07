@@ -7,7 +7,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { API } from '../api';
 import { DefaultAlert } from './elements/alerts';
 import { Gray } from './elements/texts';
-import { isLocalFile } from '../util';
+import { imgPath, isLocalFile } from '../util';
 
 
 export const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
@@ -45,12 +45,13 @@ export const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
                     * 사진을 클릭하면 삭제 됩니다.
                 </Gray>
             }
-            <ScrollView horizontal>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {imgList.map((uri, idx) =>
                     <TouchableOpacity key={idx} onPress={() => onImgPress(idx)}>
                         <Image
                             source={{ uri: uri }}
                             style={{ width: 100, height: 100, marginRight: 4 }}
+                            defaultSource={imgPath.loading}
                         />
                     </TouchableOpacity>
                 )}

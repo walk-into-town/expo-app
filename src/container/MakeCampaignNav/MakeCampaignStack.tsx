@@ -24,6 +24,7 @@ const MakeCampaignStack = () => {
     const [pinPointList, setPinPointList] = useState<MakePinPoint[]>(campaign?.pinpoints || []);
     const [couponList, setCouponList] = useState<MakeCoupon[]>(campaign?.coupons || []);
     const [region, setRegion] = useState<string>(campaign?.region || "");
+    const isEdit = campaign?.id !== undefined
 
     useEffect(() => {
         if (pinpoint) {
@@ -31,12 +32,17 @@ const MakeCampaignStack = () => {
                 : [...pinPointList, pinpoint])
         }
     }, [pinpoint])
+
     useEffect(() => {
         if (coupon) {
             setCouponList(editIndex !== undefined ? [...couponList.slice(0, editIndex), coupon, ...couponList.splice(editIndex + 1)]
                 : [...couponList, coupon])
         }
     }, [coupon])
+
+    useEffect(() => {
+        mainNav.setOptions({ headerTitle: isEdit ? "캠페인 수정" : "캠페인 만들기" })
+    }, [])
 
     // PinPointList
     const navToPinPointModal = (item?: MakePinPoint, idx?: number) => {
@@ -71,7 +77,6 @@ const MakeCampaignStack = () => {
             }
         }
         else DefaultAlert({ title: "핀포인트를 먼저 설정 하세요", subTitle: "아직 핀포인트가 설정되어있지 않습니다." })
-
     }
 
 
@@ -165,14 +170,24 @@ const MakeCampaignStack = () => {
         endLoading();
     }
 
-    const { isSubmit, onSubmit } = useSubmit({
-        submitFunc: async () => {
-            if (campaign?.id !== undefined)
+    const onSubmit = () => {
+        const init = async () => {
+            if (isEdit)
                 await onUpdateCamapign();
             else
                 await onCreateCampaign();
         }
-    });
+        init();
+    }
+
+    // const { isSubmit, onSubmit } = useSubmit({
+    //     submitFunc: async () => {
+    //         if (campaign?.id !== undefined)
+    //             await onUpdateCamapign();
+    //         else
+    //             await onCreateCampaign();
+    //     }
+    // });
     // const hasUnsavedChanges = Boolean(title || description || campaignImgs.length || pinPointList.length || couponList.length)
     //     && !isSubmit;
     // perventGoBack({ hasUnsavedChanges });
@@ -191,12 +206,14 @@ const MakeCampaignStack = () => {
                 setCampaignRegion={setCampaignRegion}
                 deletePinPoint={deletePinPoint}
                 navToPinPointModal={navToPinPointModal}
+                isEdit={isEdit}
             />
 
             <CouponListBox
                 couponList={couponList}
                 deleteCoupon={deleteCoupon}
                 navToCouponModal={navToCouponModal}
+                isEdit={isEdit}
             />
 
             <SubmitButton title={"캠페인 만들기"} onPress={onSubmit} />

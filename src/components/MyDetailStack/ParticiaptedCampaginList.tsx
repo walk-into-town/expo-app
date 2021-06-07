@@ -92,7 +92,7 @@ const ParticiaptedCampaginList = (props: Props) => {
                 </Row>
                 <Text1>조회된 캠페인 {playingCampaignList.length}</Text1>
             </View>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {
                     playingCampaignList.map((v, idx) => (
                         <ListItem key={idx} onPress={() => navToCampaignDetail(v.id)} onLongPress={() => onLongPress(v)}>

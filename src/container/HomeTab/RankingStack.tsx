@@ -62,7 +62,10 @@ const RankingStack = () => {
             <RankHeader onModal={onModal} />
             <MyRankModal useVisible={[modalVisible, setModalVisible]} myRank={myRank} />
 
-            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            >
                 {
                     refreshing ? <LoadingCircle />
                         : <>

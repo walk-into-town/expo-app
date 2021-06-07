@@ -40,13 +40,13 @@ const MakedCampaignList = (props: Props) => {
         props.getPartedUsers(caid);
         setIsVisible(true);
     }
-    
+
     return (
         <>
             <View style={{ marginTop: 10, marginBottom: 20, marginLeft: 10 }}>
                 <Text1>리스트를 꾹 누르면 [ 참여중인 유저 정보 ]를 볼 수 있어요!</Text1>
             </View>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {
                     props.myCampaignList.map((v, idx) => (
                         <View key={idx}>

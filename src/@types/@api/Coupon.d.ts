@@ -7,7 +7,7 @@ declare module "@types" {
         endDate: string,
         issued: number,
         limit: number,
-        img: string,
+        imgs: string,
         paymentCondition: number
     }
     type MyCoupon = {
@@ -16,7 +16,7 @@ declare module "@types" {
         description: string,
         goods: string,
         endDate: string,
-        img: string,
+        imgs: string,
         paymentCondition: number,
         used: boolean
     }
@@ -28,7 +28,7 @@ declare module "@types" {
         goods: string,
         endDate: string,
         limit: number,
-        img: string,
+        imgs: string,
         paymentCondition: number
     }
 

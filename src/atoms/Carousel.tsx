@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { FlatList, Dimensions, Image, NativeSyntheticEvent, NativeScrollEvent, View, Pressable } from 'react-native'
 import { mainNavigation } from '../useHook';
+import { imgPath } from '../util';
 
 interface CarouselProps {
     images: string[]
@@ -62,9 +63,9 @@ interface AbsoluteCouselProps {
     absoluteHeight?: number
 }
 export const AbsoluteCousel = (props: AbsoluteCouselProps) => {
-    if(props.images.length < 1)
+    if (props.images.length < 1)
         return <></>
-        
+
     return <View style={{ height: props.height || 200 }}>
         <View style={{ position: "absolute", height: props.absoluteHeight || 250 }}>
             <Carousel

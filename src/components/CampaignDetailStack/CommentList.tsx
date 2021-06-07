@@ -2,7 +2,7 @@ import { BadgeButtonGroupButtonsProps, UpdateCampaignComment } from '@types'
 import { CampaignComment } from '@types'
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { BadgeButton, ClearButton, LoadingCircle, Row, SubTitle, BadgeButtonGroup } from '../../atoms'
+import { BadgeButton, ClearButton, LoadingCircle, Row, SubTitle, BadgeButtonGroup, Text3, Text1 } from '../../atoms'
 import Comment from './Comment'
 
 interface Props {
@@ -21,8 +21,8 @@ const CommentList = (props: Props) => {
     const [filterIdx, setFilterIdx] = useState(0)
 
     useEffect(() => {
-        setCommentList(props.commentList);
-        filterButtons[filterIdx].func()
+        setIsOnlyImg(false)
+        filterButtons[filterIdx].func();
     }, [props.commentList])
 
     const onOnlyImgToggle = () => {
@@ -42,13 +42,13 @@ const CommentList = (props: Props) => {
 
     // sort
     const onSortByTime = () => {
-        const newArr = commentList.sort((a: CampaignComment, b: CampaignComment) => {
+        const newArr = props.commentList.sort((a: CampaignComment, b: CampaignComment) => {
             return new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime();
         })
         setCommentList([...newArr])
     }
     const onSortByRate = (isHigh: boolean) => {
-        const newArr = commentList.sort((a: CampaignComment, b: CampaignComment) => {
+        const newArr = props.commentList.sort((a: CampaignComment, b: CampaignComment) => {
             return (b.rated - a.rated) * (isHigh ? 1 : -1);
         })
         setCommentList([...newArr]);
@@ -62,19 +62,21 @@ const CommentList = (props: Props) => {
 
     return (
         <View style={{ backgroundColor: "white", marginTop: 10, paddingHorizontal: 10, minHeight: 300 }}>
-            <Row style={{ marginTop: 15, marginLeft: 10 }}>
-                <SubTitle>
-                    조회된 리뷰 {commentList.length}개
-                </SubTitle>
-                <View style={{ marginLeft: 'auto', marginRight: 5, marginBottom: 5 }}>
-                    <ClearButton
-                        title="리뷰 쓰기"
-                        onPress={() => props.navToWriteComment(null)}
-                        size={15}
-                        disabled={props.isParticipate}
-                    />
-                </View>
-            </Row>
+            <View style={{}}>
+                <Row style={{ marginTop: 15, marginLeft: 10 }}>
+                    <SubTitle style={{ marginBottom: 0 }}>
+                        조회된 리뷰 {commentList.length}개
+                    </SubTitle>
+                    <View style={{ marginLeft: 'auto', marginRight: 5 }}>
+                        <ClearButton
+                            title="리뷰 쓰기"
+                            onPress={() => props.navToWriteComment(null)}
+                            size={15}
+                            disabled={!props.isParticipate}
+                        />
+                    </View>
+                </Row>
+            </View>
 
             <Row>
                 <View style={{ marginRight: 10 }}>
@@ -85,6 +87,7 @@ const CommentList = (props: Props) => {
                     useFilterIdx={[filterIdx, setFilterIdx]}
                 />
             </Row>
+            <Text1 style={{ marginVertical: 4, marginLeft: 2 }}>* 캠페인을 클리어하셔야지 리뷰를 작성할 수 있습니다.</Text1>
 
             {
                 refreshing ?

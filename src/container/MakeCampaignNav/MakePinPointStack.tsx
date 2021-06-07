@@ -14,42 +14,28 @@ const MakePinPointStack = () => {
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakePinPointStack'>>();
 
-    const [name, setName] = useState("");
-    const [latitude, setLatitude] = useState<number>(0);
-    const [longitude, setLongitude] = useState<number>(0);
-    const [description, setDescription] = useState("");
-    const [pinPointImgs, setPinPointImgs] = useState<string[]>([]);
+    const [name, setName] = useState(pinpoint?.name || "");
+    const [latitude, setLatitude] = useState<number>(pinpoint?.latitude || 0);
+    const [longitude, setLongitude] = useState<number>(pinpoint?.longitude || 0);
+    const [description, setDescription] = useState(pinpoint?.description || "");
+    const [pinPointImgs, setPinPointImgs] = useState<string[]>(pinpoint?.imgs || []);
 
-    const [quizText, setQuizText] = useState<string>("");
-    const [type, setType] = useState<quizType>("주관식");
-    const [choices, setChoices] = useState<string[]>([""]);
-    const [answer, setAnswer] = useState<string>("");
-    const [selectedAnswer, setSelectedAnswer] = useState("");
+    const [quizText, setQuizText] = useState<string>(pinpoint?.quiz.text || "");
+    const [type, setType] = useState<quizType>(pinpoint?.quiz.type || "주관식");
+    const [choices, setChoices] = useState<string[]>(pinpoint?.quiz.choices || [""]);
+    const [answer, setAnswer] = useState<string>(pinpoint?.quiz.answer || "");
+    const [selectedAnswer, setSelectedAnswer] = useState(pinpoint?.quiz.answer || "");
 
     useEffect(() => {
-        if (pinpoint === undefined) return;
-
-        if (editIndex !== undefined) nav.setOptions({ headerTitle: "핀포인트 수정하기" })
-
-        setName(pinpoint.name);
-        setLatitude(pinpoint.latitude);
-        setLongitude(pinpoint.longitude);
-        setDescription(pinpoint.description);
-
-        setQuizText(pinpoint.quiz.text);
-        setType(pinpoint.quiz.type);
-        setChoices(pinpoint.quiz.choices);
-        if (pinpoint.quiz.type === '주관식')
-            setAnswer(pinpoint.quiz.answer);
-        else
-            setSelectedAnswer(pinpoint.quiz.answer);
-
+        if (editIndex !== undefined)
+            nav.setOptions({ headerTitle: "핀포인트 수정하기" })
     }, [pinpoint])
 
     // 핀포인트 업로드
     const getPinpoint: () => MakePinPoint = () => {
         const selectAns = selectedAnswer === "" ? choices[0] : selectedAnswer;
         return {
+            id: pinpoint?.id,
             name,
             imgs: pinPointImgs,
             latitude,
@@ -64,27 +50,44 @@ const MakePinPointStack = () => {
             }
         }
     }
-    const { isSubmit, onSubmit } = useSubmit({
-        submitFunc: async () => {
-            if (latitude + longitude === 0)
-                return DefaultAlert({ title: "위치 설정 오류", subTitle: "해당 핀포인트로 모험을 떠날 수 있게 위치를 설정해주세요!" })
 
-            if (isBlank([name, description, quizText]))
-                return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "" })
+    const onSubmit = () => {
+        if (latitude + longitude === 0)
+            return DefaultAlert({ title: "위치 설정 오류", subTitle: "해당 핀포인트로 모험을 떠날 수 있게 위치를 설정해주세요!" })
 
-            if (isBlank(type === "주관식" ? [answer] : choices))
-                return DefaultAlert({ title: "퀴즈 오류", subTitle: "퀴즈에 비어 있는 값이 있으면 안됩니다." })
+        if (isBlank([name, description, quizText]))
+            return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "" })
 
-            if (isLocalFile(pinPointImgs))
-                return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+        if (isBlank(type === "주관식" ? [answer] : choices))
+            return DefaultAlert({ title: "퀴즈 오류", subTitle: "퀴즈에 비어 있는 값이 있으면 안됩니다." })
 
-            const pinpoint: MakePinPoint = getPinpoint();
-            campaginNav.navigate('MakeCampaignStack', { pinpoint, editIndex });
-        }
-    });
-    const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
-        : name || pinPointImgs.length || description || quizText || answer)) && !isSubmit;
-    perventGoBack({ hasUnsavedChanges })
+        if (isLocalFile(pinPointImgs))
+            return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+
+        const pinpoint: MakePinPoint = getPinpoint();
+        campaginNav.navigate('MakeCampaignStack', { pinpoint, editIndex });
+    }
+    // const { isSubmit, onSubmit } = useSubmit({
+    //     submitFunc: async () => {
+    //         if (latitude + longitude === 0)
+    //             return DefaultAlert({ title: "위치 설정 오류", subTitle: "해당 핀포인트로 모험을 떠날 수 있게 위치를 설정해주세요!" })
+
+    //         if (isBlank([name, description, quizText]))
+    //             return DefaultAlert({ title: "필수 입력을 확인해주세요", subTitle: "" })
+
+    //         if (isBlank(type === "주관식" ? [answer] : choices))
+    //             return DefaultAlert({ title: "퀴즈 오류", subTitle: "퀴즈에 비어 있는 값이 있으면 안됩니다." })
+
+    //         if (isLocalFile(pinPointImgs))
+    //             return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
+
+    //         const pinpoint: MakePinPoint = getPinpoint();
+    //         campaginNav.navigate('MakeCampaignStack', { pinpoint, editIndex });
+    //     }
+    // });
+    // const hasUnsavedChanges = Boolean((pinpoint ? isEditPinPoint(pinpoint, getPinpoint())
+    //     : name || pinPointImgs.length || description || quizText || answer)) && !isSubmit;
+    // perventGoBack({ hasUnsavedChanges })
 
     // FindPinPoint
     const navToFindPinPointLocationModal = () => {

@@ -37,13 +37,19 @@ const sendFile = (body: string[]): BaseFetchRes<string[]> => {
 
 //// 주소
 const getCoordinate = async () => {
-    await Location.requestPermissionsAsync();
+    await Location.requestForegroundPermissionsAsync();
     return await Location.getCurrentPositionAsync();
 }
 
 // 좌표 -> 주소반환 api
-export const getRegion = async (params: { latitude: number, longitude: number }) => {
-    return baseFetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${params.latitude},${params.longitude}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`, "GET");
+export const getRegion = async (params: { latitude: number, longitude: number }): Promise<string> => {
+    const res = await baseFetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${params.latitude},${params.longitude}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`, "GET");
+    if (res === undefined)
+        return ""
+
+    const fullAddress = res.results[0].formatted_address
+    const splitAddress = fullAddress.split(" ");
+    return splitAddress[1].charAt(splitAddress.length - 1) === "시" ? splitAddress[1] : splitAddress[2];
 }
 
 export const API = {
