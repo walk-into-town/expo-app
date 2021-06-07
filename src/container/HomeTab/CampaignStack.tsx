@@ -18,10 +18,10 @@ const CampaignStack = () => {
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    const getSearchCampaign = async () => {
+    const getSearchCampaign = async (text = searchText) => {
         setIsFetchingData(true);
-        const { result, error, errdesc, data } = searchText === "" ? await API.campaignReadAll()
-            : await API.campaignSearch({ condition, type, value: searchText });
+        const { result, error, errdesc, data } = text === "" ? await API.campaignReadAll()
+            : await API.campaignSearch({ condition, type, value: text });
 
         if (result === "failed" || data === undefined) {
             DefaultAlert({ title: error, subTitle: errdesc })
@@ -39,7 +39,8 @@ const CampaignStack = () => {
     const reset = () => {
         setType("name");
         setCondition("part");
-        getSearchCampaign();
+        setSearchText("")
+        getSearchCampaign("");
     }
 
     const onRefresh = () => {
@@ -58,7 +59,7 @@ const CampaignStack = () => {
                 useCondition={[condition, setCondition]}
                 useCampaignList={[campaignList, setCampaignList]}
                 reset={reset}
-                refreshing={refreshing}
+                refreshing={isFetchingData}
             />
 
             <ScrollView

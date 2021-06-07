@@ -36,7 +36,6 @@ const CampaignSortFilter = (props: Props) => {
     // 정렬 조건 설정
     const [filterIdx, setFilterIdx] = useState(0);
     const filterButton: BadgeButtonGroupButtonsProps[] = [
-        { name: "초기화", func: props.reset },
         { name: "최신 순", func: () => onFilter((a, b) => new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime()) },
         { name: "핀포인트 많은 순", func: () => onFilter((a, b) => b.pinpoints.length - a.pinpoints.length) },
         { name: "쿠폰 많은 순", func: () => onFilter((a, b) => b.coupons.length + b.pcoupons.length - a.coupons.length - a.pcoupons.length) },
@@ -49,21 +48,21 @@ const CampaignSortFilter = (props: Props) => {
     }
     useEffect(() => {
         // 리프레쉬하면 다시 필터잉
-        if (props.refreshing === false && filterIdx > 0)
+        if (props.refreshing === false)
             filterButton[filterIdx].func();
 
     }, [props.refreshing])
 
     return (
-        <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
+        <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View style={{ marginRight: 15 }}>
+                <Row style={{ marginRight: 8 }}>
                     <BadgeButton title={`검색조건 - ${typeText[type]}`} onPress={toggleTypeModal} backgroundToggle />
-                </View>
+                    <BadgeButton title={`초기화`} onPress={props.reset} option={{ style: { marginLeft: 4 } }} />
+                </Row>
                 <BadgeButtonGroup
                     buttons={filterButton}
                     useFilterIdx={[filterIdx, setFilterIdx]}
-                    disableToggleFristBt
                 />
             </ScrollView>
             <Modal isVisible={typeModalVisible} onBackdropPress={() => setTypeModalVisible(false)} avoidKeyboard animationIn={'pulse'} animationOut={'fadeOut'}>
