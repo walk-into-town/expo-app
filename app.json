@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "rn-test",
-    "slug": "rn-test",
-    "version": "1.0.0",
+    "name": "walk-into-town",
+    "slug": "walk-into-town",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
