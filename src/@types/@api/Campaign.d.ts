@@ -12,6 +12,7 @@ declare module "@types" {
 
         pinpoints: PinPoint[],
         coupons: Coupon[],
+        pcoupons: string[],
         comments: CampaignComment[]
     }
     type CampaignComment = {

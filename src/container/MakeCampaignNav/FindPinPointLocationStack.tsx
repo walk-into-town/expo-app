@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { MakeCampaignNavParamList } from '@types'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core'
 import { makeCampaignNavigation, useAuthContext } from '../../useHook';
-
 import FindOnMap from '../../components/FindPinPointLocationStack/FindOnMap';
 import { SubmitButton, Container } from '../../atoms';
-import { Alert } from 'react-native';
-import * as Location from 'expo-location';
 import { GooglePlaceData, GooglePlaceDetail } from 'react-native-google-places-autocomplete';
 import FindOnGooglePlace from '../../components/FindPinPointLocationStack/FindOnGooglePlace';
 
@@ -16,10 +13,10 @@ const FindPinPointLocationStack = () => {
     const makeCampaignNav = makeCampaignNavigation();
     const nav = useNavigation();
     const { auth: { userToken } } = useAuthContext();
-    if (userToken === undefined) return <></>
+    if (userToken === undefined) return null;
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'FindPinPointLocationStack'>>();
-    if (pinpoint === undefined) return;
+    if (pinpoint === undefined) return null;
     
     const [latitude, setLatitude] = useState<number>(userToken.coords.latitude);
     const [longitude, setLongitude] = useState<number>(userToken.coords.longitude);
@@ -36,34 +33,10 @@ const FindPinPointLocationStack = () => {
             setLatitude(pinpoint.latitude);
             setLongitude(pinpoint.longitude);
         }
-            
+
     }, [])
 
 
-    // useEffect(() => {
-    //     //clean up을 위한 변수
-    //     let isEnd = false;
-    //     const getLocation = async () => {
-    //         try {
-    //             await Location.requestPermissionsAsync();
-    //             const { coords } = await Location.getCurrentPositionAsync();
-    //             if (!isEnd) {
-    //                 setLatitude(coords.latitude)
-    //                 setLongitude(coords.longitude)
-    //             }
-
-    //         } catch (error) {
-    //             if (!isEnd) {
-    //                 Alert.alert("Can't find you");
-    //             }
-
-    //         }
-    //     }
-    //     if (!latitude && !longitude)
-    //         getLocation();
-
-    //     return () => { isEnd = true }
-    // }, []);
 
 
     const getPlaceDetails = (data: GooglePlaceData, detail: GooglePlaceDetail | null) => {
@@ -77,6 +50,7 @@ const FindPinPointLocationStack = () => {
 
 
     const onSubmit = async () => {
+        
         if (pinpoint === undefined) return;
 
         pinpoint.latitude = latitude

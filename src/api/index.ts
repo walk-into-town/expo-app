@@ -1,4 +1,4 @@
-import { BaseFetchRes } from "@types";
+import { Address, BaseFetchRes, UseFetchRes } from "@types";
 import useFetch from "../useHook/useFetch";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
@@ -10,6 +10,7 @@ import * as campaign from "./campaign";
 import * as pinpoint from "./pinpoint";
 import * as game from "./game";
 import * as coupons from "./coupons";
+import * as location from "./location";
 
 export const getRandomCat = () => {
     return useFetch("http://aws.random.cat/meow");
@@ -40,13 +41,20 @@ const getCoordinate = async() =>{
     return await Location.getCurrentPositionAsync();
 }
 
+export const getRegion = async(params:{latitude: number, longitude: number}) =>{
+    return baseFetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${params.latitude},${params.longitude}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`, "GET");
+}
+
+
+
 export const API = {
     debugSendImg,
     sendFile,
     getCoordinate,
+    getRegion,
     ...member,
     ...campaign,
     ...pinpoint,
     ...game,
-    ...coupons
+    ...coupons,
 }

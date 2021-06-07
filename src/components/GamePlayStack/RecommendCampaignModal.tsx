@@ -5,18 +5,17 @@ import { BtsWrapper, Container } from '../../atoms/elements/layouts';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Ionicons, Title } from '../../atoms';
 import { ListItem } from 'react-native-elements';
-import { PlayingCampaign } from '@types';
+import { Campaign } from '@types';
 
 
 interface Props {
-    playingCampaignList: PlayingCampaign[],
-    SelectPlayingCampaign: (cid: string) => Promise<void>
-    getAllPlayingCampaigns: () => Promise<void>
-    getAllPlayingPinPoints: () => Promise<void>
+    recommendCampaignList: Campaign[],
+    getRecommendCampaign: () => Promise<void>,
+
 }
 
 
-const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getAllPlayingCampaigns, getAllPlayingPinPoints }: Props) => {
+const RecommendCampaignModal = ({ recommendCampaignList, getRecommendCampaign }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
 
 
@@ -25,7 +24,7 @@ const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getA
     };
 
     const showCampaignList = () => {
-        getAllPlayingCampaigns()
+        getRecommendCampaign()
         setModalVisible(true);
     }
 
@@ -33,7 +32,7 @@ const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getA
         <Container>
             <View>
                 <TouchableOpacity activeOpacity={0.7} onPress={showCampaignList}>
-                    <Ionicons name="airplane-sharp" size={40} color="#00c3ff" />
+                    <Ionicons name="thumbs-up" size={40} color="#00c3ff" />
                 </TouchableOpacity>
             </View>
 
@@ -46,9 +45,9 @@ const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getA
             >
 
                 <View style={styles.modalContainer}>
-                    <Title style={{ marginTop: 10 }}>참여중인 캠페인 목록</Title>
+                    <Title style={{ marginTop: 10 }}>추천 캠페인 목록</Title>
                     {
-                        playingCampaignList.length === 0 ?
+                        recommendCampaignList === undefined || recommendCampaignList.length === 0 ?
                             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                                 <Title>텅</Title>
                             </View> :
@@ -58,22 +57,17 @@ const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getA
                                 {
 
 
-                                    playingCampaignList.map((campaign, idx) =>
+                                    recommendCampaignList.map((campaign, idx) =>
 
                                         <ListItem key={idx}>
                                             {
-                                                campaign.cleared ?
+
+                                                <TouchableOpacity activeOpacity={0.8} onPress={() => console.log("aaa")}>
                                                     <ListItem.Content>
-                                                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}✅</Text>
+                                                        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}</Text>
                                                         <Text>{campaign.region}</Text>
                                                     </ListItem.Content>
-                                                    :
-                                                    <TouchableOpacity activeOpacity={0.8} onPress={() => SelectPlayingCampaign(campaign.id)}>
-                                                        <ListItem.Content>
-                                                            <Text style={{ fontWeight: "bold", fontSize: 16 }}>{campaign.name}</Text>
-                                                            <Text>{campaign.region}</Text>
-                                                        </ListItem.Content>
-                                                    </TouchableOpacity>
+                                                </TouchableOpacity>
                                             }
 
 
@@ -81,14 +75,6 @@ const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getA
                                         </ListItem>
                                     )
                                 }
-                                <ListItem>
-                                    <TouchableOpacity activeOpacity={0.8} onPress={() => getAllPlayingPinPoints()}>
-                                        <ListItem.Content>
-                                            <Text style={{ fontWeight: "bold", fontSize: 16 }}>참여중인 캠페인</Text>
-                                            <Text>모든 지역</Text>
-                                        </ListItem.Content>
-                                    </TouchableOpacity>
-                                </ListItem>
 
 
                             </ScrollView>
@@ -113,7 +99,7 @@ const PlayingCampaignModal = ({ playingCampaignList, SelectPlayingCampaign, getA
 }
 
 
-export default PlayingCampaignModal;
+export default RecommendCampaignModal;
 
 const styles = StyleSheet.create({
     modalContainer: {

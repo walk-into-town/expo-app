@@ -65,4 +65,10 @@ declare module "@types" {
         isClear: boolean,
         coupons: ResCoupon[]
     }
+
+    type Address = {
+        plus_code:{},
+        results: any[{}]
+
+    }
 }

@@ -1,5 +1,5 @@
 import { ip } from "./ip"
-import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember } from "@types"
+import { BaseFetchRes, Coupon, MakeCampaign, PinPoint, CampaignSearchParams, SearchCampaign, MakeCampaignComment, CampaignComment, PinPointReadParams, CouponReadParams, PartedMember, Campaign } from "@types"
 import { baseFetch } from "./baseFetch"
 import { formAppendImg, formAppendImgs } from "../util";
 
@@ -30,6 +30,11 @@ export const campaignSearch: campaignSearchFetch = ({ condition, type, value }) 
 type campaignSearchOneFetch = (params: CampaignSearchParams) => BaseFetchRes<SearchCampaign>
 export const campaignSearchOne: campaignSearchOneFetch = ({ condition, type, value }) => {
     return baseFetch(`${ip}/campaign?type=${type}&condition=${condition}&value=${value}`, "GET");
+}
+
+type campaignRecommendFetch = (region: string) => BaseFetchRes<Campaign[]>
+export const campaignRecommend: campaignRecommendFetch = (region) => {
+    return baseFetch(`${ip}/campaign/recommend?region=${region}`, "GET");
 }
 
 // 캠페인 디테일 페이지

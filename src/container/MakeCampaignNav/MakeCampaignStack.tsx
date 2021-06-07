@@ -60,8 +60,8 @@ const MakeCampaignStack = () => {
             const long = pinPointList[0].longitude
             const { data: { results } } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=ko&key=AIzaSyA-4i3FV1KLsJbsyVySpYi4YIwxIkEXFlw`);
 
-            let fullAddress = results[0].formatted_address
-            let splitAddress = fullAddress.split(" ");
+            const fullAddress = results[0].formatted_address
+            const splitAddress = fullAddress.split(" ");
 
             if (splitAddress[1].charAt(splitAddress.length - 1) === "시") {
                 setRegion(splitAddress[1])

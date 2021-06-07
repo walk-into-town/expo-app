@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStackNavigator, StackHeaderLeftButtonProps } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import MakeCampaignStack from '../container/MakeCampaignNav/MakeCampaignStack';
 import MakePinPointStack from '../container/MakeCampaignNav/MakePinPointStack';
 import MakeCouponStack from '../container/MakeCampaignNav/MakeCouponStack';

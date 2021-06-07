@@ -6,8 +6,11 @@ import { API } from '../../api';
 import { mainNavigation, useAuthContext, useLoadingContext } from '../../useHook';
 import PinPointPanel from '../../components/GamePlayStack/PinpointPanel';
 import PlayingCampaignModal from '../../components/GamePlayStack/PlayingCampaignModal';
+import RecommendCampaignModal from '../../components/GamePlayStack/RecommendCampaignModal';
 import { View, StyleSheet } from 'react-native';
 import { getDistance } from 'geolib';
+import axios from 'axios';
+
 
 interface Props {
 
@@ -28,6 +31,7 @@ const GamePlayStack = (props: Props) => {
     const [pinPoint, setPinPoint] = useState<PinPoint>();
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [cam, setCam] = useState<SearchCampaign>();
+    const [recommendCampaignList, setRecommendCampaignList] = useState<Campaign[]>([]);
 
 
     const openPanel = async (pinPoint: PinPoint) => {
@@ -42,14 +46,14 @@ const GamePlayStack = (props: Props) => {
         setIsPanelActive(true);
     };
 
-    // 참여중인 캠페인의 모든 핀포인트를 가져옴 
+    // 참여중인 모든 캠페인을 들고옴
     const getAllPlayingCampaigns = async () => {
         if (userToken === undefined)
             return;
         const { result, data, error, errdesc } = await API.memberPlayingCampaign(userToken.id);
         console.log(userToken.coords?.latitude)
         if (result === "failed" || data === undefined)
-            return DefaultAlert({ title: "참여중인 캠페인 가져오기 실패", subTitle: `${error} ${errdesc}` })
+            return DefaultAlert({ title: "참여중인 캠페인이 없습니다", btColor:"cancel" })
 
         setPlayingCampaignList([...data])
 
@@ -58,18 +62,18 @@ const GamePlayStack = (props: Props) => {
 
     }
 
+    // 참여중인 모든 핀포인트를 들고옴
     const getAllPlayingPinPoints = async () => {
         setIsPlaying(false)
         const { result, data, error, errdesc } = await API.memberPlayingPinPoint()
-        console.log(data)
         if (result === "failed" || data === undefined)
-            return DefaultAlert({ title: "참여중인 캠페인이 없습니다.", subTitle: `${error} ${errdesc}` })
+            return DefaultAlert({ title: "참여중인 캠페인이 없습니다.", subTitle: "캠페인에 참여해볼까요?👀" })
 
 
         console.log(data.clearedPinpoints)
         setPlayingPinPointList([...data.pinpoints])
         setClearedPinPointList(data.clearedPinpoints)
-        return DefaultAlert({ title: "참여중인 캠페인 가져오기 완료", btColor: "cancel"})
+        return DefaultAlert({ title: "참여중인 캠페인 가져오기 완료", btColor: "cancel" })
 
 
     }
@@ -77,7 +81,7 @@ const GamePlayStack = (props: Props) => {
     // 플레이할 캠페인을 선택하여 핀포인트를 가져옴
     const SelectPlayingCampaign = async (cid: string) => {
         const { result, data, error, errdesc } = await API.pinPointRead({ type: 'list', value: cid })
-        
+
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "핀포인트 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
@@ -93,11 +97,37 @@ const GamePlayStack = (props: Props) => {
         if (isTrue) {
             setPinPointList([...data])
             setIsPlaying(true)
-            return DefaultAlert({ title: "핀포인트 탐험 시작!🚶‍♂️", btColor: "cancel"})
+            return DefaultAlert({ title: "핀포인트 탐험 시작!🚶‍♂️", btColor: "cancel" })
 
         }
-        else return DefaultAlert({ title: "캠페인 거리가 너무 멉니다", subTitle: '100m 이내여야 합니다😥', btColor: "cancel"})
+        else return DefaultAlert({ title: "캠페인 거리가 너무 멉니다", subTitle: '100m 이내여야 합니다😥', btColor: "cancel" })
 
+    }
+
+    const getRecommendCampaign = async () => {
+
+        const data = await API.getRegion(userToken.coords)
+        if (data === undefined)
+            return DefaultAlert({ title: "주소를 찾을 수 없습니다." })
+
+
+        
+        const fullAddress = data.results[0].formatted_address
+        const splitAddress = fullAddress.split(" ");
+
+        if (splitAddress[1].charAt(splitAddress.length - 1) === "시") {
+            const { result, data, error, errdesc } = await API.campaignRecommend(splitAddress[1]);
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: "근처에 추천할만한 캠페인이 없습니다.", btColor: "cancel"})
+            setRecommendCampaignList([...data])
+
+        }
+        else {
+            const { result, data, error, errdesc } = await API.campaignRecommend(splitAddress[2]);
+            if (result === "failed" || data === undefined)
+                return DefaultAlert({ title: "근처에 추천할만한 캠페인이 없습니다.", btColor: "cancel"})
+            setRecommendCampaignList([...data])
+        }
     }
 
     const navtoPinPointDetail = (pinpoint: PinPoint) => {
@@ -111,7 +141,7 @@ const GamePlayStack = (props: Props) => {
     }
 
     const navtoGame = async (pinpoint: PinPoint) => {
-        
+
         if (isPlaying === false) {
 
             return DefaultAlert({ title: "게임 플레이중이 아닙니다", subTitle: "먼저 캠페인을 선택해 주세요😁" })
@@ -123,7 +153,7 @@ const GamePlayStack = (props: Props) => {
         } else {
             startLoading()
             const { coords } = await API.getCoordinate()
-            
+
             if (coords === undefined) {
                 endLoading()
                 return DefaultAlert({ title: "사용자 위치를 찾을 수 없음", subTitle: "Can't find you😥" })
@@ -133,24 +163,24 @@ const GamePlayStack = (props: Props) => {
                 { latitude: coords.latitude, longitude: coords.longitude },
                 { latitude: pinpoint.latitude, longitude: pinpoint.longitude })
 
-            if (distance < 30 && cam !==undefined) {
+            if (distance < 30 && cam !== undefined) {
                 endLoading()
                 mainNav.navigate("GameNav", {
                     screen: "QuizStack",
-                    params: { caid: cam.id, campaignName: cam.name, pinpoint: pinpoint }
+                    params: { caid: cam.id, pid: pinpoint.id, quiz: pinpoint.quiz }
                 })
-               
-            }else{
+
+            } else {
                 endLoading()
-               return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다😥' })
-                
-                
+                return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다😥' })
+
+
             }
 
-            
+
         }
 
-        
+
     }
 
 
@@ -179,9 +209,16 @@ const GamePlayStack = (props: Props) => {
                 <PlayingCampaignModal
                     playingCampaignList={playingCampaignList}
                     SelectPlayingCampaign={SelectPlayingCampaign}
+                    getAllPlayingCampaigns={getAllPlayingCampaigns}
                     getAllPlayingPinPoints={getAllPlayingPinPoints}
                 />
+                <RecommendCampaignModal
+                    recommendCampaignList={recommendCampaignList}
+                    getRecommendCampaign={getRecommendCampaign}
+                />
+
             </View>
+
 
             <PinPointPanel
                 pinPoint={pinPoint}
@@ -189,6 +226,7 @@ const GamePlayStack = (props: Props) => {
                 navtoGame={navtoGame}
                 usePanelActivie={[isPanelActive, setIsPanelActive]}
             />
+
         </View>
     )
 }
@@ -202,5 +240,11 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginTop: 10,
         paddingRight: 10
+    },
+    icon2: {
+        // position: 'absolute',
+        alignSelf: 'flex-end',
+        // marginTop: 40,
+        // paddingRight: 10
     }
 });
