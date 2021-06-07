@@ -7,8 +7,10 @@ import { API } from '../../api';
 import { CampaignSearchCondition, CampaignSearchType, SearchCampaign } from '@types';
 import { RefreshControl, ScrollView } from 'react-native';
 import CampaignSortFilter from '../../components/CampaignStack/CampaignSortFilter';
+import { useIsFocused } from '@react-navigation/core';
 
 const CampaignStack = () => {
+    const isFocused = useIsFocused()
     const [searchText, setSearchText] = useState("")
     const [type, setType] = useState<CampaignSearchType>("name")
     const [condition, setCondition] = useState<CampaignSearchCondition>("part")
@@ -32,7 +34,7 @@ const CampaignStack = () => {
 
     useEffect(() => {
         getSearchCampaign();
-    }, [])
+    }, [isFocused])
 
     const reset = () => {
         setType("name");
@@ -60,6 +62,7 @@ const CampaignStack = () => {
             />
 
             <ScrollView
+                showsVerticalScrollIndicator={false}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
                 <CampaignList

@@ -63,7 +63,7 @@ export default () => {
 
     return (
         <Container>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <Profile memberInfo={memberInfo} />
                 <BadgeList badgeList={memberInfo.badge} />
                 <Playground

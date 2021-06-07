@@ -14,36 +14,21 @@ const MakePinPointStack = () => {
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakePinPointStack'>>();
 
-    const [name, setName] = useState("");
-    const [latitude, setLatitude] = useState<number>(0);
-    const [longitude, setLongitude] = useState<number>(0);
-    const [description, setDescription] = useState("");
-    const [pinPointImgs, setPinPointImgs] = useState<string[]>([]);
+    const [name, setName] = useState(pinpoint?.name || "");
+    const [latitude, setLatitude] = useState<number>(pinpoint?.latitude || 0);
+    const [longitude, setLongitude] = useState<number>(pinpoint?.longitude || 0);
+    const [description, setDescription] = useState(pinpoint?.description || "");
+    const [pinPointImgs, setPinPointImgs] = useState<string[]>(pinpoint?.imgs || []);
 
-    const [quizText, setQuizText] = useState<string>("");
-    const [type, setType] = useState<quizType>("주관식");
-    const [choices, setChoices] = useState<string[]>([""]);
-    const [answer, setAnswer] = useState<string>("");
-    const [selectedAnswer, setSelectedAnswer] = useState("");
+    const [quizText, setQuizText] = useState<string>(pinpoint?.quiz.text || "");
+    const [type, setType] = useState<quizType>(pinpoint?.quiz.type || "주관식");
+    const [choices, setChoices] = useState<string[]>(pinpoint?.quiz.choices || [""]);
+    const [answer, setAnswer] = useState<string>(pinpoint?.quiz.answer || "");
+    const [selectedAnswer, setSelectedAnswer] = useState(pinpoint?.quiz.answer || "");
 
     useEffect(() => {
-        if (pinpoint === undefined) return;
-
-        if (editIndex !== undefined) nav.setOptions({ headerTitle: "핀포인트 수정하기" })
-
-        setName(pinpoint.name);
-        setLatitude(pinpoint.latitude);
-        setLongitude(pinpoint.longitude);
-        setDescription(pinpoint.description);
-
-        setQuizText(pinpoint.quiz.text);
-        setType(pinpoint.quiz.type);
-        setChoices(pinpoint.quiz.choices);
-        if (pinpoint.quiz.type === '주관식')
-            setAnswer(pinpoint.quiz.answer);
-        else
-            setSelectedAnswer(pinpoint.quiz.answer);
-
+        if (editIndex !== undefined)
+            nav.setOptions({ headerTitle: "핀포인트 수정하기" })
     }, [pinpoint])
 
     // 핀포인트 업로드

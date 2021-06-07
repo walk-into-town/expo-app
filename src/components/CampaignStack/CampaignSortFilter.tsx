@@ -17,17 +17,16 @@ interface Props {
 
 const CampaignSortFilter = (props: Props) => {
     const [type, setType] = props.useType;
-    const [condition, setCondition] = props.useCondition;
     const [campaignList, setCampaignList] = props.useCampaignList;
-    const [typeModalVisible, setTypeModalVIsible] = useState(false)
-    const toggleTypeModal = () => setTypeModalVIsible(!typeModalVisible);
+    const [typeModalVisible, setTypeModalVisible] = useState(false)
+    const toggleTypeModal = () => setTypeModalVisible(!typeModalVisible);
 
     // 검색 조건 설정
     const typeText: CampaignSearchTypeText = {
         'name': "캠페인 이름",
         'region': "지역",
         'id': "캠페인 ID",
-        'owner': "제작유저"
+        'ownner': "제작유저"
     }
     const onSelectType = (type: string) => {
         setType(type as CampaignSearchType); // 편법.
@@ -48,7 +47,6 @@ const CampaignSortFilter = (props: Props) => {
         const newArr = campaignList.sort(func);
         setCampaignList([...newArr]);
     }
-
     useEffect(() => {
         // 리프레쉬하면 다시 필터잉
         if (props.refreshing === false && filterIdx > 0)
@@ -68,7 +66,7 @@ const CampaignSortFilter = (props: Props) => {
                     disableToggleFristBt
                 />
             </ScrollView>
-            <Modal isVisible={typeModalVisible} onBackdropPress={() => setTypeModalVIsible(false)} avoidKeyboard animationIn={'pulse'} animationOut={'fadeOut'}>
+            <Modal isVisible={typeModalVisible} onBackdropPress={() => setTypeModalVisible(false)} avoidKeyboard animationIn={'pulse'} animationOut={'fadeOut'}>
                 {Object.keys(typeText).map((v, idx) => {
                     return <WhiteTitle onPress={() => onSelectType(v)} key={idx}>{typeText[v]}</WhiteTitle>
                 })}

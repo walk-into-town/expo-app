@@ -6,13 +6,11 @@ import { formAppendImgs } from "../util";
 //// 캠페인 CRUD
 type CampaignCreateFetch = (body: MakeCampaign) => BaseFetchRes<string>;
 export const campaignCreate: CampaignCreateFetch = (body) => {
-    console.log(body)
     return baseFetch(`${ip}/campaign`, "POST", { body });
 }
 
 export const campaignUpdate = (body: MakeCampaign): BaseFetchRes<string> => {
     body.caid = body.id;
-    console.log(body)
     return baseFetch(`${ip}/campaign`, "PUT", { body });
 }
 

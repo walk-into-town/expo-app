@@ -48,7 +48,6 @@ const CampaignDetailStack = () => {
         if (result === "failed" || data === undefined)
             return DefaultAlert({ title: "쿠폰 가져오기 실패", subTitle: `${error} ${errdesc}` })
 
-        console.log(data)
         setCouponList(data)
     }
     const getCampaign = async () => {
@@ -187,7 +186,10 @@ const CampaignDetailStack = () => {
 
     return (
         <Container>
-            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            >
                 <ProfileCard
                     campaignProfile={campaignProfile}
                     isParticipate={isParticipate}

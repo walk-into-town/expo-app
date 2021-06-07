@@ -45,7 +45,7 @@ export const ImgPicker = (props: { useImgs: TuseState<string[]> }) => {
                     * 사진을 클릭하면 삭제 됩니다.
                 </Gray>
             }
-            <ScrollView horizontal>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {imgList.map((uri, idx) =>
                     <TouchableOpacity key={idx} onPress={() => onImgPress(idx)}>
                         <Image

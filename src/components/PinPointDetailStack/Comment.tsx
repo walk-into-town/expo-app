@@ -1,8 +1,9 @@
 import { PinPointComment, WritePinPointComment } from '@types'
 import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
 import { Avatar, ListItem } from 'react-native-elements'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Bold, colorCode, Gray, LikeIcon, Row, Text3 } from '../../atoms'
+import { Bold, Carousel, colorCode, Gray, LikeIcon, Row, Text3 } from '../../atoms'
 import { useAuthContext, useCommentActionSheet } from '../../useHook'
 import { getPassingTime } from '../../util'
 import commingSoon from '../commingSoon'
@@ -42,21 +43,26 @@ const Comment = (props: Props) => {
     }
 
     return (
-        <ListItem containerStyle={{ backgroundColor: colorCode.background }}>
-            <Avatar source={{ uri: comment.profileImg }} rounded />
-            <ListItem.Content>
-                <Bold>{comment.nickname}</Bold>
-                <Text3 ellipsizeMode={'middle'}>{comment.text}</Text3>
-                <Row>
-                    <Gray style={{ marginRight: 10 }}>{getPassingTime(comment.updateTime)}</Gray>
-                    <Gray>좋아요 {comment.rated}개</Gray>
-                </Row>
-            </ListItem.Content>
-            <TouchableOpacity style={{ marginRight: 10 }} onPress={onLiked}>
-                <LikeIcon toggle={liked} size={15} />
-            </TouchableOpacity>
-            <ListItem.Chevron onPress={onAction} color={colorCode.sub} style={{ paddingRight: 5 }} />
-        </ListItem>
+        <View>
+            <ListItem containerStyle={{ backgroundColor: colorCode.background }}>
+                <Avatar source={{ uri: comment.profileImg }} rounded />
+                <ListItem.Content>
+                    <Bold>{comment.nickname}</Bold>
+                    <Text3 ellipsizeMode={'middle'}>{comment.text}</Text3>
+                    <Row>
+                        <Gray style={{ marginRight: 10 }}>{getPassingTime(comment.updateTime)}</Gray>
+                        <Gray>좋아요 {comment.rated}개</Gray>
+                    </Row>
+                </ListItem.Content>
+                <TouchableOpacity style={{ marginRight: 10 }} onPress={onLiked}>
+                    <LikeIcon toggle={liked} size={15} />
+                </TouchableOpacity>
+                <ListItem.Chevron onPress={onAction} color={colorCode.sub} style={{ paddingRight: 5 }} />
+            </ListItem>
+            <View style={{ marginHorizontal: 20 }}>
+                <Carousel images={comment.imgs} />
+            </View>
+        </View>
     )
 }
 

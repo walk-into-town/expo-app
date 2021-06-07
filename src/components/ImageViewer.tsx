@@ -21,7 +21,7 @@ const ImageViewer = () => {
     }, [])
 
     return (
-        <ScrollView style={{ paddingTop: 60 }}>
+        <ScrollView style={{ paddingTop: 60 }} showsVerticalScrollIndicator={false}>
             {
                 images.map((uri, idx) => (
                     <Image

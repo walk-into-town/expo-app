@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { API } from '../../api';
 import { ImgPicker, TextArea, HeaderRightCheckIcon, DefaultAlert } from '../../atoms';
-import { perventGoBack, useAuthContext, useSubmit } from '../../useHook';
+import { perventGoBack, useAuthContext, useLoadingContext, useSubmit } from '../../useHook';
 
 
 const WritePinPointCommentStack = () => {
     const { auth: { userToken } } = useAuthContext();
+    const { useLoading: { endLoading, startLoading } } = useLoadingContext()
     if (userToken === undefined) return <></>
 
     const { params: { pid, pname, comment } } = useRoute<RouteProp<EditModalNavParamList, "WritePinPointCommentStack">>();
@@ -26,6 +27,10 @@ const WritePinPointCommentStack = () => {
 
     const { isSubmit, onSubmit } = useSubmit({
         submitFunc: async () => {
+
+            if (text === "")
+                return DefaultAlert({ title: "내용을 입력해주세요!" })
+            startLoading();
             const { result, data, error, errdesc } = comment ?
                 await API.pinpointCommentUpdate({
                     coid: comment.coid,
@@ -42,12 +47,12 @@ const WritePinPointCommentStack = () => {
                     imgs
                 });
             if (result === "failed" || data === undefined)
-                return DefaultAlert({ title: error, subTitle: errdesc });
-            
+                return DefaultAlert({ title: error, subTitle: errdesc, onPress: endLoading });
+            endLoading()
             nav.goBack();
         }
     })
-    perventGoBack({ hasUnsavedChanges: !isSubmit })
+    // perventGoBack({ hasUnsavedChanges: !isSubmit })
 
     return (
         <View style={{ marginHorizontal: 10, marginTop: 20 }}>

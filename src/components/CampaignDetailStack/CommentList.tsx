@@ -21,8 +21,8 @@ const CommentList = (props: Props) => {
     const [filterIdx, setFilterIdx] = useState(0)
 
     useEffect(() => {
-        setCommentList(props.commentList);
-        filterButtons[filterIdx].func()
+        setIsOnlyImg(false)
+        filterButtons[filterIdx].func();
     }, [props.commentList])
 
     const onOnlyImgToggle = () => {
@@ -42,13 +42,13 @@ const CommentList = (props: Props) => {
 
     // sort
     const onSortByTime = () => {
-        const newArr = commentList.sort((a: CampaignComment, b: CampaignComment) => {
+        const newArr = props.commentList.sort((a: CampaignComment, b: CampaignComment) => {
             return new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime();
         })
         setCommentList([...newArr])
     }
     const onSortByRate = (isHigh: boolean) => {
-        const newArr = commentList.sort((a: CampaignComment, b: CampaignComment) => {
+        const newArr = props.commentList.sort((a: CampaignComment, b: CampaignComment) => {
             return (b.rated - a.rated) * (isHigh ? 1 : -1);
         })
         setCommentList([...newArr]);

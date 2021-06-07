@@ -21,7 +21,7 @@ const ParticiaptedUserModal = (props: Props) => {
                 <Text1 style={{ alignSelf: "center" }}>
                     클리어한 유저 {partedUserList.reduce((ac, v) => v.cleared ? ac + 1 : ac, 0)}명
                 </Text1>
-                <ScrollView style={{ height: 300 }} bounces={false}>
+                <ScrollView style={{ height: 300 }} bounces={false} showsVerticalScrollIndicator={false}>
                     {
                         partedUserList.map((v, idx) => (
                             <ListItem key={idx}>

@@ -15,7 +15,7 @@ const EditModalNav = () => {
             screenOptions={{
                 headerTitleStyle: { fontSize: 15, color: colorCode.primary },
                 headerBackTitleVisible: false,
-                headerLeft: HeaderLeftCloseIcon,
+                headerLeft: HeaderLeftCloseIcon
             }}
         >
             <Stack.Screen

@@ -112,17 +112,17 @@ const GameStack = () => {
         const caid = campaign.id
         startLoading()
         // 위치 정보 가져오기
-        const { coords } = await API.getCoordinate()
-        if (coords === undefined)
-            return DefaultAlert({ title: "사용자 위치를 찾을 수 없음", subTitle: "Can't find you😥", onPress: endLoading },)
+        // const { coords } = await API.getCoordinate()
+        // if (coords === undefined)
+        //     return DefaultAlert({ title: "사용자 위치를 찾을 수 없음", subTitle: "Can't find you😥", onPress: endLoading },)
 
-        // 30m 거리 
-        const distance = getDistance(
-            { latitude: coords.latitude, longitude: coords.longitude },
-            { latitude: pinpoint.latitude, longitude: pinpoint.longitude }
-        )
-        if (distance > 30)
-            return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다😥', onPress: endLoading })
+        // // 30m 거리 
+        // const distance = getDistance(
+        //     { latitude: coords.latitude, longitude: coords.longitude },
+        //     { latitude: pinpoint.latitude, longitude: pinpoint.longitude }
+        // )
+        // if (distance > 30)
+        //     return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다😥', onPress: endLoading })
 
         // 퀴즈 참여가능 여부
         const { result, data, error, errdesc } = await API.quizCheck({ pid: pinpoint.id, caid })

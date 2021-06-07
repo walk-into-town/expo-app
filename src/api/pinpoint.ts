@@ -1,4 +1,5 @@
 import { BaseFetchRes, PinPoint, PinPointComment, PinPointReadParams } from "@types";
+import { formAppendImgs } from "../util";
 import { baseFetch } from "./baseFetch";
 import { ip } from "./ip";
 
@@ -19,10 +20,13 @@ type pCommentCreateFetch = (body: {
     imgs: string[]
 }) => BaseFetchRes<PinPointComment>
 export const pinpointCommentCreate: pCommentCreateFetch = (body) => {
-    return baseFetch(`${ip}/pinpoint/comment`, "POST", {
-        body,
-        isForm: body.imgs.length > 0
-    });
+    const formdata = new FormData();
+    formdata.append("pid", body.pid);
+    formdata.append("comments[userId]", body.comments.userId);
+    formdata.append("comments[text]", body.comments.text);
+    formAppendImgs(formdata, body.imgs, { formName: "img" })
+
+    return baseFetch(`${ip}/pinpoint/comment`, "POST", { body: formdata, isForm: true });
 }
 
 export const pinpointCommentRead = (pid: string): BaseFetchRes<PinPointComment[]> => {

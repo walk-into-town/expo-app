@@ -19,9 +19,9 @@ const CouponDetailStack = () => {
         if (coupon.paymentCondition === -1) return `전체 핀포인트 클리어`
         return `[${pinpointList[coupon.paymentCondition]}] 핀포인트 클리어`
     }
-    
+
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
             {coupon.imgs !== "" && <AbsoluteCousel images={[coupon.imgs]} />}
 
             <Card containerStyle={{ borderRadius: 4, marginBottom: 4 }}>

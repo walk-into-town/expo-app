@@ -14,6 +14,7 @@ const MakeCouponStack = () => {
     const nav = useNavigation();
     const { params: { coupon, editIndex, pinPointList } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakeCouponStack'>>();
 
+
     const [name, setName] = useState(coupon?.name || "");
     const [description, setDescription] = useState(coupon?.description || "");
     const [couponImg, setCouponImg] = useState<string>(coupon?.imgs || "");
@@ -49,7 +50,6 @@ const MakeCouponStack = () => {
         if (isLocalFile([couponImg]))
             return DefaultAlert({ title: "사진을 서버로 먼저 전송해주세요!" })
 
-        console.log(getCoupon())
         nav.goBack()
         campaginNav.navigate("MakeCampaignStack", { coupon: getCoupon(), editIndex })
     }
