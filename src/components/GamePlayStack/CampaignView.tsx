@@ -1,6 +1,6 @@
 import { Coord, PinPoint, TuseState } from '@types';
 import React, { useEffect, useRef } from 'react'
-import { PermissionsAndroid, Platform, Pressable } from 'react-native';
+import { Image, Platform, Pressable } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { API } from '../../api';
 import { colorCode, Ionicons } from '../../atoms';
@@ -51,13 +51,14 @@ const CampaignView = (props: Props) => {
         loadingEnabled={true}
       >
         {
-          props.pinPointList.map((p, idx) => (
+          props.pinPointList.map((pin, idx) => (
             <Marker
               key={idx}
-              coordinate={{ latitude: p.latitude, longitude: p.longitude }}
-              image={isCleared(p.id) ? imgPath.checkpinpoint : imgPath.bluepinpoint}
-              onPress={() => props.openPanel(p)}
-            />
+              coordinate={pin}
+              onPress={() => props.openPanel(pin)}
+            >
+              <Image source={isCleared(pin.id) ? imgPath.checkpinpoint : imgPath.bluepinpoint} style={{ height: 30, width: 30 }} />
+            </Marker>
           ))
         }
       </MapView>
