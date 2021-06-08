@@ -2,7 +2,7 @@ import { Coord, PinPoint } from '@types'
 import React from 'react'
 import { Pressable, Text, View } from 'react-native'
 import { Card, Divider } from 'react-native-elements'
-import { AbsoluteCousel, ClearButton, PaddingBox, Row, SubTitle, Text3, Title } from '../../atoms'
+import { AbsoluteCousel, PaddingBox, Row, SubTitle, Text3, Title } from '../../atoms'
 import { mainNavigation } from '../../useHook'
 import { toCommonDateTime } from '../../util'
 
