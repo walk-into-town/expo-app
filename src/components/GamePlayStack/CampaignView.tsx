@@ -1,9 +1,11 @@
 import { Coord, PinPoint, TuseState } from '@types';
 import React, { useEffect, useRef } from 'react'
-import { Pressable } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Camera } from 'react-native-maps';
+import { PermissionsAndroid, Platform, Pressable } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { API } from '../../api';
 import { colorCode, Ionicons } from '../../atoms';
 import { imgPath } from '../../util';
+
 
 interface Props {
   location: Coord | undefined
@@ -23,6 +25,7 @@ const CampaignView = (props: Props) => {
     map.current?.setCamera({ center, zoom: 17 })
   }
   const animateToRegion = (center: Coord) => {
+    console.log(center)
     map.current?.animateCamera({ center, zoom: 17 }, { duration: 300 })
   }
 
@@ -38,7 +41,12 @@ const CampaignView = (props: Props) => {
         style={{ height: '100%' }}
         provider={PROVIDER_GOOGLE}
         onUserLocationChange={({ nativeEvent: { coordinate } }) => setUserCoord(coordinate)}
-        onMapReady={() => moveToRegion(userCoord)}
+        onMapReady={() => {
+          moveToRegion(userCoord)
+          const init = async () => await API.getCoordinate()
+          if (Platform.OS === 'android')
+            init()
+        }}
         showsUserLocation={true}
         loadingEnabled={true}
       >
