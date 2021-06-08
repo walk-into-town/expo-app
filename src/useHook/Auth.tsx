@@ -53,7 +53,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
         bootAsync();
     }, []);
 
-    const useAuth: UseAuth = useMemo(() => ({
+    const useAuth: UseAuth = {
         signIn: async ({ id, pw }) => {
             startLoading();
 
@@ -96,7 +96,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             const id = auth.userToken.id;
             dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
         }
-    }), []);
+    }
 
     return (
         <AuthContext.Provider value={{ auth, useAuth }}>

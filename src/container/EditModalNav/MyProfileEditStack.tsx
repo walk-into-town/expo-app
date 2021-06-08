@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
-
-import { Container, DefaultAlert, InputModal, SingleImgPicker, SubmitButton } from '../../atoms'
-import { useAuthContext, useLoadingContext } from '../../useHook';
 import { API } from '../../api';
 import { useNavigation } from '@react-navigation/core';
+import { useAuthContext, useLoadingContext } from '../../useHook';
 
-interface Props {
-    isModalVisible: boolean,
-    toggleModal: () => void
-}
+import { Container, DefaultAlert, InputModal, SingleImgPicker, SubmitButton } from '../../atoms'
 
-const MyProfileEditStack = (props: Props) => {
+
+const MyProfileEditStack = () => {
     const nav = useNavigation();
     const { auth: { userToken }, useAuth: { onEdit } } = useAuthContext();
     const { useLoading: { startLoading, endLoading } } = useLoadingContext();
