@@ -107,8 +107,8 @@ const GameStack = () => {
         if (campaign === undefined) return;
         const caid = campaign.id, pid = pinpoint.id
 
-        if (getDistance(userCoord, pinpoint) > 30)
-            return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '30m 이내여야 합니다 😥' })
+        if (getDistance(userCoord, pinpoint) > 100)
+            return DefaultAlert({ title: "핀포인트와 거리가 너무 멉니다", subTitle: '100m 이내여야 합니다 😥' })
 
         startLoading()
         const { result, data, error, errdesc } = await API.quizCheck({ pid, caid })
@@ -133,6 +133,7 @@ const GameStack = () => {
             />
 
             <PlayingCampaignModal
+                userCoord={userCoord}
                 playingCampaignList={playingCampaignList}
                 playingPinPointList={playingPinPointList}
                 useDisplayPinPointList={[displayPinPointList, setDisplayPinPointList]}

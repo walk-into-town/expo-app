@@ -12,11 +12,13 @@ const RankHeader = (props: Props) => {
             <Title style={{ color: colorCode.primary, position: "absolute", top: "50%" }}>
                 랭크
             </Title>
-            <ClearButton
-                title="내 랭킹 조회하기"
-                onPress={props.onModal}
-                size={14} style={{ marginLeft: "auto" }}
-            />
+            <View style={{ alignItems: "flex-end" }}>
+                <ClearButton
+                    title="내 랭킹 조회하기"
+                    onPress={props.onModal}
+                    size={14}
+                />
+            </View>
             <View style={{ backgroundColor: colorCode.primary, height: 4 }} />
         </WhiteView>
     )

@@ -5,7 +5,9 @@ export const getDateAfter = (target: string, dayAfter: number) => {
 }
 
 export const toCommonDate = (time: string) => {
-    return time.slice(0, 10).replaceAll('-', '.');
+    // 안드로이드에서 안되는 버그...
+    // return time.slice(0, 10).replaceAll('-', '.');
+    return time.slice(0, 10)
 }
 
 export const toCommonDateTime = (time: string) => {
