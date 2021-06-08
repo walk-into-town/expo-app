@@ -1,4 +1,4 @@
-import { Campaign, PinPoint, PlayingCampaign, SearchCampaign, TuseState } from '@types';
+import { Campaign, Coord, PinPoint, PlayingCampaign, SearchCampaign, TuseState } from '@types';
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, Text, ScrollView, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
@@ -10,6 +10,7 @@ import { getDummySearchCampaign } from '../../util';
 
 
 interface Props {
+    userCoord: Coord
     playingCampaignList: PlayingCampaign[],
     playingPinPointList: PinPoint[],
     useDisplayPinPointList: TuseState<PinPoint[]>
@@ -18,7 +19,7 @@ interface Props {
     navtoCampaignDetail: (campaign: SearchCampaign) => void
 }
 
-const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDisplayPinPointList, getAllPlayingPinPoints, getAllPlayingCampaigns, navtoCampaignDetail }: Props) => {
+const PlayingCampaignModal = ({ userCoord, playingCampaignList, playingPinPointList, useDisplayPinPointList, getAllPlayingPinPoints, getAllPlayingCampaigns, navtoCampaignDetail }: Props) => {
     const { auth: { userToken } } = useAuthContext();
     if (userToken === undefined) return <></>
 
@@ -65,10 +66,7 @@ const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDis
                     .some(pinpoint => {
                         if (pinpoint === undefined) return false
 
-                        const distance = getDistance(
-                            { latitude: pinpoint.latitude, longitude: pinpoint.longitude },
-                            { latitude: userToken.coords.latitude, longitude: userToken.coords.longitude }
-                        )
+                        const distance = getDistance(pinpoint, userCoord)
                         return distance < 100
                     })
             ))]
@@ -107,12 +105,12 @@ const PlayingCampaignModal = ({ playingCampaignList, playingPinPointList, useDis
             >
                 <View style={styles.modalContainer}>
                     <Title>참여중인 캠페인 목록</Title>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 40 }}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ height: 50 }}>
                         <BadgeButton title="초기화" onPress={onReset} />
                         <BadgeButton title="도전 중인 캠페인만 표시하기" onPress={onToggleUnClear} backgroundToggle={toggleUnClear} />
                         <BadgeButton title="100m 이내의 캠페인만 표시하기" onPress={onToggle100m} backgroundToggle={toggle100m} />
                     </ScrollView>
-                    <Text1 style={{ fontSize: 10, marginVertical: 4 }}>* 파란색 테두리가 지도에 표시되는 핀포인트입니다.</Text1>
+                    <Text1 style={{ fontSize: 10, marginVertical: 4, marginBottom: 8 }}>* 파란색 테두리가 지도에 표시되는 핀포인트입니다.</Text1>
 
 
                     <ScrollView showsVerticalScrollIndicator={false} style={{ height: "100%" }}>

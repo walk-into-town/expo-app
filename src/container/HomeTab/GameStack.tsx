@@ -133,6 +133,7 @@ const GameStack = () => {
             />
 
             <PlayingCampaignModal
+                userCoord={userCoord}
                 playingCampaignList={playingCampaignList}
                 playingPinPointList={playingPinPointList}
                 useDisplayPinPointList={[displayPinPointList, setDisplayPinPointList]}

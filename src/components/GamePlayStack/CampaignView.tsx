@@ -25,7 +25,6 @@ const CampaignView = (props: Props) => {
     map.current?.setCamera({ center, zoom: 17 })
   }
   const animateToRegion = (center: Coord) => {
-    console.log(center)
     map.current?.animateCamera({ center, zoom: 17 }, { duration: 300 })
   }
 
@@ -42,10 +41,12 @@ const CampaignView = (props: Props) => {
         provider={PROVIDER_GOOGLE}
         onUserLocationChange={({ nativeEvent: { coordinate } }) => setUserCoord(coordinate)}
         onMapReady={() => {
-          moveToRegion(userCoord)
-          const init = async () => await API.getCoordinate()
-          if (Platform.OS === 'android')
-            init()
+          const init = async () => {
+            if (Platform.OS === 'android')
+              await API.getCoordinate();
+            moveToRegion(userCoord);
+          }
+          init();
         }}
         showsUserLocation={true}
         loadingEnabled={true}
