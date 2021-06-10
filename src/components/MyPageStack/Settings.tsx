@@ -30,7 +30,7 @@ const Settings = (props: Props) => {
             <DefaultListItem title="이벤트" onPress={navToNyanCat} />
             <DefaultListItem title="약관 및 정책" onPress={commingSoon} />
             <DefaultListItem title="회원탈퇴" onPress={onWithdrawal} />
-            <DefaultListItem title="현재 버전 0.27.0" onPress={commingSoon} />
+            <DefaultListItem title="현재 버전 1.0.1" onPress={commingSoon} />
 
             <Footer />
         </View>

@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { API } from '../../api'
 import { DefaultAlert } from '../../atoms'
 import { Failed, Phase1, Phase2, Phase3 } from '../../components/QuizStack'
-import { mainNavigation, useBGMContext, useSound } from '../../useHook'
+import { mainNavigation, useAuthContext, useBGMContext, useSound } from '../../useHook'
 
 
 const QuizStack = () => {
     const DUMMY_MOSTER = "http://asq.kr/XKdRm";
     const { params: { caid, pid, quiz } } = useRoute<RouteProp<GameNavParamList, "QuizStack">>()
+    const { auth: { userToken } } = useAuthContext()
     const { playSound: playBGM, stopSound: stopBGM } = useBGMContext();
     const { playSound, stopSound } = useSound()
     const isFocused = useIsFocused()
@@ -38,7 +39,8 @@ const QuizStack = () => {
         }
         else {
             stopSound()
-            playBGM()
+            if (userToken?.setting.playBGM)
+                playBGM()
         }
     }, [isFocused])
 

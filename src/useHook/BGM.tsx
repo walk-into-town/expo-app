@@ -1,6 +1,7 @@
 import { IBGMContext } from "@types";
 import React, { createContext, useContext, useEffect } from "react";
 import { getStorage, setStorage } from "../util/AsyncStorage";
+import { useAuthContext } from "./Auth";
 import { useBackGroundSound } from "./useSound";
 
 const BGMContext = createContext<IBGMContext | null>(null);
@@ -14,37 +15,19 @@ const useBGMContext = () => {
 
 const BGMContextProvider = ({ children }: { children: JSX.Element }) => {
     const BGM = useBackGroundSound()
+    const { auth: { userToken } } = useAuthContext()
 
-    const playSound = () => {
-        const init = async () => {
-            const data = await getStorage("playBGM");
-
-            if (data === null || data.play) BGM.playSound();
-        }
-        init();
-    }
+    const playSound = () => BGM.playSound();
 
     const stopSound = () => BGM.stopSound();
 
-    const onSetting = (isPlaying: boolean) => {
-        const init = async () => {
-            await setStorage("playBGM", { play: isPlaying });
-            isPlaying ? playSound() : stopSound();
-        }
-        init();
-    }
-
     useEffect(() => {
-        const init = async () => {
-            const storage = await getStorage("playBGM");
-            if (!storage || storage.play)
-                playSound();
-        }
-        init();
-    }, [])
+        if (userToken === undefined || userToken.setting.playBGM)
+            playSound();
+    }, [userToken?.setting.playBGM])
 
     return (
-        <BGMContext.Provider value={{ playSound, stopSound, onSetting }}>
+        <BGMContext.Provider value={{ playSound, stopSound }}>
             {children}
         </BGMContext.Provider>
     )

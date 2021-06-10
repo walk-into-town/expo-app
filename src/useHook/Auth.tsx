@@ -1,4 +1,4 @@
-import { IAuthContext, AuthReduce, UseAuth } from "@types";
+import { IAuthContext, AuthReduce, UseAuth, IUserToken } from "@types";
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { Alert } from "react-native";
 import { API } from "../api";
@@ -22,18 +22,14 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
     const reduce: AuthReduce = (_, action) => {
         switch (action.type) {
             case 'SIGN_IN':
-                return {
-                    userToken: action.userToken,
-                };
+                return { userToken: action.userToken };
             case 'SIGN_OUT':
             case 'RESTORE_TOKEN':
-                return {
-                    userToken: undefined,
-                };
+                return { userToken: undefined };
             case "EDIT":
-                return {
-                    userToken: action.userToken
-                }
+                return { userToken: action.userToken }
+            case "SETTING":
+                return { userToken: action.userToken }
         }
     }
     const [auth, dispatch] = useReducer(reduce, {
@@ -65,7 +61,13 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
             else {
                 const { nickname, profileImg, selfIntroduction } = data;
                 await setStorage("userToken", { id, pw });
-                dispatch({ type: 'SIGN_IN', userToken: { id, nickname, profileImg, selfIntroduction } });
+                dispatch({
+                    type: 'SIGN_IN',
+                    userToken: {
+                        id, nickname, profileImg, selfIntroduction,
+                        setting: { playBGM: true, useDist: true }
+                    }
+                });
             }
             endLoading();
             return errdesc ? errdesc : "";
@@ -94,7 +96,22 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
                 return;
 
             const id = auth.userToken.id;
-            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction } })
+            const setting = auth.userToken.setting;
+            dispatch({ type: 'EDIT', userToken: { id, nickname, profileImg, selfIntroduction, setting } })
+        },
+        setting: ({ playBGM, useDist }) => {
+            if (auth.userToken === undefined)
+                return;
+
+            const userToken: IUserToken = JSON.parse(JSON.stringify(auth.userToken));
+
+            if (playBGM !== undefined)
+                userToken.setting.playBGM = playBGM;
+
+            if (useDist !== undefined)
+                userToken.setting.useDist = useDist;
+
+            dispatch({ type: 'SETTING', userToken });
         }
     }
 

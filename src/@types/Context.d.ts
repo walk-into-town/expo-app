@@ -3,12 +3,13 @@ declare module "@types" {
     type Auth = {
         userToken: IUserToken | undefined;
     }
-    type AuthReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN' | 'EDIT'
+    type AuthReduceAction = 'RESTORE_TOKEN' | 'SIGN_OUT' | 'SIGN_IN' | 'EDIT' | "SETTING"
     type AuthReduce = (state: Auth, action: { type: AuthReduceAction, userToken?: IUserToken }) => Auth;
     type UseAuth = {
         signIn: (data: { id: string, pw: string }) => Promise<string>;
         signOut: (data: { id: string }) => void;
         onEdit: (data: { nickname: string, profileImg: string, selfIntroduction: string }) => void
+        setting: (data: { playBGM?: boolean, useDist?: boolean }) => void
     }
     interface IAuthContext {
         auth: Auth,
@@ -30,14 +31,12 @@ declare module "@types" {
     interface IBGMContext {
         playSound: () => void;
         stopSound: () => void;
-        onSetting: (isPlaying: boolean) => void;
     }
 
     /* Location */
     interface ILocationContext {
         playSound: () => void;
         stopSound: () => void;
-        onSetting: (isPlaying: boolean) => void;
     }
 
     interface IUserToken {
@@ -45,6 +44,10 @@ declare module "@types" {
         nickname: string;
         profileImg: string;
         selfIntroduction: string;
+        setting: {
+            playBGM: boolean,
+            useDist: boolean
+        }
     }
 
 }

@@ -13,7 +13,6 @@ const MakePinPointStack = () => {
     const nav = useNavigation();
 
     const { params: { pinpoint, editIndex } } = useRoute<RouteProp<MakeCampaignNavParamList, 'MakePinPointStack'>>();
-
     const [name, setName] = useState(pinpoint?.name || "");
     const [latitude, setLatitude] = useState<number>(pinpoint?.latitude || 0);
     const [longitude, setLongitude] = useState<number>(pinpoint?.longitude || 0);
@@ -29,6 +28,10 @@ const MakePinPointStack = () => {
     useEffect(() => {
         if (editIndex !== undefined)
             nav.setOptions({ headerTitle: "핀포인트 수정하기" })
+        if (pinpoint) {
+            setLatitude(pinpoint.latitude)
+            setLongitude(pinpoint.longitude)
+        }
     }, [pinpoint])
 
     // 핀포인트 업로드
