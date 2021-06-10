@@ -47,7 +47,7 @@ const RecommendCampaignModal = (props: Props) => {
             >
                 <WhiteView style={styles.modalContainer}>
                     <Title>추천 캠페인 목록</Title>
-                    <Text1 style={{ fontSize: 10, marginVertical: 4 }}>* 가깝고 평가가 좋은 핀포인트 10개를 추천해줍니다.</Text1>
+                    <Text1 style={{ fontSize: 10, marginVertical: 4 }}>* 가깝고 평가가 좋은 캠페인 10개를 추천해줍니다.</Text1>
                     <ScrollView showsVerticalScrollIndicator={false} style={{ height: "100%" }}>
                         {
                             loading ?
