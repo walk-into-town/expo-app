@@ -15,9 +15,9 @@ const CouponFilter = (props: Props) => {
 
     useEffect(() => {
         onFilter();
-    }, [props.couponList, toggle])
+    }, [props.couponList, toggle, filterIdx])
 
-    const filteredArr = () => toggle ? props.couponList.filter(v => !v.used) : props.couponList
+    const filteredArr = () => toggle ? props.couponList.filter(v => !v.used) : [...props.couponList]
 
     const onFilter = () => {
         if (filterIdx === 0)
@@ -50,8 +50,8 @@ const CouponFilter = (props: Props) => {
             </View>
             <BadgeButtonGroup
                 buttons={[
-                    { name: "유효기간순", func: onTimeSort },
-                    { name: "이름순", func: onNameSort },
+                    { name: "유효기간순", func: () => { } },
+                    { name: "이름순", func: () => { } },
                 ]}
                 useFilterIdx={[filterIdx, setFilterIdx]}
             />
