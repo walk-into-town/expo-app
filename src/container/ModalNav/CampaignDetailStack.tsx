@@ -206,7 +206,7 @@ const CampaignDetailStack = () => {
                     buttons={["핀포인트 리스트", "쿠폰 리스트"]}
                     viewList={[
                         <PinPointListTab pinPointList={pinPointList} navtoPinPointDetail={navtoPinPointDetail} refreshing={refreshing} />,
-                        <CouponListTab couponList={couponList} navToCouponDetail={navToCouponDetail} />
+                        <CouponListTab couponList={couponList} navToCouponDetail={navToCouponDetail} refreshing={refreshing} />
                     ]}
                 />
 
