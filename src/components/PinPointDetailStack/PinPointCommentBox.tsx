@@ -30,7 +30,7 @@ const PinPointCommentBox = ({ comments, navToWriteComment, navToReport, deleteCo
                 </View>
             </Row>
             {
-                comments
+                [...comments]
                     .sort(sortLogic)
                     .map((v, idx) => (
                         <Comment key={idx}
