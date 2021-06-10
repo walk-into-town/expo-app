@@ -34,9 +34,11 @@ const PlayingCampaignModal = ({ userCoord, playingCampaignList, playingPinPointL
 
     const onReset = () => {
         const init = async () => {
+            setToggleUnClear(false)
+            setToggle100m(false)
             await getAllPlayingPinPoints()
             await getAllPlayingCampaigns();
-            onFilter(toggleUnClear, toggle100m);
+            // onFilter(toggleUnClear, toggle100m);
         }
         init();
     }
