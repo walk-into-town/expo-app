@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import { Image, Platform, Pressable } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { API } from '../../api';
-import { colorCode, Ionicons } from '../../atoms';
+import { colorCode, Ionicons, Text1 } from '../../atoms';
 import { imgPath } from '../../util';
 
 

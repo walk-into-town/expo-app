@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Card } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Modal from 'react-native-modal';
-import { BadgeButtonGroup, ClearButton, Title } from '../../atoms';
+import { BadgeButtonGroup, ClearButton, Text1, Title } from '../../atoms';
+import { useAuthContext } from '../../useHook';
 import { useBGMContext } from '../../useHook/BGM';
 
 import commingSoon from '../commingSoon'
@@ -15,11 +16,27 @@ interface PlaygroundProps {
     navToReport: () => void
 }
 const Playground = (props: PlaygroundProps) => {
-    const { playSound, stopSound } = useBGMContext()
+    const { auth: { userToken }, useAuth: { setting } } = useAuthContext()
+    if (userToken === undefined) return <></>
+
     const [settingVisible, setSettingVisible] = useState(false)
     const toggleSetting = () => setSettingVisible(!settingVisible)
     // 0: 재생, 1: 정지
-    const [onBgm, setOnBgm] = useState(0)
+    const [onBgm, setOnBgm] = useState(userToken.setting.playBGM ? 0 : 1)
+    const [onDist, setOnDist] = useState(userToken.setting.useDist ? 0 : 1)
+
+    const { playSound, stopSound } = useBGMContext()
+    const onPlaySound = () => {
+        setting({ playBGM: true });
+        playSound();
+    }
+    const onStopSound = () => {
+        setting({ playBGM: false })
+        stopSound();
+    }
+    const onUseDist = () => setting({ useDist: true })
+    const onNoDist = () => setting({ useDist: false })
+
 
     return (
         <View style={{ backgroundColor: "white" }}>
@@ -28,14 +45,24 @@ const Playground = (props: PlaygroundProps) => {
                 <Modal isVisible={settingVisible} onBackdropPress={toggleSetting}>
                     <Card containerStyle={{ borderRadius: 10 }}>
                         <Title>설정</Title>
-                        <View style={{ marginVertical: 10, alignItems: "center" }}>
+                        <View style={{ marginVertical: 4, alignItems: "center" }}>
                             <BadgeButtonGroup
                                 useFilterIdx={[onBgm, setOnBgm]}
                                 buttons={[
-                                    { name: "BGM 재생", func: playSound },
-                                    { name: "정지", func: stopSound }
+                                    { name: "BGM 재생", func: onPlaySound },
+                                    { name: "정지", func: onStopSound }
                                 ]}
                             />
+                        </View>
+                        <View style={{ marginVertical: 4, alignItems: "center" }}>
+                            <BadgeButtonGroup
+                                useFilterIdx={[onDist, setOnDist]}
+                                buttons={[
+                                    { name: "퀴즈 도전 거리 제한", func: onUseDist },
+                                    { name: "무제한", func: onNoDist }
+                                ]}
+                            />
+                            <Text1 style={{ marginVertical: 8 }}>* 개발모드로 임시 제공되는 기능입니다.</Text1>
                         </View>
                     </Card>
                 </Modal>

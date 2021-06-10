@@ -102,6 +102,7 @@ const PlayingCampaignModal = ({ userCoord, playingCampaignList, playingPinPointL
                 animationIn="zoomIn"
                 animationOut="fadeOut"
                 backdropOpacity={0.5}
+                onBackdropPress={toggleModal}
             >
                 <View style={styles.modalContainer}>
                     <Title>참여중인 캠페인 목록</Title>
