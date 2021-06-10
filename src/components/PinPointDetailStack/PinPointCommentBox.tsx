@@ -14,11 +14,16 @@ interface Props {
 
 const PinPointCommentBox = ({ comments, navToWriteComment, navToReport, deleteComment, onRate }: Props) => {
 
+    const getRated = (cmts: PinPointComment) => cmts.rateList.reduce((ac, v) => ac + (v.like ? 1 : 0), 0);
+
     const sortLogic = (a: PinPointComment, b: PinPointComment): number => {
-        if (a.rateList.length === b.rateList.length)
+        const aRate = getRated(a)
+        const bRate = getRated(b)
+
+        if (aRate === bRate)
             return new Date(b.updateTime).getTime() - new Date(a.updateTime).getTime()
 
-        return b.rateList.length - a.rateList.length;
+        return bRate - aRate;
     }
 
     return (

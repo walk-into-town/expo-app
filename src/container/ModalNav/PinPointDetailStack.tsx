@@ -70,7 +70,7 @@ const PinPointDetailStack = () => {
         const init = async () => {
             setRefreshing(true)
             await getComment()
-            setTimeout(() => setRefreshing(false), 500)
+            setRefreshing(false)
         }
         init();
     }
